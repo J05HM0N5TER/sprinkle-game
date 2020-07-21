@@ -1502,6 +1502,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DirectCam: {fileID: 1245622233}
   player: {fileID: 1693667788}
+  wasFollowingPlayer: 0
+  canSeePlayer: 0
 --- !u!1 &353209166 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -6111218144040389256, guid: d8b43734ff8ce74428dce7f88ebe0729,
@@ -6050,7 +6052,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1245622229}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.715, z: 0}
+  m_LocalPosition: {x: 0, y: 0.715, z: -0.441}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 352239284}
@@ -7085,7 +7087,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1693667788}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -10.759, y: 0.425, z: -0.655}
+  m_LocalPosition: {x: -9.97, y: 0.425, z: 3.55}
   m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_Children: []
   m_Father: {fileID: 0}
