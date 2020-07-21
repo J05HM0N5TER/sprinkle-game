@@ -23,8 +23,8 @@ public class LivingArmourAI : MonoBehaviour
         
         Vector3 screenPoint = DirectCam.WorldToViewportPoint(player.GetComponent<Transform>().position);
         bool onScreen = screenPoint.z > 0 && screenPoint.x > 0 && screenPoint.x < 1 && screenPoint.y > 0 && screenPoint.y < 1;
-        //Vector3 playersLastSeenSpot = screenPoint;
-        if (onScreen)
+        Vector3 playersLastSeenSpot;
+        if(onScreen)
         {
             agent.SetDestination(player.transform.position);
         }
