@@ -11,10 +11,16 @@ public class LivingArmourAI : MonoBehaviour
 	// The agents camera to see if the player is in the direct view
 	public Camera DirectCam;
 	public GameObject player;
-	public bool wasFollowingPlayer = false;
-	public bool canSeePlayer = false;
+	// Was the AI previously following the player?
+	private bool wasFollowingPlayer = false;
+	private bool isPlayerVisable = false;
 	// Has the player ever been seen by this AI?
-	bool playerHasBeenSeen = false;
+	private bool playerHasBeenSeen = false;
+	// Is the ray between the player and AI colliding with something
+    private bool rayObstructed = true;
+	// Is the player in the view area for the AI
+    private bool playerInScreenBounds = false;
+
 	// Start is called before the first frame update
 	void Start()
 	{
@@ -27,32 +33,32 @@ public class LivingArmourAI : MonoBehaviour
 		// Player position on the AI camera view
 		Vector3 screenPoint = DirectCam.WorldToViewportPoint(player.GetComponent<Transform>().position);
 		// Is the player within the view bounds
-		bool onScreen = screenPoint.z > 0 && screenPoint.x > 0 && screenPoint.x < 1 && screenPoint.y > 0 && screenPoint.y < 1;
+		playerInScreenBounds = screenPoint.z > 0 && screenPoint.x > 0 && screenPoint.x < 1 && screenPoint.y > 0 && screenPoint.y < 1;
 		// The position the player was last seen at by the AI (Updated when the player is discovered)
 		Vector3 playerLastSeen = Vector3.zero;
         // Is the player within screen bounds and nothing is obstructing view
-        Vector3 startPos = transform.position + ((player.transform.position - transform.position).normalized * 0.5f); 
-        Vector3 endPos = player.transform.position + ((transform.transform.position - player.transform.position).normalized * 0.5f); 
-		bool isPlayerVisable = onScreen && !Physics.Linecast(startPos, endPos,/*agent.transform.position, player.transform.position,*/ /*0b100000000*/(1 << 9)/*9*/);
+		rayObstructed = Physics.Linecast(/*startPos, endPos,*/ agent.transform.position, player.transform.position, out RaycastHit hitinfo, ~(1<<9) );
+		// Print out what the ray hit
+		if (rayObstructed)
+			print("Ray hit: " + hitinfo.collider.name + " at: " + hitinfo.point.x + ", " + hitinfo.point.y);
+		// Debug view
+        isPlayerVisable = playerInScreenBounds && !rayObstructed;
 		// If the player is currently seen
 		if (isPlayerVisable)
 		{
 			playerLastSeen = player.transform.position;
 			// Set the AI to go towards the player
 			agent.SetDestination(playerLastSeen);
-			wasFollowingPlayer = true;
-			canSeePlayer = true;
 			playerHasBeenSeen = true;
-		}
-		else
-		{
-			canSeePlayer = false;
 		}
 
 		if (wasFollowingPlayer && !isPlayerVisable)
 		{
+			wasFollowingPlayer = true;
+			// If there is a last seen position go search there
 			if (playerHasBeenSeen)
 				agent.SetDestination(playerLastSeen);
+			// If the AI has reached the last known position then search again
 			if ((agent.transform.position - playerLastSeen).magnitude < 0.5f)
 			{
 				wasFollowingPlayer = false;
@@ -63,8 +69,6 @@ public class LivingArmourAI : MonoBehaviour
 		{
 			agent.SetDestination(RandomNavSphere(agent.GetComponent<Transform>().position, 50f, -1));
 		}
-
-
 	}
 	public static Vector3 RandomNavSphere(Vector3 origin, float distance, int layermask)
 	{
@@ -72,10 +76,19 @@ public class LivingArmourAI : MonoBehaviour
 
 		randomDirection += origin;
 
-		NavMeshHit navHit;
-
-		NavMesh.SamplePosition(randomDirection, out navHit, distance, layermask);
+		NavMesh.SamplePosition(randomDirection, out NavMeshHit navHit, distance, layermask);
 
 		return navHit.position;
 	}
+	private void OnDrawGizmos()
+	{
+        if (agent)
+		{
+			if (rayObstructed)
+                Gizmos.color = Color.red;
+			else
+				Gizmos.color = Color.blue;
+			Gizmos.DrawLine(agent.transform.position, player.transform.position);
+		}
+    }
 }
