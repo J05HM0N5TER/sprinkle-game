@@ -552,7 +552,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 910452127}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2136268084}
+        m_MethodName: LaunchMainGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &910452127
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1338,7 +1349,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2087475358}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2136268084}
+        m_MethodName: Quit
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2087475358
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1404,7 +1426,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69d6143e4c275054aa7a4c42d951bec0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainMenu: 
+  mainMenu: MainMenu
   mainGame: 
 --- !u!4 &2136268085
 Transform:
