@@ -10,7 +10,7 @@ public class mouselook : MonoBehaviour
     public Transform PlayerBody;
     private float Xrotation = 0f;
     // ray casting
-    int layermask = 1 << 10;
+    //int layermask = 1 << 10;
     private GameObject hitobject;
     RaycastHit hit;
     private bool object_being_look_at;
@@ -39,23 +39,23 @@ public class mouselook : MonoBehaviour
             Cursor.lockState = CursorLockMode.Locked;
         }
         // ray casting
-        if(Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, Mathf.Infinity, layermask))
-        {
-            //Debug.Log("did hit");
-            object_being_look_at = true;
+        //if(Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, Mathf.Infinity, layermask))
+        //{
+        //    //Debug.Log("did hit");
+        //    object_being_look_at = true;
             
-            hitobject = (hit.collider.gameObject);
-            hitobject.GetComponent<Renderer>().material.SetColor("_BaseColor", Color.green);
+        //    hitobject = (hit.collider.gameObject);
+        //    hitobject.GetComponent<Renderer>().material.SetColor("_BaseColor", Color.green);
           
-        }
-        else
-        {
-            object_being_look_at = false;
-        }
-        if(object_being_look_at == false)
-        {
-            hitobject.GetComponent<Renderer>().material.SetColor("_BaseColor", Color.red);
-        }
+        //}
+        //else
+        //{
+        //    object_being_look_at = false;
+        //}
+        //if(object_being_look_at == false)
+        //{
+        //    hitobject.GetComponent<Renderer>().material.SetColor("_BaseColor", Color.red);
+        //}
         
 
         
