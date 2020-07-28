@@ -28,7 +28,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1376844649919263987}
-  m_LocalRotation: {x: 0, y: 0.99963653, z: 0, w: -0.026960209}
+  m_LocalRotation: {x: 0, y: 0.99963653, z: -0, w: -0.026961986}
   m_LocalPosition: {x: -1.7448469, y: 1, z: -2.5368884}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -36,7 +36,7 @@ Transform:
   - {fileID: 1376844650644571555}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 183.09, z: 0}
 --- !u!33 &1376844649919263992
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -132,7 +132,7 @@ MonoBehaviour:
   ground_distance: 0.4
   ground_mask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 823
 --- !u!1 &1376844650062081211
 GameObject:
   m_ObjectHideFlags: 0
@@ -331,6 +331,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mouseSen: 100
   PlayerBody: {fileID: 1376844649919263993}
+  grabLayers:
+    serializedVersion: 2
+    m_Bits: 1831
+  grabDistance: 3.5
+  holdDistance: 2.5
 --- !u!1 &1376844650644571554
 GameObject:
   m_ObjectHideFlags: 0
