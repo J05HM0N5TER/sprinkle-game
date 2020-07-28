@@ -9,11 +9,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1376844649919263993}
+  - component: {fileID: 8933707690807652985}
   - component: {fileID: 1376844649919263992}
   - component: {fileID: 1376844649919263999}
   - component: {fileID: 1376844649919263998}
   - component: {fileID: 1376844649919263995}
-  - component: {fileID: 8933707690807652985}
   m_Layer: 0
   m_Name: Character
   m_TagString: Untagged
@@ -37,6 +37,33 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 183.09, z: 0}
+--- !u!114 &8933707690807652985
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1376844649919263987}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc56d65854554404e9931f8062cb785d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rb: {fileID: 1376844649919263995}
+  groundcheck: {fileID: 1376844650644571554}
+  ground_mask:
+    serializedVersion: 2
+    m_Bits: 823
+  speed: 10
+  ground_distance: 0.4
+  Jump_height: 15
+  crouchHeight: 0.5
+  left: 97
+  right: 100
+  forwards: 119
+  backwards: 115
+  crouch: 304
+  jump: 32
 --- !u!33 &1376844649919263992
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -113,26 +140,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!114 &8933707690807652985
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1376844649919263987}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cc56d65854554404e9931f8062cb785d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rb: {fileID: 1376844649919263995}
-  speed: 10
-  groundcheck: {fileID: 1376844650644571554}
-  Jump_height: 15
-  ground_distance: 0.4
-  ground_mask:
-    serializedVersion: 2
-    m_Bits: 823
 --- !u!1 &1376844650062081211
 GameObject:
   m_ObjectHideFlags: 0
@@ -142,10 +149,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1376844650062081156}
+  - component: {fileID: 6183614188393528494}
   - component: {fileID: 1376844650062081159}
   - component: {fileID: 1376844650062081158}
   - component: {fileID: 3869078025290700848}
-  - component: {fileID: 6183614188393528494}
   m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
@@ -167,6 +174,25 @@ Transform:
   m_Father: {fileID: 1376844649919263993}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6183614188393528494
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1376844650062081211}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32a15ad93e16ac14daa7f087fe8929e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mouseSen: 100
+  PlayerBody: {fileID: 1376844649919263993}
+  grabLayers:
+    serializedVersion: 2
+    m_Bits: 1831
+  grabDistance: 3.5
+  holdDistance: 2.5
 --- !u!20 &1376844650062081159
 Camera:
   m_ObjectHideFlags: 0
@@ -317,25 +343,6 @@ MonoBehaviour:
       enableFptlForForwardOpaque: 0
       enableBigTilePrepass: 0
       isFptlEnabled: 0
---- !u!114 &6183614188393528494
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1376844650062081211}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 32a15ad93e16ac14daa7f087fe8929e5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mouseSen: 100
-  PlayerBody: {fileID: 1376844649919263993}
-  grabLayers:
-    serializedVersion: 2
-    m_Bits: 1831
-  grabDistance: 3.5
-  holdDistance: 2.5
 --- !u!1 &1376844650644571554
 GameObject:
   m_ObjectHideFlags: 0
