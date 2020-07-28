@@ -642,7 +642,7 @@ GameObject:
   - component: {fileID: 996147854379546400}
   - component: {fileID: 3581354160878852789}
   - component: {fileID: 8905701427617565663}
-  - component: {fileID: 5205383462704013524}
+  - component: {fileID: 2969679002555842053}
   m_Layer: 0
   m_Name: Tunnel_Cross_Floor
   m_TagString: Untagged
@@ -710,8 +710,8 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &5205383462704013524
-BoxCollider:
+--- !u!64 &2969679002555842053
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -720,9 +720,10 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 10, y: 0.0002736762, z: 10}
-  m_Center: {x: 0, y: 0.0001368381, z: 0}
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 14
+  m_Mesh: {fileID: -3489355175104920561, guid: b67f656c855531441a11ffd5daba6da0, type: 3}
 --- !u!1 &5951555053910283769
 GameObject:
   m_ObjectHideFlags: 0
@@ -938,7 +939,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6646196409564788529}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: 0, z: 0}
+  m_LocalPosition: {x: -0, y: 2.295, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 956883395907648084}
