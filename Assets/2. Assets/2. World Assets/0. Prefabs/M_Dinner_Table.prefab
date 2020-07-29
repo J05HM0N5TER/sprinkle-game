@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!65 &5786885150102049827
+--- !u!65 &1439723743565492600
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -11,8 +11,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2.6409154, y: 0.12053144, z: 1.4855151}
-  m_Center: {x: -1.1805003, y: 1.2052109, z: 0.6075001}
+  m_Size: {x: 0.09780693, y: 1.1381685, z: 0.11968994}
+  m_Center: {x: -0.003402993, y: 0.5690748, z: 0.0025063846}
 --- !u!65 &3364608567942568627
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -26,6 +26,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.09780693, y: 1.1381685, z: 0.12069702}
   m_Center: {x: -0.003402993, y: 0.5690748, z: 1.2138253}
+--- !u!65 &5786885150102049827
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2553198440615796024}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.6409154, y: 0.12053144, z: 1.4855151}
+  m_Center: {x: -1.1805003, y: 1.2052109, z: 0.6075001}
 --- !u!65 &7571058738797721650
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -52,19 +65,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.09819603, y: 1.1381685, z: 0.119781494}
   m_Center: {x: -2.3569872, y: 0.5690748, z: 1.2094682}
---- !u!65 &1439723743565492600
-BoxCollider:
+--- !u!208 &9113490055850289748
+NavMeshObstacle:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2553198440615796024}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.09780693, y: 1.1381685, z: 0.11968994}
-  m_Center: {x: -0.003402993, y: 0.5690748, z: 0.0025063846}
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 1.32, y: 0.633, z: 0.74300003}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: -1.1800001, y: 0.633, z: 0.60700005}
+  m_TimeToStationary: 0.5
 --- !u!1 &5786885150210091742
 GameObject:
   m_ObjectHideFlags: 0
@@ -74,6 +90,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5786885150210091809}
+  - component: {fileID: 7759799550246117912}
   m_Layer: 0
   m_Name: M_Dinner_Table
   m_TagString: Untagged
@@ -96,6 +113,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &7759799550246117912
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5786885150210091742}
+  serializedVersion: 2
+  m_Mass: 3
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1001 &5786885149634528305
 PrefabInstance:
   m_ObjectHideFlags: 0
