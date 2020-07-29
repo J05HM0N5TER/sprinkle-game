@@ -2511,10 +2511,20 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 1517191272095933147, guid: 2d5bd77ecfb0248498e1f974e32ed3ff,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.941
+      objectReference: {fileID: 0}
     - target: {fileID: 8933707690807652985, guid: 2d5bd77ecfb0248498e1f974e32ed3ff,
         type: 3}
       propertyPath: ground_mask.m_Bits
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8933707690807652985, guid: 2d5bd77ecfb0248498e1f974e32ed3ff,
+        type: 3}
+      propertyPath: speed
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2d5bd77ecfb0248498e1f974e32ed3ff, type: 3}
@@ -5946,6 +5956,31 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.99999994, y: 0.099999994, z: 0.99999994}
   m_Center: {x: 0, y: 0.049999997, z: 0}
+--- !u!1 &457186254 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6416419460254581596, guid: 2d5bd77ecfb0248498e1f974e32ed3ff,
+    type: 3}
+  m_PrefabInstance: {fileID: 350482524}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &457186258
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 457186254}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32a15ad93e16ac14daa7f087fe8929e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mouseSen: 100
+  PlayerBody: {fileID: 600340696}
+  grabLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  grabDistance: 1
+  holdDistance: 0.5
 --- !u!1 &459762357 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2945772334772967585, guid: d8b43734ff8ce74428dce7f88ebe0729,
@@ -6568,6 +6603,12 @@ BoxCollider:
 --- !u!1 &600340690 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1376844649919263987, guid: 2d5bd77ecfb0248498e1f974e32ed3ff,
+    type: 3}
+  m_PrefabInstance: {fileID: 350482524}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &600340696 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1376844649919263993, guid: 2d5bd77ecfb0248498e1f974e32ed3ff,
     type: 3}
   m_PrefabInstance: {fileID: 350482524}
   m_PrefabAsset: {fileID: 0}
@@ -8009,6 +8050,12 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.1250001, y: 0.99999994, z: 0.125}
   m_Center: {x: 0, y: 0.49999997, z: -0.50000006}
+--- !u!20 &929383499 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 1376844650062081159, guid: 2d5bd77ecfb0248498e1f974e32ed3ff,
+    type: 3}
+  m_PrefabInstance: {fileID: 350482524}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &933856874 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -4290332034471126928, guid: d8b43734ff8ce74428dce7f88ebe0729,
@@ -8454,7 +8501,7 @@ PrefabInstance:
     - target: {fileID: 4271985064962363077, guid: 024e0dd817d799645b6e964aee4de894,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.4906878
+      value: -5.15
       objectReference: {fileID: 0}
     - target: {fileID: 4271985064962363077, guid: 024e0dd817d799645b6e964aee4de894,
         type: 3}
@@ -8464,7 +8511,7 @@ PrefabInstance:
     - target: {fileID: 4271985064962363077, guid: 024e0dd817d799645b6e964aee4de894,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 4.059876
+      value: 0.83
       objectReference: {fileID: 0}
     - target: {fileID: 4271985064962363077, guid: 024e0dd817d799645b6e964aee4de894,
         type: 3}
@@ -10774,7 +10821,7 @@ GameObject:
   - component: {fileID: 1494185078}
   - component: {fileID: 1494185077}
   - component: {fileID: 1494185076}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Lurker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10795,9 +10842,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lurkerPoints: []
   player: {fileID: 600340690}
-  wasSeen: 0
-  closestLurkerPoint: {fileID: 0}
-  closestDistance: 0
+  playerCam: {fileID: 929383499}
 --- !u!136 &1494185077
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -13344,7 +13389,7 @@ PrefabInstance:
     - target: {fileID: 4271985064962363077, guid: 024e0dd817d799645b6e964aee4de894,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -5.641
+      value: -8.25
       objectReference: {fileID: 0}
     - target: {fileID: 4271985064962363077, guid: 024e0dd817d799645b6e964aee4de894,
         type: 3}
@@ -13354,7 +13399,7 @@ PrefabInstance:
     - target: {fileID: 4271985064962363077, guid: 024e0dd817d799645b6e964aee4de894,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 5.754
+      value: -3.55
       objectReference: {fileID: 0}
     - target: {fileID: 4271985064962363077, guid: 024e0dd817d799645b6e964aee4de894,
         type: 3}
