@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class LurkerPoint : MonoBehaviour
 {
-    public bool isVisable = false;
+    public bool isVisableByPlayer = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -16,11 +16,11 @@ public class LurkerPoint : MonoBehaviour
     {
         if(gameObject.GetComponent<Renderer>().isVisible)
         {
-            isVisable = true;
+            isVisableByPlayer = true;
         }
         else
         {
-            isVisable = false;
+            isVisableByPlayer = false;
         }
     }
 }
