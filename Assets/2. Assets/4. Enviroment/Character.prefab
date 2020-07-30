@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1376844649919263999}
   - component: {fileID: 1376844649919263998}
   - component: {fileID: 1376844649919263995}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Character
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -54,15 +54,15 @@ MonoBehaviour:
   ground_mask:
     serializedVersion: 2
     m_Bits: 1
-  speed: 25
+  speed: 15
   ground_distance: 0.4
-  Jump_height: 15
-  crouchHeight: 0
+  Jump_height: 25
+  crouchHeight: 0.8
   left: 97
   right: 100
   forwards: 119
   backwards: 115
-  crouch: 304
+  crouch: 99
   jump: 32
 --- !u!33 &1376844649919263992
 MeshFilter:
@@ -120,7 +120,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.5
+  m_Radius: 0.3
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
@@ -152,7 +152,7 @@ GameObject:
   - component: {fileID: 1376844650644571566}
   - component: {fileID: 1376844650644571565}
   - component: {fileID: 1376844650644571564}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Ground check
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -245,7 +245,7 @@ GameObject:
   - component: {fileID: 7590235112788743765}
   - component: {fileID: 8365309257839724994}
   - component: {fileID: 1376844650062081159}
-  m_Layer: 8
+  m_Layer: 10
   m_Name: Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -260,7 +260,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6416419460254581596}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.8, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1376844649919263993}
@@ -282,7 +282,7 @@ MonoBehaviour:
   PlayerBody: {fileID: 1376844649919263993}
   grabLayers:
     serializedVersion: 2
-    m_Bits: 823
+    m_Bits: 2048
   grabDistance: 3.5
   holdDistance: 2.5
 --- !u!81 &7590235112788743765

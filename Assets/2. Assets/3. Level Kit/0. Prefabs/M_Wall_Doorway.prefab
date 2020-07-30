@@ -10,12 +10,26 @@ NavMeshObstacle:
   m_Enabled: 1
   serializedVersion: 3
   m_Shape: 1
-  m_Extents: {x: 1.25, y: 2.4, z: 0.1}
+  m_Extents: {x: 1.25, y: 2.229, z: 0.1}
   m_MoveThreshold: 0.1
   m_Carve: 0
   m_CarveOnlyStationary: 1
-  m_Center: {x: -1.25, y: 2.4420002, z: -0.003}
+  m_Center: {x: -1.25, y: 2.2710001, z: -0.003}
   m_TimeToStationary: 0.5
+--- !u!64 &5101957505452299008
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2954163527558456342}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 14
+  m_Mesh: {fileID: 8004743623081329618, guid: 4fddc230767ab20449b3c1043a072e4a, type: 3}
 --- !u!208 &8008702005357715734
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -26,11 +40,11 @@ NavMeshObstacle:
   m_Enabled: 1
   serializedVersion: 3
   m_Shape: 1
-  m_Extents: {x: 1.25, y: 2.4, z: 0.1}
+  m_Extents: {x: 1.25, y: 2.229, z: 0.1}
   m_MoveThreshold: 0.1
   m_Carve: 0
   m_CarveOnlyStationary: 1
-  m_Center: {x: 1.25, y: 2.4420002, z: -0.003}
+  m_Center: {x: 1.25, y: 2.2710001, z: -0.003}
   m_TimeToStationary: 0.5
 --- !u!1 &8828099536965303338
 GameObject:
@@ -70,10 +84,15 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6168945611044700362}
     m_Modifications:
+    - target: {fileID: -5066566985688280651, guid: 4fddc230767ab20449b3c1043a072e4a,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: f2f9fb349391ed04882bdf12af9e2927, type: 2}
     - target: {fileID: -4216859302048453862, guid: 4fddc230767ab20449b3c1043a072e4a,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.024
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 4fddc230767ab20449b3c1043a072e4a,
         type: 3}
@@ -130,6 +149,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Wall_DoorWay
       objectReference: {fileID: 0}
+    - target: {fileID: 3045828903723125379, guid: 4fddc230767ab20449b3c1043a072e4a,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: e679aeab6252702408a6de084a7751e7, type: 2}
+    - target: {fileID: 4588088175110109557, guid: 4fddc230767ab20449b3c1043a072e4a,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: f2f9fb349391ed04882bdf12af9e2927, type: 2}
     - target: {fileID: 8238049098148044565, guid: 4fddc230767ab20449b3c1043a072e4a,
         type: 3}
       propertyPath: m_StaticEditorFlags
@@ -152,6 +181,12 @@ GameObject:
 --- !u!1 &1985920525324161656 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -4529695297734661765, guid: 4fddc230767ab20449b3c1043a072e4a,
+    type: 3}
+  m_PrefabInstance: {fileID: 6533634621955783427}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2954163527558456342 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8238049098148044565, guid: 4fddc230767ab20449b3c1043a072e4a,
     type: 3}
   m_PrefabInstance: {fileID: 6533634621955783427}
   m_PrefabAsset: {fileID: 0}

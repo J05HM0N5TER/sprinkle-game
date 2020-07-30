@@ -11,13 +11,13 @@ GameObject:
   - component: {fileID: 539891882518784272}
   - component: {fileID: 8801461325796021030}
   - component: {fileID: 2961568769578823647}
-  - component: {fileID: 4757103028325024264}
+  - component: {fileID: 1350483076}
   m_Layer: 0
   m_Name: Floor_Basic
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 8
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &539891882518784272
 Transform:
@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 3541321440713300739}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 5, y: 1, z: 5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7292494080598936413}
   m_RootOrder: 0
@@ -58,7 +58,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 5561349426305759274, guid: 505a59297fefc794380c6473cb76aba5, type: 3}
+  - {fileID: 2100000, guid: 48896b95687c2e342a9baea46f6ee8d9, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -79,7 +79,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &4757103028325024264
+--- !u!65 &1350483076
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -90,8 +90,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 0.5, z: 1}
-  m_Center: {x: 0, y: -0.25, z: 0}
+  m_Size: {x: 5, y: 0.016569138, z: 5}
+  m_Center: {x: 0, y: -0.008284569, z: 0}
 --- !u!1 &7835198261854607822
 GameObject:
   m_ObjectHideFlags: 0
@@ -106,7 +106,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &7292494080598936413
 Transform:

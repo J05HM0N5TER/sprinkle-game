@@ -93,11 +93,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -2519270285209910419, guid: 97e39540372fc56458d3b1c19126c7be,
+        type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 48896b95687c2e342a9baea46f6ee8d9, type: 2}
     - target: {fileID: -927199367670048503, guid: 97e39540372fc56458d3b1c19126c7be,
         type: 3}
       propertyPath: m_Name
       value: Wall_BlastDoor
       objectReference: {fileID: 0}
+    - target: {fileID: 1006628747151719034, guid: 97e39540372fc56458d3b1c19126c7be,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: f2f9fb349391ed04882bdf12af9e2927, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 97e39540372fc56458d3b1c19126c7be, type: 3}
 --- !u!4 &1352105371131674055 stripped
