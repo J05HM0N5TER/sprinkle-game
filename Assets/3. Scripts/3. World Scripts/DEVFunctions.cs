@@ -5,7 +5,8 @@ using UnityEngine.SceneManagement;
 public class DEVFunctions : MonoBehaviour
 {
     public string DevScene = ""; //The scene that will be loaded.
-    public string GameScene = ""; //The scene that will be loaded.
+    public string GameScene = "";
+    public string LevelDesignScene = "";
 
     void Update()
     {
@@ -31,7 +32,7 @@ public class DEVFunctions : MonoBehaviour
 
         if (Input.GetKey(KeyCode.KeypadPlus))
         {
-            //SceneManager.LoadScene(SceneName);
+            SceneManager.LoadScene(LevelDesignScene);
             Debug.Log("Plus Activated");
         }
 

@@ -25136,7 +25136,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DevScene: Developer Room
-  GameScene: LD Connor
+  GameScene: Game Scene
+  LevelDesignScene: LD Testing
 --- !u!1 &1127134756
 GameObject:
   m_ObjectHideFlags: 0
@@ -38710,36 +38711,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1746970117}
   m_Mesh: {fileID: -8115255404500940436, guid: d300b52c5aab9b74c9c63d1c3d16f90d, type: 3}
---- !u!1 &1749205983
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1749205984}
-  m_Layer: 0
-  m_Name: '-------------------------'
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1749205984
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1749205983}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 22
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1753349130
 GameObject:
   m_ObjectHideFlags: 0
