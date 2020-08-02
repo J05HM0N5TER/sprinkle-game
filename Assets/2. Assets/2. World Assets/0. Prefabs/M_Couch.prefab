@@ -15,12 +15,13 @@ GameObject:
   - component: {fileID: 7841675611938224698}
   - component: {fileID: 4597153009432397723}
   - component: {fileID: 6639247612766307091}
+  - component: {fileID: 854496090}
   m_Layer: 0
   m_Name: Couch
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &3529024092044243278
 Transform:
@@ -135,6 +136,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.5680676, y: 0.65502715, z: 0.19877239}
   m_Center: {x: -1.2748073, y: 1.0275136, z: -0.8988659}
+--- !u!208 &854496090
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 478161587723649885}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 1.616, y: 0.71300006, z: 0.64000005}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: -1.276, y: 0.71300006, z: -0.51000005}
+  m_TimeToStationary: 0.5
 --- !u!1 &2125576166197964298
 GameObject:
   m_ObjectHideFlags: 0
@@ -149,7 +166,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &9049804512777956222
 Transform:
