@@ -37,7 +37,7 @@ public class LivingArmourAI : MonoBehaviour
 		// The position the player was last seen at by the AI (Updated when the player is discovered)
 		Vector3 playerLastSeen = Vector3.zero;
         // Is the player within screen bounds and nothing is obstructing view
-		rayObstructed = Physics.Linecast(/*startPos, endPos,*/ agent.transform.position, player.transform.position, out RaycastHit hitinfo, ~(1<<9) );
+		rayObstructed = Physics.Linecast(/*startPos, endPos,*/ agent.transform.position, player.transform.position, out RaycastHit hitinfo, ~(1<<10) );
 		// Print out what the ray hit
 		if (rayObstructed)
 			print("Ray hit: " + hitinfo.collider.name + " at: " + hitinfo.point.x + ", " + hitinfo.point.y);
