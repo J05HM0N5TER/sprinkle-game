@@ -2501,6 +2501,11 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.3
       objectReference: {fileID: 0}
+    - target: {fileID: 1376844650062081159, guid: 2d5bd77ecfb0248498e1f974e32ed3ff,
+        type: 3}
+      propertyPath: m_CullingMask.m_Bits
+      value: 1335
+      objectReference: {fileID: 0}
     - target: {fileID: 1376844650062081211, guid: 2d5bd77ecfb0248498e1f974e32ed3ff,
         type: 3}
       propertyPath: m_Layer
@@ -6202,7 +6207,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: lurkerPoint (2)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 4271985064962363097, guid: 024e0dd817d799645b6e964aee4de894,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 7641622338252832422, guid: 024e0dd817d799645b6e964aee4de894, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 024e0dd817d799645b6e964aee4de894, type: 3}
 --- !u!1 &516357056 stripped
 GameObject:
@@ -8426,7 +8437,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: lurkerPoint (1)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 4271985064962363097, guid: 024e0dd817d799645b6e964aee4de894,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 7641622338252832422, guid: 024e0dd817d799645b6e964aee4de894, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 024e0dd817d799645b6e964aee4de894, type: 3}
 --- !u!1 &1032908088 stripped
 GameObject:
@@ -10527,14 +10544,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lurkerPoints: []
   player: {fileID: 600340690}
-<<<<<<< HEAD
   playerCam: {fileID: 929383499}
-=======
-  wasSeen: 0
-  closestLurkerPoint: {fileID: 0}
-  closestDistance: 0
-  debugIsVisable: 0
->>>>>>> master
 --- !u!136 &1494185077
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -13078,20 +13088,25 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4004068573854185770, guid: 6356f2d9fdc39ce4992a932fd141477c,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4004068573854185774, guid: 6356f2d9fdc39ce4992a932fd141477c,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -10.427213
+      value: -10.15
       objectReference: {fileID: 0}
     - target: {fileID: 4004068573854185774, guid: 6356f2d9fdc39ce4992a932fd141477c,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.434
+      value: 1.57
       objectReference: {fileID: 0}
     - target: {fileID: 4004068573854185774, guid: 6356f2d9fdc39ce4992a932fd141477c,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -3.32
+      value: -6.32
       objectReference: {fileID: 0}
     - target: {fileID: 4004068573854185774, guid: 6356f2d9fdc39ce4992a932fd141477c,
         type: 3}
@@ -13138,10 +13153,20 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 600340690}
+    - target: {fileID: 4004068573854185775, guid: 6356f2d9fdc39ce4992a932fd141477c,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4004068573854185781, guid: 6356f2d9fdc39ce4992a932fd141477c,
         type: 3}
       propertyPath: m_Name
       value: LivingArmour
+      objectReference: {fileID: 0}
+    - target: {fileID: 4004068573854185781, guid: 6356f2d9fdc39ce4992a932fd141477c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6356f2d9fdc39ce4992a932fd141477c, type: 3}
@@ -13212,5 +13237,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: lurkerPoint
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 4271985064962363097, guid: 024e0dd817d799645b6e964aee4de894,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 7641622338252832422, guid: 024e0dd817d799645b6e964aee4de894, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 024e0dd817d799645b6e964aee4de894, type: 3}
