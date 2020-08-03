@@ -11,9 +11,16 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        if (FindObjectOfType<GameManager>() != null)
+        DontDestroyOnLoad(this);
+        // If their is another game manager delete this one
+        GameManager[] gameManagers = FindObjectsOfType<GameManager>();
+        foreach (var manager in gameManagers)
         {
-            Destroy(gameObject);
+            if (manager != this)
+            {
+                Debug.LogError("More then one game manager, deleting one.");
+                Destroy(gameObject);
+            }
         }
     }
 
@@ -21,7 +28,11 @@ public class GameManager : MonoBehaviour
     /// Changes the scene
     /// </summary>
     /// <param name="sceneName">The name of the scene file to be opened</param>
-    private void SceneChange(string sceneName) => SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
+    private void SceneChange(string sceneName)
+    {
+        Debug.Log("Loading " + sceneName);
+        SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
+    }
 
     /// <summary>
     /// Navigates to the main game scene
@@ -36,5 +47,9 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// Quits the game
     /// </summary>
-    public void Quit() => Application.Quit();
+    public void Quit()
+    {
+        Debug.Log("Quitting");
+        Application.Quit();
+    }
 }
