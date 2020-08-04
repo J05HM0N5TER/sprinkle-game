@@ -39,14 +39,6 @@ public class mouselook : MonoBehaviour
 		transform.localRotation = Quaternion.Euler(Xrotation, 0, 0);
 		PlayerBody.Rotate(Vector3.up * mousex);
 
-		if (Input.GetKey(KeyCode.Q))
-		{
-			LockMouse(false);
-		}
-		if (Input.GetKey(KeyCode.E))
-		{
-			LockMouse(true);
-		}
 		// ray casting
 		if (!heldObject && Input.GetMouseButtonDown((int)grabButton) &&
 			Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, grabDistance, grabLayers))
@@ -73,17 +65,5 @@ public class mouselook : MonoBehaviour
             heldObject.GetComponent<Rigidbody>().isKinematic = false;
             heldObject = null;
         }
-	}
-
-	public void LockMouse(bool isMouseLocked)
-	{
-		if (isMouseLocked)
-		{
-			UnityEngine.Cursor.lockState = CursorLockMode.Locked;
-		}
-		else
-		{
-			UnityEngine.Cursor.lockState = CursorLockMode.None;
-		}
 	}
 }
