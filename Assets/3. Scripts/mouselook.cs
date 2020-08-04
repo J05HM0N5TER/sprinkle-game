@@ -19,8 +19,6 @@ public class mouselook : MonoBehaviour
 	[Range(0.1f, 5)]
 	public float holdDistance = 0.5f;
 	private Transform heldObject = null;
-	[Header("Controls")]
-	MouseButton grabButton = MouseButton.LeftMouse;
 
 	// Start is called before the first frame update
 	void Start()
@@ -31,16 +29,16 @@ public class mouselook : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		float mousex = Input.GetAxis("Mouse X") * mouseSen * Time.deltaTime;
-		float mousey = Input.GetAxis("Mouse Y") * mouseSen * Time.deltaTime;
+		float mousex = Input.GetAxis("Horizontal") * mouseSen * Time.deltaTime;
+		float mousey = Input.GetAxis("Vertical") * mouseSen * Time.deltaTime;
 
 		Xrotation -= mousey;
 		Xrotation = Mathf.Clamp(Xrotation, -90f, 90f);
 		transform.localRotation = Quaternion.Euler(Xrotation, 0, 0);
 		PlayerBody.Rotate(Vector3.up * mousex);
 
-		// ray casting
-		if (!heldObject && Input.GetMouseButtonDown((int)grabButton) &&
+		// Picking up objects
+		if (!heldObject && Input.GetButtonDown("Interact") &&
 			Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, grabDistance, grabLayers))
 		{
 			print("Grabbed " + hit.collider.name);
@@ -58,7 +56,8 @@ public class mouselook : MonoBehaviour
 				heldObject = null;
             }
 		}
-		else if (heldObject && Input.GetMouseButtonUp((int)grabButton))
+		// Dropping held object
+		else if (heldObject && Input.GetButtonUp("Interact"))
 		{
 			print("Dropped " + heldObject.name);
             heldObject.parent = null;
