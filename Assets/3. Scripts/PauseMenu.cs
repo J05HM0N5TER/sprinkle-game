@@ -30,6 +30,7 @@ public class PauseMenu : MonoBehaviour
 	{
 		GameObject.FindObjectOfType<GameManager>();
 		pauseMenu.SetActive(false);
+		ResumeGame();
 	}
 
 	// Update is called once per frame
@@ -53,6 +54,7 @@ public class PauseMenu : MonoBehaviour
 		isPaused = true;
 		pauseMenu.SetActive(true);
 		Time.timeScale = 0f;
+		UnityEngine.Cursor.visible = true;
 	}
 
 	/// <summary>
@@ -64,5 +66,6 @@ public class PauseMenu : MonoBehaviour
 		isPaused = false;
 		pauseMenu.SetActive(false);
 		Time.timeScale = 1f;
+		UnityEngine.Cursor.visible = false;
 	}
 }
