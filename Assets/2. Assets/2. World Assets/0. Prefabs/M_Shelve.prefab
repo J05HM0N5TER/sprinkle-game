@@ -11,8 +11,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.7394598, y: 0.10343444, z: 0.8255451}
-  m_Center: {x: 0, y: -0.05171711, z: 0.0017227381}
+  m_Size: {x: 1.7679292, y: 0.042222597, z: 0.74088836}
+  m_Center: {x: 0, y: -0.000000038184226, z: 0}
 --- !u!1 &1745922571558695463
 GameObject:
   m_ObjectHideFlags: 0
@@ -55,8 +55,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.7394598, y: 0.10343437, z: 0.8255451}
-  m_Center: {x: 0, y: -0.051717184, z: 0.0017227381}
+  m_Size: {x: 1.7679292, y: 0.042222746, z: 0.74088836}
+  m_Center: {x: 0, y: 0.000000038184226, z: 0}
 --- !u!65 &2701189377763746547
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -68,8 +68,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.7394598, y: 0.10343444, z: 0.8255451}
-  m_Center: {x: 0, y: -0.051717147, z: 0.0017227381}
+  m_Size: {x: 1.7679292, y: 0.042222746, z: 0.74088836}
+  m_Center: {x: 0, y: 0.000000038184226, z: 0}
 --- !u!65 &1745922573236524194
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -133,8 +133,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.9427528, y: 3.316699, z: 0.924994}
-  m_Center: {x: -0.0021202564, y: 1.6583495, z: 0.019860595}
+  m_Size: {x: 1.9427528, y: 3.316699, z: 0.07093355}
+  m_Center: {x: -0.0021202564, y: 1.6583495, z: -0.40716964}
 --- !u!1001 &1745922573179355057
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -142,6 +142,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1745922571558695462}
     m_Modifications:
+    - target: {fileID: -8890757838935307277, guid: 6df308a4625f094498eb9eb320e50888,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 41306ca2ef6ed344db7e71ec13d65c16, type: 2}
     - target: {fileID: -7282421940200719482, guid: 6df308a4625f094498eb9eb320e50888,
         type: 3}
       propertyPath: m_StaticEditorFlags
@@ -207,6 +212,11 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 4294967295
       objectReference: {fileID: 0}
+    - target: {fileID: -1986441603876583024, guid: 6df308a4625f094498eb9eb320e50888,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 41306ca2ef6ed344db7e71ec13d65c16, type: 2}
     - target: {fileID: -927199367670048503, guid: 6df308a4625f094498eb9eb320e50888,
         type: 3}
       propertyPath: m_Name
@@ -217,6 +227,11 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 4294967295
       objectReference: {fileID: 0}
+    - target: {fileID: -724270141783932088, guid: 6df308a4625f094498eb9eb320e50888,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 41306ca2ef6ed344db7e71ec13d65c16, type: 2}
     - target: {fileID: 5742056090274104395, guid: 6df308a4625f094498eb9eb320e50888,
         type: 3}
       propertyPath: m_StaticEditorFlags
@@ -227,6 +242,11 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 4294967295
       objectReference: {fileID: 0}
+    - target: {fileID: 8004631765013325489, guid: 6df308a4625f094498eb9eb320e50888,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 41306ca2ef6ed344db7e71ec13d65c16, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6df308a4625f094498eb9eb320e50888, type: 3}
 --- !u!4 &6719502151542461611 stripped

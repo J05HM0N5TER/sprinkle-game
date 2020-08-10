@@ -54,7 +54,7 @@ MonoBehaviour:
   ground_mask:
     serializedVersion: 2
     m_Bits: 1
-  speed: 15
+  speed: 10
   ground_distance: 0.4
   Jump_height: 35
   crouchHeight: 0.8
@@ -310,7 +310,7 @@ MonoBehaviour:
   clearDepth: 1
   volumeLayerMask:
     serializedVersion: 2
-    m_Bits: 311
+    m_Bits: 2359
   volumeAnchorOverride: {fileID: 0}
   antialiasing: 3
   SMAAQuality: 2
@@ -423,7 +423,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 311
+    m_Bits: 2359
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
