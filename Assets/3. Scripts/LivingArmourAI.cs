@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using JetBrains.Annotations;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -21,6 +22,11 @@ public class LivingArmourAI : MonoBehaviour
 	// Is the player in the view area for the AI
     private bool playerInScreenBounds = false;
 
+	//hearing and sound stuff
+	//public GameObject[] soundSources;
+	public List <GameObject> soundSources = new List<GameObject>();
+	public float maxHearingRange = 5;
+
 	// Start is called before the first frame update
 	void Start()
 	{
@@ -39,11 +45,12 @@ public class LivingArmourAI : MonoBehaviour
         // Is the player within screen bounds and nothing is obstructing view
 		rayObstructed = Physics.Linecast(/*startPos, endPos,*/ agent.transform.position, player.transform.position, out RaycastHit hitinfo, ~(1<<10) );
 		// Print out what the ray hit
-		if (rayObstructed)
-			print("Ray hit: " + hitinfo.collider.name + " at: " + hitinfo.point.x + ", " + hitinfo.point.y);
+		//if (rayObstructed)
+		//	print("Ray hit: " + hitinfo.collider.name + " at: " + hitinfo.point.x + ", " + hitinfo.point.y);
 		// Debug view
         isPlayerVisable = playerInScreenBounds && !rayObstructed;
 		// If the player is currently seen
+		/////////////////////////////////////////////////////////////////////// taken out for testing of hearing
 		if (isPlayerVisable)
 		{
 			playerLastSeen = player.transform.position;
@@ -52,7 +59,7 @@ public class LivingArmourAI : MonoBehaviour
 			playerHasBeenSeen = true;
 		}
 
-		if (wasFollowingPlayer && !isPlayerVisable)
+		else if (wasFollowingPlayer && !isPlayerVisable)
 		{
 			wasFollowingPlayer = true;
 			// If there is a last seen position go search there
@@ -65,10 +72,26 @@ public class LivingArmourAI : MonoBehaviour
 			}
 		}
 
-		if (!agent.hasPath)
+		else if (!agent.hasPath || agent.path == null)
 		{
 			agent.SetDestination(RandomNavSphere(agent.GetComponent<Transform>().position, 50f, -1));
 		}
+		///////////////////////////////////////////////////////////////////////// THIS HAS TO BE ADDED BACK FOR AI TO SEE!!!
+		if (!wasFollowingPlayer && !isPlayerVisable)
+		{
+			foreach (GameObject SoundSource in soundSources)
+			{
+				if (Vector3.Distance(gameObject.transform.position, SoundSource.transform.position) <= maxHearingRange)
+				{
+					agent.SetDestination(SoundSource.transform.position);
+				}
+				if ((agent.transform.position - SoundSource.transform.position).magnitude < 0.5f)
+				{
+					agent.stoppingDistance = 0.5f;
+				}
+			}
+		}
+
 	}
 	public static Vector3 RandomNavSphere(Vector3 origin, float distance, int layermask)
 	{
@@ -80,15 +103,21 @@ public class LivingArmourAI : MonoBehaviour
 
 		return navHit.position;
 	}
-	private void OnDrawGizmos()
+	//private void OnDrawGizmos()
+	//{
+ //       if (agent)
+	//	{
+	//		if (rayObstructed)
+ //               Gizmos.color = Color.red;
+	//		else
+	//			Gizmos.color = Color.blue;
+	//		Gizmos.DrawLine(agent.transform.position, player.transform.position);
+	//	}
+ //   }
+	private void ifSoundInRange()
 	{
-        if (agent)
-		{
-			if (rayObstructed)
-                Gizmos.color = Color.red;
-			else
-				Gizmos.color = Color.blue;
-			Gizmos.DrawLine(agent.transform.position, player.transform.position);
-		}
-    }
+		Physics.OverlapSphere(gameObject.transform.position, 30);
+
+	}
+	
 }
