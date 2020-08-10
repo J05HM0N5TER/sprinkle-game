@@ -96,8 +96,8 @@ public class LurkerAi : MonoBehaviour
         bool rayObstructed = Physics.Linecast(/*startPos, endPos,*/ position, player.transform.position,
             out RaycastHit hitinfo, ~((1 << 9) | (1 << 10))); // ignore layer 9 and 10
                                                               // Print out what the ray hit
-        if (rayObstructed)
-            print("Ray hit: " + hitinfo.collider.name + " at: " + hitinfo.point.x + ", " + hitinfo.point.y);
+        //if (rayObstructed)
+        //    print("Ray hit: " + hitinfo.collider.name + " at: " + hitinfo.point.x + ", " + hitinfo.point.y);
         // Debug view
         return InScreenBounds && !rayObstructed;
     }
