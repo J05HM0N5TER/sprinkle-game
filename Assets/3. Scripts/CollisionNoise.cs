@@ -26,19 +26,11 @@ public class CollisionNoise : MonoBehaviour
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
-        
         livingSuit = GameObject.Find("LivingArmour");
         livingSuit.GetComponent<LivingArmourAI>();
         rb = GetComponent<Rigidbody>();
         
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     private IEnumerator OnCollisionEnter(Collision collision)
     {
         if(collision.relativeVelocity.magnitude >= minSpeedToMakeSound)

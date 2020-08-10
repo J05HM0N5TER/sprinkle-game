@@ -77,7 +77,7 @@ public class LivingArmourAI : MonoBehaviour
 			agent.SetDestination(RandomNavSphere(agent.GetComponent<Transform>().position, 50f, -1));
 		}
 		///////////////////////////////////////////////////////////////////////// THIS HAS TO BE ADDED BACK FOR AI TO SEE!!!
-		if (!wasFollowingPlayer && !isPlayerVisable)
+		if (!wasFollowingPlayer || !isPlayerVisable)
 		{
 			foreach (GameObject SoundSource in soundSources)
 			{
