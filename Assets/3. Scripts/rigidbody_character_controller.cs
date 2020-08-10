@@ -13,6 +13,7 @@ public class rigidbody_character_controller : MonoBehaviour
 	public float ground_distance = 0.4f;
 	public float Jump_height = 15;
 	public float crouchHeight;
+	private Vector3 defautScale;
 	private float standHeight;
 	private CapsuleCollider capsule;
 
@@ -23,6 +24,7 @@ public class rigidbody_character_controller : MonoBehaviour
 		groundcheck.GetComponent<GameObject>();
 		capsule = GetComponent<CapsuleCollider>();
 		standHeight = capsule.height;
+		defautScale = transform.localScale;
 	}
 
 	// Update is called once per frame
@@ -41,15 +43,19 @@ public class rigidbody_character_controller : MonoBehaviour
 		if (Input.GetButtonDown("Crouch"))
 		{
 			// If the player is standing then make them crouch otherwise make them stand
-			if (capsule.height == standHeight)
+			if (transform.localScale == defautScale)
             {
-                capsule.height = crouchHeight;
-            }
+				// Change the localScale of the gameObject so that the height is the crouch height
+				gameObject.transform.localScale = new Vector3(transform.localScale.x, 
+					defautScale.y / (standHeight / crouchHeight), transform.localScale.z);
+				
+			}
             else if (!Physics.Raycast(transform.position, Vector3.up,
 				// Distance is how much difference between current height and stand height
 				standHeight - (capsule.radius < crouchHeight ? crouchHeight : capsule.radius))) 
 			{
-				capsule.height = standHeight;
+				// When the player stands up reset the scale back to what it was at the start
+				gameObject.transform.localScale = defautScale;
 
 			}
 		}
