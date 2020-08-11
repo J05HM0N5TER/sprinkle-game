@@ -8,9 +8,11 @@ using UnityEngine.UIElements;
 
 public class LivingArmourAI : MonoBehaviour
 {
-	NavMeshAgent agent;
+	private NavMeshAgent agent;
 	// The agents camera to see if the player is in the direct view
+	[Tooltip ("The Camera of the AI")]
 	public Camera DirectCam;
+	[Tooltip("The player Object")]
 	public GameObject player;
 	// Was the AI previously following the player?
 	private bool wasFollowingPlayer = false;
@@ -25,6 +27,7 @@ public class LivingArmourAI : MonoBehaviour
 	//hearing and sound stuff
 	//public GameObject[] soundSources;
 	public List <GameObject> soundSources = new List<GameObject>();
+	[Tooltip("The detection range of hearing for the AI")]
 	public float maxHearingRange = 5;
 
 	// Start is called before the first frame update
@@ -50,7 +53,6 @@ public class LivingArmourAI : MonoBehaviour
 		// Debug view
         isPlayerVisable = playerInScreenBounds && !rayObstructed;
 		// If the player is currently seen
-		/////////////////////////////////////////////////////////////////////// taken out for testing of hearing
 		if (isPlayerVisable)
 		{
 			playerLastSeen = player.transform.position;
@@ -58,7 +60,6 @@ public class LivingArmourAI : MonoBehaviour
 			agent.SetDestination(playerLastSeen);
 			playerHasBeenSeen = true;
 		}
-
 		else if (wasFollowingPlayer && !isPlayerVisable)
 		{
 			wasFollowingPlayer = true;
@@ -71,12 +72,10 @@ public class LivingArmourAI : MonoBehaviour
 				wasFollowingPlayer = false;
 			}
 		}
-
 		else if (!agent.hasPath || agent.path == null)
 		{
 			agent.SetDestination(RandomNavSphere(agent.GetComponent<Transform>().position, 50f, -1));
 		}
-		///////////////////////////////////////////////////////////////////////// THIS HAS TO BE ADDED BACK FOR AI TO SEE!!!
 		if (!wasFollowingPlayer || !isPlayerVisable)
 		{
 			foreach (GameObject SoundSource in soundSources)
@@ -91,7 +90,6 @@ public class LivingArmourAI : MonoBehaviour
 				}
 			}
 		}
-
 	}
 	public static Vector3 RandomNavSphere(Vector3 origin, float distance, int layermask)
 	{

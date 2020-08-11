@@ -5,7 +5,9 @@ using UnityEngine.UIElements;
 
 public class PauseMenu : MonoBehaviour
 {
+	[Tooltip("UI elements for the pause menu")]
 	public GameObject pauseMenu;
+	[Tooltip("Is the game paused")]
 	public static bool isPaused = false;
 
 	private GameManager manager = null;

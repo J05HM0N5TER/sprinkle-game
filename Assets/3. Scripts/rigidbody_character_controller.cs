@@ -6,12 +6,19 @@ using UnityEngine;
 [RequireComponent(typeof(CapsuleCollider), typeof(Rigidbody))]
 public class rigidbody_character_controller : MonoBehaviour
 {
-	public Rigidbody rb;
+	
+	private Rigidbody rb;
+	[Tooltip("object on bottom of player for checking ground")]
 	public GameObject groundcheck;
+	[Tooltip("Layer of the ground")]
 	public LayerMask ground_mask;
+	[Tooltip("Speed the player moves")]
 	public float speed  = 10.0f;
+	[Tooltip("how far the player can be and still jump... maybe")]
 	public float ground_distance = 0.4f;
+	[Tooltip("Height jump")]
 	public float Jump_height = 15;
+	[Tooltip("Height of player when crouched")]
 	public float crouchHeight;
 	private Vector3 defautScale;
 	private float standHeight;
