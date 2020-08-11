@@ -6,15 +6,18 @@ using UnityEngine;
 public class LurkerAi : MonoBehaviour
 {
     //public List<GameObject> lurkerPoints = new List<GameObject>();
-    public GameObject[] lurkerPoints;
+    private GameObject[] lurkerPoints;
+    [Tooltip("Player Object")]
     public GameObject player;
-    GameObject currentLurkingPoint;
-    private GameObject closestLurkerPoint;
-    private float closestDistance;
-    private bool debugIsVisable;
-    private float spookyTimer = 0.5f;
+    private GameObject currentLurkingPoint; // point that the AI is currently at
+    private GameObject closestLurkerPoint; // the closest point to the player that the AI is not at
+    private float closestDistance; // checking which point is closest to player
+    private bool debugIsVisable; // debug checking if the AI is visible to the player
+    [Tooltip("Time that the AI stays visible when looked at until it disappears/moves")]
+    public float spookyTimer = 0.5f;
+    [Tooltip("Camera attached to player")]
     public Camera playerCam;
-
+    [Tooltip("Time until the AI moves from spot without being seen as player hasn't looked at it in a while")]
     public float unseenTimer = 20.0f;
     private float resetUnseenTimer;
     // Start is called before the first frame update
@@ -57,8 +60,6 @@ public class LurkerAi : MonoBehaviour
                         closestLurkerPoint = Lurkerpoint;
                         closestDistance = distance;
                     } 
-
-                    //Physics.Linecast(player.GetComponent<Transform>().position, Lurkerpoint.transform.position)
                 }
                 unseenTimer = resetUnseenTimer;
 
