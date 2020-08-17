@@ -14,6 +14,12 @@ public class LivingArmourAI : MonoBehaviour
 	public Camera DirectCam;
 	[Tooltip("The player Object")]
 	public GameObject player;
+	[Tooltip("The max distance the ai will wonder around from its current point, decrease for ai to not move to other rooms as much")]
+	public float wonderDistance = 10.0f;
+	[Tooltip("How long will the ai be searching in the area that it last saw the player")]
+	public float timer = 10.0f;
+	[Tooltip("the area around the last seen point of the player that the ai will search for the player")]
+	public float lookngDistance = 1.0f;
 	// Was the AI previously following the player?
 	private bool wasFollowingPlayer = false;
 	private bool isPlayerVisable = false;
@@ -23,6 +29,7 @@ public class LivingArmourAI : MonoBehaviour
     private bool rayObstructed = true;
 	// Is the player in the view area for the AI
     private bool playerInScreenBounds = false;
+	bool GoneToLastPoint;
 
 	//hearing and sound stuff
 	//public GameObject[] soundSources;
@@ -59,22 +66,33 @@ public class LivingArmourAI : MonoBehaviour
 			// Set the AI to go towards the player
 			agent.SetDestination(playerLastSeen);
 			playerHasBeenSeen = true;
+			wasFollowingPlayer = true;
 		}
 		else if (wasFollowingPlayer && !isPlayerVisable)
 		{
-			wasFollowingPlayer = true;
 			// If there is a last seen position go search there
 			if (playerHasBeenSeen)
+			{
 				agent.SetDestination(playerLastSeen);
+			}
+			//LookForPlayer();
 			// If the AI has reached the last known position then search again
 			if ((agent.transform.position - playerLastSeen).magnitude < 0.5f)
 			{
+				playerHasBeenSeen = false;
+				GoneToLastPoint = true;
 				wasFollowingPlayer = false;
 			}
+			//while(GoneToLastPoint)
+			//{
+			//	agent.SetDestination(RandomNavSphere(agent.GetComponent<Transform>().position, lookngDistance, -1));
+			//}
+
 		}
 		else if (!agent.hasPath || agent.path == null)
 		{
-			agent.SetDestination(RandomNavSphere(agent.GetComponent<Transform>().position, 50f, -1));
+			agent.SetDestination(RandomNavSphere(agent.GetComponent<Transform>().position, wonderDistance, -1));
+			
 		}
 		if (!wasFollowingPlayer || !isPlayerVisable)
 		{
@@ -101,21 +119,33 @@ public class LivingArmourAI : MonoBehaviour
 
 		return navHit.position;
 	}
-	//private void OnDrawGizmos()
-	//{
- //       if (agent)
-	//	{
-	//		if (rayObstructed)
- //               Gizmos.color = Color.red;
-	//		else
-	//			Gizmos.color = Color.blue;
-	//		Gizmos.DrawLine(agent.transform.position, player.transform.position);
-	//	}
- //   }
+	private void OnDrawGizmos()
+	{
+		if (agent)
+		{
+			if (rayObstructed)
+				Gizmos.color = Color.red;
+			else
+				Gizmos.color = Color.blue;
+			Gizmos.DrawLine(agent.transform.position, player.transform.position);
+
+			Gizmos.DrawWireSphere(agent.transform.position, wonderDistance);
+		}
+	}
 	private void ifSoundInRange()
 	{
 		Physics.OverlapSphere(gameObject.transform.position, 30);
 
 	}
-	
+	private IEnumerator LookForPlayer()
+	{
+		yield return StartCoroutine("resetLookingForPlayer");
+	}
+	private IEnumerator resetLookingForPlayer()
+	{
+		yield return new WaitForSeconds(timer);
+
+		
+		GoneToLastPoint = false;
+	}
 }
