@@ -194,7 +194,7 @@ RectTransform:
   m_Children:
   - {fileID: 4075613935929613142}
   m_Father: {fileID: 7437027849266534200}
-  m_RootOrder: 2
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -267,9 +267,9 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
+  - {fileID: 4387051741607370063}
   - {fileID: 7437027851281134515}
   - {fileID: 7437027849505915785}
-  - {fileID: 4387051741607370063}
   - {fileID: 7437027849284315933}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -370,7 +370,7 @@ RectTransform:
   m_Children:
   - {fileID: 7437027849566857588}
   m_Father: {fileID: 7437027849266534200}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
@@ -669,7 +669,7 @@ RectTransform:
   m_Children:
   - {fileID: 7437027850541464710}
   m_Father: {fileID: 7437027849266534200}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -781,11 +781,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3851353463004171286, guid: a6d9a5a72bdef7c4983abf32597bb922,
         type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3851353463004171286, guid: a6d9a5a72bdef7c4983abf32597bb922,
-        type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: LaunchMainMenu
       objectReference: {fileID: 0}
@@ -798,11 +793,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3851353463597695050, guid: a6d9a5a72bdef7c4983abf32597bb922,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 3851353463597695050, guid: a6d9a5a72bdef7c4983abf32597bb922,
         type: 3}
