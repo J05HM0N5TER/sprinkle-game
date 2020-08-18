@@ -73,26 +73,27 @@ public class LivingArmourAI : MonoBehaviour
 			playerHasBeenSeen = true;
 			wasFollowingPlayer = true;
 		}
-		//if (wasFollowingPlayer && !isPlayerVisable)
-		//{
-		//	// If there is a last seen position go search there
-		//	//if (playerHasBeenSeen)
-		//	//{
-		//	//	agent.SetDestination(playerLastSeen);
-		//	//}
-		//	//LookForPlayer();
-		//	// If the AI has reached the last known position then search again
-		//	if ((agent.transform.position - playerLastSeen).magnitude < 0.5f)
-		//	{
-		//		playerHasBeenSeen = false;
-		//		lookingforplayer = true;
-		//		wasFollowingPlayer = false;
-		//	}
-		//	//while(GoneToLastPoint)
-		//	//{
-		//	//	agent.SetDestination(RandomNavSphere(agent.GetComponent<Transform>().position, lookngDistance, -1));
-		//	//}
-		//}
+		/*if (wasFollowingPlayer && !isPlayerVisable)
+		{
+			// If there is a last seen position go search there
+			//if (playerHasBeenSeen)
+			//{
+			//	agent.SetDestination(playerLastSeen);
+			//}
+			//LookForPlayer();
+			// If the AI has reached the last known position then search again
+			if ((agent.transform.position - playerLastSeen).magnitude < 0.5f)
+			{
+				playerHasBeenSeen = false;
+				lookingforplayer = true;
+				wasFollowingPlayer = false;
+			}
+			//while(GoneToLastPoint)
+			//{
+			//	agent.SetDestination(RandomNavSphere(agent.GetComponent<Transform>().position, lookngDistance, -1));
+			//}
+		}
+		*/
 		if ((agent.transform.position - playerLastSeen).magnitude < 0.5f)
 		{
 			playerHasBeenSeen = false;
