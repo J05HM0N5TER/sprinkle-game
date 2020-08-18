@@ -1,5 +1,19 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!64 &8712092401177162097
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 354239431507080007}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 14
+  m_Mesh: {fileID: -5357545857454172571, guid: 97e39540372fc56458d3b1c19126c7be, type: 3}
 --- !u!1 &3815755115481976451
 GameObject:
   m_ObjectHideFlags: 0
@@ -13,7 +27,7 @@ GameObject:
   - component: {fileID: 1177040698613245909}
   m_Layer: 9
   m_Name: DoorIndicator
-  m_TagString: Untagged
+  m_TagString: EditorOnly
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -78,6 +92,36 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!64 &6581607756009762318
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4999615196032270242}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 14
+  m_Mesh: {fileID: -4935332469645111236, guid: 97e39540372fc56458d3b1c19126c7be, type: 3}
+--- !u!208 &7285619870394220588
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4999615196032270242}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 2.1980002, y: 2.084, z: 0.49}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 2.079, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &7975614945967486798
 GameObject:
   m_ObjectHideFlags: 0
@@ -172,6 +216,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -3219068197961423462, guid: 97e39540372fc56458d3b1c19126c7be,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     - target: {fileID: -2519270285209910419, guid: 97e39540372fc56458d3b1c19126c7be,
         type: 3}
       propertyPath: m_Materials.Array.data[1]
@@ -192,6 +241,18 @@ PrefabInstance:
 --- !u!4 &1352105371131674055 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: 97e39540372fc56458d3b1c19126c7be,
+    type: 3}
+  m_PrefabInstance: {fileID: 6321101579456534237}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &4999615196032270242 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1358719214563567999, guid: 97e39540372fc56458d3b1c19126c7be,
+    type: 3}
+  m_PrefabInstance: {fileID: 6321101579456534237}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &354239431507080007 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -3219068197961423462, guid: 97e39540372fc56458d3b1c19126c7be,
     type: 3}
   m_PrefabInstance: {fileID: 6321101579456534237}
   m_PrefabAsset: {fileID: 0}
