@@ -10546,6 +10546,8 @@ MonoBehaviour:
   spookyTimer: 0.5
   playerCam: {fileID: 929383499}
   unseenTimer: 20
+  chanceOfAppearing: 1
+  lurkerWaitingPoint: {fileID: 0}
 --- !u!136 &1494185077
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -13389,7 +13391,12 @@ PrefabInstance:
     - target: {fileID: 4004068573854185775, guid: 6356f2d9fdc39ce4992a932fd141477c,
         type: 3}
       propertyPath: lookngDistance
-      value: 10
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4004068573854185775, guid: 6356f2d9fdc39ce4992a932fd141477c,
+        type: 3}
+      propertyPath: wonderDistance
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4004068573854185781, guid: 6356f2d9fdc39ce4992a932fd141477c,
         type: 3}

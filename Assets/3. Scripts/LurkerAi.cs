@@ -15,6 +15,7 @@ public class LurkerAi : MonoBehaviour
     private bool debugIsVisable; // debug checking if the AI is visible to the player
     [Tooltip("Time that the AI stays visible when looked at until it disappears/moves")]
     public float spookyTimer = 0.5f;
+    float resettimer;
     [Tooltip("Camera attached to player")]
     public Camera playerCam;
     [Tooltip("Time until the AI moves from spot without being seen as player hasn't looked at it in a while")]
@@ -34,6 +35,7 @@ public class LurkerAi : MonoBehaviour
             print("Lurker point: " + Lurkerpoint.transform.position);
         }
         resetUnseenTimer = unseenTimer;
+        resettimer = spookyTimer;
     }
 
     // Update is called once per frame
@@ -92,7 +94,7 @@ public class LurkerAi : MonoBehaviour
                 {
                     gameObject.GetComponent<Transform>().position = closestLurkerPoint.transform.position;
                     currentLurkingPoint = closestLurkerPoint;
-                    spookyTimer = 0.5f;
+                    spookyTimer = resettimer;
                 }
             }
             else

@@ -18,6 +18,7 @@ public class LivingArmourAI : MonoBehaviour
 	public float wonderDistance = 10.0f;
 	[Tooltip("How long will the ai be searching in the area that it last saw the player")]
 	public float timer = 10.0f;
+	private float timerReset;
 	[Tooltip("the area around the last seen point of the player that the ai will search for the player")]
 	public float lookngDistance = 1.0f;
 	// Was the AI previously following the player?
@@ -36,11 +37,15 @@ public class LivingArmourAI : MonoBehaviour
 	public List <GameObject> soundSources = new List<GameObject>();
 	[Tooltip("The detection range of hearing for the AI")]
 	public float maxHearingRange = 5;
+	private bool lookingforplayer = false;
+	private float originalWonder;
 
 	// Start is called before the first frame update
 	void Start()
 	{
 		agent = gameObject.GetComponent<NavMeshAgent>();
+		originalWonder = wonderDistance;
+		timerReset = timer;
 	}
 
 	// Update is called once per frame  
@@ -68,32 +73,48 @@ public class LivingArmourAI : MonoBehaviour
 			playerHasBeenSeen = true;
 			wasFollowingPlayer = true;
 		}
-		else if (wasFollowingPlayer && !isPlayerVisable)
+		//if (wasFollowingPlayer && !isPlayerVisable)
+		//{
+		//	// If there is a last seen position go search there
+		//	//if (playerHasBeenSeen)
+		//	//{
+		//	//	agent.SetDestination(playerLastSeen);
+		//	//}
+		//	//LookForPlayer();
+		//	// If the AI has reached the last known position then search again
+		//	if ((agent.transform.position - playerLastSeen).magnitude < 0.5f)
+		//	{
+		//		playerHasBeenSeen = false;
+		//		lookingforplayer = true;
+		//		wasFollowingPlayer = false;
+		//	}
+		//	//while(GoneToLastPoint)
+		//	//{
+		//	//	agent.SetDestination(RandomNavSphere(agent.GetComponent<Transform>().position, lookngDistance, -1));
+		//	//}
+		//}
+		if ((agent.transform.position - playerLastSeen).magnitude < 0.5f)
 		{
-			// If there is a last seen position go search there
-			if (playerHasBeenSeen)
-			{
-				agent.SetDestination(playerLastSeen);
-			}
-			//LookForPlayer();
-			// If the AI has reached the last known position then search again
-			if ((agent.transform.position - playerLastSeen).magnitude < 0.5f)
-			{
-				playerHasBeenSeen = false;
-				GoneToLastPoint = true;
-				wasFollowingPlayer = false;
-			}
-			//while(GoneToLastPoint)
-			//{
-			//	agent.SetDestination(RandomNavSphere(agent.GetComponent<Transform>().position, lookngDistance, -1));
-			//}
-
+			playerHasBeenSeen = false;
+			lookingforplayer = true;
+			wasFollowingPlayer = false;
 		}
-		else if (!agent.hasPath || agent.path == null)
+		if (!agent.hasPath || agent.path == null)
 		{
 			agent.SetDestination(RandomNavSphere(agent.GetComponent<Transform>().position, wonderDistance, -1));
-			
 		}
+		if(lookingforplayer)
+		{
+			wonderDistance = lookngDistance;
+			//LookForPlayer();
+			timer -= Time.deltaTime;
+		}
+		if(timer <= 0)
+		{
+			lookingforplayer = false;
+			wonderDistance = originalWonder;
+		}
+		
 		if (!wasFollowingPlayer || !isPlayerVisable)
 		{
 			foreach (GameObject SoundSource in soundSources)
@@ -135,7 +156,6 @@ public class LivingArmourAI : MonoBehaviour
 	private void ifSoundInRange()
 	{
 		Physics.OverlapSphere(gameObject.transform.position, 30);
-
 	}
 	private IEnumerator LookForPlayer()
 	{
@@ -144,8 +164,6 @@ public class LivingArmourAI : MonoBehaviour
 	private IEnumerator resetLookingForPlayer()
 	{
 		yield return new WaitForSeconds(timer);
-
-		
-		GoneToLastPoint = false;
+		wonderDistance = originalWonder;
 	}
 }
