@@ -15,11 +15,17 @@ public class LurkerAi : MonoBehaviour
     private bool debugIsVisable; // debug checking if the AI is visible to the player
     [Tooltip("Time that the AI stays visible when looked at until it disappears/moves")]
     public float spookyTimer = 0.5f;
+    float resettimer;
     [Tooltip("Camera attached to player")]
     public Camera playerCam;
     [Tooltip("Time until the AI moves from spot without being seen as player hasn't looked at it in a while")]
     public float unseenTimer = 20.0f;
     private float resetUnseenTimer;
+    [Tooltip("The chance of the ai appearing, 1 = 100%, 0 = 0%")]
+    public float chanceOfAppearing = 1.0f;
+    private bool appearsNearPlayer = false;
+    [Tooltip("The place that the lurker goes when it is not supposed to be seen")]
+    public GameObject lurkerWaitingPoint;
     // Start is called before the first frame update
     void Start()
     {
@@ -29,6 +35,7 @@ public class LurkerAi : MonoBehaviour
             print("Lurker point: " + Lurkerpoint.transform.position);
         }
         resetUnseenTimer = unseenTimer;
+        resettimer = spookyTimer;
     }
 
     // Update is called once per frame
@@ -38,32 +45,47 @@ public class LurkerAi : MonoBehaviour
         // Is the lurker being seen?
         if (IsVisableToPlayer(transform.position) || unseenTimer <= 0.0f)// gameObject.GetComponent<Renderer>().isVisible)
         {
+            if (Random.value <= chanceOfAppearing)
+            {
+                appearsNearPlayer = true;
+            }
+            else
+            {
+                appearsNearPlayer = false;
+            }
             debugIsVisable = true;
             print("Is seen, trying to find new point...");
-            foreach (GameObject Lurkerpoint in lurkerPoints)
+            if (appearsNearPlayer)
             {
-                
-                // Is the spawn point being seen?
-                if (!IsVisableToPlayer(Lurkerpoint.transform.position))
+                foreach (GameObject Lurkerpoint in lurkerPoints)
                 {
-                    // Find closest valid spawn point
-                    float distance = UnityEngine.Vector3.Distance(player.GetComponent<Transform>().position, Lurkerpoint.GetComponent<Transform>().position);
-                    // If their is no points then set this as the current one
-                    if (closestLurkerPoint == null)
+                    // Is the spawn point being seen?
+                    if (!IsVisableToPlayer(Lurkerpoint.transform.position))
                     {
-                        closestLurkerPoint = Lurkerpoint;
-                        closestDistance = distance;
+                        // Find closest valid spawn point
+                        float distance = UnityEngine.Vector3.Distance(player.GetComponent<Transform>().position, Lurkerpoint.GetComponent<Transform>().position);
+                        // If their is no points then set this as the current one
+                        if (closestLurkerPoint == null)
+                        {
+                            closestLurkerPoint = Lurkerpoint;
+                            closestDistance = distance;
+                        }
+                        // If the point is not the current point
+                        else if (transform != currentLurkingPoint)
+                        {
+                            closestLurkerPoint = Lurkerpoint;
+                            closestDistance = distance;
+                        }
                     }
-                    // If the point is not the current point
-                    else if (transform != currentLurkingPoint)
-                    { 
-                        closestLurkerPoint = Lurkerpoint;
-                        closestDistance = distance;
-                    } 
-                }
-                unseenTimer = resetUnseenTimer;
+                    unseenTimer = resetUnseenTimer;
 
+                }
             }
+            if(!appearsNearPlayer)
+            {
+                closestLurkerPoint.transform.position = lurkerWaitingPoint.transform.position;
+            }
+            //actually moving the bloody thing
             if (closestLurkerPoint != null)
             {
                 print("Closest point is " + closestLurkerPoint.name);
@@ -72,9 +94,8 @@ public class LurkerAi : MonoBehaviour
                 {
                     gameObject.GetComponent<Transform>().position = closestLurkerPoint.transform.position;
                     currentLurkingPoint = closestLurkerPoint;
-                    spookyTimer = 0.5f;
+                    spookyTimer = resettimer;
                 }
-                
             }
             else
             {
