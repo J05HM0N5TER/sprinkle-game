@@ -5,18 +5,22 @@ using UnityEngine.UIElements;
 
 public class mouselook : MonoBehaviour
 {
+	[Tooltip("Mouse Sensitivity")]
 	public float mouseSen = 100f;
-
+	[Tooltip("Player Object")]
 	public Transform PlayerBody;
 	private float Xrotation = 0f;
 	// ray casting
+	[Tooltip("layer of objects that can be picked up")]
 	public LayerMask grabLayers;
 	RaycastHit hit;
 
 	[Header("Grab ability settings:")]
 	[Range(0.1f, 10)]
+	[Tooltip("How far away the object can be before it cant be grabbed")]
 	public float grabDistance = 1;
 	[Range(0.1f, 5)]
+	[Tooltip("How far the object is held from the player once picked up")]
 	public float holdDistance = 0.5f;
 	private Transform heldObject = null;
 
