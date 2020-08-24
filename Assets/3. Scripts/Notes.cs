@@ -18,21 +18,17 @@ public class Notes : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(isActive)
-        {
-            player.GetComponentInChildren<TextMeshPro>().text = inscription;
-        }
-        if(!isActive)
-        {
-            player.GetComponentInChildren<TextMeshPro>().text = null;
-        }
+        
     }
     private void OnTriggerEnter(Collider other)
     {
         isActive = true;
+        player.GetComponentInChildren<TextMeshProUGUI>().text = inscription;
+        
     }
     private void OnTriggerExit(Collider other)
     {
         isActive = false;
+        player.GetComponentInChildren<TextMeshProUGUI>().text = null;
     }
 }
