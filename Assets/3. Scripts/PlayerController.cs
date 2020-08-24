@@ -6,7 +6,7 @@ using UnityEngine;
 [RequireComponent(typeof(CapsuleCollider), typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour
 {
-	
+
 	private Rigidbody rb;
 	[Tooltip("Layer of the ground")]
 	public LayerMask groundMask;
@@ -16,14 +16,17 @@ public class PlayerController : MonoBehaviour
 	public float groundDistance = 0.4f;
 	[Tooltip("Height jump")]
 	public float JumpHeight = 15;
+
+	// Crouch variables
 	[Tooltip("Height of player when crouched")]
 	public float crouchHeight;
+	// The scale of the player at launch
 	private Vector3 defautScale;
+	// The default height of the player
 	private float standHeight;
+	// The collider for the player
 	private CapsuleCollider capsule;
 
-	// FIXME: This is dumb, need to work out the math to do in code later
-	private Transform moveTransform;
 
 	// Start is called before the first frame update
 	void Start()
@@ -36,60 +39,20 @@ public class PlayerController : MonoBehaviour
 
 	private void FixedUpdate()
 	{
-		// Movement input
+		// Constant input
 		Vector3 input = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-		//rb.AddForce(gameObject.transform.forward * input.y * speed);
-		//rb.AddForce(gameObject.transform.right * input.x * speed);
 
-		//Vector3 forwardInput = input.z * transform.forward;
-		//Vector3 rightInput = input.x * transform.right;
-		//rb.velocity = forwardInput + rightInput;
-		//rb.velocity = input.x * transform.forward;
-
-		//Vector3 localForward = transform.worldToLocalMatrix.MultiplyVector(transform.forward * input.x);
-		//Vector3 localForward = transform.InverseTransformPoint(input);
-		//Vector3 localForward = Transform.Translate(input, Space.Self);
-
-		//float velocityInDirection = Vector3.Dot(rigidbody.velocity, direction);
-
-		Vector3 localForward = transform.InverseTransformVector(input);
-
-		// Working from https://answers.unity.com/questions/518399/simulate-child-parent-relationship.html
-		// FIXME: This is not working at all.
-
-		Quaternion rotation = new Quaternion();
-		rotation = transform.rotation;
-		rotation *= transform.rotation;
-
-		Matrix4x4 test = new Matrix4x4();
-		//test.
-		Vector3 vel = rotation.eulerAngles;
-		vel /= 360;
+		// Move the player using the input, keep the downwards velocity for when they fall.
+		Vector3 vel = new Vector3(0, rb.velocity.y, 0);
+		vel += gameObject.transform.forward * input.z * speed;
+		vel += gameObject.transform.right * input.x * speed;
 		rb.velocity = vel;
-		//Transform dumbFix = new Transform();
-
-		Matrix4x4 child = new Matrix4x4();
-		child.SetTRS(input, Quaternion.identity, Vector3.one);
-
-		Matrix4x4 parentMatrix = Matrix4x4.TRS(transform.position, transform.rotation, transform.lossyScale);
-
-		transform.position = parentMatrix.MultiplyPoint3x4(child.ExtractPosition());
-
-		transform.rotation = (transform.rotation * Quaternion.Inverse(transform.rotation)) * mouse.gameObject.transform.rotation;
-
-
-
-		//transform.Translate(new Vector3(Input.GetAxis("Horizontal") * speed * Time.deltaTime, 0, Input.GetAxis("Vertical") * speed * Time.deltaTime));
-
 	}
 
 	// Update is called once per frame
 	void Update()
 	{
-		// Movement input
-
-		//rb.velocity = Vector3.Project(input, transform.forward);
-
+		// Impulse input
 		if (Input.GetButton("Jump") && isStanding())
 		{
 			rb.AddForce(gameObject.transform.up * JumpHeight);
