@@ -10542,10 +10542,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9978166bf35bd1246a3488a6e2c6d7f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lurkerPoints: []
   player: {fileID: 600340690}
+  spookyTimer: 0.5
   playerCam: {fileID: 929383499}
   unseenTimer: 20
+  chanceOfAppearing: 1
+  lurkerWaitingPoint: {fileID: 0}
 --- !u!136 &1494185077
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -13385,6 +13387,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4004068573854185775, guid: 6356f2d9fdc39ce4992a932fd141477c,
+        type: 3}
+      propertyPath: lookngDistance
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4004068573854185775, guid: 6356f2d9fdc39ce4992a932fd141477c,
+        type: 3}
+      propertyPath: wonderDistance
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4004068573854185781, guid: 6356f2d9fdc39ce4992a932fd141477c,
         type: 3}
