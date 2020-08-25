@@ -93,6 +93,7 @@ public class LurkerAi : MonoBehaviour
                 if (spookyTimer <= 0.0f)
                 {
                     gameObject.GetComponent<Transform>().position = closestLurkerPoint.transform.position;
+                    gameObject.GetComponent<Transform>().rotation = closestLurkerPoint.transform.rotation;
                     currentLurkingPoint = closestLurkerPoint;
                     spookyTimer = resettimer;
                 }
