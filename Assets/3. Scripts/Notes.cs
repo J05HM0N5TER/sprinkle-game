@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -35,27 +36,23 @@ public class Notes : MonoBehaviour
                 {
                     player.GetComponentInChildren<TextMeshProUGUI>().enabled = true;
                     player.GetComponentInChildren<TextMeshProUGUI>().text = inscription;
-                    buffertimer();
                     FindObjectOfType<PauseMenu>().PauseGame();
+                    FindObjectOfType<PauseMenu>().pauseMenu.SetActive(false);
+                    UnityEngine.Cursor.lockState = CursorLockMode.Locked;
+                    isActive = true;
                 }
-            }
-            if(isActive)
-            {
-                isActive = false;
-                player.GetComponentInChildren<TextMeshProUGUI>().enabled = false;
-                FindObjectOfType<PauseMenu>().ResumeGame();
-            }
+            } 
+        }
+        if (Input.GetKeyDown(KeyCode.E) && isActive)
+        {
+            isActive = false;
+            player.GetComponentInChildren<TextMeshProUGUI>().enabled = false;
+            player.GetComponentInChildren<TextMeshProUGUI>().text = " ";
+            FindObjectOfType<PauseMenu>().ResumeGame();
+
         }
     }
-    private IEnumerator buffertimer()
-    {
-        yield return StartCoroutine("bufferTime");
-    }
-    private IEnumerator bufferTime()
-    {
-        yield return new WaitForSeconds(bufferTimer);
-        isActive = true;
-    }
+    
 }
 
 
