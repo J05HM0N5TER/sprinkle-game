@@ -49,7 +49,6 @@ public class PlayerController : MonoBehaviour
 	// Start is called before the first frame update
 	void Start()
 	{
-		inventory = Inventory.Astrobotany | Inventory.EscapePodPasscard;
 		rb = gameObject.GetComponent<Rigidbody>();
 		capsule = GetComponent<CapsuleCollider>();
 		standHeight = capsule.height;
