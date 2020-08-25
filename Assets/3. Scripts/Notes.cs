@@ -11,14 +11,14 @@ public class Notes : MonoBehaviour
 {
     public string inscription = "";
     [HideInInspector] public bool isActive = false;
-    private GameObject player;
+    [Tooltip("the text mesh pro gameobject attached to the canvas that is to show the note pad text")]
+    public GameObject noteTextBox;
     RaycastHit hit;
-    [Tooltip("This is to make sure that the notes do not activate and deactivate at the same time. low number above 0.1 should be fine.")]
-    public float bufferTimer = 0.2f; // as the notes will deactive and activate at the same time as a button press happens over multiple frames this should allow it to have time between.
+    
+    
     // Start is called before the first frame update
     void Start()
     {
-        player = GameObject.FindWithTag("Player");
     }
 
     // Update is called once per frame
@@ -34,8 +34,9 @@ public class Notes : MonoBehaviour
                 Debug.Log(hit.collider.gameObject.name);
                 if(hit.collider.gameObject == gameObject)
                 {
-                    player.GetComponentInChildren<TextMeshProUGUI>().enabled = true;
-                    player.GetComponentInChildren<TextMeshProUGUI>().text = inscription;
+                    noteTextBox.SetActive(true);
+                    noteTextBox.GetComponent<TextMeshProUGUI>().enabled = true;
+                    noteTextBox.GetComponent<TextMeshProUGUI>().text = inscription;
                     FindObjectOfType<PauseMenu>().PauseGame();
                     FindObjectOfType<PauseMenu>().pauseMenu.SetActive(false);
                     UnityEngine.Cursor.lockState = CursorLockMode.Locked;
@@ -46,8 +47,9 @@ public class Notes : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E) && isActive)
         {
             isActive = false;
-            player.GetComponentInChildren<TextMeshProUGUI>().enabled = false;
-            player.GetComponentInChildren<TextMeshProUGUI>().text = " ";
+            noteTextBox.SetActive(false);
+            noteTextBox.GetComponent<TextMeshProUGUI>().enabled = false;
+            noteTextBox.GetComponent<TextMeshProUGUI>().text = " ";
             FindObjectOfType<PauseMenu>().ResumeGame();
 
         }
