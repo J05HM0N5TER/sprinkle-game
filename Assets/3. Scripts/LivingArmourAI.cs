@@ -115,7 +115,6 @@ public class LivingArmourAI : MonoBehaviour
 			lookingforplayer = false;
 			wonderDistance = originalWonder;
 		}
-		
 		if (!wasFollowingPlayer || !isPlayerVisable)
 		{
 			foreach (GameObject SoundSource in soundSources)
