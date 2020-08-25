@@ -1,15 +1,25 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.UIElements;
 using UnityEngine;
 
 [RequireComponent(typeof(CapsuleCollider), typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour
 {
 
+	[Flags] public enum Inventory : byte
+	{
+		none = 0,
+		Astrogeology = 1 << 0,
+		Astrobotany = 1 << 1,
+		AstroMicrobiology = 1 << 2,
+		EscapePodPasscard = 1 << 3,
+		ChemicalSpray = 1 << 4,
+		SolderingIron = 1 << 5
+	}
+
 	private Rigidbody rb;
-	[Tooltip("Layer of the ground")]
-	public LayerMask groundMask;
 	[Tooltip("Speed the player moves")]
 	public float speed = 10.0f;
 	[Tooltip("How far the player can be from the ground and still jump")]
@@ -27,10 +37,19 @@ public class PlayerController : MonoBehaviour
 	// The collider for the player
 	private CapsuleCollider capsule;
 
+	[Header("Debug values")]
+	[Tooltip("What the player has in their inventory")]
+	public Inventory inventory;
+	[Tooltip("How many Med-Syringes the player has in their inventory")]
+	public int medSyringes = 0;
+	[Tooltip("How many Battery Packs the player has in their inventory")]
+	public int batteryPacks = 0;
+
 
 	// Start is called before the first frame update
 	void Start()
 	{
+		inventory = Inventory.Astrobotany | Inventory.EscapePodPasscard;
 		rb = gameObject.GetComponent<Rigidbody>();
 		capsule = GetComponent<CapsuleCollider>();
 		standHeight = capsule.height;
@@ -60,6 +79,14 @@ public class PlayerController : MonoBehaviour
 		if (Input.GetButtonDown("Crouch"))
 		{
 			ToggleCrouch();
+		}
+
+		inventory = Inventory.Astrobotany | Inventory.Astrogeology;
+
+		Inventory check = Inventory.Astrobotany | Inventory.Astrogeology;
+		if ((inventory | check ) == check)
+		{
+
 		}
 	}
 
