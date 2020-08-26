@@ -7,25 +7,42 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
 
+	[Flags] public enum Inventory : byte
+	{
+		none = 0,
+		Astrogeology = 1 << 0,
+		Astrobotany = 1 << 1,
+		AstroMicrobiology = 1 << 2,
+		EscapePodPasscard = 1 << 3,
+		ChemicalSpray = 1 << 4,
+		SolderingIron = 1 << 5
+	}
+
 	private Rigidbody rb;
-	[Tooltip("Layer of the ground")]
-	public LayerMask groundMask;
 	[Tooltip("Speed the player moves")]
 	public float speed = 10.0f;
 	[Tooltip("How far the player can be from the ground and still jump")]
 	public float groundDistance = 0.4f;
 	[Tooltip("Height jump")]
-	public float JumpHeight = 15;
+	public float jumpForce = 300;
 
 	// Crouch variables
 	[Tooltip("Height of player when crouched")]
-	public float crouchHeight;
+	public float crouchHeight = 0.5f;
 	// The scale of the player at launch
 	private Vector3 defautScale;
 	// The default height of the player
 	private float standHeight;
 	// The collider for the player
 	private CapsuleCollider capsule;
+
+	[Header("Debug values")]
+	[Tooltip("What the player has in their inventory")]
+	public Inventory inventory;
+	[Tooltip("How many Med-Syringes the player has in their inventory")]
+	public int medSyringes = 0;
+	[Tooltip("How many Battery Packs the player has in their inventory")]
+	public int batteryPacks = 0;
 
 
 	// Start is called before the first frame update
@@ -53,9 +70,10 @@ public class PlayerController : MonoBehaviour
 	void Update()
 	{
 		// Impulse input
-		if (Input.GetButton("Jump") && isStanding())
+		if (Input.GetButtonDown("Jump") && isStanding())
 		{
-			rb.AddForce(gameObject.transform.up * JumpHeight);
+			Debug.Log("Jump pressed", this);
+			rb.AddForce(gameObject.transform.up * jumpForce);
 		}
 		if (Input.GetButtonDown("Crouch"))
 		{
@@ -74,6 +92,9 @@ public class PlayerController : MonoBehaviour
 			// Change the localScale of the gameObject so that the height is the crouch height
 			gameObject.transform.localScale = new Vector3(transform.localScale.x,
 				defautScale.y / (standHeight / crouchHeight), transform.localScale.z);
+			Vector3 pos = transform.position;
+			pos.y -= ((standHeight - crouchHeight) / 2) /*+ 0.01f*/;
+			transform.position = pos;
 
 		}
 		else if (!Physics.Raycast(transform.position, Vector3.up,
@@ -92,6 +113,6 @@ public class PlayerController : MonoBehaviour
 	bool isStanding()
 	{
 		Ray ray = new Ray(transform.position, -transform.up);
-		return Physics.Raycast(ray, (capsule.height / 2) + groundDistance);
+		return Physics.Raycast(ray, ((capsule.height * transform.localScale.y) / 2) + groundDistance, ~LayerMask.GetMask("Player"));
 	}
 }
