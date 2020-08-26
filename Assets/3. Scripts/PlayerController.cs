@@ -24,11 +24,11 @@ public class PlayerController : MonoBehaviour
 	[Tooltip("How far the player can be from the ground and still jump")]
 	public float groundDistance = 0.4f;
 	[Tooltip("Height jump")]
-	public float JumpHeight = 15;
+	public float jumpForce = 300;
 
 	// Crouch variables
 	[Tooltip("Height of player when crouched")]
-	public float crouchHeight;
+	public float crouchHeight = 0.5f;
 	// The scale of the player at launch
 	private Vector3 defautScale;
 	// The default height of the player
@@ -70,21 +70,14 @@ public class PlayerController : MonoBehaviour
 	void Update()
 	{
 		// Impulse input
-		if (Input.GetButton("Jump") && isStanding())
+		if (Input.GetButtonDown("Jump") && isStanding())
 		{
-			rb.AddForce(gameObject.transform.up * JumpHeight);
+			Debug.Log("Jump pressed", this);
+			rb.AddForce(gameObject.transform.up * jumpForce);
 		}
 		if (Input.GetButtonDown("Crouch"))
 		{
 			ToggleCrouch();
-		}
-
-		inventory = Inventory.Astrobotany | Inventory.Astrogeology;
-
-		Inventory check = Inventory.Astrobotany | Inventory.Astrogeology;
-		if ((inventory | check ) == check)
-		{
-
 		}
 	}
 
@@ -99,6 +92,9 @@ public class PlayerController : MonoBehaviour
 			// Change the localScale of the gameObject so that the height is the crouch height
 			gameObject.transform.localScale = new Vector3(transform.localScale.x,
 				defautScale.y / (standHeight / crouchHeight), transform.localScale.z);
+			Vector3 pos = transform.position;
+			pos.y -= ((standHeight - crouchHeight) / 2) /*+ 0.01f*/;
+			transform.position = pos;
 
 		}
 		else if (!Physics.Raycast(transform.position, Vector3.up,
@@ -117,6 +113,6 @@ public class PlayerController : MonoBehaviour
 	bool isStanding()
 	{
 		Ray ray = new Ray(transform.position, -transform.up);
-		return Physics.Raycast(ray, (capsule.height / 2) + groundDistance);
+		return Physics.Raycast(ray, ((capsule.height * transform.localScale.y) / 2) + groundDistance, ~LayerMask.GetMask("Player"));
 	}
 }
