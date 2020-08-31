@@ -40,7 +40,7 @@ Animator:
   m_GameObject: {fileID: 2994276943422120458}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 3aa7adca45ca7744db5aeade18691ab7, type: 2}
+  m_Controller: {fileID: 9100000, guid: 890084dc7b380904196f85892ec579f6, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -105,7 +105,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8828099536965303338}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 6.100006, y: 3.2, z: 1.8999939}
@@ -117,6 +117,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6168945611044700362}
     m_Modifications:
+    - target: {fileID: -6631202120679360120, guid: 4fddc230767ab20449b3c1043a072e4a,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -2.31
+      objectReference: {fileID: 0}
     - target: {fileID: -6631202120679360120, guid: 4fddc230767ab20449b3c1043a072e4a,
         type: 3}
       propertyPath: m_LocalPosition.z
@@ -231,6 +236,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_StaticEditorFlags
       value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 8901182080002521832, guid: 4fddc230767ab20449b3c1043a072e4a,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2.41
       objectReference: {fileID: 0}
     - target: {fileID: 8901182080002521832, guid: 4fddc230767ab20449b3c1043a072e4a,
         type: 3}
