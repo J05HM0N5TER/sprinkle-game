@@ -8,11 +8,11 @@ FBXHeaderExtension:  {
 		Version: 1000
 		Year: 2020
 		Month: 8
-		Day: 4
-		Hour: 16
-		Minute: 48
-		Second: 13
-		Millisecond: 28
+		Day: 31
+		Hour: 10
+		Minute: 35
+		Second: 22
+		Millisecond: 36
 	}
 	Creator: "FBX SDK/FBX Plugins version 2019.2"
 	SceneInfo: "SceneInfo::GlobalInfo", "UserData" {
@@ -34,15 +34,15 @@ FBXHeaderExtension:  {
 			P: "Original|ApplicationVendor", "KString", "", "", "Autodesk"
 			P: "Original|ApplicationName", "KString", "", "", "Maya"
 			P: "Original|ApplicationVersion", "KString", "", "", "201900"
-			P: "Original|DateTime_GMT", "DateTime", "", "", "04/08/2020 06:48:13.026"
+			P: "Original|DateTime_GMT", "DateTime", "", "", "31/08/2020 00:35:22.032"
 			P: "Original|FileName", "KString", "", "", "C:\Users\Samuel\Desktop\End of year project\Exports\GreyBox\Greybox (Working)\Vent_Basic.fbx"
 			P: "LastSaved", "Compound", "", ""
 			P: "LastSaved|ApplicationVendor", "KString", "", "", "Autodesk"
 			P: "LastSaved|ApplicationName", "KString", "", "", "Maya"
 			P: "LastSaved|ApplicationVersion", "KString", "", "", "201900"
-			P: "LastSaved|DateTime_GMT", "DateTime", "", "", "04/08/2020 06:48:13.026"
+			P: "LastSaved|DateTime_GMT", "DateTime", "", "", "31/08/2020 00:35:22.032"
 			P: "Original|ApplicationActiveProject", "KString", "", "", "C:\Users\Samuel\Desktop\End of year project\Exports\GreyBox\Greybox (Working)"
-			P: "Original|ApplicationNativeFile", "KString", "", "", "C:\Users\Samuel\Desktop\End of year project\Scenes\Game Modular Assets\Game_Modular_AssetsV2.0009.ma"
+			P: "Original|ApplicationNativeFile", "KString", "", "", "C:\Users\Samuel\Desktop\End of year project\Scenes\Game Modular Assets(Working)\Game_Modular_AssetsV2.0050.ma"
 		}
 	}
 }
@@ -77,7 +77,7 @@ GlobalSettings:  {
 
 Documents:  {
 	Count: 1
-	Document: 1598760490976, "", "Scene" {
+	Document: 1813557616816, "", "Scene" {
 		Properties70:  {
 			P: "SourceObject", "object", "", ""
 			P: "ActiveAnimStackName", "KString", "", "", "Take 001"
@@ -250,9 +250,9 @@ Definitions:  {
 ;------------------------------------------------------------------
 
 Objects:  {
-	Geometry: 1599248196992, "Geometry::", "Mesh" {
+	Geometry: 1813146071616, "Geometry::", "Mesh" {
 		Vertices: *36 {
-			a: -50,-2.98023223876953e-07,150,50,-2.98023223876953e-07,150,-50,109.785499572754,150,50,109.785499572754,150,-50,109.785499572754,-150,50,109.785499572754,-150,-50,6.55651092529297e-07,-150,50,6.55651092529297e-07,-150,-50,-1.16229045943328e-06,-3.95774841308594e-05,50,-1.16229045943328e-06,6.19888260189327e-06,50,109.785499572754,6.19888260189327e-06,-50,109.785499572754,-3.95774841308594e-05
+			a: -50,-2.98023223876953e-07,150,50,-2.98023223876953e-07,150,-50,109.785499572754,150,50,109.785499572754,150,-50,109.785499572754,-150,50,109.785499572754,-150,-50,6.55651092529297e-07,-150,50,6.55651092529297e-07,-150,-50,-1.16229034574644e-06,-3.95774841308594e-05,50,-1.16229034574644e-06,6.19888260189327e-06,50,109.785499572754,6.19888260189327e-06,-50,109.785499572754,-3.95774841308594e-05
 		} 
 		PolygonVertexIndex: *32 {
 			a: 0,1,9,-9,1,3,10,-10,3,2,11,-11,2,0,8,-12,4,5,10,-12,5,7,9,-11,7,6,8,-10,6,4,11,-9
@@ -278,11 +278,11 @@ Objects:  {
 			Name: "map1"
 			MappingInformationType: "ByPolygonVertex"
 			ReferenceInformationType: "IndexToDirect"
-			UV: *32 {
-				a: 0.375,0,0.625,0,0.375,0.25,0.625,0.25,0.375,0.5,0.625,0.5,0.375,0.75,0.625,0.75,0.375137507915497,0.0001077732667909,0.624880254268646,0.000119775431812741,0.624892234802246,0.249862492084503,0.375121653079987,0.249878346920013,0.375125497579575,0.500125527381897,0.624890267848969,0.500141263008118,0.624878466129303,0.749878466129303,0.375141263008118,0.749890267848969
+			UV: *30 {
+				a: 0.83608865737915,0.277435004711151,0.836052060127258,0.503225803375244,0.497365713119507,0.503170847892761,0.497402310371399,0.277380049228668,0.83601176738739,0.751111388206482,0.497325450181961,0.751056432723999,0.835975050926208,0.976902365684509,0.4974425137043,0.0294945240020752,0.158756375312805,0.0294394195079803,0.158639192581177,0.751001477241516,0.158679485321045,0.503115892410278,0.158716112375259,0.277325004339218,0.497288674116135,0.976847112178802,0.158602505922318,0.976792275905609,0.836128830909729,0.0295493602752686
 			} 
 			UVIndex: *32 {
-				a: 0,1,9,8,1,3,10,9,3,2,11,10,2,0,8,11,4,5,13,12,5,7,14,13,7,6,15,14,6,4,12,15
+				a: 0,1,2,3,1,4,5,2,4,6,12,5,14,0,3,7,13,9,5,12,9,10,2,5,10,11,3,2,11,8,7,3
 			} 
 		}
 		LayerElementSmoothing: 0 {
@@ -323,7 +323,7 @@ Objects:  {
 			}
 		}
 	}
-	Model: 1598084630800, "Model::Vent_Basic", "Mesh" {
+	Model: 1813160076976, "Model::Vent_Basic", "Mesh" {
 		Version: 232
 		Properties70:  {
 			P: "ScalingPivot", "Vector3D", "Vector", "",0,-1.40165656858926e-14,0
@@ -331,12 +331,13 @@ Objects:  {
 			P: "InheritType", "enum", "", "",1
 			P: "ScalingMax", "Vector3D", "Vector", "",0,0,0
 			P: "DefaultAttributeIndex", "int", "Integer", "",0
+			P: "Lcl Scaling", "Lcl Scaling", "", "A",0.999999999999999,0.999999999999999,0.999999999999999
 			P: "currentUVSet", "KString", "", "U", "map1"
 		}
 		Shading: T
 		Culling: "CullingOff"
 	}
-	Material: 1599137613056, "Material::Greybox_MAT1", "" {
+	Material: 1813094531184, "Material::Greybox_MAT1", "" {
 		Version: 102
 		ShadingModel: "lambert"
 		MultiLayer: 0
@@ -351,13 +352,13 @@ Objects:  {
 			P: "Opacity", "double", "Number", "",1
 		}
 	}
-	AnimationStack: 1599134347168, "AnimStack::Take 001", "" {
+	AnimationStack: 1813365534608, "AnimStack::Take 001", "" {
 		Properties70:  {
 			P: "LocalStop", "KTime", "Time", "",230930790000
 			P: "ReferenceStop", "KTime", "Time", "",230930790000
 		}
 	}
-	AnimationLayer: 1599227839200, "AnimLayer::BaseLayer", "" {
+	AnimationLayer: 1813449881008, "AnimLayer::BaseLayer", "" {
 	}
 }
 
@@ -367,16 +368,16 @@ Objects:  {
 Connections:  {
 	
 	;Model::Vent_Basic, Model::RootNode
-	C: "OO",1598084630800,0
+	C: "OO",1813160076976,0
 	
 	;AnimLayer::BaseLayer, AnimStack::Take 001
-	C: "OO",1599227839200,1599134347168
+	C: "OO",1813449881008,1813365534608
 	
 	;Geometry::, Model::Vent_Basic
-	C: "OO",1599248196992,1598084630800
+	C: "OO",1813146071616,1813160076976
 	
 	;Material::Greybox_MAT1, Model::Vent_Basic
-	C: "OO",1599137613056,1598084630800
+	C: "OO",1813094531184,1813160076976
 }
 ;Takes section
 ;----------------------------------------------------
