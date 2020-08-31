@@ -5,30 +5,34 @@ using UnityEngine;
 
 public class TriggerScript : MonoBehaviour
 {
+    [Tooltip("The object that will be animated")]
     public GameObject animatedObject;
-    private Animation refToAnimation;
-    public AnimationClip[] clip;
-    int currentClip = 0;
+    private AudioSource audio;
+    [Tooltip("The open sound of the doors")]
+    public AudioClip Openclip;
+    [Tooltip("The close sound of the doors")]
+    public AudioClip Closeclip;
+    [Tooltip("Can only be used ones, false = no, true = yes")]
+    public bool oneTimeUse = false;
     // Start is called before the first frame update
     void Start()
     {
-        //animatedObject.GetComponent<Animation>();
-        //refToAnimation = animatedObject.GetComponent<Animation>();
-        //refToAnimation["Open"].layer = 0;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {   
-        
+       audio =  animatedObject.GetComponent<AudioSource>();
     }
     private void OnTriggerEnter(Collider other)
     {
-        //refToAnimation.Play();
-        animatedObject.GetComponent<Animator>().SetTrigger("Open");
+        if(!oneTimeUse)
+        {
+            animatedObject.GetComponent<Animator>().SetTrigger("Open");
+            audio.PlayOneShot(Openclip);
+        }
     }
     private void OnTriggerExit(Collider other)
     {
-        animatedObject.GetComponent<Animator>().SetTrigger("Close");
+        if (!oneTimeUse)
+        {
+            animatedObject.GetComponent<Animator>().SetTrigger("Close");
+            audio.PlayOneShot(Closeclip);
+        }
     }
 }
