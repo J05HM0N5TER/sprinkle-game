@@ -7,12 +7,13 @@ public class TriggerScript : MonoBehaviour
 {
     public GameObject animatedObject;
     private Animation refToAnimation;
-    //public AnimationClip[] clip;
-
+    public AnimationClip[] clip;
+    int currentClip = 0;
     // Start is called before the first frame update
     void Start()
     {
-        refToAnimation = animatedObject.GetComponent<Animation>();
+        //animatedObject.GetComponent<Animation>();
+        //refToAnimation = animatedObject.GetComponent<Animation>();
         //refToAnimation["Open"].layer = 0;
     }
 
@@ -23,10 +24,11 @@ public class TriggerScript : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        refToAnimation.Play("Open");
+        //refToAnimation.Play();
+        animatedObject.GetComponent<Animator>().SetTrigger("Open");
     }
     private void OnTriggerExit(Collider other)
     {
-        refToAnimation.Play("Close");
+        animatedObject.GetComponent<Animator>().SetTrigger("Close");
     }
 }
