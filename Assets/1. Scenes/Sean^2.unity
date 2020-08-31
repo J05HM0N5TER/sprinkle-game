@@ -6275,6 +6275,75 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.1249999, y: 0.99999994, z: 0.12499997}
   m_Center: {x: 0, y: 0.49999997, z: -0.49999994}
+--- !u!1001 &530615871
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 6168945611044700362, guid: c99d60fba5db44b4b8a2e2b39a588063,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6168945611044700362, guid: c99d60fba5db44b4b8a2e2b39a588063,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6168945611044700362, guid: c99d60fba5db44b4b8a2e2b39a588063,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -9.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6168945611044700362, guid: c99d60fba5db44b4b8a2e2b39a588063,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6168945611044700362, guid: c99d60fba5db44b4b8a2e2b39a588063,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6168945611044700362, guid: c99d60fba5db44b4b8a2e2b39a588063,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6168945611044700362, guid: c99d60fba5db44b4b8a2e2b39a588063,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6168945611044700362, guid: c99d60fba5db44b4b8a2e2b39a588063,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 6168945611044700362, guid: c99d60fba5db44b4b8a2e2b39a588063,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6168945611044700362, guid: c99d60fba5db44b4b8a2e2b39a588063,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6168945611044700362, guid: c99d60fba5db44b4b8a2e2b39a588063,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8828099536965303338, guid: c99d60fba5db44b4b8a2e2b39a588063,
+        type: 3}
+      propertyPath: m_Name
+      value: M_Wall_Doorway
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c99d60fba5db44b4b8a2e2b39a588063, type: 3}
 --- !u!1 &534471895 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8311264450889489846, guid: d8b43734ff8ce74428dce7f88ebe0729,
@@ -8846,8 +8915,6 @@ MonoBehaviour:
   isActive: 0
   nameOfNoteTextBox: TextTest
   nameotherThingToDisable: 
-  noteTextBox: {fileID: 0}
-  otherThingToDisable: {fileID: 0}
 --- !u!65 &1092651363
 BoxCollider:
   m_ObjectHideFlags: 0
