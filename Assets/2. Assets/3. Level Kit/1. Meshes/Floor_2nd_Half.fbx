@@ -8,11 +8,11 @@ FBXHeaderExtension:  {
 		Version: 1000
 		Year: 2020
 		Month: 8
-		Day: 4
-		Hour: 15
-		Minute: 58
-		Second: 44
-		Millisecond: 606
+		Day: 31
+		Hour: 10
+		Minute: 36
+		Second: 29
+		Millisecond: 207
 	}
 	Creator: "FBX SDK/FBX Plugins version 2019.2"
 	SceneInfo: "SceneInfo::GlobalInfo", "UserData" {
@@ -34,15 +34,15 @@ FBXHeaderExtension:  {
 			P: "Original|ApplicationVendor", "KString", "", "", "Autodesk"
 			P: "Original|ApplicationName", "KString", "", "", "Maya"
 			P: "Original|ApplicationVersion", "KString", "", "", "201900"
-			P: "Original|DateTime_GMT", "DateTime", "", "", "04/08/2020 05:58:44.602"
+			P: "Original|DateTime_GMT", "DateTime", "", "", "31/08/2020 00:36:29.202"
 			P: "Original|FileName", "KString", "", "", "C:\Users\Samuel\Desktop\End of year project\Exports\GreyBox\Greybox (Working)\Floor_2nd_Half.fbx"
 			P: "LastSaved", "Compound", "", ""
 			P: "LastSaved|ApplicationVendor", "KString", "", "", "Autodesk"
 			P: "LastSaved|ApplicationName", "KString", "", "", "Maya"
 			P: "LastSaved|ApplicationVersion", "KString", "", "", "201900"
-			P: "LastSaved|DateTime_GMT", "DateTime", "", "", "04/08/2020 05:58:44.602"
+			P: "LastSaved|DateTime_GMT", "DateTime", "", "", "31/08/2020 00:36:29.202"
 			P: "Original|ApplicationActiveProject", "KString", "", "", "C:\Users\Samuel\Desktop\End of year project\Exports\GreyBox\Greybox (Working)"
-			P: "Original|ApplicationNativeFile", "KString", "", "", "C:\Users\Samuel\Desktop\End of year project\Scenes\Game Modular Assets\Game_Modular_AssetsV2.0005.ma"
+			P: "Original|ApplicationNativeFile", "KString", "", "", "C:\Users\Samuel\Desktop\End of year project\Scenes\Game Modular Assets(Working)\Game_Modular_AssetsV2.0050.ma"
 		}
 	}
 }
@@ -77,7 +77,7 @@ GlobalSettings:  {
 
 Documents:  {
 	Count: 1
-	Document: 1598760477408, "", "Scene" {
+	Document: 1813566200400, "", "Scene" {
 		Properties70:  {
 			P: "SourceObject", "object", "", ""
 			P: "ActiveAnimStackName", "KString", "", "", "Take 001"
@@ -250,7 +250,7 @@ Definitions:  {
 ;------------------------------------------------------------------
 
 Objects:  {
-	Geometry: 1599224415728, "Geometry::", "Mesh" {
+	Geometry: 1813146103296, "Geometry::", "Mesh" {
 		Vertices: *24 {
 			a: -250,450,250,0,450,250,-250,500,250,0,500,250,-250,500,-250,0,500,-250,-250,450,-250,0,450,-250
 		} 
@@ -279,10 +279,10 @@ Objects:  {
 			MappingInformationType: "ByPolygonVertex"
 			ReferenceInformationType: "IndexToDirect"
 			UV: *28 {
-				a: 0.375,0,0.625,0,0.375,0.25,0.625,0.25,0.375,0.5,0.625,0.5,0.375,0.75,0.625,0.75,0.375,1,0.625,1,0.875,0,0.875,0.25,0.125,0,0.125,0.25
+				a: 0.373974144458771,0.343735665082932,0.373932003974915,0.615756571292877,0.373923540115356,0.670160830020905,0.373982608318329,0.289331465959549,0.917965352535248,0.670245110988617,0.918024480342865,0.289415806531906,0.917973816394806,0.615840911865234,0.918016016483307,0.343820035457611,0.972428619861603,0.289424270391464,0.972470819950104,0.0174033045768738,0.918066561222076,0.0173948854207993,0.37402480840683,0.0173105448484421,0.319578409194946,0.289323031902313,0.319620579481125,0.0173020958900452
 			} 
 			UVIndex: *24 {
-				a: 0,1,3,2,2,3,5,4,4,5,7,6,6,7,9,8,1,10,11,3,12,0,2,13
+				a: 12,13,11,3,3,11,10,5,5,10,9,8,7,6,1,0,1,6,4,2,7,0,3,5
 			} 
 		}
 		LayerElementSmoothing: 0 {
@@ -323,7 +323,7 @@ Objects:  {
 			}
 		}
 	}
-	Model: 1598761402064, "Model::Floor_2nd_Half", "Mesh" {
+	Model: 1813160074656, "Model::Floor_2nd_Half", "Mesh" {
 		Version: 232
 		Properties70:  {
 			P: "RotationActive", "bool", "", "",1
@@ -335,7 +335,7 @@ Objects:  {
 		Shading: T
 		Culling: "CullingOff"
 	}
-	Material: 1599227956208, "Material::lambert3", "" {
+	Material: 1814147645168, "Material::lambert3", "" {
 		Version: 102
 		ShadingModel: "lambert"
 		MultiLayer: 0
@@ -350,13 +350,13 @@ Objects:  {
 			P: "Opacity", "double", "Number", "",1
 		}
 	}
-	AnimationStack: 1599122038784, "AnimStack::Take 001", "" {
+	AnimationStack: 1813566131824, "AnimStack::Take 001", "" {
 		Properties70:  {
 			P: "LocalStop", "KTime", "Time", "",230930790000
 			P: "ReferenceStop", "KTime", "Time", "",230930790000
 		}
 	}
-	AnimationLayer: 1599227844064, "AnimLayer::BaseLayer", "" {
+	AnimationLayer: 1813454977424, "AnimLayer::BaseLayer", "" {
 	}
 }
 
@@ -366,16 +366,16 @@ Objects:  {
 Connections:  {
 	
 	;Model::Floor_2nd_Half, Model::RootNode
-	C: "OO",1598761402064,0
+	C: "OO",1813160074656,0
 	
 	;AnimLayer::BaseLayer, AnimStack::Take 001
-	C: "OO",1599227844064,1599122038784
+	C: "OO",1813454977424,1813566131824
 	
 	;Geometry::, Model::Floor_2nd_Half
-	C: "OO",1599224415728,1598761402064
+	C: "OO",1813146103296,1813160074656
 	
 	;Material::lambert3, Model::Floor_2nd_Half
-	C: "OO",1599227956208,1598761402064
+	C: "OO",1814147645168,1813160074656
 }
 ;Takes section
 ;----------------------------------------------------
