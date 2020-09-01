@@ -150,7 +150,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animatedObject: {fileID: 2994276943422120458}
-  clip: []
+  Openclip: {fileID: 0}
+  Closeclip: {fileID: 0}
+  oneTimeUse: 0
 --- !u!1001 &6533634621955783427
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -252,7 +254,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 2af80e8ee56ef9642975beabbb7d6ead, type: 2}
+      objectReference: {fileID: 2100000, guid: a76e298555d0bce41a5abb6c1548acda, type: 2}
     - target: {fileID: 3973946745501840942, guid: 4fddc230767ab20449b3c1043a072e4a,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
