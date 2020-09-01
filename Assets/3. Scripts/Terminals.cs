@@ -12,6 +12,7 @@ public class Terminals : MonoBehaviour
 	private GameObject player;
 	[Tooltip("the max distance that the player can be from the terminal and still interact with it")]
 	public float maxDistanceToInteract;
+	public bool brokenTerminal = false;
 	// Start is called before the first frame update
 	void Start()
 	{
@@ -26,14 +27,21 @@ public class Terminals : MonoBehaviour
 			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 			if (Physics.Raycast(ray, out RaycastHit hit) &&  // Raycast check
 				hit.collider.gameObject == gameObject && // Raycast hit this object
-				Vector3.Distance(hit.transform.position, gameObject.transform.position) <= maxDistanceToInteract && // The player is in range
-				(player.GetComponent<PlayerController>().inventory & neededKeyCard) == neededKeyCard) // The player has the key card needed
+				Vector3.Distance(hit.transform.position, gameObject.transform.position) <= maxDistanceToInteract)  // The player is in range 
 			{
-				// Unlock script
-				doorToOpen.GetComponent<TriggerScript>().locked = false;
-				// Unlock Animation
-				gameObject.GetComponent<Animator>().SetTrigger("Unlock");
-
+				// The player has the key card needed
+				if ((player.GetComponent<PlayerController>().inventory & neededKeyCard) == neededKeyCard && !brokenTerminal)
+				{
+					// Unlock script
+					doorToOpen.GetComponent<TriggerScript>().locked = false;
+					// Unlock Animation
+					gameObject.GetComponent<Animator>().SetTrigger("Unlock");
+				}
+				if(player.GetComponent<PlayerController>().inventory.HasFlag(PlayerController.Inventory.SolderingIron) && brokenTerminal)
+				{
+					gameObject.GetComponent<Animator>().SetTrigger("FixTerminal");
+					brokenTerminal = false;
+				}
 			}
 		}
 	}
