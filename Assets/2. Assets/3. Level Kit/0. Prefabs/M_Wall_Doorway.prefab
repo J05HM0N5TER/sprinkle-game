@@ -135,7 +135,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 5, y: 3.2, z: 5.4999847}
+  m_Size: {x: 5, y: 3.2, z: 4.4999847}
   m_Center: {x: 0, y: 1.6, z: -2.2500076}
 --- !u!114 &450253954
 MonoBehaviour:
@@ -153,6 +153,7 @@ MonoBehaviour:
   Openclip: {fileID: 0}
   Closeclip: {fileID: 0}
   oneTimeUse: 0
+  locked: 0
 --- !u!1001 &6533634621955783427
 PrefabInstance:
   m_ObjectHideFlags: 0
