@@ -18,6 +18,13 @@ public class PlayerController : MonoBehaviour
 		SolderingIron = 1 << 5
 	}
 
+	private enum LeanState : byte
+	{
+		None = 0,
+		Left,
+		Right
+	}
+
 	private Rigidbody rb;
 	[Tooltip("Speed the player moves")]
 	public float speed = 10.0f;
@@ -26,7 +33,7 @@ public class PlayerController : MonoBehaviour
 	[Tooltip("Height jump")]
 	public float jumpForce = 300;
 
-	// Crouch variables
+	[Header("Crouch variables")]
 	[Tooltip("Height of player when crouched")]
 	public float crouchHeight = 0.5f;
 	// The scale of the player at launch
@@ -35,6 +42,17 @@ public class PlayerController : MonoBehaviour
 	private float standHeight;
 	// The collider for the player
 	private CapsuleCollider capsule;
+
+	[Header("Lean variables")]
+	[Tooltip("The angle that the camera will be tilted on when the player leans")]
+	public float leanTilt;
+	[Tooltip("How much the camera will be moved by when the player leans")]
+	public Vector3 leanOffset;
+	// The camera that is going to be moved
+	private GameObject camera;
+	// The default position of camera
+	private Vector3 defaultCameraPos;
+	private Quaternion defaultCameraRot;
 
 	[Header("Debug values")]
 	[Tooltip("What the player has in their inventory")]
@@ -52,6 +70,9 @@ public class PlayerController : MonoBehaviour
 		capsule = GetComponent<CapsuleCollider>();
 		standHeight = capsule.height;
 		defautScale = transform.localScale;
+		camera = GetComponentInChildren<Camera>().gameObject;
+		defaultCameraPos = camera.transform.localPosition;
+		defaultCameraRot = camera.transform.localRotation;
 	}
 
 	private void FixedUpdate()
@@ -70,7 +91,7 @@ public class PlayerController : MonoBehaviour
 	void Update()
 	{
 		// Impulse input
-		if (Input.GetButtonDown("Jump") && isStanding())
+		if (Input.GetButtonDown("Jump") && IsStanding())
 		{
 			Debug.Log("Jump pressed", this);
 			rb.AddForce(gameObject.transform.up * jumpForce);
@@ -78,6 +99,19 @@ public class PlayerController : MonoBehaviour
 		if (Input.GetButtonDown("Crouch"))
 		{
 			ToggleCrouch();
+		}
+		//Lean
+		if (Input.GetButtonDown("Lean Right"))
+		{
+			ToggleLean(LeanState.Right);
+		}
+		if (Input.GetButtonDown("Lean Left"))
+		{
+			ToggleLean(LeanState.Left);
+		}
+		if (Input.GetButtonUp("Lean Left") || Input.GetButtonUp("Lean Right"))
+		{
+			ToggleLean(LeanState.None);
 		}
 	}
 
@@ -110,9 +144,34 @@ public class PlayerController : MonoBehaviour
 	/// Checks if the player is standing on ground
 	/// </summary>
 	/// <returns>Is the player on the ground</returns>
-	bool isStanding()
+	bool IsStanding()
 	{
 		Ray ray = new Ray(transform.position, -transform.up);
 		return Physics.Raycast(ray, ((capsule.height * transform.localScale.y) / 2) + groundDistance, ~LayerMask.GetMask("Player"));
+	}
+
+	private void ToggleLean(LeanState leanState)
+	{
+		Quaternion newLocalRot = defaultCameraRot;
+		Debug.Log("Toggles lean", this);
+		switch (leanState)
+		{
+			case LeanState.None:
+				camera.transform.localPosition = defaultCameraPos;
+				break;
+			case LeanState.Left:
+				camera.transform.localPosition = defaultCameraPos - leanOffset;
+				newLocalRot.eulerAngles = new Vector3(newLocalRot.x + leanTilt, newLocalRot.y + leanTilt, newLocalRot.z + leanTilt);
+				break;
+			case LeanState.Right:
+				camera.transform.localPosition = defaultCameraPos + leanOffset;
+				//newLocalRot.eulerAngles = new Vector3(newLocalRot.x - leanTilt, newLocalRot.y - leanTilt, newLocalRot.z - leanTilt);
+				newLocalRot.SetLookRotation(new Vector3(0, 0, leanTilt));
+				break;
+			default:
+				Debug.Log("Invalid lean state", this);
+				break;
+		}
+		//camera.transform.localRotation = newLocalRot;
 	}
 }
