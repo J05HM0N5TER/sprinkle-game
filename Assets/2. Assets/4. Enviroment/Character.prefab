@@ -49,14 +49,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc56d65854554404e9931f8062cb785d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  groundcheck: {fileID: 1376844650644571554}
-  ground_mask:
-    serializedVersion: 2
-    m_Bits: 1
   speed: 15
-  ground_distance: 0.4
-  Jump_height: 50
-  crouchHeight: 0.1
+  groundDistance: 0.4
+  jumpForce: 300
+  crouchHeight: 0.5
+  inventory: 0
+  medSyringes: 0
+  batteryPacks: 0
 --- !u!33 &1376844649919263992
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -278,6 +277,8 @@ MonoBehaviour:
     m_Bits: 2048
   grabDistance: 3.5
   holdDistance: 2.5
+  leanTilt: -12.4
+  leanOffset: 0.828
 --- !u!81 &7590235112788743765
 AudioListener:
   m_ObjectHideFlags: 0
@@ -447,3 +448,5 @@ MonoBehaviour:
     m_Bits: 1831
   grabDistance: 3.5
   holdDistance: 2.5
+  leanTilt: 0
+  leanOffset: 0

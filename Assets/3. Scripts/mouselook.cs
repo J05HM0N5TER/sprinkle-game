@@ -16,7 +16,7 @@ public class Mouselook : MonoBehaviour
 	public float mouseSen = 100f;
 	[Tooltip("Player Object")]
 	public Transform PlayerBody;
-	private float Xrotation = 0f;
+	private float Yrotation = 0f;
 	// ray casting
 	[Tooltip("layer of objects that can be picked up")]
 	public LayerMask grabLayers;
@@ -31,33 +31,37 @@ public class Mouselook : MonoBehaviour
 	public float holdDistance = 0.5f;
 	private Transform heldObject = null;
 
-	[Header("Lean variables")]
+	[Header("Lean settings")]
 	[Tooltip("The angle that the camera will be tilted on when the player leans")]
+	[Range(-90, 90)]
 	public float leanTilt;
 	[Tooltip("How much the camera will be moved by when the player leans")]
-	public Vector3 leanOffset;
+	[Range(-1, 1)]
+	public float leanOffset;
 	// The default position of camera
-	private Vector3 defaultCameraPos;
-	private Quaternion defaultCameraRot;
+	private Vector3 defaultPos;
 
 	// Start is called before the first frame update
 	void Start()
 	{
 		UnityEngine.Cursor.lockState = CursorLockMode.Locked;
-		defaultCameraPos = camera.transform.localPosition;
-		defaultCameraRot = camera.transform.localRotation;
+		defaultPos = transform.localPosition;
 	}
 
 	// Update is called once per frame
 	void Update()
 	{
-		float mousex = Input.GetAxis("Mouse X") * mouseSen * Time.deltaTime;
-		float mousey = Input.GetAxis("Mouse Y") * mouseSen * Time.deltaTime;
+		// Get input
+		float mouseX = Input.GetAxis("Mouse X") * mouseSen * Time.deltaTime;
+		float mouseY = Input.GetAxis("Mouse Y") * mouseSen * Time.deltaTime;
 
-		Xrotation -= mousey;
-		Xrotation = Mathf.Clamp(Xrotation, -90f, 90f);
-		transform.localRotation = Quaternion.Euler(Xrotation, 0, 0);
-		PlayerBody.Rotate(Vector3.up * mousex);
+		// Vertical mouse movement goes on camera transform
+		Yrotation -= mouseY;
+		Yrotation = Mathf.Clamp(Yrotation, -90f, 90f);
+		transform.localRotation = Quaternion.Euler(Yrotation, 0, 0);
+
+		// Horizontal mouse movement goes on player body transform
+		PlayerBody.Rotate(Vector3.up * mouseX);
 
 		// Picking up objects
 		if (!heldObject && Input.GetButtonDown("Interact") &&
@@ -89,43 +93,65 @@ public class Mouselook : MonoBehaviour
 
 
 		//Lean
-		if (Input.GetButtonDown("Lean Right"))
-		{
-			ToggleLean(LeanState.Right);
-		}
-		if (Input.GetButtonDown("Lean Left"))
-		{
-			ToggleLean(LeanState.Left);
-		}
-		if (Input.GetButtonUp("Lean Left") || Input.GetButtonUp("Lean Right"))
+		bool isLeaningLeft = Input.GetButton("Lean Left");
+		bool isLeaningRight = Input.GetButton("Lean Right");
+
+		// If both directions or none are pressed
+		if ((isLeaningLeft && isLeaningRight) || !(isLeaningLeft || isLeaningRight))
 		{
 			ToggleLean(LeanState.None);
 		}
+		else if (isLeaningLeft)
+		{ 
+			ToggleLean(LeanState.Left);
+		}
+		else if (isLeaningRight)
+		{
+			ToggleLean(LeanState.Right);
+		}
 	}
 
+	/// <summary>
+	/// Moves the camera when the player leans
+	/// </summary>
+	/// <param name="leanState">The current lean of the player (left, right or none)</param>
 	private void ToggleLean(LeanState leanState)
 	{
-		Quaternion newLocalRot = transform.rotation;
 		Debug.Log("Toggles lean", this);
 		switch (leanState)
 		{
 			case LeanState.None:
-				transform.localPosition = defaultCameraPos;
+				transform.localPosition = defaultPos;
 				break;
 			case LeanState.Left:
-				this.transform.localPosition = defaultCameraPos - leanOffset;
-				newLocalRot.eulerAngles = new Vector3(newLocalRot.x + leanTilt, newLocalRot.y + leanTilt, newLocalRot.z + leanTilt);
+				// Set position of camera
+				this.transform.localPosition = new Vector3(
+					defaultPos.x - leanOffset,
+					defaultPos.y,
+					defaultPos.z);
+
+				// Set rotation of camera
+				transform.localRotation = Quaternion.Euler(
+					transform.localRotation.eulerAngles.x , 
+					transform.localRotation.eulerAngles.y, 
+					transform.localRotation.eulerAngles.z - leanTilt);
 				break;
 			case LeanState.Right:
-				this.transform.localPosition = defaultCameraPos + leanOffset;
-				//newLocalRot.eulerAngles = new Vector3(newLocalRot.x - leanTilt, newLocalRot.y - leanTilt, newLocalRot.z - leanTilt);
-				newLocalRot.SetLookRotation(new Vector3(0, 0, leanTilt));
+				// Set position of camera
+				this.transform.localPosition = new Vector3(
+					defaultPos.x + leanOffset,
+					defaultPos.y,
+					defaultPos.z);
+
+				// Set rotation of camera
+				transform.localRotation = Quaternion.Euler(
+					transform.localRotation.eulerAngles.x, 
+					transform.localRotation.eulerAngles.y, 
+					transform.localRotation.eulerAngles.z + leanTilt);
 				break;
 			default:
 				Debug.Log("Invalid lean state", this);
 				break;
 		}
-
-		this.transform.localRotation = newLocalRot;
 	}
 }
