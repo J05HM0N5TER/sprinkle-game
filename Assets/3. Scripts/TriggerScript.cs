@@ -14,6 +14,8 @@ public class TriggerScript : MonoBehaviour
     public AudioClip Closeclip;
     [Tooltip("Can only be used ones, false = no, true = yes")]
     public bool oneTimeUse = false;
+    [Tooltip("is the door locked")]
+    public bool locked = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,18 +23,26 @@ public class TriggerScript : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if(!oneTimeUse)
+        if(!locked)
         {
-            animatedObject.GetComponent<Animator>().SetTrigger("Open");
-            audio.PlayOneShot(Openclip);
+            if (!oneTimeUse)
+            {
+                animatedObject.GetComponent<Animator>().SetTrigger("Open");
+                audio.PlayOneShot(Openclip);
+            }
         }
+        
     }
     private void OnTriggerExit(Collider other)
     {
-        if (!oneTimeUse)
+        if(!locked)
         {
-            animatedObject.GetComponent<Animator>().SetTrigger("Close");
-            audio.PlayOneShot(Closeclip);
+            if (!oneTimeUse)
+            {
+                animatedObject.GetComponent<Animator>().SetTrigger("Close");
+                audio.PlayOneShot(Closeclip);
+            }
         }
+        
     }
 }
