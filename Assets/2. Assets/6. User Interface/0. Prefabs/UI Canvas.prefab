@@ -1014,6 +1014,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3851353463004171286, guid: a6d9a5a72bdef7c4983abf32597bb922,
         type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: LaunchMainMenu
+      objectReference: {fileID: 0}
+    - target: {fileID: 3851353463004171286, guid: a6d9a5a72bdef7c4983abf32597bb922,
+        type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
