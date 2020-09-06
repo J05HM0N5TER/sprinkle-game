@@ -101,7 +101,7 @@ MeshCollider:
   m_GameObject: {fileID: 4999615196032270242}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Convex: 0
   m_CookingOptions: 14
@@ -118,10 +118,29 @@ NavMeshObstacle:
   m_Shape: 1
   m_Extents: {x: 2.1980002, y: 2.084, z: 0.49}
   m_MoveThreshold: 0.1
-  m_Carve: 0
+  m_Carve: 1
   m_CarveOnlyStationary: 1
   m_Center: {x: 0, y: 2.079, z: 0}
   m_TimeToStationary: 0.5
+--- !u!95 &499191640
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4999615196032270242}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 1d890dc9828b51d42a6be3a9617af00d, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &7975614945967486798
 GameObject:
   m_ObjectHideFlags: 0
@@ -216,6 +235,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -4086160134249553721, guid: 97e39540372fc56458d3b1c19126c7be,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.005986758
+      objectReference: {fileID: 0}
+    - target: {fileID: -4086160134249553721, guid: 97e39540372fc56458d3b1c19126c7be,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.00000001931553
+      objectReference: {fileID: 0}
     - target: {fileID: -3219068197961423462, guid: 97e39540372fc56458d3b1c19126c7be,
         type: 3}
       propertyPath: m_StaticEditorFlags
@@ -225,7 +254,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[1]
       value: 
-      objectReference: {fileID: 2100000, guid: 1468a1d3536a273478667122516bb658, type: 2}
+      objectReference: {fileID: 2100000, guid: e679aeab6252702408a6de084a7751e7, type: 2}
     - target: {fileID: -927199367670048503, guid: 97e39540372fc56458d3b1c19126c7be,
         type: 3}
       propertyPath: m_Name
@@ -235,7 +264,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 1468a1d3536a273478667122516bb658, type: 2}
+      objectReference: {fileID: 2100000, guid: f2f9fb349391ed04882bdf12af9e2927, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 97e39540372fc56458d3b1c19126c7be, type: 3}
 --- !u!4 &1352105371131674055 stripped
