@@ -6,7 +6,6 @@ using UnityEngine;
 [RequireComponent(typeof(CapsuleCollider), typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour
 {
-
 	[Flags] public enum Inventory : byte
 	{
 		none = 0,
@@ -18,6 +17,7 @@ public class PlayerController : MonoBehaviour
 		SolderingIron = 1 << 5
 	}
 
+
 	private Rigidbody rb;
 	[Tooltip("Speed the player moves")]
 	public float speed = 10.0f;
@@ -26,7 +26,7 @@ public class PlayerController : MonoBehaviour
 	[Tooltip("Height jump")]
 	public float jumpForce = 300;
 
-	// Crouch variables
+	[Header("Crouch variables")]
 	[Tooltip("Height of player when crouched")]
 	public float crouchHeight = 0.5f;
 	// The scale of the player at launch
@@ -35,6 +35,7 @@ public class PlayerController : MonoBehaviour
 	private float standHeight;
 	// The collider for the player
 	private CapsuleCollider capsule;
+
 
 	[Header("Debug values")]
 	[Tooltip("What the player has in their inventory")]
@@ -70,7 +71,7 @@ public class PlayerController : MonoBehaviour
 	void Update()
 	{
 		// Impulse input
-		if (Input.GetButtonDown("Jump") && isStanding())
+		if (Input.GetButtonDown("Jump") && IsStanding())
 		{
 			Debug.Log("Jump pressed", this);
 			rb.AddForce(gameObject.transform.up * jumpForce);
@@ -110,9 +111,11 @@ public class PlayerController : MonoBehaviour
 	/// Checks if the player is standing on ground
 	/// </summary>
 	/// <returns>Is the player on the ground</returns>
-	bool isStanding()
+	bool IsStanding()
 	{
 		Ray ray = new Ray(transform.position, -transform.up);
 		return Physics.Raycast(ray, ((capsule.height * transform.localScale.y) / 2) + groundDistance, ~LayerMask.GetMask("Player"));
 	}
+
+	
 }
