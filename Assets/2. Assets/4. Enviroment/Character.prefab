@@ -237,6 +237,7 @@ GameObject:
   - component: {fileID: 7590235112788743765}
   - component: {fileID: 8365309257839724994}
   - component: {fileID: 1376844650062081159}
+  - component: {fileID: 1991756812}
   m_Layer: 10
   m_Name: Camera
   m_TagString: MainCamera
@@ -279,6 +280,7 @@ MonoBehaviour:
   holdDistance: 2.5
   leanTilt: -12.4
   leanOffset: 0.828
+  leanTransitionTime: 0.15
 --- !u!81 &7590235112788743765
 AudioListener:
   m_ObjectHideFlags: 0
@@ -429,6 +431,19 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+--- !u!135 &1991756812
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6416419460254581596}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &6183614188393528494
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -450,3 +465,4 @@ MonoBehaviour:
   holdDistance: 2.5
   leanTilt: 0
   leanOffset: 0
+  leanTransitionTime: 1

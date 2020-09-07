@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -132,7 +133,7 @@ public class CameraControl : MonoBehaviour
 	private void Lean()
 	{
 
-		//Lean
+		//Lean Input
 		bool isLeaningLeft = Input.GetButton("Lean Left");
 		bool isLeaningRight = Input.GetButton("Lean Right");
 
@@ -140,7 +141,11 @@ public class CameraControl : MonoBehaviour
 		LeanState leanStateAtStartOfFrame = currentLean;
 
 		// If both directions or none are pressed
-		if ((isLeaningLeft && isLeaningRight) || (!isLeaningLeft && !isLeaningRight))
+		if (isLeaningLeft && isLeaningRight) // This is to not do anything if both lean keys are held down
+		{ }
+
+		// If none are being pressed
+		else if (!isLeaningLeft && !isLeaningRight)
 		{
 			currentLean = LeanState.None;
 		}
@@ -153,6 +158,7 @@ public class CameraControl : MonoBehaviour
 			currentLean = LeanState.Right;
 		}
 
+		// If the target lean changed this frame
 		if (currentLean != leanStateAtStartOfFrame)
 		{
 			Debug.Log($"Current lean changed from {leanStateAtStartOfFrame} to {currentLean}", this);
@@ -167,7 +173,7 @@ public class CameraControl : MonoBehaviour
 			{
 				float transitionPercent = (float)(DateTime.Now - leanTransitionStartTime).TotalSeconds / leanTransitionTime;
 				leanTransitionStartRotMod = Mathf.Lerp(
-					leanRotMod[(int)leanStateAtStartOfFrame],
+					leanTransitionStartRotMod,
 					leanRotMod[(int)currentLean],
 					transitionPercent);
 			}
@@ -175,7 +181,10 @@ public class CameraControl : MonoBehaviour
 			leanTransitionStartTime = DateTime.Now;
 		}
 
-		if (Vector3.Distance(transform.localPosition, leanTransitionStartPos) > 0.05f || previousLean != currentLean)
+		bool leanPosBlocked = Physics.Linecast(transform.TransformPoint(transform.localPosition), transform.TransformPoint(leanPos[(int)currentLean]), ~LayerMask.GetMask("Player"));
+
+		// If a transition is needed
+		if (!leanPosBlocked && (Vector3.Distance(transform.localPosition, leanTransitionStartPos) > 0.05f || previousLean != currentLean))
 		{
 			// Position
 			//Debug.Log($"Transitioning between {previousLean} and {currentLean}", this);
@@ -185,25 +194,8 @@ public class CameraControl : MonoBehaviour
 				leanPos[(int)currentLean], // The state transitioning to
 				transitionPercent); // How far though the transition it is
 
-			if (transitionPercent > 0.5f && transitionPercent < 1)
-			{
-				float a = 5;
-			}
 
-			//// Rotation
-			//Quaternion targetRot = Quaternion.Euler(
-			//			transform.localRotation.eulerAngles.x,
-			//			transform.localRotation.eulerAngles.y,
-			//			transform.localRotation.eulerAngles.z + leanRotMod[(int)currentLean]);
-
-			//Quaternion startTransitionRot = Quaternion.Euler(
-			//			transform.localRotation.eulerAngles.x,
-			//			transform.localRotation.eulerAngles.y,
-			//			transform.localRotation.eulerAngles.z + leanTransitionStartRotMod);
-
-			////transform.localRotation = targetRot;
-			//transform.localRotation = Quaternion.Slerp(startTransitionRot, targetRot, transitionPercent);
-
+			// Rotation
 			float currentRotMod = Mathf.Lerp(leanTransitionStartRotMod, leanRotMod[(int)currentLean], transitionPercent);
 			transform.localRotation = Quaternion.Euler(
 						transform.localRotation.eulerAngles.x,
@@ -215,9 +207,16 @@ public class CameraControl : MonoBehaviour
 				previousLean = currentLean;
 			}
 		}
-		else
+		// If a transition is not needed
+		else if (!leanPosBlocked)
 		{
+			// Position
 			transform.localPosition = leanPos[(int)currentLean];
+			// Rotation
+			transform.localRotation = Quaternion.Euler(
+						transform.localRotation.eulerAngles.x,
+						transform.localRotation.eulerAngles.y,
+						transform.localRotation.eulerAngles.z + leanRotMod[(int)currentLean]);
 		}
 		//Debug.Log("Toggles lean", this);
 
