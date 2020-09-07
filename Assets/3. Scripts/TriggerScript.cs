@@ -7,6 +7,8 @@ public class TriggerScript : MonoBehaviour
 {
     [Tooltip("The object that will be animated")]
     public GameObject animatedObject;
+    [Tooltip("The object that will make sound")]
+    public GameObject soundSource;
     private AudioSource audio;
     [Tooltip("The open sound of the doors")]
     public AudioClip Openclip;
@@ -16,33 +18,46 @@ public class TriggerScript : MonoBehaviour
     public bool oneTimeUse = false;
     [Tooltip("is the door locked")]
     public bool locked = false;
+    private bool hasplayedonce;
     // Start is called before the first frame update
     void Start()
     {
-       audio =  animatedObject.GetComponent<AudioSource>();
+       audio = soundSource.GetComponent<AudioSource>();
     }
     private void OnTriggerEnter(Collider other)
     {
         if(!locked)
         {
-            if (!oneTimeUse)
+            if (!hasplayedonce)
             {
-                animatedObject.GetComponent<Animator>().SetTrigger("Open");
-                audio.PlayOneShot(Openclip);
+                if(other.tag == "Player" || other.tag == "Enemy")
+                {
+                    animatedObject.GetComponent<Animator>().SetTrigger("Open");
+                    audio.PlayOneShot(Openclip);
+                    if(oneTimeUse)
+                    {
+                        hasplayedonce = true;
+                    }
+                }
             }
-        }
-        
+        } 
     }
     private void OnTriggerExit(Collider other)
     {
         if(!locked)
         {
-            if (!oneTimeUse)
+            if (!hasplayedonce)
             {
-                animatedObject.GetComponent<Animator>().SetTrigger("Close");
-                audio.PlayOneShot(Closeclip);
+                if (other.tag == "Player" || other.tag == "Enemy")
+                {
+                    animatedObject.GetComponent<Animator>().SetTrigger("Close");
+                    audio.PlayOneShot(Closeclip);
+                    if (oneTimeUse)
+                    {
+                        hasplayedonce = true;
+                    }
+                }     
             }
-        }
-        
+        }  
     }
 }
