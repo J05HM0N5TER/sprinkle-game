@@ -13,10 +13,26 @@ public class Terminals : MonoBehaviour
 	[Tooltip("the max distance that the player can be from the terminal and still interact with it")]
 	public float maxDistanceToInteract;
 	public bool brokenTerminal = false;
+	[Tooltip("Spark Particles")]
+	public GameObject brokenParticles;
+	private ParticleSystem ps;
 	// Start is called before the first frame update
 	void Start()
 	{
 		player = GameObject.FindGameObjectWithTag("Player");
+		ps = brokenParticles.GetComponent<ParticleSystem>();
+		var em = ps.emission;
+		if(brokenTerminal)
+		{
+			ps.Play();
+			em.enabled = true;
+		}
+		else
+		{
+			em.enabled = false;
+			ps.Stop();
+			
+		}
 	}
 
 	// Update is called once per frame
@@ -41,6 +57,9 @@ public class Terminals : MonoBehaviour
 				{
 					gameObject.GetComponent<Animator>().SetTrigger("FixTerminal");
 					brokenTerminal = false;
+					var em = ps.emission;
+					em.enabled = false;
+					ps.Stop();
 				}
 			}
 		}
