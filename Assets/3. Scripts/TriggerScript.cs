@@ -16,6 +16,7 @@ public class TriggerScript : MonoBehaviour
     public bool oneTimeUse = false;
     [Tooltip("is the door locked")]
     public bool locked = false;
+    private bool hasplayedonce;
     // Start is called before the first frame update
     void Start()
     {
@@ -25,24 +26,36 @@ public class TriggerScript : MonoBehaviour
     {
         if(!locked)
         {
-            if (!oneTimeUse)
+            if (!hasplayedonce)
             {
-                animatedObject.GetComponent<Animator>().SetTrigger("Open");
-                audio.PlayOneShot(Openclip);
+                if(other.tag == "Player" || other.tag == "Enemy")
+                {
+                    animatedObject.GetComponent<Animator>().SetTrigger("Open");
+                    audio.PlayOneShot(Openclip);
+                    if(oneTimeUse)
+                    {
+                        hasplayedonce = true;
+                    }
+                }
             }
-        }
-        
+        } 
     }
     private void OnTriggerExit(Collider other)
     {
         if(!locked)
         {
-            if (!oneTimeUse)
+            if (!hasplayedonce)
             {
-                animatedObject.GetComponent<Animator>().SetTrigger("Close");
-                audio.PlayOneShot(Closeclip);
+                if (other.tag == "Player" || other.tag == "Enemy")
+                {
+                    animatedObject.GetComponent<Animator>().SetTrigger("Close");
+                    audio.PlayOneShot(Closeclip);
+                    if (oneTimeUse)
+                    {
+                        hasplayedonce = true;
+                    }
+                }     
             }
-        }
-        
+        }  
     }
 }
