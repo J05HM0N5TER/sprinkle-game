@@ -8,11 +8,11 @@ FBXHeaderExtension:  {
 		Version: 1000
 		Year: 2020
 		Month: 8
-		Day: 4
-		Hour: 16
-		Minute: 4
-		Second: 39
-		Millisecond: 483
+		Day: 31
+		Hour: 10
+		Minute: 36
+		Second: 20
+		Millisecond: 847
 	}
 	Creator: "FBX SDK/FBX Plugins version 2019.2"
 	SceneInfo: "SceneInfo::GlobalInfo", "UserData" {
@@ -34,15 +34,15 @@ FBXHeaderExtension:  {
 			P: "Original|ApplicationVendor", "KString", "", "", "Autodesk"
 			P: "Original|ApplicationName", "KString", "", "", "Maya"
 			P: "Original|ApplicationVersion", "KString", "", "", "201900"
-			P: "Original|DateTime_GMT", "DateTime", "", "", "04/08/2020 06:04:39.481"
+			P: "Original|DateTime_GMT", "DateTime", "", "", "31/08/2020 00:36:20.842"
 			P: "Original|FileName", "KString", "", "", "C:\Users\Samuel\Desktop\End of year project\Exports\GreyBox\Greybox (Working)\Floor_Half.fbx"
 			P: "LastSaved", "Compound", "", ""
 			P: "LastSaved|ApplicationVendor", "KString", "", "", "Autodesk"
 			P: "LastSaved|ApplicationName", "KString", "", "", "Maya"
 			P: "LastSaved|ApplicationVersion", "KString", "", "", "201900"
-			P: "LastSaved|DateTime_GMT", "DateTime", "", "", "04/08/2020 06:04:39.481"
+			P: "LastSaved|DateTime_GMT", "DateTime", "", "", "31/08/2020 00:36:20.842"
 			P: "Original|ApplicationActiveProject", "KString", "", "", "C:\Users\Samuel\Desktop\End of year project\Exports\GreyBox\Greybox (Working)"
-			P: "Original|ApplicationNativeFile", "KString", "", "", "C:\Users\Samuel\Desktop\End of year project\Scenes\Game Modular Assets\Game_Modular_AssetsV2.0005.ma"
+			P: "Original|ApplicationNativeFile", "KString", "", "", "C:\Users\Samuel\Desktop\End of year project\Scenes\Game Modular Assets(Working)\Game_Modular_AssetsV2.0050.ma"
 		}
 	}
 }
@@ -77,7 +77,7 @@ GlobalSettings:  {
 
 Documents:  {
 	Count: 1
-	Document: 1598760566752, "", "Scene" {
+	Document: 1813557852896, "", "Scene" {
 		Properties70:  {
 			P: "SourceObject", "object", "", ""
 			P: "ActiveAnimStackName", "KString", "", "", "Take 001"
@@ -250,7 +250,7 @@ Definitions:  {
 ;------------------------------------------------------------------
 
 Objects:  {
-	Geometry: 1599121099904, "Geometry::", "Mesh" {
+	Geometry: 1813146048576, "Geometry::", "Mesh" {
 		Vertices: *12 {
 			a: -250,0,250,0,0,250,-250,0,-250,0,0,-250
 		} 
@@ -279,10 +279,10 @@ Objects:  {
 			MappingInformationType: "ByPolygonVertex"
 			ReferenceInformationType: "IndexToDirect"
 			UV: *8 {
-				a: 0.375,0.25,0.625,0.25,0.375,0.5,0.625,0.5
+				a: 0.273422390222549,0.0330403745174408,0.740382075309753,0.0330403745174408,0.740382075309753,0.966959714889526,0.273422390222549,0.966959714889526
 			} 
 			UVIndex: *4 {
-				a: 0,1,3,2
+				a: 0,1,2,3
 			} 
 		}
 		LayerElementSmoothing: 0 {
@@ -323,7 +323,7 @@ Objects:  {
 			}
 		}
 	}
-	Model: 1598761355664, "Model::Floor_Half", "Mesh" {
+	Model: 1813160074656, "Model::Floor_Half", "Mesh" {
 		Version: 232
 		Properties70:  {
 			P: "RotationActive", "bool", "", "",1
@@ -335,7 +335,7 @@ Objects:  {
 		Shading: T
 		Culling: "CullingOff"
 	}
-	Material: 1599128300304, "Material::Greybox_MAT9", "" {
+	Material: 1813559206496, "Material::Greybox_MAT9", "" {
 		Version: 102
 		ShadingModel: "lambert"
 		MultiLayer: 0
@@ -350,13 +350,13 @@ Objects:  {
 			P: "Opacity", "double", "Number", "",1
 		}
 	}
-	AnimationStack: 1598705519632, "AnimStack::Take 001", "" {
+	AnimationStack: 1813557462000, "AnimStack::Take 001", "" {
 		Properties70:  {
 			P: "LocalStop", "KTime", "Time", "",230930790000
 			P: "ReferenceStop", "KTime", "Time", "",230930790000
 		}
 	}
-	AnimationLayer: 1599227845584, "AnimLayer::BaseLayer", "" {
+	AnimationLayer: 1813555886096, "AnimLayer::BaseLayer", "" {
 	}
 }
 
@@ -366,16 +366,16 @@ Objects:  {
 Connections:  {
 	
 	;Model::Floor_Half, Model::RootNode
-	C: "OO",1598761355664,0
+	C: "OO",1813160074656,0
 	
 	;AnimLayer::BaseLayer, AnimStack::Take 001
-	C: "OO",1599227845584,1598705519632
+	C: "OO",1813555886096,1813557462000
 	
 	;Geometry::, Model::Floor_Half
-	C: "OO",1599121099904,1598761355664
+	C: "OO",1813146048576,1813160074656
 	
 	;Material::Greybox_MAT9, Model::Floor_Half
-	C: "OO",1599128300304,1598761355664
+	C: "OO",1813559206496,1813160074656
 }
 ;Takes section
 ;----------------------------------------------------
