@@ -7,6 +7,8 @@ public class TriggerScript : MonoBehaviour
 {
     [Tooltip("The object that will be animated")]
     public GameObject animatedObject;
+    [Tooltip("The object that will make sound")]
+    public GameObject soundSource;
     private AudioSource audio;
     [Tooltip("The open sound of the doors")]
     public AudioClip Openclip;
@@ -20,7 +22,7 @@ public class TriggerScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-       audio =  animatedObject.GetComponent<AudioSource>();
+       audio = soundSource.GetComponent<AudioSource>();
     }
     private void OnTriggerEnter(Collider other)
     {
