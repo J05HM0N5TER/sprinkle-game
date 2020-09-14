@@ -53,12 +53,14 @@ public class CameraControl : MonoBehaviour
 	private float leanTransitionStartRotMod;
 	// Array of modifiers to the rotation, uses the lean state for index
 	private float[] leanRotMod;
+	[Tooltip("How fast the player has to be moving before they can no longer lean")]
+	public float maxSpeedWhileLeaning = 0.25f;
 
 	private Camera PlayerCamera;
 
 	[Header("Spring variables")]
 	[Tooltip("How \"Snappy\" the holding is")]
-	public float springStrenght = 50;
+	public float springStrength = 50;
 	[Tooltip("How much the dragging slows down when it is the correct position")]
 	public float damper = 5;
 	public float minDistance = 0;
@@ -67,12 +69,20 @@ public class CameraControl : MonoBehaviour
 	public float rigidBodyDrag = 5;
 	[Tooltip("The amount of angular drag applied to the held object")]
 	public float rigidBodyDragAngular = 5;
-	// The saved varibles from the held object, to be applied when dropped
+	// The saved variables from the held object, to be applied when dropped
 	float normalDrag = 0;
 	float normalADrag = 0.05f;
 
-	// The spring that controls the held object
+	[Header("Debug")]
+	[Tooltip("The current magnitue of the velocity of the player")]
+#pragma warning disable IDE0052 // Remove unread private members
+	[SerializeField] private float playerMagnitude = 0;
+#pragma warning restore IDE0052 // Remove unread private members
+							   // The spring that controls the held object
 	private SpringJoint grabSpring;
+
+	private PlayerController player;
+	private Rigidbody playerRigidbody;
 
 
 	// Start is called before the first frame update
@@ -101,6 +111,24 @@ public class CameraControl : MonoBehaviour
 		};
 
 		PlayerCamera = GetComponent<Camera>();
+		player = gameObject.transform.parent.GetComponent<PlayerController>();
+		playerRigidbody = player.GetComponent<Rigidbody>();
+
+		// Check that everything was retreved successfully
+#if UNITY_EDITOR
+		if (PlayerCamera == null)
+		{
+			Debug.LogWarning("Can't find Camera", this);
+		}
+		if (player == null)
+		{
+			Debug.LogWarning("Can't find PlayerController", this);
+		}
+		if (playerRigidbody == null)
+		{
+			Debug.LogWarning("Cant find player RigidBody", this);
+		}
+#endif
 	}
 
 	// Update is called once per frame
@@ -143,6 +171,7 @@ public class CameraControl : MonoBehaviour
 	/// </summary>
 	public void GrabObject()
 	{
+		// TODO: Check for dynamic layer
 		if (Physics.Raycast(PlayerCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0.5f)), out RaycastHit RayOut, grabDistance))
 		{
 			if (RayOut.rigidbody != null)
@@ -154,7 +183,7 @@ public class CameraControl : MonoBehaviour
 				// Turn off the auto configuation, this is so you can specify a position instead of a game object
 				grabSpring.autoConfigureConnectedAnchor = false;
 				// Set the variables that has been set manually
-				grabSpring.spring = springStrenght;
+				grabSpring.spring = springStrength;
 				grabSpring.damper = damper;
 				grabSpring.minDistance = minDistance;
 				grabSpring.maxDistance = maxDistance;
@@ -200,8 +229,16 @@ public class CameraControl : MonoBehaviour
 		// Used to see if the target lean state changed this frame
 		LeanState leanStateAtStartOfFrame = currentLean;
 
+		playerMagnitude = playerRigidbody.velocity.magnitude;
+
+		// NOTE: At peak of jump velocity is 0 so for a quick second it allows them to lean
+		// If the player is moving or jumping
+		if (playerRigidbody.velocity.magnitude > maxSpeedWhileLeaning)
+		{
+			currentLean = LeanState.None;
+		}
 		// If both directions or none are pressed
-		if (isLeaningLeft && isLeaningRight)
+		else if (isLeaningLeft && isLeaningRight)
 		{
 			// Don't do anything
 		}
