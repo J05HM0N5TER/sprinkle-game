@@ -2421,6 +2421,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 916796667, guid: 2d5bd77ecfb0248498e1f974e32ed3ff, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 916796668, guid: 2d5bd77ecfb0248498e1f974e32ed3ff, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.88
+      objectReference: {fileID: 0}
     - target: {fileID: 1376844649919263987, guid: 2d5bd77ecfb0248498e1f974e32ed3ff,
         type: 3}
       propertyPath: m_Name
@@ -5859,6 +5867,9 @@ MonoBehaviour:
     m_Bits: 0
   grabDistance: 1
   holdDistance: 0.5
+  leanTilt: 0
+  leanOffset: 0
+  leanTransitionTime: 1
 --- !u!1 &459762357 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2945772334772967585, guid: d8b43734ff8ce74428dce7f88ebe0729,
