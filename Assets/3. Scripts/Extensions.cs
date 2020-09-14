@@ -37,3 +37,17 @@ public static class MatrixExtensions
         return scale;
     }
 }
+
+public static class Vector3Extensions
+{
+    /// <summary>
+    /// Devide the components of one vector by the components of a second vecotor
+    /// </summary>
+    /// <param name="vector">The dividend in the equasion</param>
+    /// <param name="secondVector">The divisor in the equasion</param>
+    /// <returns>The result of the equasion</returns>
+    public static Vector3 ComponentDevide(this Vector3 vector, Vector3 secondVector)
+	{
+        return new Vector3(vector.x / secondVector.x, vector.y / secondVector.y, vector.z / secondVector.z);
+	}
+}

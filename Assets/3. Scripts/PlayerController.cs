@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Experimental.Rendering.HDPipeline;
 
 [RequireComponent(typeof(CapsuleCollider), typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour
@@ -44,7 +45,7 @@ public class PlayerController : MonoBehaviour
 	public int medSyringes = 0;
 	[Tooltip("How many Battery Packs the player has in their inventory")]
 	public int batteryPacks = 0;
-
+	private CameraControl cameraControl;
 
 	// Start is called before the first frame update
 	void Start()
@@ -53,6 +54,7 @@ public class PlayerController : MonoBehaviour
 		capsule = GetComponent<CapsuleCollider>();
 		standHeight = capsule.height;
 		defautScale = transform.localScale;
+		cameraControl = GetComponentInChildren<CameraControl>();
 	}
 
 	private void FixedUpdate()
@@ -105,6 +107,13 @@ public class PlayerController : MonoBehaviour
 			// When the player stands up reset the scale back to what it was at the start
 			gameObject.transform.localScale = defautScale;
 		}
+
+		// If the player is holding something, make sure that the scale is not effected
+		//if (cameraControl.heldObject)
+		//{
+		//	cameraControl.heldObject.localScale = cameraControl.heldObject.localScale.ComponentDevide(cameraControl.heldObject.lossyScale);
+		//}
+		//Debug.Log($"Held objects transform is {heldObject.localScale} and lossyscale is {heldObject.lossyScale}", heldObject);
 	}
 
 	/// <summary>
@@ -116,6 +125,4 @@ public class PlayerController : MonoBehaviour
 		Ray ray = new Ray(transform.position, -transform.up);
 		return Physics.Raycast(ray, ((capsule.height * transform.localScale.y) / 2) + groundDistance, ~LayerMask.GetMask("Player"));
 	}
-
-	
 }
