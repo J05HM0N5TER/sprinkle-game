@@ -11,8 +11,6 @@ public class LurkerAi : MonoBehaviour
     public GameObject player;
     private GameObject currentLurkingPoint; // point that the AI is currently at
     private GameObject closestLurkerPoint; // the closest point to the player that the AI is not at
-    private float closestDistance; // checking which point is closest to player
-    private bool debugIsVisable; // debug checking if the AI is visible to the player
     [Tooltip("Time that the AI stays visible when looked at until it disappears/moves")]
     public float spookyTimer = 0.5f;
     float resettimer;
@@ -32,7 +30,7 @@ public class LurkerAi : MonoBehaviour
         lurkerPoints = GameObject.FindGameObjectsWithTag("Respawn");
         foreach (GameObject Lurkerpoint in lurkerPoints)
         {
-            print("Lurker point: " + Lurkerpoint.transform.position);
+            //print("Lurker point: " + Lurkerpoint.transform.position);
         }
         resetUnseenTimer = unseenTimer;
         resettimer = spookyTimer;
@@ -53,7 +51,7 @@ public class LurkerAi : MonoBehaviour
             {
                 appearsNearPlayer = false;
             }
-            debugIsVisable = true;
+            
             print("Is seen, trying to find new point...");
             if (appearsNearPlayer)
             {
@@ -68,17 +66,14 @@ public class LurkerAi : MonoBehaviour
                         if (closestLurkerPoint == null)
                         {
                             closestLurkerPoint = Lurkerpoint;
-                            closestDistance = distance;
                         }
                         // If the point is not the current point
                         else if (transform != currentLurkingPoint)
                         {
                             closestLurkerPoint = Lurkerpoint;
-                            closestDistance = distance;
                         }
                     }
                     unseenTimer = resetUnseenTimer;
-
                 }
             }
             if(!appearsNearPlayer)
@@ -88,7 +83,7 @@ public class LurkerAi : MonoBehaviour
             //actually moving the bloody thing
             if (closestLurkerPoint != null)
             {
-                print("Closest point is " + closestLurkerPoint.name);
+                //print("Closest point is " + closestLurkerPoint.name);
                 spookyTimer -= Time.deltaTime;
                 if (spookyTimer <= 0.0f)
                 {
@@ -102,10 +97,6 @@ public class LurkerAi : MonoBehaviour
             {
                 Debug.LogError("Couldn't find valid point");
             }
-        }
-        else
-        {
-            debugIsVisable = false;
         }
     }
 

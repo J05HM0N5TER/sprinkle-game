@@ -18,19 +18,19 @@ public class LivingArmourAI : MonoBehaviour
 	public float wonderDistance = 10.0f;
 	[Tooltip("How long will the ai be searching in the area that it last saw the player")]
 	public float timer = 10.0f;
-	private float timerReset;
+	
 	[Tooltip("the area around the last seen point of the player that the ai will search for the player")]
 	public float lookngDistance = 1.0f;
 	// Was the AI previously following the player?
 	private bool wasFollowingPlayer = false;
 	private bool isPlayerVisable = false;
 	// Has the player ever been seen by this AI?
-	private bool playerHasBeenSeen = false;
+	
 	// Is the ray between the player and AI colliding with something
     private bool rayObstructed = true;
 	// Is the player in the view area for the AI
     private bool playerInScreenBounds = false;
-	bool GoneToLastPoint;
+	
 
 	//hearing and sound stuff
 	//public GameObject[] soundSources;
@@ -45,7 +45,7 @@ public class LivingArmourAI : MonoBehaviour
 	{
 		agent = gameObject.GetComponent<NavMeshAgent>();
 		originalWonder = wonderDistance;
-		timerReset = timer;
+		
 	}
 
 	// Update is called once per frame  
@@ -70,7 +70,7 @@ public class LivingArmourAI : MonoBehaviour
 			playerLastSeen = player.transform.position;
 			// Set the AI to go towards the player
 			agent.SetDestination(playerLastSeen);
-			playerHasBeenSeen = true;
+			
 			wasFollowingPlayer = true;
 		}
 		/*if (wasFollowingPlayer && !isPlayerVisable)
@@ -96,7 +96,7 @@ public class LivingArmourAI : MonoBehaviour
 		*/
 		if ((agent.transform.position - playerLastSeen).magnitude < 0.5f)
 		{
-			playerHasBeenSeen = false;
+			
 			lookingforplayer = true;
 			wasFollowingPlayer = false;
 		}
