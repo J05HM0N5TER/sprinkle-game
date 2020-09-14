@@ -25,12 +25,11 @@ public class tutorial : MonoBehaviour
 	[Tooltip("The box element that will display the text on the canvas")]
 	public GameObject textbox;
 	private string buttonToPress = "";
-	private GameObject player;
+	private bool hasEnteredTurotialBox;
 
 	// Start is called before the first frame update
 	void Start()
 	{
-		player = GameObject.Find("Player");
 		//checking which button has been selected for this trigger box
 		switch (gameObject.GetComponent<tutorial>().tutorialButton.ToString())
 		{
@@ -61,18 +60,23 @@ public class tutorial : MonoBehaviour
 
 		textbox.SetActive(false);
 	}
+	private void Update()
+	{
+		if (Input.GetButtonDown(buttonToPress) && hasEnteredTurotialBox)
+		{
+			textbox.SetActive(false);
+			gameObject.SetActive(false);
+			hasEnteredTurotialBox = false;
+		}
+	}
 	private void OnTriggerEnter(Collider other)
 	{
 		//make sure it only pops up when player comes into the trigger box
-		if (other == player)
+		if (other.CompareTag("Player"))
 		{
 			textbox.SetActive(true);
 			textbox.GetComponent<TextMeshProUGUI>().text = tutorialText;
-			if (Input.GetButtonDown(buttonToPress))
-			{
-				textbox.SetActive(false);
-				gameObject.SetActive(false);
-			}
+			hasEnteredTurotialBox = true;
 		}
 	}
 

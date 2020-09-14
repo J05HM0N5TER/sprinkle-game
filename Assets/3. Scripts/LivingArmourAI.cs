@@ -70,7 +70,7 @@ public class LivingArmourAI : MonoBehaviour
 			playerLastSeen = player.transform.position;
 			// Set the AI to go towards the player
 			agent.SetDestination(playerLastSeen);
-			playerHasBeenSeen = true;
+			
 			wasFollowingPlayer = true;
 		}
 		/*if (wasFollowingPlayer && !isPlayerVisable)
@@ -96,7 +96,7 @@ public class LivingArmourAI : MonoBehaviour
 		*/
 		if ((agent.transform.position - playerLastSeen).magnitude < 0.5f)
 		{
-			playerHasBeenSeen = false;
+			
 			lookingforplayer = true;
 			wasFollowingPlayer = false;
 		}
