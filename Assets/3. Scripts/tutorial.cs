@@ -30,7 +30,7 @@ public class tutorial : MonoBehaviour
 	// Start is called before the first frame update
 	void Start()
 	{
-		player = GameObject.Find("Player");
+		player = GameObject.Find("Character");
 		//checking which button has been selected for this trigger box
 		switch (gameObject.GetComponent<tutorial>().tutorialButton.ToString())
 		{
@@ -59,7 +59,7 @@ public class tutorial : MonoBehaviour
 				break;
 		}
 
-		textbox.SetActive(false);
+		//textbox.SetActive(false);
 	}
 	private void OnTriggerEnter(Collider other)
 	{
