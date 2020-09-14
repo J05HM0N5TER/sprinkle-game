@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class CameraControl : MonoBehaviour
 {
@@ -21,7 +18,6 @@ public class CameraControl : MonoBehaviour
 	// ray casting
 	[Tooltip("layer of objects that can be picked up")]
 	public LayerMask grabLayers;
-	RaycastHit hit;
 
 	[Header("Grab ability settings:")]
 	[Range(0.1f, 10)]
@@ -30,7 +26,8 @@ public class CameraControl : MonoBehaviour
 	[Range(0.1f, 5)]
 	[Tooltip("How far the object is held from the player once picked up")]
 	public float holdDistance = 0.5f;
-	private Transform heldObject = null;
+	// The object that is in the players hand (null if player isn't holding anything)
+	[HideInInspector] public Rigidbody heldObject = null;
 
 	[Header("Lean settings")]
 	[Tooltip("The angle that the camera will be tilted on when the player leans")]
@@ -41,18 +38,42 @@ public class CameraControl : MonoBehaviour
 	public float leanOffset;
 	// The default position of camera
 	private Vector3 defaultPos;
+	// What is the current lean (eather the one that it is on or the one that is being transitioned to)
 	private LeanState currentLean = LeanState.None;
+	// The previous state of lean
 	private LeanState previousLean = LeanState.None;
 	// Array of the position to lerp to, uses the lean state for index
 	private Vector3[] leanPos;
 	private DateTime leanTransitionStartTime;
 	[Tooltip("How long it takes to transition between lean states (in seconds)")]
 	public float leanTransitionTime = 1f;
+	// What the position of the camera is when a new transition starts
 	private Vector3 leanTransitionStartPos;
 	// The modifier to the rotation euler x at start of transition
 	private float leanTransitionStartRotMod;
 	// Array of modifiers to the rotation, uses the lean state for index
 	private float[] leanRotMod;
+
+	private Camera PlayerCamera;
+
+	[Header("Spring variables")]
+	[Tooltip("How \"Snappy\" the holding is")]
+	public float springStrenght = 50;
+	[Tooltip("How much the dragging slows down when it is the correct position")]
+	public float damper = 5;
+	public float minDistance = 0;
+	public float maxDistance = 0.2f;
+	[Tooltip("The amount of drag applied to the held object")]
+	public float rigidBodyDrag = 5;
+	[Tooltip("The amount of angular drag applied to the held object")]
+	public float rigidBodyDragAngular = 5;
+	// The saved varibles from the held object, to be applied when dropped
+	float normalDrag = 0;
+	float normalADrag = 0.05f;
+
+	// The spring that controls the held object
+	private SpringJoint grabSpring;
+
 
 	// Start is called before the first frame update
 	void Start()
@@ -78,6 +99,8 @@ public class CameraControl : MonoBehaviour
 			-leanTilt,
 			leanTilt
 		};
+
+		PlayerCamera = GetComponent<Camera>();
 	}
 
 	// Update is called once per frame
@@ -96,34 +119,73 @@ public class CameraControl : MonoBehaviour
 		PlayerBody.Rotate(Vector3.up * mouseX);
 
 		// Picking up objects
-		if (!heldObject && Input.GetButtonDown("Interact") &&
-			Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, grabDistance, grabLayers))
+		if (!heldObject && Input.GetButtonDown("Interact"))
 		{
-			print("Grabbed " + hit.collider.name);
-			heldObject = hit.collider.transform;
-			Rigidbody rigidbody = heldObject.GetComponent<Rigidbody>();
-			if (rigidbody)
-			{
-				heldObject.position = transform.position + (transform.forward * holdDistance);
-				heldObject.parent = transform;
-				rigidbody.isKinematic = true;
-			}
-			else
-			{
-				Debug.LogError(hit.collider.name + " was grabbed and has no rigidbody");
-				heldObject = null;
-			}
+			GrabObject();
 		}
 		// Dropping held object
 		else if (heldObject && Input.GetButtonUp("Interact"))
 		{
-			print("Dropped " + heldObject.name);
-			heldObject.parent = null;
-			heldObject.GetComponent<Rigidbody>().isKinematic = false;
-			heldObject = null;
+			DropObject();
+		}
+
+		if (heldObject != null)
+		{
+			// Ajust the held object spring to in front of the player
+			grabSpring.connectedAnchor = PlayerCamera.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, holdDistance));
 		}
 
 		Lean();
+	}
+
+	/// <summary>
+	/// Grabs the object in front of the player
+	/// </summary>
+	public void GrabObject()
+	{
+		if (Physics.Raycast(PlayerCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0.5f)), out RaycastHit RayOut, grabDistance))
+		{
+			if (RayOut.rigidbody != null)
+			{
+				//RayOut.collider.isTrigger = false;
+				heldObject = RayOut.rigidbody;
+				// Creates a spring to hold the object by
+				grabSpring = RayOut.transform.gameObject.AddComponent<SpringJoint>();
+				// Turn off the auto configuation, this is so you can specify a position instead of a game object
+				grabSpring.autoConfigureConnectedAnchor = false;
+				// Set the variables that has been set manually
+				grabSpring.spring = springStrenght;
+				grabSpring.damper = damper;
+				grabSpring.minDistance = minDistance;
+				grabSpring.maxDistance = maxDistance;
+				// Set the anchor to nothing, this will be updated with correct position later
+				grabSpring.anchor = Vector3.zero;
+
+				normalDrag = RayOut.rigidbody.drag;
+				normalADrag = RayOut.rigidbody.angularDrag;
+				heldObject.drag = rigidBodyDrag;
+				heldObject.angularDrag = rigidBodyDragAngular;
+
+				heldObject.gameObject.transform.position = PlayerCamera.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, holdDistance));
+			}
+		}
+	}
+
+	/// <summary>
+	/// Drops the currently held object
+	/// </summary>
+	public void DropObject()
+	{
+		heldObject.WakeUp();
+
+		// Reset values saved from before
+		heldObject.drag = normalDrag;
+		heldObject.angularDrag = normalADrag;
+
+		// Destroy the spring
+		Destroy(grabSpring);
+		// Set it to not holding anything
+		heldObject = null;
 	}
 
 	/// <summary>
@@ -131,7 +193,6 @@ public class CameraControl : MonoBehaviour
 	/// </summary>
 	private void Lean()
 	{
-
 		//Lean Input
 		bool isLeaningLeft = Input.GetButton("Lean Left");
 		bool isLeaningRight = Input.GetButton("Lean Right");
@@ -140,9 +201,10 @@ public class CameraControl : MonoBehaviour
 		LeanState leanStateAtStartOfFrame = currentLean;
 
 		// If both directions or none are pressed
-		if (isLeaningLeft && isLeaningRight) // This is to not do anything if both lean keys are held down
-		{ }
-
+		if (isLeaningLeft && isLeaningRight)
+		{
+			// Don't do anything
+		}
 		// If none are being pressed
 		else if (!isLeaningLeft && !isLeaningRight)
 		{
@@ -160,7 +222,7 @@ public class CameraControl : MonoBehaviour
 		// If the target lean changed this frame
 		if (currentLean != leanStateAtStartOfFrame)
 		{
-			Debug.Log($"Current lean changed from {leanStateAtStartOfFrame} to {currentLean}", this);
+			//Debug.Log($"Current lean changed from {leanStateAtStartOfFrame} to {currentLean}", this);
 			// What was the rotation modifier when the lean state changed? 
 			// If the transition was complete
 			if (leanStateAtStartOfFrame == previousLean)
@@ -217,7 +279,5 @@ public class CameraControl : MonoBehaviour
 						transform.localRotation.eulerAngles.y,
 						transform.localRotation.eulerAngles.z + leanRotMod[(int)currentLean]);
 		}
-		//Debug.Log("Toggles lean", this);
-
 	}
 }
