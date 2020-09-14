@@ -17,47 +17,48 @@ public class tutorial : MonoBehaviour
         jump = 1 << 4,
         sprint = 1 << 5
     }
+    [Tooltip("What button needs to pressed to 'complete' the tutorial")]
     public Tutorial tutorialButton;
-    private GameObject player;
+    [TextAreaAttribute(5, 40)]
     public string tutorialText = "";
+    [Tooltip("The box element that will display the text on the canvas")]
     public GameObject textbox;
     private string buttonToPress = "";
-    
+    private GameObject player;
+
     // Start is called before the first frame update
     void Start()
     {
         player = GameObject.Find("Player");
-        if(gameObject.GetComponent<tutorial>().tutorialButton.ToString() == "crouch")
+        //checking which button has been selected for this trigger box
+        switch(gameObject.GetComponent<tutorial>().tutorialButton.ToString())
         {
-            buttonToPress = "Crouch";
-        }
-        else if(gameObject.GetComponent<tutorial>().tutorialButton.ToString() == "interact")
-        {
-            buttonToPress = "Interact";
-        }
-        else if(gameObject.GetComponent<tutorial>().tutorialButton.ToString() == "leanRight")
-        {
-            buttonToPress = "Lean Right";
-        }
-        else if(gameObject.GetComponent<tutorial>().tutorialButton.ToString() == "leanLeft")
-        {
-            buttonToPress = "Lean Left";
-        }
-        else if(gameObject.GetComponent<tutorial>().tutorialButton.ToString() == "jump")
-        {
-            buttonToPress = "Jump";
-        }
-        else if(gameObject.GetComponent<tutorial>().tutorialButton.ToString() == "sprint")
-        {
-            buttonToPress = "Sprint";
+            case "crouch":
+                buttonToPress = "Crouch";
+                break;
+
+            case "interact":
+                buttonToPress = "Interact";
+                break;
+
+            case "leanRight":
+                buttonToPress = "Lean Right";
+                break;
+
+            case "leanLeft":
+                buttonToPress = "Lean Left";
+                break;
+
+            case "jump":
+                buttonToPress = "Jump";
+                break;
+
+            case "sprint":
+                buttonToPress = "Sprint";
+                break;
         }
 
         textbox.SetActive(false);
-        //if(gameObject.GetComponent<tutorial>().tutorialButton.ToString() == "crouch")
-        //{
-        //    buttonToPress = "Crouch";
-        //}
-        
     }
 
     // Update is called once per frame
@@ -67,6 +68,7 @@ public class tutorial : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
+        //make sure it only pops up when player comes into the trigger box
         if(other == player)
         {
             textbox.SetActive(true);
