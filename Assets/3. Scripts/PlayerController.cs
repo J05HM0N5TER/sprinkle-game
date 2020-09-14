@@ -120,7 +120,7 @@ public class PlayerController : MonoBehaviour
 	/// Checks if the player is standing on ground
 	/// </summary>
 	/// <returns>Is the player on the ground</returns>
-	bool IsStanding()
+	public bool IsStanding()
 	{
 		Ray ray = new Ray(transform.position, -transform.up);
 		return Physics.Raycast(ray, ((capsule.height * transform.localScale.y) / 2) + groundDistance, ~LayerMask.GetMask("Player"));
