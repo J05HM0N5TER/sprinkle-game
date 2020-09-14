@@ -5,9 +5,11 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+#pragma warning disable 649
     [Header("Scene names:")]
     [SerializeField] private string mainMenu;
     [SerializeField] private string mainGame;
+#pragma warning restore 649
 
     /// <summary>
     /// Changes the scene
