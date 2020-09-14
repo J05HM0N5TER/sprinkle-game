@@ -7,11 +7,12 @@ using UnityEngine.UI;
 
 public class tutorial : MonoBehaviour
 {
-    [Flags]public enum Tutorial : byte 
-    { 
+    [Flags]
+    public enum Tutorial : byte
+    {
         none = 0,
         crouch = 1 << 0,
-        interact = 1<< 1,
+        interact = 1 << 1,
         leanRight = 1 << 2,
         leanLeft = 1 << 3,
         jump = 1 << 4,
@@ -31,7 +32,7 @@ public class tutorial : MonoBehaviour
     {
         player = GameObject.Find("Player");
         //checking which button has been selected for this trigger box
-        switch(gameObject.GetComponent<tutorial>().tutorialButton.ToString())
+        switch (gameObject.GetComponent<tutorial>().tutorialButton.ToString())
         {
             case "crouch":
                 buttonToPress = "Crouch";
@@ -60,20 +61,14 @@ public class tutorial : MonoBehaviour
 
         textbox.SetActive(false);
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
     private void OnTriggerEnter(Collider other)
     {
         //make sure it only pops up when player comes into the trigger box
-        if(other == player)
+        if (other == player)
         {
             textbox.SetActive(true);
             textbox.GetComponent<TextMeshProUGUI>().text = tutorialText;
-            if(Input.GetButtonDown(buttonToPress))
+            if (Input.GetButtonDown(buttonToPress))
             {
                 textbox.SetActive(false);
                 gameObject.SetActive(false);
