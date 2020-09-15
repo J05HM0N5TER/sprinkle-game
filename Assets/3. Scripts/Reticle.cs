@@ -11,11 +11,16 @@ public class Reticle : MonoBehaviour
     void Start()
     {
         gameObject.GetComponent<Camera>();
+        reticleSprite.SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
         Physics.Raycast(playerCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0.5f)), out RaycastHit RayOut, grabDistance);
+        if(RayOut.collider.GetComponent<LayerMask>() == LayerMask.NameToLayer("Dynamic"))
+        {
+
+        }
     }
 }
