@@ -1,5 +1,40 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!65 &6564403368810217114
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 628319479473163169}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.21661742, y: 0.013418274, z: 0.3720153}
+  m_Center: {x: 0, y: 0.006709137, z: 0.000000007450581}
+--- !u!114 &4063198191436552808
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 628319479473163169}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08cdf7834a46df040a42c4f0960745c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inscription: "This is a template note, do not write any text into this note.\n\nThis
+    template note text is being used to show you how text is formatted and displayed
+    on a note in the game. \n\nNow that we've come to that understanding I'll just
+    write in a bit more text to fill up the page, enough for it to be a useful gauge
+    for you to use with your own text.\n\nIt should also show you how brief you should
+    keep your written notes, nobody wants to read through a text dump, even an interesting
+    on, that's why these notes are only 1 page with large text."
+  isActive: 0
+  nameOfNoteTextBox: Note_Text
+  nameotherThingToDisable: Note_Background
 --- !u!1 &3309479600643558785
 GameObject:
   m_ObjectHideFlags: 0
@@ -11,9 +46,7 @@ GameObject:
   - component: {fileID: 3309479600643558781}
   - component: {fileID: 3309479600643558780}
   - component: {fileID: 3309479600643558787}
-  - component: {fileID: 3309479600643558786}
-  - component: {fileID: 3309479600643558782}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Note_Template
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -30,7 +63,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -85, y: 0.5, z: 80}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 4531576581501630898}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -59,7 +93,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2af80e8ee56ef9642975beabbb7d6ead, type: 2}
+  - {fileID: 2100000, guid: 3113b02b9107e644a96e498e7ba2e5b4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -80,38 +114,84 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &3309479600643558786
-BoxCollider:
+--- !u!1001 &8906378620088062632
+PrefabInstance:
   m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3309479600643558785}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &3309479600643558782
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_Modification:
+    m_TransformParent: {fileID: 3309479600643558781}
+    m_Modifications:
+    - target: {fileID: -4216859302048453862, guid: 6706209b0f6972442b57def8512587df,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: 6706209b0f6972442b57def8512587df,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: 6706209b0f6972442b57def8512587df,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: 6706209b0f6972442b57def8512587df,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: 6706209b0f6972442b57def8512587df,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: 6706209b0f6972442b57def8512587df,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: 6706209b0f6972442b57def8512587df,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: 6706209b0f6972442b57def8512587df,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: 6706209b0f6972442b57def8512587df,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: 6706209b0f6972442b57def8512587df,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: 6706209b0f6972442b57def8512587df,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 6706209b0f6972442b57def8512587df,
+        type: 3}
+      propertyPath: m_Name
+      value: DataPad
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 6706209b0f6972442b57def8512587df, type: 3}
+--- !u!1 &628319479473163169 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -927199367670048503, guid: 6706209b0f6972442b57def8512587df,
+    type: 3}
+  m_PrefabInstance: {fileID: 8906378620088062632}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3309479600643558785}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 08cdf7834a46df040a42c4f0960745c9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  inscription: "This is a template note, do not write any text into this note.\n\nThis
-    template note text is being used to show you how text is formatted and displayed
-    on a note in the game. \n\nNow that we've come to that understanding I'll just
-    write in a bit more text to fill up the page, enough for it to be a useful gauge
-    for you to use with your own text.\n\nIt should also show you how brief you should
-    keep your written notes, nobody wants to read through a text dump, even an interesting
-    on, that's why these notes are only 1 page with large text."
-  isActive: 0
-  nameOfNoteTextBox: Note_Text
-  nameotherThingToDisable: Note_Background
+--- !u!4 &4531576581501630898 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: 6706209b0f6972442b57def8512587df,
+    type: 3}
+  m_PrefabInstance: {fileID: 8906378620088062632}
+  m_PrefabAsset: {fileID: 0}

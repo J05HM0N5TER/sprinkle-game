@@ -58,7 +58,7 @@ public class tutorial : MonoBehaviour
 				break;
 		}
 
-		textbox.SetActive(false);
+		//textbox.SetActive(false);
 	}
 	private void Update()
 	{
