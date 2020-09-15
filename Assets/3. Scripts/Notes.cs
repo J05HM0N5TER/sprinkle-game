@@ -13,12 +13,12 @@ public class Notes : MonoBehaviour
     public string inscription = "";
     [HideInInspector] public bool isActive = false;
     [Tooltip("the text mesh pro gameobject attached to the canvas that is to show the note pad text. this needs to be active for start up to show")]
-    public string nameOfNoteTextBox;
+    public GameObject noteTextBox;
     [Tooltip("the other thing that is to be deactivated, this also needs to be active on the start of the game")]
-    public string nameotherThingToDisable;
-    
-    private GameObject noteTextBox;
-    private GameObject otherThingToDisable;
+    public GameObject otherThingToDisable;
+
+
+
     RaycastHit hit;
     
     
@@ -26,12 +26,12 @@ public class Notes : MonoBehaviour
     void Start()
     {
         
-        noteTextBox = GameObject.Find(nameOfNoteTextBox);
+        //noteTextBox = GameObject.Find(nameOfNoteTextBox);
         
-        otherThingToDisable = GameObject.Find(nameotherThingToDisable);
+        //otherThingToDisable = GameObject.Find(nameotherThingToDisable);
         if(noteTextBox == null)
         {
-            Debug.Log("couldnt find notetextbox");
+            Debug.LogWarning("couldnt find notetextbox");
         }
         noteTextBox.SetActive(false);
         otherThingToDisable.SetActive(false);
