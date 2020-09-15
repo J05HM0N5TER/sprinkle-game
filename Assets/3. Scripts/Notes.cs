@@ -10,81 +10,113 @@ using UnityEngine.UIElements;
 
 public class Notes : MonoBehaviour
 {
-    [TextAreaAttribute(5, 40)]
-    public string inscription = "";
-    [HideInInspector] public bool isActive = false;
-    [Tooltip("the text mesh pro gameobject attached to the canvas that is to show the note pad text. this needs to be active for start up to show")]
-    public GameObject noteTextBox;
-    [Tooltip("the other thing that is to be deactivated, this also needs to be active on the start of the game")]
-    public GameObject otherThingToDisable;
-    [Tooltip("The position on the screen where it detects click at (decimal percentage)")]
-	private Vector2 cursorPosition = new Vector2(0.5f, 0.5f);
+	[TextArea(5, 40)]
+	public string inscription = "";
+	[HideInInspector] public bool isActive = false;
+
+	[Tooltip("The name of the text box that is being used as the display")]
+	public string noteTextBoxName;
+	// The text box that the text is put into
+	private GameObject noteTextBox;
+
+	[Tooltip("All of the other things that will be disabled other then when a note is being looked at")]
+	public string[] otherNoteObjectsNames;
+	// All of the other things that will be disabled other then when a note is being looked at
+	private List<GameObject> otherNoteObjects;
+
+	[Tooltip("The position on the screen where it detects click at (decimal percentage)")]
 	public string redicleName = "Reticle";
-    private RectTransform redicle;
+	// The info from the redicle used to calculate where to click
+	private RectTransform redicle;
+	// Same as previous
+	private Vector2 cursorPosition = new Vector2(0.5f, 0.5f);
 
+	// Cashe
+	TextMeshProUGUI textBoxText;
+	PauseMenu pauseManager;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        redicle = GameObject.Find(redicleName).GetComponent<RectTransform>();
-        //noteTextBox = GameObject.Find(nameOfNoteTextBox);
-        
-        //otherThingToDisable = GameObject.Find(nameotherThingToDisable);
-        if(noteTextBox == null)
-        {
-            Debug.LogWarning("couldnt find notetextbox");
-        }
-        // TODO: Check for valid values
-        noteTextBox.SetActive(false);
-        otherThingToDisable.SetActive(false);
+	// Start is called before the first frame update
+	void Start()
+	{
+		otherNoteObjects = new List<GameObject>();
+		redicle = GameObject.Find(redicleName).GetComponent<RectTransform>();
+		noteTextBox = GameObject.Find(noteTextBoxName);
+		textBoxText = noteTextBox.GetComponent<TextMeshProUGUI>();
+		pauseManager = FindObjectOfType<PauseMenu>();
 
+		// TODO: Check for valid values
+		noteTextBox.SetActive(false);
 
+		foreach (var name in otherNoteObjectsNames)
+		{
+			GameObject newObect = GameObject.Find(name);
+
+			// Only in editor check and warn if not filled out properly in inspector
 #if UNITY_EDITOR
-        if (redicle == null)
-            Debug.LogWarning("No Redicle found", this);
+			if (newObect == null)
+				Debug.LogWarning($"\"{name}\" was not found", this);
 #endif
-        cursorPosition = new Vector2(redicle.position.x / Screen.width, redicle.position.y / Screen.height);
-    }
+			newObect.SetActive(false);
+			otherNoteObjects.Add(newObect);
+		}
 
-    // Update is called once per frame
-    void Update()
-    {
 
-        if (Input.GetButtonDown("Interact"))
-        {
+
+		// Only in editor check and warn if not filled out properly in inspector
 #if UNITY_EDITOR
-            cursorPosition = new Vector2(redicle.position.x / Screen.width, redicle.position.y / Screen.height);
+		if (redicle == null)
+			Debug.LogWarning($"No Redicle of name \"{redicleName}\" was found", this);
+		if (noteTextBox == null)
+			Debug.LogWarning($"Text box of name \"{noteTextBoxName}\" was not found", this);
 #endif
-            // TODO: Make click position ajustable
-            Ray ray = Camera.main.ScreenPointToRay(new Vector2(cursorPosition.x * Screen.width, cursorPosition.y * Screen.height));
+		cursorPosition = new Vector2(redicle.position.x / Screen.width, redicle.position.y / Screen.height);
+	}
+
+	// Update is called once per frame
+	void Update()
+	{
+
+		if (Input.GetButtonDown("Interact"))
+		{
+			// Only in editor update redicle position every click
+#if UNITY_EDITOR
+			cursorPosition = new Vector2(redicle.position.x / Screen.width, redicle.position.y / Screen.height);
+#endif
+			// TODO: Make click position ajustable
+			Ray ray = Camera.main.ScreenPointToRay(new Vector2(cursorPosition.x * Screen.width, cursorPosition.y * Screen.height));
 
 			if (Physics.Raycast(ray, out RaycastHit hit))
 			{
-				Debug.Log(hit.collider.gameObject.name);
 				if (hit.collider.gameObject == gameObject)
 				{
 					noteTextBox.SetActive(true);
-					otherThingToDisable.SetActive(true);
-					noteTextBox.GetComponent<TextMeshProUGUI>().enabled = true;
-					noteTextBox.GetComponent<TextMeshProUGUI>().text = inscription;
-					FindObjectOfType<PauseMenu>().PauseGame();
-					FindObjectOfType<PauseMenu>().pauseMenu.SetActive(false);
+					foreach (var item in otherNoteObjects)
+					{
+						item.SetActive(true);
+					}
+					textBoxText.enabled = true;
+					textBoxText.text = inscription;
+					pauseManager.PauseGame();
+					pauseManager.pauseMenu.SetActive(false);
 					UnityEngine.Cursor.lockState = CursorLockMode.Locked;
 					isActive = true;
 				}
 			}
 		}
-        if (Input.GetButtonDown("Pause") && isActive)
-        {
-            isActive = false;
-            noteTextBox.SetActive(false);
-            otherThingToDisable.SetActive(false);
-            noteTextBox.GetComponent<TextMeshProUGUI>().enabled = false;
-            noteTextBox.GetComponent<TextMeshProUGUI>().text = " ";
-            FindObjectOfType<PauseMenu>().ResumeGame();
+		if (Input.GetButtonDown("Pause") && isActive)
+		{
+			isActive = false;
+			noteTextBox.SetActive(false);
+			foreach (var item in otherNoteObjects)
+			{
+				item.SetActive(false);
+			}
+			textBoxText.enabled = false;
+			textBoxText.text = " ";
+			pauseManager.ResumeGame();
 
-        }
-    }
+		}
+	}
 }
 
 
