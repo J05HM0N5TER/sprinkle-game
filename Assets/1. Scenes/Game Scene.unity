@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 1544.0309, g: 2177.0703, b: 3451.8564, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -13259,7 +13259,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 0.03
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -27847,7 +27847,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f40d9201b334604f96e2665785892c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tellPlayerToMoveText: '[WASD] to Move and Mouse to Look'
+  tellPlayerToMoveText: Press [WASD] to Move and [Mouse] to Look
   textbox: {fileID: 765407328}
   testIfPlayerhasMoved: 0
   timeUntilPopUp: 15
@@ -82021,8 +82021,8 @@ PrefabInstance:
         type: 3}
       propertyPath: inscription
       value: Hello good sir, this text box is yet to have a proper note written into
-        it, though are Writes are hard at work typing out the lore of the world and
-        scary things to put you on edge.
+        it, though are writing are hard at work writings scary things to put you on
+        edge.
       objectReference: {fileID: 0}
     - target: {fileID: 4063198191436552808, guid: 8453eba51effbf9469cb25056a4138d3,
         type: 3}
@@ -82057,7 +82057,7 @@ PrefabInstance:
     - target: {fileID: 1625872296434024809, guid: a112ab76cfba78441aecdd479c4f2444,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1625872296434024811, guid: a112ab76cfba78441aecdd479c4f2444,
         type: 3}
@@ -82191,7 +82191,7 @@ PrefabInstance:
     - target: {fileID: 3976814577426043383, guid: 4f8b0e85e6ca0284193193e579d404b5,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4f8b0e85e6ca0284193193e579d404b5, type: 3}
