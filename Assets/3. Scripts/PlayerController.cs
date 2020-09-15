@@ -36,7 +36,10 @@ public class PlayerController : MonoBehaviour
 	private float standHeight;
 	// The collider for the player
 	private CapsuleCollider capsule;
+	// Is the player currently couching?
 	private bool isCrouching = false;
+	[Tooltip("The effect that crouching has on speed, this is a percentage impact (0.5 make it so crouching make the player half speed)")]
+	public float crouchSpeedModifier = 0.5f;
 
 
 	[Header("Debug values")]
@@ -64,10 +67,13 @@ public class PlayerController : MonoBehaviour
 		if (input.magnitude > 0.9f)
 			input.Normalize();
 
+		// Modify speed based on if the player is crouching
+		float currentSpeed = isCrouching ? speed * crouchSpeedModifier : speed;
+
 		// Move the player using the input, keep the downwards velocity for when they fall.
 		Vector3 vel = new Vector3(0, rb.velocity.y, 0);
-		vel += gameObject.transform.forward * input.z * speed;
-		vel += gameObject.transform.right * input.x * speed;
+		vel += gameObject.transform.forward * input.z * currentSpeed;
+		vel += gameObject.transform.right * input.x * currentSpeed;
 		rb.velocity = vel;
 	}
 
