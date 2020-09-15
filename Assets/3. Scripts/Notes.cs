@@ -17,8 +17,8 @@ public class Notes : MonoBehaviour
     [Tooltip("the other thing that is to be deactivated, this also needs to be active on the start of the game")]
     public string nameotherThingToDisable;
     
-    private GameObject noteTextBox;
-    private GameObject otherThingToDisable;
+    public GameObject noteTextBox;
+    public GameObject otherThingToDisable;
     RaycastHit hit;
     
     
@@ -26,12 +26,12 @@ public class Notes : MonoBehaviour
     void Start()
     {
         
-        noteTextBox = GameObject.Find(nameOfNoteTextBox);
+        //noteTextBox = GameObject.Find(nameOfNoteTextBox);
         
-        otherThingToDisable = GameObject.Find(nameotherThingToDisable);
+        //otherThingToDisable = GameObject.Find(nameotherThingToDisable);
         if(noteTextBox == null)
         {
-            Debug.Log("couldnt find notetextbox");
+            Debug.LogWarning("couldnt find notetextbox");
         }
         noteTextBox.SetActive(false);
         otherThingToDisable.SetActive(false);
