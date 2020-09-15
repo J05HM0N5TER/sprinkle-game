@@ -24,7 +24,7 @@ public class Notes : MonoBehaviour
 	// All of the other things that will be disabled other then when a note is being looked at
 	private List<GameObject> otherNoteObjects;
 
-	[Tooltip("The position on the screen where it detects click at (decimal percentage)")]
+	[Tooltip("The name of the game object that is the redicle that the player can see")]
 	public string redicleName = "Reticle";
 	// The info from the redicle used to calculate where to click
 	private RectTransform redicle;
@@ -40,6 +40,7 @@ public class Notes : MonoBehaviour
 	{
 		otherNoteObjects = new List<GameObject>();
 		redicle = GameObject.Find(redicleName).GetComponent<RectTransform>();
+		cursorPosition = new Vector2(redicle.position.x / Screen.width, redicle.position.y / Screen.height);
 		noteTextBox = GameObject.Find(noteTextBoxName);
 		textBoxText = noteTextBox.GetComponent<TextMeshProUGUI>();
 		pauseManager = FindObjectOfType<PauseMenu>();
@@ -69,7 +70,6 @@ public class Notes : MonoBehaviour
 		if (noteTextBox == null)
 			Debug.LogWarning($"Text box of name \"{noteTextBoxName}\" was not found", this);
 #endif
-		cursorPosition = new Vector2(redicle.position.x / Screen.width, redicle.position.y / Screen.height);
 	}
 
 	// Update is called once per frame
@@ -82,7 +82,6 @@ public class Notes : MonoBehaviour
 #if UNITY_EDITOR
 			cursorPosition = new Vector2(redicle.position.x / Screen.width, redicle.position.y / Screen.height);
 #endif
-			// TODO: Make click position ajustable
 			Ray ray = Camera.main.ScreenPointToRay(new Vector2(cursorPosition.x * Screen.width, cursorPosition.y * Screen.height));
 
 			if (Physics.Raycast(ray, out RaycastHit hit))

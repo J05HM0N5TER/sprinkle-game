@@ -28,8 +28,12 @@ public class CameraControl : MonoBehaviour
 	public float holdDistance = 0.5f;
 	// The object that is in the players hand (null if player isn't holding anything)
 	[HideInInspector] public Rigidbody heldObject = null;
-	[Tooltip("The position on the screen where it detects click at (decimal percentage)")]
-	public Vector2 cursorPosition = new Vector2(0.5f, 0.5f);
+	// The position on the screen where it detects click at (decimal percentage)
+	private Vector2 cursorPosition = new Vector2(0.5f, 0.5f);
+	[Tooltip("The name of the game object that is the redicle that the player can see")]
+	public string redicleName = "Reticle";
+	// The info from the redicle used to calculate where to click
+	private RectTransform redicle;
 
 	[Header("Lean settings")]
 	[Tooltip("The angle that the camera will be tilted on when the player leans")]
@@ -116,6 +120,9 @@ public class CameraControl : MonoBehaviour
 		player = gameObject.transform.parent.GetComponent<PlayerController>();
 		playerRigidbody = player.GetComponent<Rigidbody>();
 
+		redicle = GameObject.Find(redicleName).GetComponent<RectTransform>();
+		cursorPosition = new Vector2(redicle.position.x / Screen.width, redicle.position.y / Screen.height);
+
 		// Check that everything was retreved successfully
 #if UNITY_EDITOR
 		if (PlayerCamera == null)
@@ -161,6 +168,10 @@ public class CameraControl : MonoBehaviour
 
 		if (heldObject != null)
 		{
+			// Only in editor update redicle position every frame
+#if UNITY_EDITOR
+			cursorPosition = new Vector2(redicle.position.x / Screen.width, redicle.position.y / Screen.height);
+#endif
 			// Ajust the held object spring to in front of the player
 			grabSpring.connectedAnchor = PlayerCamera.ViewportToWorldPoint(new Vector3(cursorPosition.x, cursorPosition.y, holdDistance));
 		}
