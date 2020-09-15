@@ -49,7 +49,17 @@ public class Terminals : MonoBehaviour
 				if ((player.GetComponent<PlayerController>().inventory & neededKeyCard) == neededKeyCard && !brokenTerminal)
 				{
 					// Unlock script
-					doorToOpen.GetComponent<TriggerScript>().locked = false;
+					if(doorToOpen.name == "BlastDoor")
+					{
+						doorToOpen.GetComponent<BlastDoor>().locked = false;
+					}
+					else
+					{
+						doorToOpen.GetComponent<TriggerScript>().locked = false;
+					}
+					
+					
+						
 					// Unlock Animation
 					gameObject.GetComponent<Animator>().SetTrigger("Unlock");
 				}

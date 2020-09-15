@@ -18,7 +18,7 @@ public class BlastDoor : MonoBehaviour
     {
         if(!locked)
         {
-            gameObject.GetComponent<Animator>().Play("Open");
+            gameObject.GetComponent<Animator>().SetTrigger("Open");
             audio.PlayOneShot(Openclip);
             gameObject.GetComponent<BlastDoor>().enabled = false;
         }
