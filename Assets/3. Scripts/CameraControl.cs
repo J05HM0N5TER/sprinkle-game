@@ -171,8 +171,7 @@ public class CameraControl : MonoBehaviour
 	/// </summary>
 	public void GrabObject()
 	{
-		// TODO: Check for dynamic layer
-		if (Physics.Raycast(PlayerCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0.5f)), out RaycastHit RayOut, grabDistance))
+		if (Physics.Raycast(PlayerCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0.5f)), out RaycastHit RayOut, grabDistance, grabLayers))
 		{
 			if (RayOut.rigidbody != null)
 			{
@@ -195,7 +194,7 @@ public class CameraControl : MonoBehaviour
 				heldObject.drag = rigidBodyDrag;
 				heldObject.angularDrag = rigidBodyDragAngular;
 
-				heldObject.gameObject.transform.position = PlayerCamera.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, holdDistance));
+				//heldObject.gameObject.transform.position = PlayerCamera.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, holdDistance));
 			}
 		}
 	}
