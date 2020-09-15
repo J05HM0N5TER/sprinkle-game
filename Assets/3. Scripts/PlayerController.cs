@@ -36,6 +36,7 @@ public class PlayerController : MonoBehaviour
 	private float standHeight;
 	// The collider for the player
 	private CapsuleCollider capsule;
+	private bool isCrouching = false;
 
 
 	[Header("Debug values")]
@@ -45,7 +46,6 @@ public class PlayerController : MonoBehaviour
 	public int medSyringes = 0;
 	[Tooltip("How many Battery Packs the player has in their inventory")]
 	public int batteryPacks = 0;
-	private CameraControl cameraControl;
 
 	// Start is called before the first frame update
 	void Start()
@@ -54,13 +54,15 @@ public class PlayerController : MonoBehaviour
 		capsule = GetComponent<CapsuleCollider>();
 		standHeight = capsule.height;
 		defautScale = transform.localScale;
-		cameraControl = GetComponentInChildren<CameraControl>();
 	}
 
 	private void FixedUpdate()
 	{
 		// Constant input
 		Vector3 input = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+
+		if (input.magnitude > 0.9f)
+			input.Normalize();
 
 		// Move the player using the input, keep the downwards velocity for when they fall.
 		Vector3 vel = new Vector3(0, rb.velocity.y, 0);
@@ -92,6 +94,7 @@ public class PlayerController : MonoBehaviour
 		// If the player is standing then make them crouch otherwise make them stand
 		if (transform.localScale == defautScale)
 		{
+			isCrouching = true;
 			// Change the localScale of the gameObject so that the height is the crouch height
 			gameObject.transform.localScale = new Vector3(transform.localScale.x,
 				defautScale.y / (standHeight / crouchHeight), transform.localScale.z);
@@ -104,6 +107,7 @@ public class PlayerController : MonoBehaviour
 			// Distance is how much difference between current height and stand height
 			standHeight - (capsule.radius < crouchHeight ? crouchHeight : capsule.radius)))
 		{
+			isCrouching = false;
 			// When the player stands up reset the scale back to what it was at the start
 			gameObject.transform.localScale = defautScale;
 		}
