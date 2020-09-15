@@ -28,6 +28,8 @@ public class CameraControl : MonoBehaviour
 	public float holdDistance = 0.5f;
 	// The object that is in the players hand (null if player isn't holding anything)
 	[HideInInspector] public Rigidbody heldObject = null;
+	[Tooltip("The position on the screen where it detects click at (decimal percentage)")]
+	public Vector2 cursorPosition = new Vector2(0.5f, 0.5f);
 
 	[Header("Lean settings")]
 	[Tooltip("The angle that the camera will be tilted on when the player leans")]
@@ -160,7 +162,7 @@ public class CameraControl : MonoBehaviour
 		if (heldObject != null)
 		{
 			// Ajust the held object spring to in front of the player
-			grabSpring.connectedAnchor = PlayerCamera.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, holdDistance));
+			grabSpring.connectedAnchor = PlayerCamera.ViewportToWorldPoint(new Vector3(cursorPosition.x, cursorPosition.y, holdDistance));
 		}
 
 		Lean();
@@ -171,7 +173,7 @@ public class CameraControl : MonoBehaviour
 	/// </summary>
 	public void GrabObject()
 	{
-		if (Physics.Raycast(PlayerCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0.5f)), out RaycastHit RayOut, grabDistance, grabLayers))
+		if (Physics.Raycast(PlayerCamera.ViewportPointToRay(new Vector3(cursorPosition.x, cursorPosition.y, 0.5f)), out RaycastHit RayOut, grabDistance, grabLayers))
 		{
 			if (RayOut.rigidbody != null)
 			{
@@ -278,7 +280,8 @@ public class CameraControl : MonoBehaviour
 			leanTransitionStartTime = DateTime.Now;
 		}
 
-		bool leanPosBlocked = Physics.Linecast(transform.TransformPoint(transform.localPosition), transform.TransformPoint(leanPos[(int)currentLean]), ~LayerMask.GetMask("Player"));
+		bool leanPosBlocked = Physics.Linecast(transform.TransformPoint(transform.localPosition), 
+			transform.TransformPoint(leanPos[(int)currentLean]), ~LayerMask.GetMask("Player"));
 
 		// If a transition is needed
 		if (!leanPosBlocked && (Vector3.Distance(transform.localPosition, leanTransitionStartPos) > 0.05f || previousLean != currentLean))
