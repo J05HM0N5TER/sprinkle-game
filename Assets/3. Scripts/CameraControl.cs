@@ -35,7 +35,7 @@ public class CameraControl : MonoBehaviour
 	// The info from the redicle used to calculate where to click
 	private RectTransform redicle;
 	[Tooltip("The amount of force put into the object held when thrown")]
-	[Min(0)]
+	[Range(0, 5000)]
 	public float throwForce = 5f;
 
 	[Header("Lean settings")]
@@ -168,6 +168,11 @@ public class CameraControl : MonoBehaviour
 		{
 			DropObject();
 		}
+		// Throwing the object
+		else if (heldObject && Input.GetButtonDown("Throw object"))
+		{
+			ThrowObject();
+		}
 
 		if (heldObject != null)
 		{
@@ -228,10 +233,18 @@ public class CameraControl : MonoBehaviour
 
 		// Destroy the spring
 		Destroy(grabSpring);
-		// TEMP test for thowing objects
-		heldObject.AddForce(transform.forward * throwForce);
+
 		// Set it to not holding anything
 		heldObject = null;
+	}
+
+	public void ThrowObject()
+	{
+		// Copy the object becuase DropObject removes it from heldobject
+		Rigidbody throwObject = heldObject;
+		DropObject();
+		// Add the throw force to the object
+		throwObject.AddForce(transform.forward * throwForce);
 	}
 
 	/// <summary>
