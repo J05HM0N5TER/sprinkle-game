@@ -13,10 +13,9 @@ public class tutorial : MonoBehaviour
 		none = 0,
 		crouch = 1 << 0,
 		interact = 1 << 1,
-		leanRight = 1 << 2,
-		leanLeft = 1 << 3,
-		jump = 1 << 4,
-		sprint = 1 << 5
+		lean = 1 << 2,
+		jump = 1 << 3,
+		sprint = 1 << 4
 	}
 	[Tooltip("What button needs to pressed to 'complete' the tutorial")]
 	public Tutorial tutorialButton;
@@ -25,6 +24,7 @@ public class tutorial : MonoBehaviour
 	[Tooltip("The box element that will display the text on the canvas")]
 	public GameObject textbox;
 	private string buttonToPress = "";
+	private string altButtonToPress = "";
 	private bool hasEnteredTurotialBox;
 
 	// Start is called before the first frame update
@@ -41,12 +41,9 @@ public class tutorial : MonoBehaviour
 				buttonToPress = "Interact";
 				break;
 
-			case "leanRight":
+			case "lean":
 				buttonToPress = "Lean Right";
-				break;
-
-			case "leanLeft":
-				buttonToPress = "Lean Left";
+				altButtonToPress = "Lean Left";
 				break;
 
 			case "jump":
@@ -57,12 +54,10 @@ public class tutorial : MonoBehaviour
 				buttonToPress = "Sprint";
 				break;
 		}
-
-		//textbox.SetActive(false);
 	}
 	private void Update()
 	{
-		if (Input.GetButtonDown(buttonToPress) && hasEnteredTurotialBox)
+		if ((Input.GetButtonDown(buttonToPress) || Input.GetButtonDown(altButtonToPress)) && hasEnteredTurotialBox)
 		{
 			textbox.SetActive(false);
 			gameObject.SetActive(false);
