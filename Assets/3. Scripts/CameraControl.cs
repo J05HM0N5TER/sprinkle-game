@@ -93,6 +93,9 @@ public class CameraControl : MonoBehaviour
 	private PlayerController player;
 	private Rigidbody playerRigidbody;
 
+	public GameObject torch;
+	private bool torchActive = false;
+
 
 	// Start is called before the first frame update
 	void Start()
@@ -125,7 +128,7 @@ public class CameraControl : MonoBehaviour
 
 		redicle = GameObject.Find(redicleName).GetComponent<RectTransform>();
 		cursorPosition = new Vector2(redicle.position.x / Screen.width, redicle.position.y / Screen.height);
-
+		
 		// Check that everything was retreved successfully
 #if UNITY_EDITOR
 		if (PlayerCamera == null)
@@ -141,6 +144,7 @@ public class CameraControl : MonoBehaviour
 			Debug.LogWarning("Cant find player RigidBody", this);
 		}
 #endif
+		torch.SetActive(false);
 	}
 
 	// Update is called once per frame
@@ -183,7 +187,16 @@ public class CameraControl : MonoBehaviour
 			// Ajust the held object spring to in front of the player
 			grabSpring.connectedAnchor = PlayerCamera.ViewportToWorldPoint(new Vector3(cursorPosition.x, cursorPosition.y, holdDistance));
 		}
-
+		if(Input.GetButtonDown("Torch") && !torchActive)
+		{
+			torch.SetActive(true);
+			torchActive = true;
+		}
+		if(Input.GetButtonDown("Torch") && torchActive)
+		{
+			torch.SetActive(false);
+			torchActive = false;
+		}
 		Lean();
 	}
 
