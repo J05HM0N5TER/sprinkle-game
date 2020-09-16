@@ -1696,8 +1696,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 220, y: 70}
-  m_SizeDelta: {x: 400, y: 100}
+  m_AnchoredPosition: {x: 175, y: 50}
+  m_SizeDelta: {x: 300, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7437027850541464696
 CanvasRenderer:
@@ -1725,7 +1725,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Alpha Build
+  m_text: Alpha 2.0.1
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 40486d11859515e4f8bdd6fad7ed7383, type: 2}
   m_sharedMaterial: {fileID: 2167403372656622180, guid: 40486d11859515e4f8bdd6fad7ed7383,
@@ -1798,7 +1798,7 @@ MonoBehaviour:
     characterCount: 11
     spriteCount: 0
     spaceCount: 1
-    wordCount: 2
+    wordCount: 4
     linkCount: 0
     lineCount: 1
     pageCount: 1
