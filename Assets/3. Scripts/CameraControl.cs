@@ -34,6 +34,9 @@ public class CameraControl : MonoBehaviour
 	public string redicleName = "Reticle";
 	// The info from the redicle used to calculate where to click
 	private RectTransform redicle;
+	[Tooltip("The amount of force put into the object held when thrown")]
+	[Range(0, 5000)]
+	public float throwForce = 5f;
 
 	[Header("Lean settings")]
 	[Tooltip("The angle that the camera will be tilted on when the player leans")]
@@ -96,7 +99,7 @@ public class CameraControl : MonoBehaviour
 	{
 		leanTransitionStartTime = DateTime.Now.AddSeconds(-leanTransitionTime);
 
-		UnityEngine.Cursor.lockState = CursorLockMode.Locked;
+		Cursor.lockState = CursorLockMode.Locked;
 		defaultPos = transform.localPosition;
 		leanPos = new Vector3[]{
 			defaultPos,
@@ -165,6 +168,11 @@ public class CameraControl : MonoBehaviour
 		{
 			DropObject();
 		}
+		// Throwing the object
+		else if (heldObject && Input.GetButtonDown("Throw object"))
+		{
+			ThrowObject();
+		}
 
 		if (heldObject != null)
 		{
@@ -225,8 +233,18 @@ public class CameraControl : MonoBehaviour
 
 		// Destroy the spring
 		Destroy(grabSpring);
+
 		// Set it to not holding anything
 		heldObject = null;
+	}
+
+	public void ThrowObject()
+	{
+		// Copy the object becuase DropObject removes it from heldobject
+		Rigidbody throwObject = heldObject;
+		DropObject();
+		// Add the throw force to the object
+		throwObject.AddForce(transform.forward * throwForce);
 	}
 
 	/// <summary>
