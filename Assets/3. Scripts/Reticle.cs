@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class Reticle : MonoBehaviour
 {
+    [Tooltip("The object on the canvas that has the reticle sprite")]
     public GameObject reticleSprite;
     private Camera playerCamera;
+    [Tooltip("Should be the same as the grabbing distance, just the distance that the ray goes to check whats in front")]
     public float grabDistance = 30;
     // Start is called before the first frame update
     void Start()
@@ -21,17 +23,12 @@ public class Reticle : MonoBehaviour
         if(RayOut.collider == null)
         {
             reticleSprite.SetActive(false);
-            Debug.Log("didnt hit shit");
+            //Debug.Log("didnt hit shit");
         }
         else//(RayOut.collider.gameObject.layer == LayerMask.NameToLayer("Dynamic"))
         {
             reticleSprite.SetActive(true);
-            Debug.Log("dynamic hit "+ RayOut.transform.gameObject.name);
+            //Debug.Log("dynamic hit "+ RayOut.transform.gameObject.name);
         }
-        //else
-        //{
-        //    reticleSprite.SetActive(false);
-        //    Debug.Log("hit " + RayOut.transform.gameObject.name);
-        //}
     }
 }
