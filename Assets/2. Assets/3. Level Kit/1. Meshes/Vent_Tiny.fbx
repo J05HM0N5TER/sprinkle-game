@@ -10,9 +10,9 @@ FBXHeaderExtension:  {
 		Month: 9
 		Day: 15
 		Hour: 13
-		Minute: 44
-		Second: 41
-		Millisecond: 10
+		Minute: 45
+		Second: 33
+		Millisecond: 362
 	}
 	Creator: "FBX SDK/FBX Plugins version 2019.2"
 	SceneInfo: "SceneInfo::GlobalInfo", "UserData" {
@@ -28,19 +28,19 @@ FBXHeaderExtension:  {
 			Comment: ""
 		}
 		Properties70:  {
-			P: "DocumentUrl", "KString", "Url", "", "C:\Users\Samuel\Desktop\End of year project\Exports\GreyBox\Greybox (Working)\Vent_Basic.fbx"
-			P: "SrcDocumentUrl", "KString", "Url", "", "C:\Users\Samuel\Desktop\End of year project\Exports\GreyBox\Greybox (Working)\Vent_Basic.fbx"
+			P: "DocumentUrl", "KString", "Url", "", "C:\Users\Samuel\Desktop\End of year project\Exports\GreyBox\Greybox (Working)\Vent_Tiny.fbx"
+			P: "SrcDocumentUrl", "KString", "Url", "", "C:\Users\Samuel\Desktop\End of year project\Exports\GreyBox\Greybox (Working)\Vent_Tiny.fbx"
 			P: "Original", "Compound", "", ""
 			P: "Original|ApplicationVendor", "KString", "", "", "Autodesk"
 			P: "Original|ApplicationName", "KString", "", "", "Maya"
 			P: "Original|ApplicationVersion", "KString", "", "", "201900"
-			P: "Original|DateTime_GMT", "DateTime", "", "", "15/09/2020 03:44:41.009"
-			P: "Original|FileName", "KString", "", "", "C:\Users\Samuel\Desktop\End of year project\Exports\GreyBox\Greybox (Working)\Vent_Basic.fbx"
+			P: "Original|DateTime_GMT", "DateTime", "", "", "15/09/2020 03:45:33.360"
+			P: "Original|FileName", "KString", "", "", "C:\Users\Samuel\Desktop\End of year project\Exports\GreyBox\Greybox (Working)\Vent_Tiny.fbx"
 			P: "LastSaved", "Compound", "", ""
 			P: "LastSaved|ApplicationVendor", "KString", "", "", "Autodesk"
 			P: "LastSaved|ApplicationName", "KString", "", "", "Maya"
 			P: "LastSaved|ApplicationVersion", "KString", "", "", "201900"
-			P: "LastSaved|DateTime_GMT", "DateTime", "", "", "15/09/2020 03:44:41.009"
+			P: "LastSaved|DateTime_GMT", "DateTime", "", "", "15/09/2020 03:45:33.360"
 			P: "Original|ApplicationActiveProject", "KString", "", "", "C:\Users\Samuel\Desktop\End of year project\Exports\GreyBox\Greybox (Working)"
 			P: "Original|ApplicationNativeFile", "KString", "", "", "C:\Users\Samuel\Desktop\End of year project\Scenes\Game Modular Assets(Working)\Game_Modular_AssetsV2.0069.ma"
 		}
@@ -77,7 +77,7 @@ GlobalSettings:  {
 
 Documents:  {
 	Count: 1
-	Document: 2866598275456, "", "Scene" {
+	Document: 2866589697040, "", "Scene" {
 		Properties70:  {
 			P: "SourceObject", "object", "", ""
 			P: "ActiveAnimStackName", "KString", "", "", "Take 001"
@@ -97,7 +97,7 @@ References:  {
 
 Definitions:  {
 	Version: 100
-	Count: 11
+	Count: 6
 	ObjectType: "GlobalSettings" {
 		Count: 1
 	}
@@ -129,18 +129,45 @@ Definitions:  {
 			}
 		}
 	}
-	ObjectType: "NodeAttribute" {
+	ObjectType: "Geometry" {
 		Count: 1
-		PropertyTemplate: "FbxNull" {
+		PropertyTemplate: "FbxMesh" {
 			Properties70:  {
 				P: "Color", "ColorRGB", "Color", "",0.8,0.8,0.8
-				P: "Size", "double", "Number", "",100
-				P: "Look", "enum", "", "",1
+				P: "BBoxMin", "Vector3D", "Vector", "",0,0,0
+				P: "BBoxMax", "Vector3D", "Vector", "",0,0,0
+				P: "Primary Visibility", "bool", "", "",1
+				P: "Casts Shadows", "bool", "", "",1
+				P: "Receive Shadows", "bool", "", "",1
+			}
+		}
+	}
+	ObjectType: "Material" {
+		Count: 1
+		PropertyTemplate: "FbxSurfaceLambert" {
+			Properties70:  {
+				P: "ShadingModel", "KString", "", "", "Lambert"
+				P: "MultiLayer", "bool", "", "",0
+				P: "EmissiveColor", "Color", "", "A",0,0,0
+				P: "EmissiveFactor", "Number", "", "A",1
+				P: "AmbientColor", "Color", "", "A",0.2,0.2,0.2
+				P: "AmbientFactor", "Number", "", "A",1
+				P: "DiffuseColor", "Color", "", "A",0.8,0.8,0.8
+				P: "DiffuseFactor", "Number", "", "A",1
+				P: "Bump", "Vector3D", "Vector", "",0,0,0
+				P: "NormalMap", "Vector3D", "Vector", "",0,0,0
+				P: "BumpFactor", "double", "Number", "",1
+				P: "TransparentColor", "Color", "", "A",0,0,0
+				P: "TransparencyFactor", "Number", "", "A",0
+				P: "DisplacementColor", "ColorRGB", "Color", "",0,0,0
+				P: "DisplacementFactor", "double", "Number", "",1
+				P: "VectorDisplacementColor", "ColorRGB", "Color", "",0,0,0
+				P: "VectorDisplacementFactor", "double", "Number", "",1
 			}
 		}
 	}
 	ObjectType: "Model" {
-		Count: 3
+		Count: 1
 		PropertyTemplate: "FbxNode" {
 			Properties70:  {
 				P: "QuaternionInterpolate", "enum", "", "",0
@@ -217,76 +244,33 @@ Definitions:  {
 			}
 		}
 	}
-	ObjectType: "Geometry" {
-		Count: 2
-		PropertyTemplate: "FbxMesh" {
-			Properties70:  {
-				P: "Color", "ColorRGB", "Color", "",0.8,0.8,0.8
-				P: "BBoxMin", "Vector3D", "Vector", "",0,0,0
-				P: "BBoxMax", "Vector3D", "Vector", "",0,0,0
-				P: "Primary Visibility", "bool", "", "",1
-				P: "Casts Shadows", "bool", "", "",1
-				P: "Receive Shadows", "bool", "", "",1
-			}
-		}
-	}
-	ObjectType: "Material" {
-		Count: 2
-		PropertyTemplate: "FbxSurfaceLambert" {
-			Properties70:  {
-				P: "ShadingModel", "KString", "", "", "Lambert"
-				P: "MultiLayer", "bool", "", "",0
-				P: "EmissiveColor", "Color", "", "A",0,0,0
-				P: "EmissiveFactor", "Number", "", "A",1
-				P: "AmbientColor", "Color", "", "A",0.2,0.2,0.2
-				P: "AmbientFactor", "Number", "", "A",1
-				P: "DiffuseColor", "Color", "", "A",0.8,0.8,0.8
-				P: "DiffuseFactor", "Number", "", "A",1
-				P: "Bump", "Vector3D", "Vector", "",0,0,0
-				P: "NormalMap", "Vector3D", "Vector", "",0,0,0
-				P: "BumpFactor", "double", "Number", "",1
-				P: "TransparentColor", "Color", "", "A",0,0,0
-				P: "TransparencyFactor", "Number", "", "A",0
-				P: "DisplacementColor", "ColorRGB", "Color", "",0,0,0
-				P: "DisplacementFactor", "double", "Number", "",1
-				P: "VectorDisplacementColor", "ColorRGB", "Color", "",0,0,0
-				P: "VectorDisplacementFactor", "double", "Number", "",1
-			}
-		}
-	}
 }
 
 ; Object properties
 ;------------------------------------------------------------------
 
 Objects:  {
-	NodeAttribute: 2866738046224, "NodeAttribute::", "Null" {
-		Properties70:  {
-			P: "Look", "enum", "", "",0
-		}
-		TypeFlags: "Null"
-	}
-	Geometry: 2866736928112, "Geometry::", "Mesh" {
-		Vertices: *12 {
-			a: 50,110,-50,50,110,50,-50,110,-50,-50,110,50
+	Geometry: 2866601435920, "Geometry::", "Mesh" {
+		Vertices: *24 {
+			a: -49.9999961853027,110,-1.9073486328125e-05,-49.9999961853027,-2.55795384873636e-13,-1.9073486328125e-05,50.0000190734863,110,-1.9073486328125e-05,50.0000190734863,0,-1.9073486328125e-05,-50,110,-50,-50,-2.55795384873636e-13,-50,50.0000152587891,-1.27897692436818e-13,-50,50.0000152587891,110,-50
 		} 
-		PolygonVertexIndex: *4 {
-			a: 0,1,3,-3
+		PolygonVertexIndex: *16 {
+			a: 0,1,5,-5,1,3,6,-6,3,2,7,-7,2,0,4,-8
 		} 
-		Edges: *4 {
-			a: 0,3,1,2
+		Edges: *12 {
+			a: 12,4,8,14,6,10,0,1,2,3,5,9
 		} 
 		GeometryVersion: 124
 		LayerElementNormal: 0 {
 			Version: 102
 			Name: ""
-			MappingInformationType: "ByVertice"
+			MappingInformationType: "ByPolygonVertex"
 			ReferenceInformationType: "Direct"
-			Normals: *12 {
-				a: 0,-1,0,0,-1,0,0,-1,0,0,-1,0
+			Normals: *48 {
+				a: 1,0,-4.44089209850063e-16,1,0,-4.44089209850063e-16,1,0,-4.44089209850063e-16,1,0,-4.44089209850063e-16,0,1,0,0,1,0,0,1,0,0,1,0,-1,0,4.44089209850063e-16,-1,0,4.44089209850063e-16,-1,0,4.44089209850063e-16,-1,0,4.44089209850063e-16,0,-1,0,0,-1,0,0,-1,0,0,-1,0
 			} 
-			NormalsW: *4 {
-				a: 1,1,1,1
+			NormalsW: *16 {
+				a: 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
 			} 
 		}
 		LayerElementUV: 0 {
@@ -294,11 +278,11 @@ Objects:  {
 			Name: "map1"
 			MappingInformationType: "ByPolygonVertex"
 			ReferenceInformationType: "IndexToDirect"
-			UV: *8 {
-				a: 0.528150737285614,0.143674671649933,0.415650814771652,0.143665492534637,0.415660113096237,0.0311654210090637,0.528159916400909,0.0311747193336487
+			UV: *20 {
+				a: 0.628164291381836,0.910297393798828,0.751906037330627,0.910297393798828,0.751906216144562,0.966543674468994,0.628164291381836,0.966544032096863,0.864398956298828,0.910297036170959,0.864398956298828,0.966543674468994,0.98814070224762,0.910297036170959,0.515671789646149,0.966544032096863,0.515671610832214,0.910298109054565,0.98814070224762,0.966543197631836
 			} 
-			UVIndex: *4 {
-				a: 0,1,2,3
+			UVIndex: *16 {
+				a: 0,1,2,3,1,4,5,2,4,6,9,5,8,0,3,7
 			} 
 		}
 		LayerElementSmoothing: 0 {
@@ -306,8 +290,8 @@ Objects:  {
 			Name: ""
 			MappingInformationType: "ByEdge"
 			ReferenceInformationType: "Direct"
-			Smoothing: *4 {
-				a: 0,0,0,0
+			Smoothing: *12 {
+				a: 0,0,0,0,0,0,0,0,0,0,0,0
 			} 
 		}
 		LayerElementMaterial: 0 {
@@ -339,105 +323,7 @@ Objects:  {
 			}
 		}
 	}
-	Geometry: 2866736929136, "Geometry::", "Mesh" {
-		Vertices: *48 {
-			a: -50,110,50,-50,110,150.000030517578,-50,0,50,-50,0,150.000030517578,50.0000228881836,110,150.000030517578,50.0000152587891,110,49.9999961853027,50.0000152587891,0,49.9999961853027,50.0000228881836,0,149.999969482422,-50,110,-150,-50,0,-150,50,110,-150,50,0,-150,-50,110,-50,-50,0,-50,50.0000152587891,0,-50,50.0000152587891,110,-50
-		} 
-		PolygonVertexIndex: *44 {
-			a: 1,0,5,-5,2,3,7,-7,4,5,6,-8,15,12,8,-11,13,14,11,-10,14,15,10,-12,0,2,13,-13,2,6,14,-14,6,5,15,-15,9,8,12,-14,1,3,2,-1
-		} 
-		Edges: *28 {
-			a: 0,1,2,3,4,5,6,7,40,11,9,12,13,14,15,16,17,18,19,20,22,36,24,25,26,27,29,33
-		} 
-		GeometryVersion: 124
-		LayerElementNormal: 0 {
-			Version: 102
-			Name: ""
-			MappingInformationType: "ByPolygonVertex"
-			ReferenceInformationType: "Direct"
-			Normals: *132 {
-				a: 0,-1,0,0,-1,0,0,-1,0,0,-1,0,-1.92011029298556e-07,1,8.52700262836927e-23,-1.9201104350941e-07,1,8.527003259458e-23,-1.9201104350941e-07,1,8.527003259458e-23,-1.92011029298556e-07,1,8.52700262836927e-23,-1,0,4.44089209850063e-16,-1,0,4.44089209850063e-16,-1,0,4.44089209850063e-16,-1,0,4.44089209850063e-16,0,-1,0,0,-1,0,0,-1,0,0,-1,0,0,1,0,0,1,0,0,1,0,0,1,0,-1,0,4.44089209850063e-16,-1,0,4.44089209850063e-16,-1,0,4.44089209850063e-16,-1,0,4.44089209850063e-16,1,0,-4.44089209850063e-16,1,0,-4.44089209850063e-16,1,0,-4.44089209850063e-16,1,0,-4.44089209850063e-16,0,1,0,0,1,0,0,1,0,0,1,0,-1,0,4.44089209850063e-16,-1,0,4.44089209850063e-16,-1,0,4.44089209850063e-16,-1,0,4.44089209850063e-16,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0
-			} 
-			NormalsW: *44 {
-				a: 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
-			} 
-		}
-		LayerElementUV: 0 {
-			Version: 101
-			Name: "map1"
-			MappingInformationType: "ByPolygonVertex"
-			ReferenceInformationType: "IndexToDirect"
-			UV: *40 {
-				a: 0.372978150844574,0.495841860771179,0.260517358779907,0.0233325138688087,0.26048755645752,0.383332461118698,0.372987568378448,0.383341819047928,0.260507106781006,0.147082477807999,0.373007118701935,0.147091835737228,0.372997760772705,0.259591847658157,0.260497808456421,0.259582489728928,0.147987484931946,0.383323162794113,0.147978186607361,0.49582314491272,0.0355174541473389,0.0233138538897038,0.0354876518249512,0.383313804864883,0.148007154464722,0.147073179483414,0.147997856140137,0.259573191404343,0.0354979038238525,0.259563893079758,0.0355072021484375,0.147063821554184,0.148017406463623,0.0233231894671917,0.0354782342910767,0.495813846588135,0.373017430305481,0.0233418419957161,0.260478258132935,0.495832562446594
-			} 
-			UVIndex: *44 {
-				a: 0,19,2,3,4,5,6,7,3,2,7,6,8,9,17,11,12,13,14,15,13,8,11,14,1,4,12,16,4,7,13,12,7,2,8,13,15,10,16,12,18,5,4,1
-			} 
-		}
-		LayerElementSmoothing: 0 {
-			Version: 102
-			Name: ""
-			MappingInformationType: "ByEdge"
-			ReferenceInformationType: "Direct"
-			Smoothing: *28 {
-				a: 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-			} 
-		}
-		LayerElementMaterial: 0 {
-			Version: 101
-			Name: ""
-			MappingInformationType: "AllSame"
-			ReferenceInformationType: "IndexToDirect"
-			Materials: *1 {
-				a: 0
-			} 
-		}
-		Layer: 0 {
-			Version: 100
-			LayerElement:  {
-				Type: "LayerElementNormal"
-				TypedIndex: 0
-			}
-			LayerElement:  {
-				Type: "LayerElementMaterial"
-				TypedIndex: 0
-			}
-			LayerElement:  {
-				Type: "LayerElementSmoothing"
-				TypedIndex: 0
-			}
-			LayerElement:  {
-				Type: "LayerElementUV"
-				TypedIndex: 0
-			}
-		}
-	}
-	Model: 2866738059664, "Model::Vent_Basic_GRP", "Null" {
-		Version: 232
-		Properties70:  {
-			P: "RotationActive", "bool", "", "",1
-			P: "InheritType", "enum", "", "",1
-			P: "ScalingMax", "Vector3D", "Vector", "",0,0,0
-			P: "DefaultAttributeIndex", "int", "Integer", "",0
-		}
-		Shading: Y
-		Culling: "CullingOff"
-	}
-	Model: 2866738078224, "Model::Vent_Cap", "Mesh" {
-		Version: 232
-		Properties70:  {
-			P: "RotationPivot", "Vector3D", "Vector", "",0,110,0
-			P: "ScalingPivot", "Vector3D", "Vector", "",0,110,0
-			P: "RotationActive", "bool", "", "",1
-			P: "InheritType", "enum", "", "",1
-			P: "ScalingMax", "Vector3D", "Vector", "",0,0,0
-			P: "DefaultAttributeIndex", "int", "Integer", "",0
-			P: "currentUVSet", "KString", "", "U", "map1"
-		}
-		Shading: T
-		Culling: "CullingOff"
-	}
-	Model: 2866738085184, "Model::Vent_Basic", "Mesh" {
+	Model: 2866742369504, "Model::Vent_Tiny", "Mesh" {
 		Version: 232
 		Properties70:  {
 			P: "RotationActive", "bool", "", "",1
@@ -449,22 +335,7 @@ Objects:  {
 		Shading: T
 		Culling: "CullingOff"
 	}
-	Material: 2866581198416, "Material::lambert1", "" {
-		Version: 102
-		ShadingModel: "lambert"
-		MultiLayer: 0
-		Properties70:  {
-			P: "AmbientColor", "Color", "", "A",0,0,0
-			P: "DiffuseColor", "Color", "", "A",0.5,0.5,0.5
-			P: "DiffuseFactor", "Number", "", "A",0.800000011920929
-			P: "TransparencyFactor", "Number", "", "A",1
-			P: "Emissive", "Vector3D", "Vector", "",0,0,0
-			P: "Ambient", "Vector3D", "Vector", "",0,0,0
-			P: "Diffuse", "Vector3D", "Vector", "",0.400000005960464,0.400000005960464,0.400000005960464
-			P: "Opacity", "double", "Number", "",1
-		}
-	}
-	Material: 2866581198816, "Material::Greybox_MAT15", "" {
+	Material: 2866596192064, "Material::Greybox_MAT14", "" {
 		Version: 102
 		ShadingModel: "lambert"
 		MultiLayer: 0
@@ -479,13 +350,13 @@ Objects:  {
 			P: "Opacity", "double", "Number", "",1
 		}
 	}
-	AnimationStack: 2866579927184, "AnimStack::Take 001", "" {
+	AnimationStack: 2866575510288, "AnimStack::Take 001", "" {
 		Properties70:  {
 			P: "LocalStop", "KTime", "Time", "",577326975000
 			P: "ReferenceStop", "KTime", "Time", "",577326975000
 		}
 	}
-	AnimationLayer: 2866562221968, "AnimLayer::BaseLayer", "" {
+	AnimationLayer: 2866740122128, "AnimLayer::BaseLayer", "" {
 	}
 }
 
@@ -494,32 +365,17 @@ Objects:  {
 
 Connections:  {
 	
-	;Model::Vent_Basic_GRP, Model::RootNode
-	C: "OO",2866738059664,0
+	;Model::Vent_Tiny, Model::RootNode
+	C: "OO",2866742369504,0
 	
 	;AnimLayer::BaseLayer, AnimStack::Take 001
-	C: "OO",2866562221968,2866579927184
+	C: "OO",2866740122128,2866575510288
 	
-	;NodeAttribute::, Model::Vent_Basic_GRP
-	C: "OO",2866738046224,2866738059664
+	;Geometry::, Model::Vent_Tiny
+	C: "OO",2866601435920,2866742369504
 	
-	;Model::Vent_Cap, Model::Vent_Basic_GRP
-	C: "OO",2866738078224,2866738059664
-	
-	;Model::Vent_Basic, Model::Vent_Basic_GRP
-	C: "OO",2866738085184,2866738059664
-	
-	;Geometry::, Model::Vent_Cap
-	C: "OO",2866736928112,2866738078224
-	
-	;Material::lambert1, Model::Vent_Cap
-	C: "OO",2866581198416,2866738078224
-	
-	;Geometry::, Model::Vent_Basic
-	C: "OO",2866736929136,2866738085184
-	
-	;Material::Greybox_MAT15, Model::Vent_Basic
-	C: "OO",2866581198816,2866738085184
+	;Material::Greybox_MAT14, Model::Vent_Tiny
+	C: "OO",2866596192064,2866742369504
 }
 ;Takes section
 ;----------------------------------------------------
