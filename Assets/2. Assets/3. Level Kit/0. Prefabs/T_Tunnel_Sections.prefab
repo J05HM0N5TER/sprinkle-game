@@ -14,7 +14,7 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 14
   m_Mesh: {fileID: 8347346522507584539, guid: e1156cbbc187ecc43bc576849f325977, type: 3}
---- !u!64 &7361299452744712362
+--- !u!64 &7638288933775847142
 MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -27,7 +27,7 @@ MeshCollider:
   serializedVersion: 3
   m_Convex: 0
   m_CookingOptions: 14
-  m_Mesh: {fileID: -7348654724505731933, guid: e1156cbbc187ecc43bc576849f325977, type: 3}
+  m_Mesh: {fileID: -6511832902968988513, guid: e1156cbbc187ecc43bc576849f325977, type: 3}
 --- !u!65 &1096576860683377772
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -73,7 +73,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!64 &7506803084614819170
+--- !u!64 &3070503826234150586
 MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -86,7 +86,7 @@ MeshCollider:
   serializedVersion: 3
   m_Convex: 0
   m_CookingOptions: 14
-  m_Mesh: {fileID: -6511832902968988513, guid: e1156cbbc187ecc43bc576849f325977, type: 3}
+  m_Mesh: {fileID: -7348654724505731933, guid: e1156cbbc187ecc43bc576849f325977, type: 3}
 --- !u!64 &3713594972116567678
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -610,7 +610,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 1468a1d3536a273478667122516bb658, type: 2}
+      objectReference: {fileID: 2100000, guid: e679aeab6252702408a6de084a7751e7, type: 2}
     - target: {fileID: 4949679844522612665, guid: e1156cbbc187ecc43bc576849f325977,
         type: 3}
       propertyPath: m_IsActive
@@ -675,7 +675,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 1468a1d3536a273478667122516bb658, type: 2}
+      objectReference: {fileID: 2100000, guid: e679aeab6252702408a6de084a7751e7, type: 2}
     - target: {fileID: 8064235772631229888, guid: e1156cbbc187ecc43bc576849f325977,
         type: 3}
       propertyPath: m_IsActive
