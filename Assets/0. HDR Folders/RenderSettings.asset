@@ -133,6 +133,7 @@ MonoBehaviour:
   - {fileID: -917243913433877158}
   - {fileID: -4896336798104559986}
   - {fileID: 4529929662223031553}
+  - {fileID: 4587647811436754265}
 --- !u!114 &4529929662223031553
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -145,11 +146,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29b00527f85bb3346a4d2cb710971587, type: 3}
   m_Name: VolumetricFog
   m_EditorClassIdentifier: 
-  active: 0
+  active: 1
   m_AdvancedMode: 0
   colorMode:
     m_OverrideState: 1
-    m_Value: 1
+    m_Value: 0
   color:
     m_OverrideState: 1
     m_Value: {r: 0.5, g: 0.5, b: 0.5, a: 1}
@@ -163,7 +164,7 @@ MonoBehaviour:
     max: 1
   maxFogDistance:
     m_OverrideState: 1
-    m_Value: 5000
+    m_Value: 100
     min: 0
   mipFogMaxMip:
     m_OverrideState: 1
@@ -180,17 +181,17 @@ MonoBehaviour:
     min: 0
   albedo:
     m_OverrideState: 1
-    m_Value: {r: 1, g: 1, b: 1, a: 1}
+    m_Value: {r: 0, g: 0, b: 0, a: 1}
     hdr: 0
     showAlpha: 1
     showEyeDropper: 1
   meanFreePath:
     m_OverrideState: 1
-    m_Value: 10
+    m_Value: 20
     min: 1
   baseHeight:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 5
   meanHeight:
     m_OverrideState: 1
     m_Value: 10
@@ -206,4 +207,27 @@ MonoBehaviour:
     max: 1
   enableDistantFog:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 1
+--- !u!114 &4587647811436754265
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4910d90e50201484ba448b791a192696, type: 3}
+  m_Name: VolumetricLightingController
+  m_EditorClassIdentifier: 
+  active: 0
+  m_AdvancedMode: 0
+  depthExtent:
+    m_OverrideState: 1
+    m_Value: 64
+    min: 0.1
+  sliceDistributionUniformity:
+    m_OverrideState: 0
+    m_Value: 0.75
+    min: 0
+    max: 1
