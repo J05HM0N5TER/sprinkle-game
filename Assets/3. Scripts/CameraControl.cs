@@ -28,6 +28,15 @@ public class CameraControl : MonoBehaviour
 	public float holdDistance = 0.5f;
 	// The object that is in the players hand (null if player isn't holding anything)
 	[HideInInspector] public Rigidbody heldObject = null;
+	// The position on the screen where it detects click at (decimal percentage)
+	private Vector2 cursorPosition = new Vector2(0.5f, 0.5f);
+	[Tooltip("The name of the game object that is the redicle that the player can see")]
+	public string redicleName = "Reticle";
+	// The info from the redicle used to calculate where to click
+	private RectTransform redicle;
+	[Tooltip("The amount of force put into the object held when thrown")]
+	[Range(0, 5000)]
+	public float throwForce = 5f;
 
 	[Header("Lean settings")]
 	[Tooltip("The angle that the camera will be tilted on when the player leans")]
@@ -84,13 +93,16 @@ public class CameraControl : MonoBehaviour
 	private PlayerController player;
 	private Rigidbody playerRigidbody;
 
+	public GameObject torch;
+	private bool torchActive = false;
+
 
 	// Start is called before the first frame update
 	void Start()
 	{
 		leanTransitionStartTime = DateTime.Now.AddSeconds(-leanTransitionTime);
 
-		UnityEngine.Cursor.lockState = CursorLockMode.Locked;
+		Cursor.lockState = CursorLockMode.Locked;
 		defaultPos = transform.localPosition;
 		leanPos = new Vector3[]{
 			defaultPos,
@@ -114,6 +126,9 @@ public class CameraControl : MonoBehaviour
 		player = gameObject.transform.parent.GetComponent<PlayerController>();
 		playerRigidbody = player.GetComponent<Rigidbody>();
 
+		redicle = GameObject.Find(redicleName).GetComponent<RectTransform>();
+		cursorPosition = new Vector2(redicle.position.x / Screen.width, redicle.position.y / Screen.height);
+		
 		// Check that everything was retreved successfully
 #if UNITY_EDITOR
 		if (PlayerCamera == null)
@@ -129,6 +144,7 @@ public class CameraControl : MonoBehaviour
 			Debug.LogWarning("Cant find player RigidBody", this);
 		}
 #endif
+		torch.SetActive(false);
 	}
 
 	// Update is called once per frame
@@ -156,13 +172,31 @@ public class CameraControl : MonoBehaviour
 		{
 			DropObject();
 		}
+		// Throwing the object
+		else if (heldObject && Input.GetButtonDown("Throw object"))
+		{
+			ThrowObject();
+		}
 
 		if (heldObject != null)
 		{
+			// Only in editor update redicle position every frame
+#if UNITY_EDITOR
+			cursorPosition = new Vector2(redicle.position.x / Screen.width, redicle.position.y / Screen.height);
+#endif
 			// Ajust the held object spring to in front of the player
-			grabSpring.connectedAnchor = PlayerCamera.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, holdDistance));
+			grabSpring.connectedAnchor = PlayerCamera.ViewportToWorldPoint(new Vector3(cursorPosition.x, cursorPosition.y, holdDistance));
 		}
-
+		if(Input.GetButtonDown("Torch") && !torchActive)
+		{
+			torch.SetActive(true);
+			torchActive = true;
+		}
+		if(Input.GetButtonDown("Torch") && torchActive)
+		{
+			torch.SetActive(false);
+			torchActive = false;
+		}
 		Lean();
 	}
 
@@ -171,7 +205,7 @@ public class CameraControl : MonoBehaviour
 	/// </summary>
 	public void GrabObject()
 	{
-		if (Physics.Raycast(PlayerCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0.5f)), out RaycastHit RayOut, grabDistance, grabLayers))
+		if (Physics.Raycast(PlayerCamera.ViewportPointToRay(new Vector3(cursorPosition.x, cursorPosition.y, 0.5f)), out RaycastHit RayOut, grabDistance, grabLayers))
 		{
 			if (RayOut.rigidbody != null)
 			{
@@ -212,8 +246,18 @@ public class CameraControl : MonoBehaviour
 
 		// Destroy the spring
 		Destroy(grabSpring);
+
 		// Set it to not holding anything
 		heldObject = null;
+	}
+
+	public void ThrowObject()
+	{
+		// Copy the object becuase DropObject removes it from heldobject
+		Rigidbody throwObject = heldObject;
+		DropObject();
+		// Add the throw force to the object
+		throwObject.AddForce(transform.forward * throwForce);
 	}
 
 	/// <summary>
@@ -278,7 +322,8 @@ public class CameraControl : MonoBehaviour
 			leanTransitionStartTime = DateTime.Now;
 		}
 
-		bool leanPosBlocked = Physics.Linecast(transform.TransformPoint(transform.localPosition), transform.TransformPoint(leanPos[(int)currentLean]), ~LayerMask.GetMask("Player"));
+		bool leanPosBlocked = Physics.Linecast(transform.TransformPoint(transform.localPosition), 
+			transform.TransformPoint(leanPos[(int)currentLean]), ~LayerMask.GetMask("Player"));
 
 		// If a transition is needed
 		if (!leanPosBlocked && (Vector3.Distance(transform.localPosition, leanTransitionStartPos) > 0.05f || previousLean != currentLean))

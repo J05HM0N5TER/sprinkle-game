@@ -11,7 +11,7 @@ public class Terminals : MonoBehaviour
 	public PlayerController.Inventory neededKeyCard;
 	private GameObject player;
 	[Tooltip("the max distance that the player can be from the terminal and still interact with it")]
-	public float maxDistanceToInteract;
+	public float maxDistanceToInteract = 2;
 	public bool brokenTerminal = false;
 	[Tooltip("Spark Particles")]
 	public GameObject brokenParticles;
@@ -41,9 +41,9 @@ public class Terminals : MonoBehaviour
 		if (Input.GetButtonDown("Interact"))
 		{
 			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-			if (Physics.Raycast(ray, out RaycastHit hit) &&  // Raycast check
-				hit.collider.gameObject == gameObject && // Raycast hit this object
-				Vector3.Distance(hit.transform.position, gameObject.transform.position) <= maxDistanceToInteract)  // The player is in range 
+			if (Physics.Raycast(ray, out RaycastHit hit, maxDistanceToInteract) &&  // Raycast check
+				hit.collider.gameObject == gameObject) //&& // Raycast hit this object
+				//hit.distance <= maxDistanceToInteract)  // The player is in range 
 			{
 				// The player has the key card needed
 				if ((player.GetComponent<PlayerController>().inventory & neededKeyCard) == neededKeyCard && !brokenTerminal)
@@ -56,20 +56,17 @@ public class Terminals : MonoBehaviour
 					else
 					{
 						doorToOpen.GetComponent<TriggerScript>().locked = false;
-					}
-					
-					
-						
+					}	
 					// Unlock Animation
 					gameObject.GetComponent<Animator>().SetTrigger("Unlock");
 				}
 				if(player.GetComponent<PlayerController>().inventory.HasFlag(PlayerController.Inventory.SolderingIron) && brokenTerminal)
 				{
-					gameObject.GetComponent<Animator>().SetTrigger("FixTerminal");
 					brokenTerminal = false;
 					var em = ps.emission;
 					em.enabled = false;
 					ps.Stop();
+					gameObject.GetComponent<Animator>().SetTrigger("FixTerminal");
 				}
 			}
 		}
