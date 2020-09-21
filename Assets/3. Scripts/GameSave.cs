@@ -2,12 +2,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 using System.Xml;
+using System.Xml.Serialization;
 using UnityEngine;
+
+// NOTE This whole class is going to be super dodgy
+
+[System.Serializable]
 
 public class GameSave : MonoBehaviour
 {
-
 	private void Update ()
 	{
 		if (Input.GetKeyDown (KeyCode.F1))
@@ -30,6 +35,13 @@ public class GameSave : MonoBehaviour
 
 		xmlDocument.AppendChild (fileInfo);
 
+		XmlElement player = xmlDocument.CreateElement ("Player");
+		PlayerController playerController = FindObjectOfType<PlayerController> ();
+		// player.SetAttribute("Player", )
+		System.Xml.Serialization.XmlSerializer playerSerializer = new XmlSerializer (playerController.GetType ());
+		FileStream playerStream = new FileStream (Application.dataPath + "/Saves/SavePlayer.xml", FileMode.Create);
+		playerSerializer.Serialize (playerStream, playerController);
+
 		XmlAttribute saveData = xmlDocument.CreateAttribute ("Save");
 		//saveData.a
 
@@ -40,13 +52,24 @@ public class GameSave : MonoBehaviour
 		}
 	}
 
-	private void FixedUpdate ()
+	public void LoadGame ()
 	{
 
 	}
 
-	public void LoadGame ()
+	private List<string> ExtractVariables (Type classType)
 	{
+		BindingFlags bindingFlags = BindingFlags.Public |
+			BindingFlags.NonPublic |
+			BindingFlags.Instance |
+			BindingFlags.Static;
 
+		List<string> names = new List<string> ();
+		foreach (FieldInfo field in classType.GetFields (bindingFlags))
+		{
+			names.Add (field.Name);
+		}
+
+		return names;
 	}
 }
