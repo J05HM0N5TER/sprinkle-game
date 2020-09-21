@@ -54,6 +54,10 @@ public class tutorial : MonoBehaviour
 				buttonToPress = "Sprint";
 				break;
 		}
+		if(altButtonToPress == null)
+		{
+			altButtonToPress = "";
+		}
 	}
 	private void Update()
 	{
