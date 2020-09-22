@@ -8,11 +8,11 @@ FBXHeaderExtension:  {
 		Version: 1000
 		Year: 2020
 		Month: 9
-		Day: 15
-		Hour: 13
-		Minute: 44
-		Second: 41
-		Millisecond: 10
+		Day: 22
+		Hour: 15
+		Minute: 56
+		Second: 47
+		Millisecond: 723
 	}
 	Creator: "FBX SDK/FBX Plugins version 2019.2"
 	SceneInfo: "SceneInfo::GlobalInfo", "UserData" {
@@ -34,15 +34,15 @@ FBXHeaderExtension:  {
 			P: "Original|ApplicationVendor", "KString", "", "", "Autodesk"
 			P: "Original|ApplicationName", "KString", "", "", "Maya"
 			P: "Original|ApplicationVersion", "KString", "", "", "201900"
-			P: "Original|DateTime_GMT", "DateTime", "", "", "15/09/2020 03:44:41.009"
+			P: "Original|DateTime_GMT", "DateTime", "", "", "22/09/2020 05:56:47.721"
 			P: "Original|FileName", "KString", "", "", "C:\Users\Samuel\Desktop\End of year project\Exports\GreyBox\Greybox (Working)\Vent_Basic.fbx"
 			P: "LastSaved", "Compound", "", ""
 			P: "LastSaved|ApplicationVendor", "KString", "", "", "Autodesk"
 			P: "LastSaved|ApplicationName", "KString", "", "", "Maya"
 			P: "LastSaved|ApplicationVersion", "KString", "", "", "201900"
-			P: "LastSaved|DateTime_GMT", "DateTime", "", "", "15/09/2020 03:44:41.009"
+			P: "LastSaved|DateTime_GMT", "DateTime", "", "", "22/09/2020 05:56:47.721"
 			P: "Original|ApplicationActiveProject", "KString", "", "", "C:\Users\Samuel\Desktop\End of year project\Exports\GreyBox\Greybox (Working)"
-			P: "Original|ApplicationNativeFile", "KString", "", "", "C:\Users\Samuel\Desktop\End of year project\Scenes\Game Modular Assets(Working)\Game_Modular_AssetsV2.0069.ma"
+			P: "Original|ApplicationNativeFile", "KString", "", "", "C:\Users\Samuel\Desktop\End of year project\Scenes\Game Modular Assets(Working)\Game_Modular_AssetsV2.0077.ma"
 		}
 	}
 }
@@ -77,7 +77,7 @@ GlobalSettings:  {
 
 Documents:  {
 	Count: 1
-	Document: 2866598275456, "", "Scene" {
+	Document: 1422968640832, "", "Scene" {
 		Properties70:  {
 			P: "SourceObject", "object", "", ""
 			P: "ActiveAnimStackName", "KString", "", "", "Take 001"
@@ -260,13 +260,13 @@ Definitions:  {
 ;------------------------------------------------------------------
 
 Objects:  {
-	NodeAttribute: 2866738046224, "NodeAttribute::", "Null" {
+	NodeAttribute: 1422967658000, "NodeAttribute::", "Null" {
 		Properties70:  {
 			P: "Look", "enum", "", "",0
 		}
 		TypeFlags: "Null"
 	}
-	Geometry: 2866736928112, "Geometry::", "Mesh" {
+	Geometry: 1422909818992, "Geometry::", "Mesh" {
 		Vertices: *12 {
 			a: 50,110,-50,50,110,50,-50,110,-50,-50,110,50
 		} 
@@ -274,7 +274,7 @@ Objects:  {
 			a: 0,1,3,-3
 		} 
 		Edges: *4 {
-			a: 0,3,1,2
+			a: 0,1,2,3
 		} 
 		GeometryVersion: 124
 		LayerElementNormal: 0 {
@@ -339,15 +339,15 @@ Objects:  {
 			}
 		}
 	}
-	Geometry: 2866736929136, "Geometry::", "Mesh" {
+	Geometry: 1422910131376, "Geometry::", "Mesh" {
 		Vertices: *48 {
-			a: -50,110,50,-50,110,150.000030517578,-50,0,50,-50,0,150.000030517578,50.0000228881836,110,150.000030517578,50.0000152587891,110,49.9999961853027,50.0000152587891,0,49.9999961853027,50.0000228881836,0,149.999969482422,-50,110,-150,-50,0,-150,50,110,-150,50,0,-150,-50,110,-50,-50,0,-50,50.0000152587891,0,-50,50.0000152587891,110,-50
+			a: -50,110,50,-50,110,150.000030517578,-50,0,50,-50,0,150.000030517578,50.0000228881836,110,150.000030517578,50.0000190734863,110,49.9999961853027,50.0000190734863,0,49.9999961853027,50.0000228881836,0,149.999969482422,-50,110,-150,-50,0,-150,50,110,-150,50,0,-150,-50,110,-50,-50,0,-50,50.0000190734863,0,-50,50.0000190734863,110,-50
 		} 
 		PolygonVertexIndex: *44 {
 			a: 1,0,5,-5,2,3,7,-7,4,5,6,-8,15,12,8,-11,13,14,11,-10,14,15,10,-12,0,2,13,-13,2,6,14,-14,6,5,15,-15,9,8,12,-14,1,3,2,-1
 		} 
 		Edges: *28 {
-			a: 0,1,2,3,4,5,6,7,40,11,9,12,13,14,15,16,17,18,19,20,22,36,24,25,26,27,29,33
+			a: 0,1,2,3,4,5,6,7,9,11,12,13,14,15,16,17,18,19,20,22,24,25,26,27,29,33,36,40
 		} 
 		GeometryVersion: 124
 		LayerElementNormal: 0 {
@@ -412,7 +412,7 @@ Objects:  {
 			}
 		}
 	}
-	Model: 2866738059664, "Model::Vent_Basic_GRP", "Null" {
+	Model: 1422420305456, "Model::Vent_Basic_GRP", "Null" {
 		Version: 232
 		Properties70:  {
 			P: "RotationActive", "bool", "", "",1
@@ -423,7 +423,7 @@ Objects:  {
 		Shading: Y
 		Culling: "CullingOff"
 	}
-	Model: 2866738078224, "Model::Vent_Cap", "Mesh" {
+	Model: 1422420321696, "Model::Vent_Cap", "Mesh" {
 		Version: 232
 		Properties70:  {
 			P: "RotationPivot", "Vector3D", "Vector", "",0,110,0
@@ -437,7 +437,7 @@ Objects:  {
 		Shading: T
 		Culling: "CullingOff"
 	}
-	Model: 2866738085184, "Model::Vent_Basic", "Mesh" {
+	Model: 1422420324016, "Model::Vent_Basic", "Mesh" {
 		Version: 232
 		Properties70:  {
 			P: "RotationActive", "bool", "", "",1
@@ -449,7 +449,7 @@ Objects:  {
 		Shading: T
 		Culling: "CullingOff"
 	}
-	Material: 2866581198416, "Material::lambert1", "" {
+	Material: 1421705106624, "Material::lambert31", "" {
 		Version: 102
 		ShadingModel: "lambert"
 		MultiLayer: 0
@@ -464,7 +464,7 @@ Objects:  {
 			P: "Opacity", "double", "Number", "",1
 		}
 	}
-	Material: 2866581198816, "Material::Greybox_MAT15", "" {
+	Material: 1422960404896, "Material::Greybox_MAT25", "" {
 		Version: 102
 		ShadingModel: "lambert"
 		MultiLayer: 0
@@ -479,13 +479,13 @@ Objects:  {
 			P: "Opacity", "double", "Number", "",1
 		}
 	}
-	AnimationStack: 2866579927184, "AnimStack::Take 001", "" {
+	AnimationStack: 1422968969056, "AnimStack::Take 001", "" {
 		Properties70:  {
 			P: "LocalStop", "KTime", "Time", "",577326975000
 			P: "ReferenceStop", "KTime", "Time", "",577326975000
 		}
 	}
-	AnimationLayer: 2866562221968, "AnimLayer::BaseLayer", "" {
+	AnimationLayer: 1422968997824, "AnimLayer::BaseLayer", "" {
 	}
 }
 
@@ -495,31 +495,31 @@ Objects:  {
 Connections:  {
 	
 	;Model::Vent_Basic_GRP, Model::RootNode
-	C: "OO",2866738059664,0
+	C: "OO",1422420305456,0
 	
 	;AnimLayer::BaseLayer, AnimStack::Take 001
-	C: "OO",2866562221968,2866579927184
+	C: "OO",1422968997824,1422968969056
 	
 	;NodeAttribute::, Model::Vent_Basic_GRP
-	C: "OO",2866738046224,2866738059664
+	C: "OO",1422967658000,1422420305456
 	
 	;Model::Vent_Cap, Model::Vent_Basic_GRP
-	C: "OO",2866738078224,2866738059664
+	C: "OO",1422420321696,1422420305456
 	
 	;Model::Vent_Basic, Model::Vent_Basic_GRP
-	C: "OO",2866738085184,2866738059664
+	C: "OO",1422420324016,1422420305456
 	
 	;Geometry::, Model::Vent_Cap
-	C: "OO",2866736928112,2866738078224
+	C: "OO",1422909818992,1422420321696
 	
-	;Material::lambert1, Model::Vent_Cap
-	C: "OO",2866581198416,2866738078224
+	;Material::lambert31, Model::Vent_Cap
+	C: "OO",1421705106624,1422420321696
 	
 	;Geometry::, Model::Vent_Basic
-	C: "OO",2866736929136,2866738085184
+	C: "OO",1422910131376,1422420324016
 	
-	;Material::Greybox_MAT15, Model::Vent_Basic
-	C: "OO",2866581198816,2866738085184
+	;Material::Greybox_MAT25, Model::Vent_Basic
+	C: "OO",1422960404896,1422420324016
 }
 ;Takes section
 ;----------------------------------------------------

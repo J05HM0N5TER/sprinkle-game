@@ -8,11 +8,11 @@ FBXHeaderExtension:  {
 		Version: 1000
 		Year: 2020
 		Month: 9
-		Day: 15
-		Hour: 13
-		Minute: 43
-		Second: 6
-		Millisecond: 613
+		Day: 22
+		Hour: 15
+		Minute: 57
+		Second: 24
+		Millisecond: 714
 	}
 	Creator: "FBX SDK/FBX Plugins version 2019.2"
 	SceneInfo: "SceneInfo::GlobalInfo", "UserData" {
@@ -34,15 +34,15 @@ FBXHeaderExtension:  {
 			P: "Original|ApplicationVendor", "KString", "", "", "Autodesk"
 			P: "Original|ApplicationName", "KString", "", "", "Maya"
 			P: "Original|ApplicationVersion", "KString", "", "", "201900"
-			P: "Original|DateTime_GMT", "DateTime", "", "", "15/09/2020 03:43:06.610"
+			P: "Original|DateTime_GMT", "DateTime", "", "", "22/09/2020 05:57:24.710"
 			P: "Original|FileName", "KString", "", "", "C:\Users\Samuel\Desktop\End of year project\Exports\GreyBox\Greybox (Working)\Vent_Small.fbx"
 			P: "LastSaved", "Compound", "", ""
 			P: "LastSaved|ApplicationVendor", "KString", "", "", "Autodesk"
 			P: "LastSaved|ApplicationName", "KString", "", "", "Maya"
 			P: "LastSaved|ApplicationVersion", "KString", "", "", "201900"
-			P: "LastSaved|DateTime_GMT", "DateTime", "", "", "15/09/2020 03:43:06.610"
+			P: "LastSaved|DateTime_GMT", "DateTime", "", "", "22/09/2020 05:57:24.710"
 			P: "Original|ApplicationActiveProject", "KString", "", "", "C:\Users\Samuel\Desktop\End of year project\Exports\GreyBox\Greybox (Working)"
-			P: "Original|ApplicationNativeFile", "KString", "", "", "C:\Users\Samuel\Desktop\End of year project\Scenes\Game Modular Assets(Working)\Game_Modular_AssetsV2.0069.ma"
+			P: "Original|ApplicationNativeFile", "KString", "", "", "C:\Users\Samuel\Desktop\End of year project\Scenes\Game Modular Assets(Working)\Game_Modular_AssetsV2.0077.ma"
 		}
 	}
 }
@@ -77,7 +77,7 @@ GlobalSettings:  {
 
 Documents:  {
 	Count: 1
-	Document: 2866735967856, "", "Scene" {
+	Document: 1422724105616, "", "Scene" {
 		Properties70:  {
 			P: "SourceObject", "object", "", ""
 			P: "ActiveAnimStackName", "KString", "", "", "Take 001"
@@ -250,15 +250,15 @@ Definitions:  {
 ;------------------------------------------------------------------
 
 Objects:  {
-	Geometry: 2866735796320, "Geometry::", "Mesh" {
+	Geometry: 1422917823008, "Geometry::", "Mesh" {
 		Vertices: *24 {
-			a: 50,0,-50,50,109.785499572754,-50,-50.6019287109375,109.785499572754,-50.0000610351563,-50.6019287109375,0,-50.0000610351563,50,0,50,50,109.785499572754,50,-50.6019287109375,109.785499572754,49.9999389648438,-50.6019287109375,0,49.9999389648438
+			a: 50,0,-50,50,110,-50,-50,110,-50.0000610351563,-50,0,-50.0000610351563,50,0,50,50,110,50,-50,110,49.9999389648438,-50,0,49.9999389648438
 		} 
 		PolygonVertexIndex: *16 {
 			a: 1,0,4,-6,3,2,6,-8,6,2,1,-6,3,7,4,-1
 		} 
 		Edges: *12 {
-			a: 0,9,4,15,1,3,2,5,7,6,11,13
+			a: 0,1,2,3,4,5,6,7,9,11,13,15
 		} 
 		GeometryVersion: 124
 		LayerElementNormal: 0 {
@@ -323,7 +323,7 @@ Objects:  {
 			}
 		}
 	}
-	Model: 2866736406992, "Model::Vent_Small", "Mesh" {
+	Model: 1422420317056, "Model::Vent_Small", "Mesh" {
 		Version: 232
 		Properties70:  {
 			P: "RotationActive", "bool", "", "",1
@@ -335,7 +335,7 @@ Objects:  {
 		Shading: T
 		Culling: "CullingOff"
 	}
-	Material: 2866684072432, "Material::lambert1", "" {
+	Material: 1422722275024, "Material::lambert34", "" {
 		Version: 102
 		ShadingModel: "lambert"
 		MultiLayer: 0
@@ -350,13 +350,13 @@ Objects:  {
 			P: "Opacity", "double", "Number", "",1
 		}
 	}
-	AnimationStack: 2866555130352, "AnimStack::Take 001", "" {
+	AnimationStack: 1422968939216, "AnimStack::Take 001", "" {
 		Properties70:  {
 			P: "LocalStop", "KTime", "Time", "",577326975000
 			P: "ReferenceStop", "KTime", "Time", "",577326975000
 		}
 	}
-	AnimationLayer: 2866593989248, "AnimLayer::BaseLayer", "" {
+	AnimationLayer: 1422724636560, "AnimLayer::BaseLayer", "" {
 	}
 }
 
@@ -366,16 +366,16 @@ Objects:  {
 Connections:  {
 	
 	;Model::Vent_Small, Model::RootNode
-	C: "OO",2866736406992,0
+	C: "OO",1422420317056,0
 	
 	;AnimLayer::BaseLayer, AnimStack::Take 001
-	C: "OO",2866593989248,2866555130352
+	C: "OO",1422724636560,1422968939216
 	
 	;Geometry::, Model::Vent_Small
-	C: "OO",2866735796320,2866736406992
+	C: "OO",1422917823008,1422420317056
 	
-	;Material::lambert1, Model::Vent_Small
-	C: "OO",2866684072432,2866736406992
+	;Material::lambert34, Model::Vent_Small
+	C: "OO",1422722275024,1422420317056
 }
 ;Takes section
 ;----------------------------------------------------
