@@ -26,6 +26,7 @@ public class TriggerScript : MonoBehaviour
     [Tooltip("time till door can close again")]
     public float timer = 5.0f;
     private float resettimer;
+    private bool doorOpen;
     // Start is called before the first frame update
     void Start()
     {
@@ -35,10 +36,11 @@ public class TriggerScript : MonoBehaviour
     private void Update()
     {
         timer -= Time.deltaTime;
-        if (thingsInDoorway.Count == 0 && timer <= 0)
+        if (thingsInDoorway.Count == 0 && timer <= 0 && doorOpen)
         {
             animatedObject.GetComponent<Animator>().SetTrigger("Close");
             audio.PlayOneShot(Closeclip);
+            doorOpen = false;
             if (oneTimeUse)
             {
                 hasplayedonce = true;
@@ -57,6 +59,7 @@ public class TriggerScript : MonoBehaviour
                     audio.PlayOneShot(Openclip);
                     thingsInDoorway.Add(other.gameObject);
                     timer = resettimer;
+                    doorOpen = true;
                     if(oneTimeUse)
                     {
                         hasplayedonce = true;
