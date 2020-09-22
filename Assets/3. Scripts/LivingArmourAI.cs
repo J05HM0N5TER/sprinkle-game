@@ -20,10 +20,10 @@ public class LivingArmourAI : MonoBehaviour
 	public float timer = 10.0f;
 	
 	[Tooltip("the area around the last seen point of the player that the ai will search for the player")]
-	public float lookngDistance = 1.0f;
+	public float lookingDistance = 1.0f;
 	// Was the AI previously following the player?
 	private bool wasFollowingPlayer = false;
-	private bool isPlayerVisable = false;
+	private bool isPlayerVisible = false;
 	// Has the player ever been seen by this AI?
 	
 	// Is the ray between the player and AI colliding with something
@@ -63,9 +63,9 @@ public class LivingArmourAI : MonoBehaviour
 		//if (rayObstructed)
 		//	print("Ray hit: " + hitinfo.collider.name + " at: " + hitinfo.point.x + ", " + hitinfo.point.y);
 		// Debug view
-        isPlayerVisable = playerInScreenBounds && !rayObstructed;
+        isPlayerVisible = playerInScreenBounds && !rayObstructed;
 		// If the player is currently seen
-		if (isPlayerVisable)
+		if (isPlayerVisible)
 		{
 			playerLastSeen = player.transform.position;
 			// Set the AI to go towards the player
@@ -73,7 +73,7 @@ public class LivingArmourAI : MonoBehaviour
 			
 			wasFollowingPlayer = true;
 		}
-		/*if (wasFollowingPlayer && !isPlayerVisable)
+		/*if (wasFollowingPlayer && !isPlayerVisible)
 		{
 			// If there is a last seen position go search there
 			//if (playerHasBeenSeen)
@@ -90,7 +90,7 @@ public class LivingArmourAI : MonoBehaviour
 			}
 			//while(GoneToLastPoint)
 			//{
-			//	agent.SetDestination(RandomNavSphere(agent.GetComponent<Transform>().position, lookngDistance, -1));
+			//	agent.SetDestination(RandomNavSphere(agent.GetComponent<Transform>().position, lookingDistance, -1));
 			//}
 		}
 		*/
@@ -106,7 +106,7 @@ public class LivingArmourAI : MonoBehaviour
 		}
 		if(lookingforplayer)
 		{
-			wonderDistance = lookngDistance;
+			wonderDistance = lookingDistance;
 			//LookForPlayer();
 			timer -= Time.deltaTime;
 		}
@@ -115,7 +115,7 @@ public class LivingArmourAI : MonoBehaviour
 			lookingforplayer = false;
 			wonderDistance = originalWonder;
 		}
-		if (!wasFollowingPlayer || !isPlayerVisable)
+		if (!wasFollowingPlayer || !isPlayerVisible)
 		{
 			foreach (GameObject SoundSource in soundSources)
 			{

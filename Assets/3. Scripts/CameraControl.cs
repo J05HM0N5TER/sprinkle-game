@@ -14,7 +14,7 @@ public class CameraControl : MonoBehaviour
 	public float mouseSen = 100f;
 	[Tooltip("Player Object")]
 	public Transform PlayerBody;
-	private float Yrotation = 0f;
+	private float YRotation = 0f;
 	// ray casting
 	[Tooltip("layer of objects that can be picked up")]
 	public LayerMask grabLayers;
@@ -30,10 +30,10 @@ public class CameraControl : MonoBehaviour
 	[HideInInspector] public Rigidbody heldObject = null;
 	// The position on the screen where it detects click at (decimal percentage)
 	private Vector2 cursorPosition = new Vector2(0.5f, 0.5f);
-	[Tooltip("The name of the game object that is the redicle that the player can see")]
-	public string redicleName = "Reticle";
-	// The info from the redicle used to calculate where to click
-	private RectTransform redicle;
+	[Tooltip("The name of the game object that is the reticle that the player can see")]
+	public string reticleName = "Reticle";
+	// The info from the reticle used to calculate where to click
+	private RectTransform reticle;
 	[Tooltip("The amount of force put into the object held when thrown")]
 	[Range(0, 5000)]
 	public float throwForce = 5f;
@@ -83,16 +83,18 @@ public class CameraControl : MonoBehaviour
 	float normalADrag = 0.05f;
 
 	[Header("Debug")]
-	[Tooltip("The current magnitue of the velocity of the player")]
+	[Tooltip("The current magnitude of the velocity of the player")]
 #pragma warning disable IDE0052 // Remove unread private members
 	[SerializeField] private float playerMagnitude = 0;
 #pragma warning restore IDE0052 // Remove unread private members
-							   // The spring that controls the held object
+	// The spring that controls the held object
 	private SpringJoint grabSpring;
 
 	private PlayerController player;
 	private Rigidbody playerRigidbody;
 
+	public GameObject torch;
+	private bool torchActive = false;
 
 	// Start is called before the first frame update
 	void Start()
@@ -101,21 +103,21 @@ public class CameraControl : MonoBehaviour
 
 		Cursor.lockState = CursorLockMode.Locked;
 		defaultPos = transform.localPosition;
-		leanPos = new Vector3[]{
+		leanPos = new Vector3[]
+		{
 			defaultPos,
 			new Vector3(
-					defaultPos.x - leanOffset,
-					defaultPos.y,
-					defaultPos.z),
+				defaultPos.x - leanOffset,
+				defaultPos.y,
+				defaultPos.z),
 			new Vector3(
-					defaultPos.x + leanOffset,
-					defaultPos.y,
-					defaultPos.z)
+				defaultPos.x + leanOffset,
+				defaultPos.y,
+				defaultPos.z)
 		};
 		leanRotMod = new float[]
 		{
-			0f,
-			-leanTilt,
+			0f, -leanTilt,
 			leanTilt
 		};
 
@@ -123,10 +125,10 @@ public class CameraControl : MonoBehaviour
 		player = gameObject.transform.parent.GetComponent<PlayerController>();
 		playerRigidbody = player.GetComponent<Rigidbody>();
 
-		redicle = GameObject.Find(redicleName).GetComponent<RectTransform>();
-		cursorPosition = new Vector2(redicle.position.x / Screen.width, redicle.position.y / Screen.height);
+		reticle = GameObject.Find(reticleName).GetComponent<RectTransform>();
+		cursorPosition = new Vector2(reticle.position.x / Screen.width, reticle.position.y / Screen.height);
 
-		// Check that everything was retreved successfully
+		// Check that everything was retrieved successfully
 #if UNITY_EDITOR
 		if (PlayerCamera == null)
 		{
@@ -141,6 +143,7 @@ public class CameraControl : MonoBehaviour
 			Debug.LogWarning("Cant find player RigidBody", this);
 		}
 #endif
+		torch.SetActive(false);
 	}
 
 	// Update is called once per frame
@@ -151,9 +154,9 @@ public class CameraControl : MonoBehaviour
 		float mouseY = Input.GetAxis("Mouse Y") * mouseSen * Time.deltaTime;
 
 		// Vertical mouse movement goes on camera transform
-		Yrotation -= mouseY;
-		Yrotation = Mathf.Clamp(Yrotation, -90f, 90f);
-		transform.localRotation = Quaternion.Euler(Yrotation, 0, 0);
+		YRotation -= mouseY;
+		YRotation = Mathf.Clamp(YRotation, -90f, 90f);
+		transform.localRotation = Quaternion.Euler(YRotation, 0, 0);
 
 		// Horizontal mouse movement goes on player body transform
 		PlayerBody.Rotate(Vector3.up * mouseX);
@@ -176,14 +179,28 @@ public class CameraControl : MonoBehaviour
 
 		if (heldObject != null)
 		{
-			// Only in editor update redicle position every frame
+			// Only in editor update reticle position every frame
 #if UNITY_EDITOR
-			cursorPosition = new Vector2(redicle.position.x / Screen.width, redicle.position.y / Screen.height);
+			cursorPosition = new Vector2(reticle.position.x / Screen.width, reticle.position.y / Screen.height);
 #endif
-			// Ajust the held object spring to in front of the player
+			// Adjust the held object spring to in front of the player
 			grabSpring.connectedAnchor = PlayerCamera.ViewportToWorldPoint(new Vector3(cursorPosition.x, cursorPosition.y, holdDistance));
-		}
 
+			heldObject.rotation = Quaternion.Euler(
+				heldObject.rotation.eulerAngles.x, 
+				heldObject.rotation.eulerAngles.y + mouseX, 
+				heldObject.rotation.eulerAngles.z);
+		}
+		if (Input.GetButtonDown("Torch") && !torchActive)
+		{
+			torch.SetActive(true);
+			torchActive = true;
+		}
+		if (Input.GetButtonDown("Torch") && torchActive)
+		{
+			torch.SetActive(false);
+			torchActive = false;
+		}
 		Lean();
 	}
 
@@ -200,7 +217,7 @@ public class CameraControl : MonoBehaviour
 				heldObject = RayOut.rigidbody;
 				// Creates a spring to hold the object by
 				grabSpring = RayOut.transform.gameObject.AddComponent<SpringJoint>();
-				// Turn off the auto configuation, this is so you can specify a position instead of a game object
+				// Turn off the auto configuration, this is so you can specify a position instead of a game object
 				grabSpring.autoConfigureConnectedAnchor = false;
 				// Set the variables that has been set manually
 				grabSpring.spring = springStrength;
@@ -214,6 +231,9 @@ public class CameraControl : MonoBehaviour
 				normalADrag = RayOut.rigidbody.angularDrag;
 				heldObject.drag = rigidBodyDrag;
 				heldObject.angularDrag = rigidBodyDragAngular;
+
+				// Stop the object to rotating
+				heldObject.constraints = heldObject.constraints | RigidbodyConstraints.FreezeRotation;
 
 				//heldObject.gameObject.transform.position = PlayerCamera.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, holdDistance));
 			}
@@ -230,6 +250,9 @@ public class CameraControl : MonoBehaviour
 		// Reset values saved from before
 		heldObject.drag = normalDrag;
 		heldObject.angularDrag = normalADrag;
+
+		// Allow the object to rotate
+		heldObject.constraints = heldObject.constraints ^ RigidbodyConstraints.FreezeRotation;
 
 		// Destroy the spring
 		Destroy(grabSpring);
@@ -294,42 +317,41 @@ public class CameraControl : MonoBehaviour
 			// If the transition was complete
 			if (leanStateAtStartOfFrame == previousLean)
 			{
-				leanTransitionStartRotMod = leanRotMod[(int)previousLean];
+				leanTransitionStartRotMod = leanRotMod[(int) previousLean];
 			}
 			// If the player changed mid transition
 			else
 			{
-				float transitionPercent = (float)(DateTime.Now - leanTransitionStartTime).TotalSeconds / leanTransitionTime;
+				float transitionPercent = (float) (DateTime.Now - leanTransitionStartTime).TotalSeconds / leanTransitionTime;
 				leanTransitionStartRotMod = Mathf.Lerp(
 					leanTransitionStartRotMod,
-					leanRotMod[(int)currentLean],
+					leanRotMod[(int) currentLean],
 					transitionPercent);
 			}
 			leanTransitionStartPos = transform.localPosition;
 			leanTransitionStartTime = DateTime.Now;
 		}
 
-		bool leanPosBlocked = Physics.Linecast(transform.TransformPoint(transform.localPosition), 
-			transform.TransformPoint(leanPos[(int)currentLean]), ~LayerMask.GetMask("Player"));
+		bool leanPosBlocked = Physics.Linecast(transform.TransformPoint(transform.localPosition),
+			transform.TransformPoint(leanPos[(int) currentLean]), ~LayerMask.GetMask("Player"));
 
 		// If a transition is needed
 		if (!leanPosBlocked && (Vector3.Distance(transform.localPosition, leanTransitionStartPos) > 0.05f || previousLean != currentLean))
 		{
 			// Position
 			//Debug.Log($"Transitioning between {previousLean} and {currentLean}", this);
-			float transitionPercent = (float)(DateTime.Now - leanTransitionStartTime).TotalSeconds / leanTransitionTime;
+			float transitionPercent = (float) (DateTime.Now - leanTransitionStartTime).TotalSeconds / leanTransitionTime;
 			transform.localPosition = Vector3.Lerp(
 				leanTransitionStartPos, // The state transitioning from
-				leanPos[(int)currentLean], // The state transitioning to
+				leanPos[(int) currentLean], // The state transitioning to
 				transitionPercent); // How far though the transition it is
 
-
 			// Rotation
-			float currentRotMod = Mathf.Lerp(leanTransitionStartRotMod, leanRotMod[(int)currentLean], transitionPercent);
+			float currentRotMod = Mathf.Lerp(leanTransitionStartRotMod, leanRotMod[(int) currentLean], transitionPercent);
 			transform.localRotation = Quaternion.Euler(
-						transform.localRotation.eulerAngles.x,
-						transform.localRotation.eulerAngles.y,
-						transform.localRotation.eulerAngles.z + currentRotMod);
+				transform.localRotation.eulerAngles.x,
+				transform.localRotation.eulerAngles.y,
+				transform.localRotation.eulerAngles.z + currentRotMod);
 
 			if (transitionPercent >= 1f)
 			{
@@ -340,12 +362,12 @@ public class CameraControl : MonoBehaviour
 		else if (!leanPosBlocked)
 		{
 			// Position
-			transform.localPosition = leanPos[(int)currentLean];
+			transform.localPosition = leanPos[(int) currentLean];
 			// Rotation
 			transform.localRotation = Quaternion.Euler(
-						transform.localRotation.eulerAngles.x,
-						transform.localRotation.eulerAngles.y,
-						transform.localRotation.eulerAngles.z + leanRotMod[(int)currentLean]);
+				transform.localRotation.eulerAngles.x,
+				transform.localRotation.eulerAngles.y,
+				transform.localRotation.eulerAngles.z + leanRotMod[(int) currentLean]);
 		}
 	}
 }
