@@ -7,15 +7,14 @@ using UnityEngine.UI;
 
 public class tutorial : MonoBehaviour
 {
-	[Flags]
 	public enum Tutorial : byte
 	{
 		none = 0,
-		crouch = 1 << 0,
-		interact = 1 << 1,
-		lean = 1 << 2,
-		jump = 1 << 3,
-		sprint = 1 << 4
+		crouch,
+		interact,
+		lean,
+		jump,
+		sprint
 	}
 	[Tooltip("What button needs to pressed to 'complete' the tutorial")]
 	public Tutorial tutorialButton;
@@ -25,32 +24,32 @@ public class tutorial : MonoBehaviour
 	public GameObject textbox;
 	private string buttonToPress = "";
 	private string altButtonToPress = "";
-	private bool hasEnteredTurotialBox;
+	private bool hasEnteredTutorialBox;
 
 	// Start is called before the first frame update
 	void Start()
 	{
 		//checking which button has been selected for this trigger box
-		switch (gameObject.GetComponent<tutorial>().tutorialButton.ToString())
+		switch (gameObject.GetComponent<tutorial>().tutorialButton)
 		{
-			case "crouch":
+			case Tutorial.crouch:
 				buttonToPress = "Crouch";
 				break;
 
-			case "interact":
+			case Tutorial.interact:
 				buttonToPress = "Interact";
 				break;
 
-			case "lean":
+			case Tutorial.lean:
 				buttonToPress = "Lean Right";
 				altButtonToPress = "Lean Left";
 				break;
 
-			case "jump":
+			case Tutorial.jump:
 				buttonToPress = "Jump";
 				break;
 
-			case "sprint":
+			case Tutorial.sprint:
 				buttonToPress = "Sprint";
 				break;
 		}
@@ -61,11 +60,14 @@ public class tutorial : MonoBehaviour
 	}
 	private void Update()
 	{
-		if ((Input.GetButtonDown(buttonToPress) || Input.GetButtonDown(altButtonToPress)) && hasEnteredTurotialBox)
+		if (hasEnteredTutorialBox && // Is the player in the correct position?
+		(Input.GetButtonDown(buttonToPress) // Is the first button getting pressed?
+		// If the second button is set is it being pressed down?
+		|| !(altButtonToPress == "" || !Input.GetButtonDown(altButtonToPress))))
 		{
 			textbox.SetActive(false);
 			gameObject.SetActive(false);
-			hasEnteredTurotialBox = false;
+			hasEnteredTutorialBox = false;
 		}
 	}
 	private void OnTriggerEnter(Collider other)
@@ -75,7 +77,7 @@ public class tutorial : MonoBehaviour
 		{
 			textbox.SetActive(true);
 			textbox.GetComponent<TextMeshProUGUI>().text = tutorialText;
-			hasEnteredTurotialBox = true;
+			hasEnteredTutorialBox = true;
 		}
 	}
 

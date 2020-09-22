@@ -35,6 +35,15 @@ public class TriggerScript : MonoBehaviour
     private void Update()
     {
         timer -= Time.deltaTime;
+        if (thingsInDoorway.Count == 0 && timer <= 0)
+        {
+            animatedObject.GetComponent<Animator>().SetTrigger("Close");
+            audio.PlayOneShot(Closeclip);
+            if (oneTimeUse)
+            {
+                hasplayedonce = true;
+            }
+        }
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -64,17 +73,8 @@ public class TriggerScript : MonoBehaviour
             {
                 if (other.tag == "Player" || other.tag == "Enemy")
                 {
-                    
                     thingsInDoorway.Remove(other.gameObject);
-                    if(thingsInDoorway.Count == 0 && timer <= 0)
-                    {
-                        animatedObject.GetComponent<Animator>().SetTrigger("Close");
-                        audio.PlayOneShot(Closeclip);
-                    }
-                    if (oneTimeUse)
-                    {
-                        hasplayedonce = true;
-                    }
+                    
                 }     
             }
         }  
