@@ -50,15 +50,15 @@ public class Notes : MonoBehaviour
 
 		foreach (var name in otherNoteObjectsNames)
 		{
-			GameObject newObect = GameObject.Find(name);
+			GameObject newObject = GameObject.Find(name);
 
 			// Only in editor check and warn if not filled out properly in inspector
 #if UNITY_EDITOR
-			if (newObect == null)
+			if (newObject == null)
 				Debug.LogWarning($"\"{name}\" was not found", this);
 #endif
-			newObect.SetActive(false);
-			otherNoteObjects.Add(newObect);
+			newObject.SetActive(false);
+			otherNoteObjects.Add(newObject);
 		}
 
 
@@ -66,7 +66,7 @@ public class Notes : MonoBehaviour
 		// Only in editor check and warn if not filled out properly in inspector
 #if UNITY_EDITOR
 		if (redicle == null)
-			Debug.LogWarning($"No Redicle of name \"{redicleName}\" was found", this);
+			Debug.LogWarning($"No Reticle of name \"{redicleName}\" was found", this);
 		if (noteTextBox == null)
 			Debug.LogWarning($"Text box of name \"{noteTextBoxName}\" was not found", this);
 #endif
