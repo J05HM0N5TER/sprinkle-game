@@ -35,6 +35,8 @@ public class Notes : MonoBehaviour
 	TextMeshProUGUI textBoxText;
 	PauseMenu pauseManager;
 
+	bool isFirstFrame = true;
+
 	// Start is called before the first frame update
 	void Start()
 	{
@@ -42,11 +44,11 @@ public class Notes : MonoBehaviour
 		redicle = GameObject.Find(redicleName).GetComponent<RectTransform>();
 		cursorPosition = new Vector2(redicle.position.x / Screen.width, redicle.position.y / Screen.height);
 		noteTextBox = GameObject.Find(noteTextBoxName);
+		if (noteTextBox == null)
+			Debug.LogError($"Text box of name \"{noteTextBoxName}\" was not found", this);
 		textBoxText = noteTextBox.GetComponent<TextMeshProUGUI>();
 		pauseManager = FindObjectOfType<PauseMenu>();
-
-		// TODO: Check for valid values
-		noteTextBox.SetActive(false);
+		textBoxText.enabled = false;
 
 		foreach (var name in otherNoteObjectsNames)
 		{
@@ -57,24 +59,37 @@ public class Notes : MonoBehaviour
 			if (newObject == null)
 				Debug.LogWarning($"\"{name}\" was not found", this);
 #endif
-			newObject.SetActive(false);
 			otherNoteObjects.Add(newObject);
 		}
-
-
 
 		// Only in editor check and warn if not filled out properly in inspector
 #if UNITY_EDITOR
 		if (redicle == null)
-			Debug.LogWarning($"No Reticle of name \"{redicleName}\" was found", this);
+			Debug.LogError($"No Reticle of name \"{redicleName}\" was found", this);
 		if (noteTextBox == null)
-			Debug.LogWarning($"Text box of name \"{noteTextBoxName}\" was not found", this);
+			Debug.LogError($"Text box of name \"{noteTextBoxName}\" was not found", this);
 #endif
 	}
 
 	// Update is called once per frame
 	void Update()
 	{
+		// Disable the note on the first frame, this is because 
+		// 		finding by name doesn't work for disabled objects
+		if (isFirstFrame)
+		{
+			if (noteTextBox == null)
+			{
+				Debug.LogError("No text box", this);
+			}
+			Debug.Log("Desabling text", this);
+
+			foreach (var obj in otherNoteObjects)
+			{
+				obj.SetActive(false);
+			}
+			isFirstFrame = false;
+		}
 
 		if (Input.GetButtonDown("Interact"))
 		{
@@ -97,7 +112,7 @@ public class Notes : MonoBehaviour
 					textBoxText.text = inscription;
 					pauseManager.PauseGame();
 					pauseManager.pauseMenu.SetActive(false);
-					UnityEngine.Cursor.lockState = CursorLockMode.Locked;
+					UnityEngine.Cursor.lockState = CursorLockMode.None;
 					isActive = true;
 				}
 			}
@@ -117,5 +132,3 @@ public class Notes : MonoBehaviour
 		}
 	}
 }
-
-

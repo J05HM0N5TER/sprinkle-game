@@ -41,13 +41,33 @@ public static class MatrixExtensions
 public static class Vector3Extensions
 {
     /// <summary>
-    /// Devide the components of one vector by the components of a second vector
+    /// Divide the components of one vector by the components of a second vector
     /// </summary>
     /// <param name="vector">The dividend in the equation</param>
     /// <param name="secondVector">The divisor in the equation</param>
     /// <returns>The result of the equation</returns>
     public static Vector3 ComponentDivide(this Vector3 vector, Vector3 secondVector)
-	{
+    {
         return new Vector3(vector.x / secondVector.x, vector.y / secondVector.y, vector.z / secondVector.z);
-	}
+    }
+
+    public static Vector3 OverWrite(this Vector3 vector, System.Numerics.Vector3 newValues)
+    {
+        return new Vector3(newValues.X, newValues.Y, newValues.Z);
+    }
+}
+
+public static class NumericsExtensions
+{
+    /// <summary>
+    /// Copies values for Unity Vector3 to .Net Vector3 for serialization
+    /// </summary>
+    /// <param name="vector">The current vector</param>
+    /// <param name="newValues">The Vector3 holding the values to overwrite the current vector</param>
+    /// <returns></returns>
+    public static System.Numerics.Vector3 OverWrite(this System.Numerics.Vector3 vector, Vector3 newValues)
+    {
+        return new System.Numerics.Vector3(newValues.x, newValues.y, newValues.z);
+    }
+    // public static 
 }
