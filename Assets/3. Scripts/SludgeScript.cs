@@ -62,7 +62,7 @@ public class SludgeScript : MonoBehaviour
         var em = ps.emission;
         em.enabled = false;
         ps.Stop();
-        gameObject.SetActive(false);
+        //gameObject.SetActive(false);
     }
 
 }
