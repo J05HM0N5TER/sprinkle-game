@@ -161,6 +161,7 @@ GameObject:
   - component: {fileID: 1998679634810409168}
   - component: {fileID: 9182237718344211532}
   - component: {fileID: 1214782534}
+  - component: {fileID: 7857444699453953964}
   m_Layer: 0
   m_Name: Sludge
   m_TagString: Untagged
@@ -237,10 +238,26 @@ BoxCollider:
   m_GameObject: {fileID: 5801265207272473164}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 1.0000001, y: 1.0000001, z: 0.4000244}
   m_Center: {x: 2.5461152e-13, y: 0, z: 0.000007688999}
+--- !u!208 &7857444699453953964
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5801265207272473164}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.00001}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &6304285231555002518
 GameObject:
   m_ObjectHideFlags: 0
