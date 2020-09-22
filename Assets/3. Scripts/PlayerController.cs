@@ -18,7 +18,6 @@ public class PlayerController : MonoBehaviour
 		SolderingIron = 1 << 5
 	}
 
-
 	private Rigidbody rb;
 	[Tooltip("Speed the player moves")]
 	public float speed = 10.0f;
@@ -31,7 +30,7 @@ public class PlayerController : MonoBehaviour
 	[Tooltip("Height of player when crouched")]
 	public float crouchHeight = 0.5f;
 	// The scale of the player at launch
-	private Vector3 defautScale;
+	private Vector3 defaultScale;
 	// The default height of the player
 	private float standHeight;
 	// The collider for the player
@@ -40,7 +39,6 @@ public class PlayerController : MonoBehaviour
 	private bool isCrouching = false;
 	[Tooltip("The effect that crouching has on speed, this is a percentage impact (0.5 make it so crouching make the player half speed)")]
 	public float crouchSpeedModifier = 0.5f;
-
 
 	[Header("Debug values")]
 	[Tooltip("What the player has in their inventory")]
@@ -56,7 +54,7 @@ public class PlayerController : MonoBehaviour
 		rb = gameObject.GetComponent<Rigidbody>();
 		capsule = GetComponent<CapsuleCollider>();
 		standHeight = capsule.height;
-		defautScale = transform.localScale;
+		defaultScale = transform.localScale;
 	}
 
 	private void FixedUpdate()
@@ -98,30 +96,30 @@ public class PlayerController : MonoBehaviour
 	void ToggleCrouch()
 	{
 		// If the player is standing then make them crouch otherwise make them stand
-		if (transform.localScale == defautScale)
+		if (transform.localScale == defaultScale)
 		{
 			isCrouching = true;
 			// Change the localScale of the gameObject so that the height is the crouch height
 			gameObject.transform.localScale = new Vector3(transform.localScale.x,
-				defautScale.y / (standHeight / crouchHeight), transform.localScale.z);
+				defaultScale.y / (standHeight / crouchHeight), transform.localScale.z);
 			Vector3 pos = transform.position;
-			pos.y -= ((standHeight - crouchHeight) / 2) /*+ 0.01f*/;
+			pos.y -= ((standHeight - crouchHeight) / 2) /*+ 0.01f*/ ;
 			transform.position = pos;
 
 		}
 		else if (!Physics.Raycast(transform.position, Vector3.up,
-			// Distance is how much difference between current height and stand height
-			standHeight - (capsule.radius < crouchHeight ? crouchHeight : capsule.radius)))
+				// Distance is how much difference between current height and stand height
+				standHeight - (capsule.radius < crouchHeight ? crouchHeight : capsule.radius)))
 		{
 			isCrouching = false;
 			// When the player stands up reset the scale back to what it was at the start
-			gameObject.transform.localScale = defautScale;
+			gameObject.transform.localScale = defaultScale;
 		}
 
 		// If the player is holding something, make sure that the scale is not effected
 		//if (cameraControl.heldObject)
 		//{
-		//	cameraControl.heldObject.localScale = cameraControl.heldObject.localScale.ComponentDevide(cameraControl.heldObject.lossyScale);
+		//	cameraControl.heldObject.localScale = cameraControl.heldObject.localScale.ComponentDivide(cameraControl.heldObject.lossyScale);
 		//}
 		//Debug.Log($"Held objects transform is {heldObject.localScale} and lossyscale is {heldObject.lossyScale}", heldObject);
 	}

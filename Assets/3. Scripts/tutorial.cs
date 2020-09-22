@@ -25,7 +25,7 @@ public class tutorial : MonoBehaviour
 	public GameObject textbox;
 	private string buttonToPress = "";
 	private string altButtonToPress = "";
-	private bool hasEnteredTurotialBox;
+	private bool hasEnteredTutorialBox;
 
 	// Start is called before the first frame update
 	void Start()
@@ -61,11 +61,11 @@ public class tutorial : MonoBehaviour
 	}
 	private void Update()
 	{
-		if ((Input.GetButtonDown(buttonToPress) || Input.GetButtonDown(altButtonToPress)) && hasEnteredTurotialBox)
+		if ((Input.GetButtonDown(buttonToPress) || Input.GetButtonDown(altButtonToPress)) && hasEnteredTutorialBox)
 		{
 			textbox.SetActive(false);
 			gameObject.SetActive(false);
-			hasEnteredTurotialBox = false;
+			hasEnteredTutorialBox = false;
 		}
 	}
 	private void OnTriggerEnter(Collider other)
@@ -75,7 +75,7 @@ public class tutorial : MonoBehaviour
 		{
 			textbox.SetActive(true);
 			textbox.GetComponent<TextMeshProUGUI>().text = tutorialText;
-			hasEnteredTurotialBox = true;
+			hasEnteredTutorialBox = true;
 		}
 	}
 
