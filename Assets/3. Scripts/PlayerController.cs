@@ -3,10 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Experimental.Rendering.HDPipeline;
-
 [RequireComponent(typeof(CapsuleCollider), typeof(Rigidbody))]
-public class PlayerController : MonoBehaviour
-{
+public class PlayerController : GameSavable
+{    
 	[Flags] public enum Inventory : byte
 	{
 		none = 0,
