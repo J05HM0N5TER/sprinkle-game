@@ -8,11 +8,11 @@ FBXHeaderExtension:  {
 		Version: 1000
 		Year: 2020
 		Month: 9
-		Day: 15
-		Hour: 13
-		Minute: 46
-		Second: 9
-		Millisecond: 153
+		Day: 22
+		Hour: 15
+		Minute: 57
+		Second: 7
+		Millisecond: 165
 	}
 	Creator: "FBX SDK/FBX Plugins version 2019.2"
 	SceneInfo: "SceneInfo::GlobalInfo", "UserData" {
@@ -34,15 +34,15 @@ FBXHeaderExtension:  {
 			P: "Original|ApplicationVendor", "KString", "", "", "Autodesk"
 			P: "Original|ApplicationName", "KString", "", "", "Maya"
 			P: "Original|ApplicationVersion", "KString", "", "", "201900"
-			P: "Original|DateTime_GMT", "DateTime", "", "", "15/09/2020 03:46:09.149"
+			P: "Original|DateTime_GMT", "DateTime", "", "", "22/09/2020 05:57:07.162"
 			P: "Original|FileName", "KString", "", "", "C:\Users\Samuel\Desktop\End of year project\Exports\GreyBox\Greybox (Working)\Vent_Corner.fbx"
 			P: "LastSaved", "Compound", "", ""
 			P: "LastSaved|ApplicationVendor", "KString", "", "", "Autodesk"
 			P: "LastSaved|ApplicationName", "KString", "", "", "Maya"
 			P: "LastSaved|ApplicationVersion", "KString", "", "", "201900"
-			P: "LastSaved|DateTime_GMT", "DateTime", "", "", "15/09/2020 03:46:09.149"
+			P: "LastSaved|DateTime_GMT", "DateTime", "", "", "22/09/2020 05:57:07.162"
 			P: "Original|ApplicationActiveProject", "KString", "", "", "C:\Users\Samuel\Desktop\End of year project\Exports\GreyBox\Greybox (Working)"
-			P: "Original|ApplicationNativeFile", "KString", "", "", "C:\Users\Samuel\Desktop\End of year project\Scenes\Game Modular Assets(Working)\Game_Modular_AssetsV2.0069.ma"
+			P: "Original|ApplicationNativeFile", "KString", "", "", "C:\Users\Samuel\Desktop\End of year project\Scenes\Game Modular Assets(Working)\Game_Modular_AssetsV2.0077.ma"
 		}
 	}
 }
@@ -77,7 +77,7 @@ GlobalSettings:  {
 
 Documents:  {
 	Count: 1
-	Document: 2866680888464, "", "Scene" {
+	Document: 1422915177616, "", "Scene" {
 		Properties70:  {
 			P: "SourceObject", "object", "", ""
 			P: "ActiveAnimStackName", "KString", "", "", "Take 001"
@@ -250,15 +250,15 @@ Definitions:  {
 ;------------------------------------------------------------------
 
 Objects:  {
-	Geometry: 2866740739072, "Geometry::", "Mesh" {
+	Geometry: 1422908986464, "Geometry::", "Mesh" {
 		Vertices: *48 {
-			a: 50,0,50,49.9999237060547,0,-49.9999847412109,50,109.785499572754,50,49.9999237060547,109.785499572754,-49.9999847412109,-50.6019287109375,109.785499572754,49.9999389648438,-50.6019973754883,109.785499572754,-50.0000457763672,-50.6019287109375,0,49.9999389648438,-50.6019973754883,0,-50.0000457763672,-150.601928710938,109.785499572754,49.9999389648438,-150.602005004883,109.785499572754,-50.0000457763672,-150.601928710938,0,49.9999389648438,-150.602005004883,0,-50.0000457763672,50,0,150,50,109.785499572754,150,-50.6019287109375,109.785499572754,149.999938964844,-50.6019287109375,0,149.999938964844
+			a: 50,0,50,49.9999237060547,0,-49.9999847412109,50,110,50,49.9999237060547,110,-49.9999847412109,-50.6019287109375,110,49.9999389648438,-50.6019973754883,110,-50.0000457763672,-50.6019287109375,0,49.9999389648438,-50.6019973754883,0,-50.0000457763672,-149.999969482422,110,49.9999389648438,-150.000030517578,110,-50.0000457763672,-149.999969482422,0,49.9999389648438,-150.000030517578,0,-50.0000457763672,50,0,150,50,110,150,-50,110,149.999938964844,-50,0,149.999938964844
 		} 
 		PolygonVertexIndex: *48 {
 			a: 1,3,5,-8,0,1,7,-7,3,2,4,-6,4,6,10,-9,7,5,9,-12,6,7,11,-11,5,4,8,-10,0,2,3,-2,2,0,12,-14,6,4,14,-16,14,4,2,-14,6,15,12,-1
 		} 
 		Edges: *28 {
-			a: 4,8,10,6,28,0,9,1,12,2,7,3,26,22,15,17,14,18,13,19,33,35,34,37,39,38,43,45
+			a: 0,1,2,3,4,6,7,8,9,10,12,13,14,15,17,18,19,22,26,28,33,34,35,37,38,39,43,45
 		} 
 		GeometryVersion: 124
 		LayerElementNormal: 0 {
@@ -267,7 +267,7 @@ Objects:  {
 			MappingInformationType: "ByPolygonVertex"
 			ReferenceInformationType: "Direct"
 			Normals: *144 {
-				a: -5.7472783510093e-07,0,1,-5.7472783510093e-07,0,1,-5.7472783510093e-07,0,1,-5.7472783510093e-07,0,1,0,1,0,0,1,0,0,0.999999940395355,0,0,0.999999940395355,0,0,-1,0,0,-1,0,0,-0.999999940395355,0,0,-0.999999940395355,0,0,0,-1,0,0,-1,0,0,-1,0,0,-1,0,0,1,0,0,1,0,0,1,0,0,1,0,1,0,0,1,0,0,1,0,0,1,0,0,-1,0,0,-1,0,0,-1,0,0,-1,0,-1,0,3.8146981751197e-07,-1,0,3.8146981751197e-07,-1,0,7.6293963502394e-07,-1,0,7.6293963502394e-07,-1,0,3.8146981751197e-07,-1,0,3.8146981751197e-07,-1,0,0,-1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,0,-1,0,0,-1,0,0,-1,0,0,-1,0,0,1,0,0,1,0,0,1,0,0,1,0
+				a: -5.7472783510093e-07,0,1,-5.7472783510093e-07,0,1,-5.7472783510093e-07,0,1,-5.7472783510093e-07,0,1,0,1,0,0,1,0,0,1,0,0,1,0,0,-1,0,0,-1,0,0,-1,0,0,-1,0,0,0,-1,0,0,-1,0,0,-1,0,0,-1,0,0,1,0,0,1,0,0,1,0,0,1,0,1,0,0,1,0,0,1,0,0,1,0,0,-1,0,0,-1,0,0,-1,0,0,-1,0,-1,0,3.8146981751197e-07,-1,0,3.8146981751197e-07,-1,0,7.6293963502394e-07,-1,0,7.6293963502394e-07,-1,0,3.8146981751197e-07,-1,0,3.8146981751197e-07,-1,0,0,-1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,0,-1,0,0,-1,0,0,-1,0,0,-1,0,0,1,0,0,1,0,0,1,0,0,1,0
 			} 
 			NormalsW: *48 {
 				a: 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
@@ -291,7 +291,7 @@ Objects:  {
 			MappingInformationType: "ByEdge"
 			ReferenceInformationType: "Direct"
 			Smoothing: *28 {
-				a: 0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+				a: 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 			} 
 		}
 		LayerElementMaterial: 0 {
@@ -323,7 +323,7 @@ Objects:  {
 			}
 		}
 	}
-	Model: 2866745836672, "Model::Vent_Corner", "Mesh" {
+	Model: 1422420324016, "Model::Vent_Corner", "Mesh" {
 		Version: 232
 		Properties70:  {
 			P: "RotationActive", "bool", "", "",1
@@ -335,7 +335,7 @@ Objects:  {
 		Shading: T
 		Culling: "CullingOff"
 	}
-	Material: 2866586328480, "Material::lambert1", "" {
+	Material: 1422959457584, "Material::lambert33", "" {
 		Version: 102
 		ShadingModel: "lambert"
 		MultiLayer: 0
@@ -350,13 +350,13 @@ Objects:  {
 			P: "Opacity", "double", "Number", "",1
 		}
 	}
-	AnimationStack: 2866555126816, "AnimStack::Take 001", "" {
+	AnimationStack: 1422596695552, "AnimStack::Take 001", "" {
 		Properties70:  {
 			P: "LocalStop", "KTime", "Time", "",577326975000
 			P: "ReferenceStop", "KTime", "Time", "",577326975000
 		}
 	}
-	AnimationLayer: 2866598286096, "AnimLayer::BaseLayer", "" {
+	AnimationLayer: 1422913634272, "AnimLayer::BaseLayer", "" {
 	}
 }
 
@@ -366,16 +366,16 @@ Objects:  {
 Connections:  {
 	
 	;Model::Vent_Corner, Model::RootNode
-	C: "OO",2866745836672,0
+	C: "OO",1422420324016,0
 	
 	;AnimLayer::BaseLayer, AnimStack::Take 001
-	C: "OO",2866598286096,2866555126816
+	C: "OO",1422913634272,1422596695552
 	
 	;Geometry::, Model::Vent_Corner
-	C: "OO",2866740739072,2866745836672
+	C: "OO",1422908986464,1422420324016
 	
-	;Material::lambert1, Model::Vent_Corner
-	C: "OO",2866586328480,2866745836672
+	;Material::lambert33, Model::Vent_Corner
+	C: "OO",1422959457584,1422420324016
 }
 ;Takes section
 ;----------------------------------------------------
