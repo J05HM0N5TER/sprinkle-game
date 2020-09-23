@@ -81,7 +81,8 @@ public class CameraControl : MonoBehaviour
 	// The saved variables from the held object, to be applied when dropped
 	float normalDrag = 0;
 	float normalADrag = 0.05f;
-
+	[Header("Lantern")]
+	public GameObject lantern;
 	[Header("Debug")]
 	[Tooltip("The current magnitude of the velocity of the player")]
 #pragma warning disable IDE0052 // Remove unread private members
@@ -93,7 +94,7 @@ public class CameraControl : MonoBehaviour
 	private PlayerController player;
 	private Rigidbody playerRigidbody;
 
-	public GameObject torch;
+	
 	private bool torchActive = false;
 
 	// Start is called before the first frame update
@@ -193,12 +194,12 @@ public class CameraControl : MonoBehaviour
 		}
 		if (Input.GetButtonDown("Torch") && !torchActive)
 		{
-			torch.SetActive(true);
+			lantern.SetActive(true);
 			torchActive = true;
 		}
-		if (Input.GetButtonDown("Torch") && torchActive)
+		else if (Input.GetButtonDown("Torch") && torchActive)
 		{
-			torch.SetActive(false);
+			lantern.SetActive(false);
 			torchActive = false;
 		}
 		Lean();
