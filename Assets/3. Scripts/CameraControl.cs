@@ -192,12 +192,12 @@ public class CameraControl : MonoBehaviour
 				heldObject.rotation.eulerAngles.y + mouseX, 
 				heldObject.rotation.eulerAngles.z);
 		}
-		if (Input.GetButtonDown("Lantern") && !torchActive)
+		if ((Input.GetButtonDown("Lantern") && !torchActive) && player.GetComponent<PlayerController>().inventory.HasFlag(PlayerController.Inventory.Lantern))
 		{
 			lantern.SetActive(true);
 			torchActive = true;
 		}
-		else if (Input.GetButtonDown("Lantern") && torchActive)
+		else if ((Input.GetButtonDown("Lantern") && torchActive)&& player.GetComponent<PlayerController>().inventory.HasFlag(PlayerController.Inventory.Lantern))
 		{
 			lantern.SetActive(false);
 			torchActive = false;
