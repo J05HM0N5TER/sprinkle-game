@@ -646,11 +646,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5.3
-  groundDistance: 0.01
+  groundDistance: 0.04
   jumpForce: 300
   crouchHeight: 0.7
-  crouchSpeedModifier: 0.5
-  inventory: 34
+  crouchSpeed: 5
+  couchJumpForce: 150
+  inventory: 50
   medSyringes: 0
   batteryPacks: 0
 --- !u!33 &1376844649919263992
@@ -783,7 +784,7 @@ MonoBehaviour:
   grabDistance: 3.5
   holdDistance: 2.5
   heldObject: {fileID: 0}
-  redicleName: Reticle
+  reticleName: Reticle
   throwForce: 5
   leanTilt: -12.4
   leanOffset: 0.828
@@ -795,8 +796,8 @@ MonoBehaviour:
   maxDistance: 0.2
   rigidBodyDrag: 5
   rigidBodyDragAngular: 5
+  lantern: {fileID: 0}
   playerMagnitude: 0
-  torch: {fileID: 196430329}
 --- !u!81 &7590235112788743765
 AudioListener:
   m_ObjectHideFlags: 0
@@ -967,7 +968,7 @@ MonoBehaviour:
   grabDistance: 3.5
   holdDistance: 2.5
   heldObject: {fileID: 0}
-  redicleName: Reticle
+  reticleName: Reticle
   throwForce: 5
   leanTilt: 0
   leanOffset: 0
@@ -979,5 +980,5 @@ MonoBehaviour:
   maxDistance: 0.2
   rigidBodyDrag: 5
   rigidBodyDragAngular: 5
+  lantern: {fileID: 0}
   playerMagnitude: 0
-  torch: {fileID: 0}

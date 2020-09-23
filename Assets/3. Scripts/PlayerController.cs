@@ -22,8 +22,8 @@ public class PlayerController : MonoBehaviour
 	[Tooltip("Speed the player moves")]
 	public float speed = 10.0f;
 	[Tooltip("How far the player can be from the ground and still jump")]
-	public float groundDistance = 0.4f;
-	[Tooltip("Height jump")]
+	public float groundDistance = 0.04f;
+	[Tooltip("The amount of force that goes into jumping (Jump height)")]
 	public float jumpForce = 300;
 
 	[Header("Crouch variables")]
@@ -38,7 +38,9 @@ public class PlayerController : MonoBehaviour
 	// Is the player currently couching?
 	private bool isCrouching = false;
 	[Tooltip("The effect that crouching has on speed, this is a percentage impact (0.5 make it so crouching make the player half speed)")]
-	public float crouchSpeedModifier = 0.5f;
+	public float crouchSpeed = 5f;
+	[Tooltip("The amount of force that goes into jumping while crouching (Jump height for crouching)")]
+	public float couchJumpForce = 150;
 
 	[Header("Debug values")]
 	[Tooltip("What the player has in their inventory")]
@@ -66,7 +68,7 @@ public class PlayerController : MonoBehaviour
 			input.Normalize();
 
 		// Modify speed based on if the player is crouching
-		float currentSpeed = isCrouching ? speed * crouchSpeedModifier : speed;
+		float currentSpeed = isCrouching ? crouchSpeed : speed;
 
 		// Move the player using the input, keep the downwards velocity for when they fall.
 		Vector3 vel = new Vector3(0, rb.velocity.y, 0);
@@ -82,7 +84,8 @@ public class PlayerController : MonoBehaviour
 		if (Input.GetButtonDown("Jump") && IsStanding())
 		{
 			Debug.Log("Jump pressed", this);
-			rb.AddForce(gameObject.transform.up * jumpForce);
+
+			rb.AddForce(gameObject.transform.up * (isCrouching ? couchJumpForce : jumpForce));
 		}
 		if (Input.GetButtonDown("Crouch"))
 		{
@@ -131,6 +134,7 @@ public class PlayerController : MonoBehaviour
 	public bool IsStanding()
 	{
 		Ray ray = new Ray(transform.position, -transform.up);
-		return Physics.Raycast(ray, ((capsule.height * transform.localScale.y) / 2) + groundDistance, ~LayerMask.GetMask("Player"));
+		float distance = ((capsule.height * transform.localScale.y) / 2) + groundDistance;
+		return Physics.Raycast(ray, distance, ~LayerMask.GetMask("Player"));
 	}
 }
