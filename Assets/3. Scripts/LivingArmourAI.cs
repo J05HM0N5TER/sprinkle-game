@@ -40,12 +40,16 @@ public class LivingArmourAI : MonoBehaviour
 	private bool lookingforplayer = false;
 	private float originalWonder;
 
+	//living suit jumping stuff
+	private GameObject[] Suits;
+	public float maxDistanceFromPlayer;
+
 	// Start is called before the first frame update
 	void Start()
 	{
 		agent = gameObject.GetComponent<NavMeshAgent>();
 		originalWonder = wonderDistance;
-		
+		Suits = GameObject.FindGameObjectsWithTag("Suit");
 	}
 
 	// Update is called once per frame  
@@ -129,6 +133,64 @@ public class LivingArmourAI : MonoBehaviour
 				}
 			}
 		}
+		/// <summary>
+		/// all this for jumping to different suits
+		/// </summary>
+		
+	
+		
+            
+            
+		// print("Is seen, trying to find new point...");
+		// if (appearsNearPlayer)
+		// {
+		// 	foreach (GameObject Lurkerpoint in lurkerPoints)
+		// 	{
+		// 		// Is the spawn point being seen?
+		// 		if (!IsVisableToPlayer(Lurkerpoint.transform.position))
+		// 		{
+		// 			// Find closest valid spawn point
+		// 			float distance = UnityEngine.Vector3.Distance(player.GetComponent<Transform>().position, Lurkerpoint.GetComponent<Transform>().position);
+		// 			// If their is no points then set this as the current one
+		// 			if (closestLurkerPoint == null)
+		// 			{
+		// 				closestLurkerPoint = Lurkerpoint;
+		// 			}
+		// 			// If the point is not the current point
+		// 			else if (transform != currentLurkingPoint)
+		// 			{
+		// 				closestLurkerPoint = Lurkerpoint;
+		// 			}
+		// 		}
+		// 		unseenTimer = resetUnseenTimer;
+		// 	}
+		// }
+		// if(!appearsNearPlayer)
+		// {
+		// 	closestLurkerPoint.transform.position = lurkerWaitingPoint.transform.position;
+		// }
+		// //actually moving the bloody thing
+		// if (closestLurkerPoint != null)
+		// {
+		// 	//print("Closest point is " + closestLurkerPoint.name);
+		// 	spookyTimer -= Time.deltaTime;
+		// 	if (spookyTimer <= 0.0f)
+		// 	{
+		// 		gameObject.GetComponent<Transform>().position = closestLurkerPoint.transform.position;
+		// 		gameObject.GetComponent<Transform>().rotation = closestLurkerPoint.transform.rotation;
+		// 		currentLurkingPoint = closestLurkerPoint;
+		// 		spookyTimer = resettimer;
+		// 	}
+		// }
+		// else
+		// {
+		// 	Debug.LogError("Couldn't find valid point");
+		// }
+	
+		/// <summary>
+		/// 
+		/// </summary>
+		
 	}
 	public static Vector3 RandomNavSphere(Vector3 origin, float distance, int layermask)
 	{

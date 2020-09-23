@@ -55,10 +55,13 @@ public class TriggerScript : MonoBehaviour
             {
                 if(other.tag == "Player" || other.tag == "Enemy")
                 {
-                    animatedObject.GetComponent<Animator>().SetTrigger("Open");
-                    audio.PlayOneShot(Openclip);
+                    if(!doorOpen)
+                    {
+                        animatedObject.GetComponent<Animator>().SetTrigger("Open");
+                        audio.PlayOneShot(Openclip);
+                        timer = resettimer;
+                    }
                     thingsInDoorway.Add(other.gameObject);
-                    timer = resettimer;
                     doorOpen = true;
                     if(oneTimeUse)
                     {
