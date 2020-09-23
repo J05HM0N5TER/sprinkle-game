@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class ItemPickUp : MonoBehaviour
 {
+    [Tooltip("Max distance away that the object can be interacted with")]
     public float maxDistanceToInteract;
     private GameObject player;
+    [Tooltip("The item that you want to give the player when picking this thing up")]
     public PlayerController.Inventory item;
 
     // Start is called before the first frame update
