@@ -44,25 +44,28 @@ public class SludgeScript : MonoBehaviour
 			{
 				if (player.GetComponent<PlayerController>().inventory.HasFlag(PlayerController.Inventory.ChemicalSpray))
 				{
-                    PlaySpray();
+                    //PlaySpray();
+                    audio.PlayOneShot(sludgeSound);
+                    audio.PlayOneShot(spraySound);
+                    gameObject.SetActive(false);
 				}
 			}
 		}
 	}
     private IEnumerator PlaySpray()
     {
-        var em = ps.emission;
-        em.enabled = true;
-        ps.Play();
+        // var em = ps.emission;
+        // em.enabled = true;
+        // ps.Play();
         yield return StartCoroutine("TimeOfSpray");
     }
     private IEnumerator TimeOfSpray()
     {
         yield return new WaitForSeconds(timeOfplaying);
-        var em = ps.emission;
-        em.enabled = false;
-        ps.Stop();
-        //gameObject.SetActive(false);
+        // var em = ps.emission;
+        // em.enabled = false;
+        // ps.Stop();
+        gameObject.SetActive(false);
     }
 
 }
