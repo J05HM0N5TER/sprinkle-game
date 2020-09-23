@@ -15,7 +15,8 @@ public class PlayerController : MonoBehaviour
 		AstroMicrobiology = 1 << 2,
 		EscapePodPasscard = 1 << 3,
 		ChemicalSpray = 1 << 4,
-		SolderingIron = 1 << 5
+		SolderingIron = 1 << 5,
+		Lantern = 1 << 6
 	}
 
 	private Rigidbody rb;
