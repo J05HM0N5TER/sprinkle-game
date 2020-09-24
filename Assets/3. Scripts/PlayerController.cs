@@ -19,26 +19,35 @@ public class PlayerController : MonoBehaviour
 	}
 
 	private Rigidbody rb;
+	[Range(1, 15)]
 	[Tooltip("Speed the player moves")]
 	public float speed = 10.0f;
+	[Range(0.04f, 0.1f)]
 	[Tooltip("How far the player can be from the ground and still jump")]
 	public float groundDistance = 0.04f;
+	[Range(150, 500)]
 	[Tooltip("The amount of force that goes into jumping (Jump height)")]
 	public float jumpForce = 300;
 
 	[Header("Crouch variables")]
+	[Range(0, 1)]
 	[Tooltip("Height of player when crouched")]
 	public float crouchHeight = 0.5f;
 	// The scale of the player at launch
 	private Vector3 defaultScale;
 	// The default height of the player
 	private float standHeight;
+	[Range(0.1f, 1)]
+	[Tooltip("How long it takes to transition between crouching and standing (in seconds)")]
+	public float crouchTransitionTime = 0.5f;
 	// The collider for the player
 	private CapsuleCollider capsule;
 	// Is the player currently couching?
 	private bool isCrouching = false;
+	[Range(0, 10)]
 	[Tooltip("The effect that crouching has on speed, this is a percentage impact (0.5 make it so crouching make the player half speed)")]
 	public float crouchSpeed = 5f;
+	[Range(50, 300)]
 	[Tooltip("The amount of force that goes into jumping while crouching (Jump height for crouching)")]
 	public float couchJumpForce = 150;
 
@@ -49,6 +58,9 @@ public class PlayerController : MonoBehaviour
 	public int medSyringes = 0;
 	[Tooltip("How many Battery Packs the player has in their inventory")]
 	public int batteryPacks = 0;
+
+	private bool inCrouchTransition;
+	private DateTime crouchTransitionStart;
 
 	// Start is called before the first frame update
 	void Start()
@@ -87,44 +99,78 @@ public class PlayerController : MonoBehaviour
 
 			rb.AddForce(gameObject.transform.up * (isCrouching ? couchJumpForce : jumpForce));
 		}
-		if (Input.GetButtonDown("Crouch"))
-		{
-			ToggleCrouch();
-		}
+		Crouch();
 	}
 
 	/// <summary>
-	/// Toggles between the player standing and crouching
+	/// Deals with all the logic to do with crouching
 	/// </summary>
-	void ToggleCrouch()
+	void Crouch()
 	{
-		// If the player is standing then make them crouch otherwise make them stand
-		if (transform.localScale == defaultScale)
+
+		// Check if a transition needs to start
+		if (!inCrouchTransition && Input.GetButtonDown("Crouch"))
 		{
+			isCrouching = !isCrouching;
+			inCrouchTransition = true;
+			crouchTransitionStart = DateTime.Now;
+		}
+
+		// If the player is standing then make them crouch otherwise make them stand
+		if (inCrouchTransition && isCrouching)
+		{
+			float currentYScale = Mathf.Lerp(defaultScale.y, crouchHeight,
+				(float) (DateTime.Now - crouchTransitionStart).TotalSeconds / crouchTransitionTime);
+
 			isCrouching = true;
 			// Change the localScale of the gameObject so that the height is the crouch height
-			gameObject.transform.localScale = new Vector3(transform.localScale.x,
-				defaultScale.y / (standHeight / crouchHeight), transform.localScale.z);
-			Vector3 pos = transform.position;
-			pos.y -= ((standHeight - crouchHeight) / 2) /*+ 0.01f*/ ;
-			transform.position = pos;
+			// gameObject.transform.localScale = new Vector3(transform.localScale.x,
+			// 	defaultScale.y / (standHeight / crouchHeight), transform.localScale.z);
+			Debug.Log($"{currentYScale} {currentYScale}");
 
+			gameObject.transform.localScale = new Vector3(
+				transform.localScale.x,
+				currentYScale,
+				transform.localScale.z
+			);
+			// Vector3 pos = transform.position;
+			// pos.y -= ((standHeight - crouchHeight) / 2) - groundDistance;
+			// transform.position = pos;
 		}
-		else if (!Physics.Raycast(transform.position, Vector3.up,
-				// Distance is how much difference between current height and stand height
-				standHeight - (capsule.radius < crouchHeight ? crouchHeight : capsule.radius)))
+		// Standing up
+		else if (inCrouchTransition && !isCrouching)
 		{
-			isCrouching = false;
-			// When the player stands up reset the scale back to what it was at the start
-			gameObject.transform.localScale = defaultScale;
+			// Check that there is nothing above them
+			if (!Physics.Raycast(transform.position, Vector3.up,
+					// Distance is how much difference between current height and stand height
+					standHeight - (capsule.radius < crouchHeight ? crouchHeight : capsule.radius)))
+			{
+				float currentYScale = Mathf.Lerp(crouchHeight, defaultScale.y,
+					(float) (DateTime.Now - crouchTransitionStart).TotalSeconds / crouchTransitionTime);
+				// When the player stands up reset the scale back to what it was at the start
+				// gameObject.transform.localScale = defaultScale;
+				gameObject.transform.localScale = new Vector3(
+					transform.localScale.x,
+					currentYScale,
+					transform.localScale.z
+				);
+			}
+			else
+			{
+				isCrouching = true;
+				inCrouchTransition = false;
+			}
+		}
+		float temp = transform.localScale.y;
+
+		// Check if a transition needs to stop
+		if (inCrouchTransition && (DateTime.Now - crouchTransitionStart).TotalSeconds > crouchTransitionTime)
+		{
+			Debug.Log($"Transion time is {(DateTime.Now - crouchTransitionStart).TotalSeconds} so stopping transition");
+			inCrouchTransition = false;
+			crouchTransitionStart = DateTime.Now;
 		}
 
-		// If the player is holding something, make sure that the scale is not effected
-		//if (cameraControl.heldObject)
-		//{
-		//	cameraControl.heldObject.localScale = cameraControl.heldObject.localScale.ComponentDivide(cameraControl.heldObject.lossyScale);
-		//}
-		//Debug.Log($"Held objects transform is {heldObject.localScale} and lossyscale is {heldObject.lossyScale}", heldObject);
 	}
 
 	/// <summary>
