@@ -8,11 +8,11 @@ FBXHeaderExtension:  {
 		Version: 1000
 		Year: 2020
 		Month: 9
-		Day: 22
-		Hour: 15
-		Minute: 57
-		Second: 16
-		Millisecond: 730
+		Day: 23
+		Hour: 9
+		Minute: 55
+		Second: 35
+		Millisecond: 803
 	}
 	Creator: "FBX SDK/FBX Plugins version 2019.2"
 	SceneInfo: "SceneInfo::GlobalInfo", "UserData" {
@@ -34,15 +34,15 @@ FBXHeaderExtension:  {
 			P: "Original|ApplicationVendor", "KString", "", "", "Autodesk"
 			P: "Original|ApplicationName", "KString", "", "", "Maya"
 			P: "Original|ApplicationVersion", "KString", "", "", "201900"
-			P: "Original|DateTime_GMT", "DateTime", "", "", "22/09/2020 05:57:16.728"
+			P: "Original|DateTime_GMT", "DateTime", "", "", "22/09/2020 23:55:35.801"
 			P: "Original|FileName", "KString", "", "", "C:\Users\Samuel\Desktop\End of year project\Exports\GreyBox\Greybox (Working)\Vent_Tiny.fbx"
 			P: "LastSaved", "Compound", "", ""
 			P: "LastSaved|ApplicationVendor", "KString", "", "", "Autodesk"
 			P: "LastSaved|ApplicationName", "KString", "", "", "Maya"
 			P: "LastSaved|ApplicationVersion", "KString", "", "", "201900"
-			P: "LastSaved|DateTime_GMT", "DateTime", "", "", "22/09/2020 05:57:16.728"
+			P: "LastSaved|DateTime_GMT", "DateTime", "", "", "22/09/2020 23:55:35.801"
 			P: "Original|ApplicationActiveProject", "KString", "", "", "C:\Users\Samuel\Desktop\End of year project\Exports\GreyBox\Greybox (Working)"
-			P: "Original|ApplicationNativeFile", "KString", "", "", "C:\Users\Samuel\Desktop\End of year project\Scenes\Game Modular Assets(Working)\Game_Modular_AssetsV2.0077.ma"
+			P: "Original|ApplicationNativeFile", "KString", "", "", "C:\Users\Samuel\Desktop\End of year project\Scenes\Game Modular Assets(Working)\Game_Modular_AssetsV2.0079.ma"
 		}
 	}
 }
@@ -77,7 +77,7 @@ GlobalSettings:  {
 
 Documents:  {
 	Count: 1
-	Document: 1422916715520, "", "Scene" {
+	Document: 2169685449840, "", "Scene" {
 		Properties70:  {
 			P: "SourceObject", "object", "", ""
 			P: "ActiveAnimStackName", "KString", "", "", "Take 001"
@@ -250,9 +250,9 @@ Definitions:  {
 ;------------------------------------------------------------------
 
 Objects:  {
-	Geometry: 1422910200640, "Geometry::", "Mesh" {
+	Geometry: 2169686333136, "Geometry::", "Mesh" {
 		Vertices: *24 {
-			a: -49.9999961853027,110,-1.9073486328125e-05,-49.9999961853027,-2.55795384873636e-13,-1.9073486328125e-05,50.0000190734863,110,-1.9073486328125e-05,50.0000190734863,0,-1.9073486328125e-05,-50,110,-50,-50,-2.55795384873636e-13,-50,50.0000152587891,-1.27897692436818e-13,-50,50.0000152587891,110,-50
+			a: -49.9999961853027,110,-1.9073486328125e-05,-49.9999961853027,-2.5579541197869e-13,-1.9073486328125e-05,50.0000190734863,110,-1.9073486328125e-05,50.0000190734863,0,-1.9073486328125e-05,-50,110,-50,-50,-2.5579541197869e-13,-50,50.0000190734863,-1.27897705989345e-13,-50,50.0000190734863,110,-50
 		} 
 		PolygonVertexIndex: *16 {
 			a: 0,1,5,-5,1,3,6,-6,3,2,7,-7,2,0,4,-8
@@ -323,7 +323,7 @@ Objects:  {
 			}
 		}
 	}
-	Model: 1422420330976, "Model::Vent_Tiny", "Mesh" {
+	Model: 2169182371664, "Model::Vent_Tiny", "Mesh" {
 		Version: 232
 		Properties70:  {
 			P: "RotationActive", "bool", "", "",1
@@ -335,7 +335,7 @@ Objects:  {
 		Shading: T
 		Culling: "CullingOff"
 	}
-	Material: 1422960215648, "Material::Greybox_MAT26", "" {
+	Material: 2169691435184, "Material::Greybox_MAT", "" {
 		Version: 102
 		ShadingModel: "lambert"
 		MultiLayer: 0
@@ -350,13 +350,13 @@ Objects:  {
 			P: "Opacity", "double", "Number", "",1
 		}
 	}
-	AnimationStack: 1422720173360, "AnimStack::Take 001", "" {
+	AnimationStack: 2169694162288, "AnimStack::Take 001", "" {
 		Properties70:  {
 			P: "LocalStop", "KTime", "Time", "",577326975000
 			P: "ReferenceStop", "KTime", "Time", "",577326975000
 		}
 	}
-	AnimationLayer: 1421703909792, "AnimLayer::BaseLayer", "" {
+	AnimationLayer: 2169450943456, "AnimLayer::BaseLayer", "" {
 	}
 }
 
@@ -366,16 +366,16 @@ Objects:  {
 Connections:  {
 	
 	;Model::Vent_Tiny, Model::RootNode
-	C: "OO",1422420330976,0
+	C: "OO",2169182371664,0
 	
 	;AnimLayer::BaseLayer, AnimStack::Take 001
-	C: "OO",1421703909792,1422720173360
+	C: "OO",2169450943456,2169694162288
 	
 	;Geometry::, Model::Vent_Tiny
-	C: "OO",1422910200640,1422420330976
+	C: "OO",2169686333136,2169182371664
 	
-	;Material::Greybox_MAT26, Model::Vent_Tiny
-	C: "OO",1422960215648,1422420330976
+	;Material::Greybox_MAT, Model::Vent_Tiny
+	C: "OO",2169691435184,2169182371664
 }
 ;Takes section
 ;----------------------------------------------------
