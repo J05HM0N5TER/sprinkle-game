@@ -30,7 +30,7 @@ public class PlayerController : MonoBehaviour
 	public float jumpForce = 300;
 
 	[Header("Crouch variables")]
-	[Range(0, 1)]
+	[Range(0.1f, 1)]
 	[Tooltip("Height of player when crouched")]
 	public float crouchHeight = 0.5f;
 	// The scale of the player at launch
@@ -133,9 +133,9 @@ public class PlayerController : MonoBehaviour
 				currentYScale,
 				transform.localScale.z
 			);
-			// Vector3 pos = transform.position;
-			// pos.y -= ((standHeight - crouchHeight) / 2) - groundDistance;
-			// transform.position = pos;
+			Vector3 pos = transform.position;
+			pos.y -= ((standHeight - crouchHeight) / (crouchTransitionTime / Time.deltaTime) );
+			transform.position = pos;
 		}
 		// Standing up
 		else if (inCrouchTransition && !isCrouching)
@@ -161,7 +161,7 @@ public class PlayerController : MonoBehaviour
 				inCrouchTransition = false;
 			}
 		}
-		float temp = transform.localScale.y;
+		// float temp = transform.localScale.y;
 
 		// Check if a transition needs to stop
 		if (inCrouchTransition && (DateTime.Now - crouchTransitionStart).TotalSeconds > crouchTransitionTime)
@@ -180,7 +180,8 @@ public class PlayerController : MonoBehaviour
 	public bool IsStanding()
 	{
 		Ray ray = new Ray(transform.position, -transform.up);
-		float distance = ((capsule.height * transform.localScale.y) / 2) + groundDistance;
+		// For some reason when crouched the value for the distace to ground has to be a lot more
+		float distance = ((capsule.height * transform.localScale.y) / 2) + (groundDistance * (isCrouching ? 5 : 1));
 		return Physics.Raycast(ray, distance, ~LayerMask.GetMask("Player"));
 	}
 }
