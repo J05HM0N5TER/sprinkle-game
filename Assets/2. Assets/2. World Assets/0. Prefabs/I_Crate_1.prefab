@@ -1,18 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!65 &1024258481673919378
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4730245475524287220}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.2783866, y: 1.2492812, z: 2.5875301}
-  m_Center: {x: 0, y: 0.6274997, z: 0.00000011920929}
 --- !u!54 &1504787475269540984
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -29,6 +16,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!65 &1024258481673919378
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4730245475524287220}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.2783866, y: 1.2492812, z: 2.5875301}
+  m_Center: {x: 0, y: 0.6274997, z: 0.00000011920929}
 --- !u!1 &5576303291691759848
 GameObject:
   m_ObjectHideFlags: 0
@@ -122,6 +122,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 218c8fc288ac47f4588a6ad0ced74ba3,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 439b01a5a655d8541b3ce047872f9ea8, type: 2}
     - target: {fileID: -927199367670048503, guid: 218c8fc288ac47f4588a6ad0ced74ba3,
         type: 3}
       propertyPath: m_Name

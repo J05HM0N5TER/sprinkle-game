@@ -8,11 +8,11 @@ FBXHeaderExtension:  {
 		Version: 1000
 		Year: 2020
 		Month: 9
-		Day: 22
-		Hour: 15
-		Minute: 56
-		Second: 59
-		Millisecond: 225
+		Day: 23
+		Hour: 9
+		Minute: 54
+		Second: 34
+		Millisecond: 490
 	}
 	Creator: "FBX SDK/FBX Plugins version 2019.2"
 	SceneInfo: "SceneInfo::GlobalInfo", "UserData" {
@@ -34,15 +34,15 @@ FBXHeaderExtension:  {
 			P: "Original|ApplicationVendor", "KString", "", "", "Autodesk"
 			P: "Original|ApplicationName", "KString", "", "", "Maya"
 			P: "Original|ApplicationVersion", "KString", "", "", "201900"
-			P: "Original|DateTime_GMT", "DateTime", "", "", "22/09/2020 05:56:59.223"
+			P: "Original|DateTime_GMT", "DateTime", "", "", "22/09/2020 23:54:34.487"
 			P: "Original|FileName", "KString", "", "", "C:\Users\Samuel\Desktop\End of year project\Exports\GreyBox\Greybox (Working)\Vent_End_Cap.fbx"
 			P: "LastSaved", "Compound", "", ""
 			P: "LastSaved|ApplicationVendor", "KString", "", "", "Autodesk"
 			P: "LastSaved|ApplicationName", "KString", "", "", "Maya"
 			P: "LastSaved|ApplicationVersion", "KString", "", "", "201900"
-			P: "LastSaved|DateTime_GMT", "DateTime", "", "", "22/09/2020 05:56:59.223"
+			P: "LastSaved|DateTime_GMT", "DateTime", "", "", "22/09/2020 23:54:34.487"
 			P: "Original|ApplicationActiveProject", "KString", "", "", "C:\Users\Samuel\Desktop\End of year project\Exports\GreyBox\Greybox (Working)"
-			P: "Original|ApplicationNativeFile", "KString", "", "", "C:\Users\Samuel\Desktop\End of year project\Scenes\Game Modular Assets(Working)\Game_Modular_AssetsV2.0077.ma"
+			P: "Original|ApplicationNativeFile", "KString", "", "", "C:\Users\Samuel\Desktop\End of year project\Scenes\Game Modular Assets(Working)\Game_Modular_AssetsV2.0079.ma"
 		}
 	}
 }
@@ -77,7 +77,7 @@ GlobalSettings:  {
 
 Documents:  {
 	Count: 1
-	Document: 1422906132736, "", "Scene" {
+	Document: 2169681554768, "", "Scene" {
 		Properties70:  {
 			P: "SourceObject", "object", "", ""
 			P: "ActiveAnimStackName", "KString", "", "", "Take 001"
@@ -250,7 +250,7 @@ Definitions:  {
 ;------------------------------------------------------------------
 
 Objects:  {
-	Geometry: 1422959561856, "Geometry::", "Mesh" {
+	Geometry: 2169687032160, "Geometry::", "Mesh" {
 		Vertices: *12 {
 			a: -50,109.785499572754,0,-50,0,0,50,109.785499572754,0,50,0,0
 		} 
@@ -279,7 +279,7 @@ Objects:  {
 			MappingInformationType: "ByPolygonVertex"
 			ReferenceInformationType: "IndexToDirect"
 			UV: *8 {
-				a: 0.023836575448513,0.824991285800934,0.0238492116332054,0.701482713222504,0.137026399374008,0.70149427652359,0.137013822793961,0.82500284910202
+				a: 0.023836612701416,0.824991285800934,0.0238492488861084,0.701482713222504,0.137026429176331,0.70149427652359,0.137013792991638,0.82500284910202
 			} 
 			UVIndex: *4 {
 				a: 0,1,2,3
@@ -323,7 +323,7 @@ Objects:  {
 			}
 		}
 	}
-	Model: 1422420289216, "Model::Vent_End_Cap", "Mesh" {
+	Model: 2169182367024, "Model::Vent_End_Cap", "Mesh" {
 		Version: 232
 		Properties70:  {
 			P: "RotationActive", "bool", "", "",1
@@ -335,28 +335,28 @@ Objects:  {
 		Shading: T
 		Culling: "CullingOff"
 	}
-	Material: 1422957215520, "Material::lambert32", "" {
+	Material: 2169686254944, "Material::Greybox_MAT", "" {
 		Version: 102
 		ShadingModel: "lambert"
 		MultiLayer: 0
 		Properties70:  {
 			P: "AmbientColor", "Color", "", "A",0,0,0
-			P: "DiffuseColor", "Color", "", "A",0.5,0.5,0.5
+			P: "DiffuseColor", "Color", "", "A",0.380645155906677,0.380645155906677,0.380645155906677
 			P: "DiffuseFactor", "Number", "", "A",0.800000011920929
 			P: "TransparencyFactor", "Number", "", "A",1
 			P: "Emissive", "Vector3D", "Vector", "",0,0,0
 			P: "Ambient", "Vector3D", "Vector", "",0,0,0
-			P: "Diffuse", "Vector3D", "Vector", "",0.400000005960464,0.400000005960464,0.400000005960464
+			P: "Diffuse", "Vector3D", "Vector", "",0.304516129262986,0.304516129262986,0.304516129262986
 			P: "Opacity", "double", "Number", "",1
 		}
 	}
-	AnimationStack: 1422962257904, "AnimStack::Take 001", "" {
+	AnimationStack: 2169689207216, "AnimStack::Take 001", "" {
 		Properties70:  {
 			P: "LocalStop", "KTime", "Time", "",577326975000
 			P: "ReferenceStop", "KTime", "Time", "",577326975000
 		}
 	}
-	AnimationLayer: 1422699442752, "AnimLayer::BaseLayer", "" {
+	AnimationLayer: 2169433922656, "AnimLayer::BaseLayer", "" {
 	}
 }
 
@@ -366,16 +366,16 @@ Objects:  {
 Connections:  {
 	
 	;Model::Vent_End_Cap, Model::RootNode
-	C: "OO",1422420289216,0
+	C: "OO",2169182367024,0
 	
 	;AnimLayer::BaseLayer, AnimStack::Take 001
-	C: "OO",1422699442752,1422962257904
+	C: "OO",2169433922656,2169689207216
 	
 	;Geometry::, Model::Vent_End_Cap
-	C: "OO",1422959561856,1422420289216
+	C: "OO",2169687032160,2169182367024
 	
-	;Material::lambert32, Model::Vent_End_Cap
-	C: "OO",1422957215520,1422420289216
+	;Material::Greybox_MAT, Model::Vent_End_Cap
+	C: "OO",2169686254944,2169182367024
 }
 ;Takes section
 ;----------------------------------------------------

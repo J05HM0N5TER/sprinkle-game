@@ -190,7 +190,7 @@ GameObject:
   - component: {fileID: 4004068573854185775}
   m_Layer: 2
   m_Name: LivingSuit
-  m_TagString: Enemy
+  m_TagString: Suit
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -312,6 +312,7 @@ MonoBehaviour:
   lookingDistance: 1
   soundSources: []
   maxHearingRange: 25
+  maxDistanceFromPlayer: 0
 --- !u!1001 &157501588965867120
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -323,7 +324,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: e1f3a22d955c72840b27a42715e5ef29, type: 2}
+      objectReference: {fileID: 2100000, guid: 76d52c29b6913a943b8ef2fb144d9dc8, type: 2}
     - target: {fileID: -4216859302048453862, guid: ca8a27ecb5b107a4091e285cb5f6fc3b,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -398,7 +399,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: e1f3a22d955c72840b27a42715e5ef29, type: 2}
+      objectReference: {fileID: 2100000, guid: 76d52c29b6913a943b8ef2fb144d9dc8, type: 2}
     - target: {fileID: -927199367670048503, guid: ca8a27ecb5b107a4091e285cb5f6fc3b,
         type: 3}
       propertyPath: m_Name
@@ -413,22 +414,22 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: e1f3a22d955c72840b27a42715e5ef29, type: 2}
+      objectReference: {fileID: 2100000, guid: 76d52c29b6913a943b8ef2fb144d9dc8, type: 2}
     - target: {fileID: 4157871252728773075, guid: ca8a27ecb5b107a4091e285cb5f6fc3b,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 290f96644278b2646a59628699cfcd6d, type: 2}
+      objectReference: {fileID: 2100000, guid: f40c8009ea015e949b2141f6147c042d, type: 2}
     - target: {fileID: 8859163266265271608, guid: ca8a27ecb5b107a4091e285cb5f6fc3b,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: e1f3a22d955c72840b27a42715e5ef29, type: 2}
+      objectReference: {fileID: 2100000, guid: 76d52c29b6913a943b8ef2fb144d9dc8, type: 2}
     - target: {fileID: 8859163266265271608, guid: ca8a27ecb5b107a4091e285cb5f6fc3b,
         type: 3}
       propertyPath: m_Materials.Array.data[1]
       value: 
-      objectReference: {fileID: 2100000, guid: 3d48247821e3bdd4aa4f09fe0a23dc05, type: 2}
+      objectReference: {fileID: 2100000, guid: d2e0b83c23d21b546ac882ef36d925ea, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ca8a27ecb5b107a4091e285cb5f6fc3b, type: 3}
 --- !u!4 &5140078402258539882 stripped
