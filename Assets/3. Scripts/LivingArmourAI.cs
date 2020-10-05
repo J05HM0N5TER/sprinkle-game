@@ -20,6 +20,10 @@ public class LivingArmourAI : MonoBehaviour
 	public float timer = 10.0f;
 	// Stores what the timer was when the game started
 	private float resettimer;
+
+	public float normalWalkSpeed = 10;
+	public float chaseSpeed = 20;
+	public float searchSpeed = 5;
 	
 	[Tooltip("the area around the last seen point of the player that the ai will search for the player")]
 	public float lookingDistance = 1.0f;
@@ -65,6 +69,7 @@ public class LivingArmourAI : MonoBehaviour
 		lightvisor = visorLight.GetComponent<Light>();
 		lightvisor.color = search;
 		resettimer = timer;
+		agent.speed = normalWalkSpeed;
 	}
 
 	// Update is called once per frame  
@@ -90,6 +95,7 @@ public class LivingArmourAI : MonoBehaviour
 			agent.SetDestination(playerLastSeen);
 			lightvisor.color = chase;
 			wasFollowingPlayer = true;
+			agent.speed = chaseSpeed;
 		}
 		/*if (wasFollowingPlayer && !isPlayerVisible)
 		{
@@ -133,6 +139,7 @@ public class LivingArmourAI : MonoBehaviour
 			//LookForPlayer();
 			lightvisor.color = investigate;
 			timer -= Time.deltaTime;
+			agent.speed = searchSpeed;
 		}
 		// reseting wonder / looking for player further
 		if(timer <= 0)
@@ -143,6 +150,7 @@ public class LivingArmourAI : MonoBehaviour
 			wonderDistance = originalWonder;
 			lightvisor.color = search;
 			timer = resettimer;
+			agent.speed = normalWalkSpeed;
 		}
 		// sound reactions
 		if (!wasFollowingPlayer || !isPlayerVisible)
