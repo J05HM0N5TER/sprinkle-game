@@ -556,7 +556,7 @@ Light:
   m_Color: {r: 0.32941177, g: 0.12156863, b: 0.31764707, a: 1}
   m_Intensity: 16777216
   m_Range: 50
-  m_SpotAngle: 139.9902
+  m_SpotAngle: 109.45086
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
   m_Shadows:
@@ -910,6 +910,11 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 76d52c29b6913a943b8ef2fb144d9dc8, type: 2}
+    - target: {fileID: -5664342998575178869, guid: ca8a27ecb5b107a4091e285cb5f6fc3b,
+        type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 2bc28d29ede581a4899d93b8b19db555, type: 2}
     - target: {fileID: -4216859302048453862, guid: ca8a27ecb5b107a4091e285cb5f6fc3b,
         type: 3}
       propertyPath: m_LocalPosition.x
