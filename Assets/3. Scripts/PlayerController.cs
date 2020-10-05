@@ -146,45 +146,12 @@ public class PlayerController : MonoBehaviour, /* ISerializable, */ IXmlSerializ
 
 	}
 
-	// protected PlayerController(SerializationInfo info, StreamingContext context)
-	// {
-	// 	speed = info.GetSingle("speed");
-	// 	groundDistance = info.GetSingle("groundDistance");
-	// 	jumpForce = info.GetSingle("jumpForce");
-	// 	crouchHeight = info.GetSingle("crouchHeight");
-	// 	defaultScale.OverWrite((System.Numerics.Vector3) info.GetValue("defaultScale", typeof(System.Numerics.Vector3)));
-	// 	standHeight = info.GetSingle("standHeight");
-	// 	isCrouching = info.GetBoolean("isCrouching");
-	// 	crouchSpeedModifier = info.GetSingle("crouchSpeedModifier");
-	// 	inventory = (Inventory) info.GetValue("inventory", typeof(Inventory));
-	// 	medSyringes = info.GetUInt16("medSyringes");
-	// 	batteryPacks = info.GetUInt16("batteryPacks");
-	// }
-
-	// [SecurityPermissionAttribute(SecurityAction.Demand, SerializationFormatter = true)]
-	// public virtual void GetObjectData(SerializationInfo info, StreamingContext context)
-	// {
-	// 	System.Numerics.Vector3 tempVec3 = new System.Numerics.Vector3();
-	// 	info.AddValue("speed", speed);
-	// 	info.AddValue("groundDistance", groundDistance);
-	// 	info.AddValue("jumpForce", jumpForce);
-	// 	info.AddValue("crouchHeight", crouchHeight);
-	// 	info.AddValue("defaultScale", tempVec3.OverWrite(defaultScale));
-	// 	info.AddValue("standHeight", standHeight);
-	// 	info.AddValue("isCrouching", isCrouching);
-	// 	info.AddValue("crouchSpeedModifier", crouchSpeedModifier);
-	// 	info.AddValue("inventory", inventory);
-	// 	info.AddValue("medSyringes", medSyringes);
-	// 	info.AddValue("batteryPacks", batteryPacks);
-	// }
-
 	// Xml Serialization Infrastructure
 
 	public void WriteXml(XmlWriter writer)
 	{
 		System.Numerics.Vector3 tempVec3 = new System.Numerics.Vector3();
-		System.Xml.Serialization.XmlSerializer vector3Writer =
-			new System.Xml.Serialization.XmlSerializer(typeof(System.Numerics.Vector3));
+		XmlSerializer vector3Writer = new XmlSerializer(typeof(System.Numerics.Vector3));
 
 		writer.WriteStartElement("Speed");
 		writer.WriteValue(speed);
@@ -193,30 +160,39 @@ public class PlayerController : MonoBehaviour, /* ISerializable, */ IXmlSerializ
 		writer.WriteStartElement("groundDistance");
 		writer.WriteValue(groundDistance);
 		writer.WriteEndElement();
+
 		writer.WriteStartElement("jumpForce");
 		writer.WriteValue(jumpForce);
 		writer.WriteEndElement();
+
 		writer.WriteStartElement("crouchHeight");
 		writer.WriteValue(crouchHeight);
 		writer.WriteEndElement();
+
 		writer.WriteStartElement("defaultScale");
-		vector3Writer.Serialize(writer, tempVec3.OverWrite(defaultScale));
-		// writer.WriteValue(tempVec3.OverWrite(defaultScale));
+		vector3Writer.Serialize(writer, tempVec3.CopyFrom(defaultScale));
 		writer.WriteEndElement();
+
 		writer.WriteStartElement("standHeight");
 		writer.WriteValue(standHeight);
 		writer.WriteEndElement();
+
 		writer.WriteStartElement("isCrouching");
 		writer.WriteValue(isCrouching);
 		writer.WriteEndElement();
+
 		writer.WriteStartElement("crouchSpeedModifier");
 		writer.WriteValue(crouchSpeedModifier);
 		writer.WriteEndElement();
+
 		writer.WriteStartElement("inventory");
 		writer.WriteValue(inventory.ToString());
 		writer.WriteEndElement();
+
 		writer.WriteStartElement("medSyringes");
 		writer.WriteValue(medSyringes);
+		writer.WriteEndElement();
+		
 		writer.WriteStartElement("batteryPacks");
 		writer.WriteValue(batteryPacks);
 		writer.WriteEndElement();
@@ -224,7 +200,22 @@ public class PlayerController : MonoBehaviour, /* ISerializable, */ IXmlSerializ
 
 	public void ReadXml(XmlReader reader)
 	{
-		speed = reader.ReadContentAsFloat();
+		XmlSerializer vector3Reader = new XmlSerializer(typeof(System.Numerics.Vector3));
+		// reader.MoveToElement();
+		Debug.Log($"Speed it {speed}");
+		speed = reader.ReadElementContentAsFloat();
+		Debug.Log($"Speed it {speed}");
+		groundDistance = reader.ReadElementContentAsFloat();
+		jumpForce = reader.ReadElementContentAsFloat();
+		crouchHeight = reader.ReadElementContentAsFloat();
+		defaultScale.CopyFrom((System.Numerics.Vector3)vector3Reader.Deserialize(reader));
+		// defaultScale.CopyFrom((System.Numerics.Vector3)reader.ReadElementContentAs(typeof(System.Numerics.Vector3), null));
+		standHeight = reader.ReadElementContentAsFloat();
+		isCrouching = reader.ReadElementContentAsBoolean();
+		crouchSpeedModifier = reader.ReadElementContentAsFloat();
+		inventory = (Inventory)reader.ReadElementContentAs(typeof(Inventory), null);
+		medSyringes = (ushort)reader.ReadElementContentAsInt();
+		batteryPacks = (ushort)reader.ReadElementContentAsInt();
 	}
 
 	public XmlSchema GetSchema()

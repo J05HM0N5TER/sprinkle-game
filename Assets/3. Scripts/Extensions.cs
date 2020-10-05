@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class MatrixExtensions
+public static class UnityMathExtensions
 {
     public static Quaternion ExtractRotation(this Matrix4x4 matrix)
     {
@@ -36,10 +36,7 @@ public static class MatrixExtensions
         scale.z = new Vector4(matrix.m02, matrix.m12, matrix.m22, matrix.m32).magnitude;
         return scale;
     }
-}
 
-public static class Vector3Extensions
-{
     /// <summary>
     /// Divide the components of one vector by the components of a second vector
     /// </summary>
@@ -48,12 +45,14 @@ public static class Vector3Extensions
     /// <returns>The result of the equation</returns>
     public static Vector3 ComponentDivide(this Vector3 vector, Vector3 secondVector)
     {
-        return new Vector3(vector.x / secondVector.x, vector.y / secondVector.y, vector.z / secondVector.z);
+        vector = new Vector3(vector.x / secondVector.x, vector.y / secondVector.y, vector.z / secondVector.z);
+        return vector;
     }
 
-    public static Vector3 OverWrite(this Vector3 vector, System.Numerics.Vector3 newValues)
+    public static Vector3 CopyFrom(this Vector3 vector, System.Numerics.Vector3 newValues)
     {
-        return new Vector3(newValues.X, newValues.Y, newValues.Z);
+        vector = new Vector3(newValues.X, newValues.Y, newValues.Z);
+        return vector;
     }
 }
 
@@ -64,10 +63,34 @@ public static class NumericsExtensions
     /// </summary>
     /// <param name="vector">The current vector</param>
     /// <param name="newValues">The Vector3 holding the values to overwrite the current vector</param>
-    /// <returns></returns>
-    public static System.Numerics.Vector3 OverWrite(this System.Numerics.Vector3 vector, Vector3 newValues)
+    /// <returns>The current value with its new values in it</returns>
+    public static System.Numerics.Vector3 CopyFrom(this System.Numerics.Vector3 vector, Vector3 newValues)
     {
-        return new System.Numerics.Vector3(newValues.x, newValues.y, newValues.z);
+        vector = new System.Numerics.Vector3(newValues.x, newValues.y, newValues.z);
+        return vector;
     }
-    // public static 
+
+    /// <summary>
+    /// Copies values for Unity Quaternion to .Net Quaternion for serialization
+    /// </summary>
+    /// <param name="vector">The current Quaternion</param>
+    /// <param name="newValues">The Quaternion holding the values to overwrite the current Quaternion</param>
+    /// <returns>The current value with its new values in it</returns>
+    public static System.Numerics.Quaternion CopyFrom(this System.Numerics.Quaternion quaternion, UnityEngine.Quaternion newValues)
+    {
+        quaternion = new System.Numerics.Quaternion(newValues.x, newValues.y, newValues.z, newValues.w);
+        return quaternion; 
+    }
+
+
+    public static System.Numerics.Matrix4x4 CopyFrom(this System.Numerics.Matrix4x4 matrix4X4, UnityEngine.Matrix4x4 newValues)
+    {
+        // This was annoying to do
+        matrix4X4 = new System.Numerics.Matrix4x4(
+            newValues.m00, newValues.m01, newValues.m02, newValues.m03,
+            newValues.m10, newValues.m11, newValues.m12, newValues.m13,
+            newValues.m20, newValues.m21, newValues.m22, newValues.m23,
+            newValues.m30, newValues.m31, newValues.m32, newValues.m33);
+        return matrix4X4;
+    }
 }
