@@ -18,6 +18,8 @@ public class LivingArmourAI : MonoBehaviour
 	public float wonderDistance = 10.0f;
 	[Tooltip("How long will the ai be searching in the area that it last saw the player")]
 	public float timer = 10.0f;
+	// Stores what the timer was when the game started
+	private float resettimer;
 	
 	[Tooltip("the area around the last seen point of the player that the ai will search for the player")]
 	public float lookingDistance = 1.0f;
@@ -44,12 +46,25 @@ public class LivingArmourAI : MonoBehaviour
 	private GameObject[] Suits;
 	public float maxDistanceFromPlayer;
 
+
+	//visor colour stuff
+	public GameObject visorLight;
+	private Light lightvisor;
+	public Color chase =  new Color(84, 31, 81, 1);
+	public Color investigate =  new Color(161, 100,16, 1);
+	public Color search =  new Color(66, 94, 68, 1);
+	private Vector3 playerLastSeen = Vector3.zero;
+
 	// Start is called before the first frame update
 	void Start()
 	{
 		agent = gameObject.GetComponent<NavMeshAgent>();
 		originalWonder = wonderDistance;
 		Suits = GameObject.FindGameObjectsWithTag("Suit");
+		//visorLight = GetComponent<Light>();
+		lightvisor = visorLight.GetComponent<Light>();
+		lightvisor.color = search;
+		resettimer = timer;
 	}
 
 	// Update is called once per frame  
@@ -60,7 +75,6 @@ public class LivingArmourAI : MonoBehaviour
 		// Is the player within the view bounds
 		playerInScreenBounds = screenPoint.z > 0 && screenPoint.x > 0 && screenPoint.x < 1 && screenPoint.y > 0 && screenPoint.y < 1;
 		// The position the player was last seen at by the AI (Updated when the player is discovered)
-		Vector3 playerLastSeen = Vector3.zero;
         // Is the player within screen bounds and nothing is obstructing view
 		rayObstructed = Physics.Linecast(/*startPos, endPos,*/ agent.transform.position, player.transform.position, out RaycastHit hitinfo, ~(1<<10) );
 		// Print out what the ray hit
@@ -74,7 +88,7 @@ public class LivingArmourAI : MonoBehaviour
 			playerLastSeen = player.transform.position;
 			// Set the AI to go towards the player
 			agent.SetDestination(playerLastSeen);
-			
+			lightvisor.color = chase;
 			wasFollowingPlayer = true;
 		}
 		/*if (wasFollowingPlayer && !isPlayerVisible)
@@ -98,27 +112,39 @@ public class LivingArmourAI : MonoBehaviour
 			//}
 		}
 		*/
+		// TODO: Check that the plaeyr can't be seen, this it for when the AI catches the player
 		if ((agent.transform.position - playerLastSeen).magnitude < 0.5f)
 		{
-			
+			// Debug.Log("Changing to look for player", this);
 			lookingforplayer = true;
 			wasFollowingPlayer = false;
 		}
 		if (!agent.hasPath || agent.path == null)
 		{
+			// for debug purpose this does work
 			agent.SetDestination(RandomNavSphere(agent.GetComponent<Transform>().position, wonderDistance, -1));
 		}
+		// Searching around previous known position
 		if(lookingforplayer)
 		{
+			// Debug.LogError("Looking for player", this);
+			
 			wonderDistance = lookingDistance;
 			//LookForPlayer();
+			lightvisor.color = investigate;
 			timer -= Time.deltaTime;
 		}
+		// reseting wonder / looking for player further
 		if(timer <= 0)
 		{
+			// Debug.Log("Timer Up", this);
+			// this isnt working
 			lookingforplayer = false;
 			wonderDistance = originalWonder;
+			lightvisor.color = search;
+			timer = resettimer;
 		}
+		// sound reactions
 		if (!wasFollowingPlayer || !isPlayerVisible)
 		{
 			foreach (GameObject SoundSource in soundSources)
@@ -126,6 +152,7 @@ public class LivingArmourAI : MonoBehaviour
 				if (Vector3.Distance(gameObject.transform.position, SoundSource.transform.position) <= maxHearingRange)
 				{
 					agent.SetDestination(SoundSource.transform.position);
+					lightvisor.color = investigate;
 				}
 				if ((agent.transform.position - SoundSource.transform.position).magnitude < 0.5f)
 				{
@@ -137,7 +164,7 @@ public class LivingArmourAI : MonoBehaviour
 		/// all this for jumping to different suits
 		/// </summary>
 		
-	
+		//TODO: add in jumping to other suits, this code bellow is the basics of it but not fully wokring
 		
             
             
@@ -227,5 +254,6 @@ public class LivingArmourAI : MonoBehaviour
 	{
 		yield return new WaitForSeconds(timer);
 		wonderDistance = originalWonder;
+		lightvisor.color = search;
 	}
 }
