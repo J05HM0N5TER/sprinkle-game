@@ -150,70 +150,67 @@ public class PlayerController : MonoBehaviour, /* ISerializable, */ IXmlSerializ
 
 	public void WriteXml(XmlWriter writer)
 	{
-		System.Numerics.Vector3 tempVec3 = new System.Numerics.Vector3();
 		XmlSerializer vector3Writer = new XmlSerializer(typeof(System.Numerics.Vector3));
 
-		writer.WriteStartElement("Speed");
+		writer.WriteStartElement(nameof(speed));
 		writer.WriteValue(speed);
 		writer.WriteEndElement();
 
-		writer.WriteStartElement("groundDistance");
+		writer.WriteStartElement(nameof(groundDistance));
 		writer.WriteValue(groundDistance);
 		writer.WriteEndElement();
 
-		writer.WriteStartElement("jumpForce");
+		writer.WriteStartElement(nameof(jumpForce));
 		writer.WriteValue(jumpForce);
 		writer.WriteEndElement();
 
-		writer.WriteStartElement("crouchHeight");
+		writer.WriteStartElement(nameof(crouchHeight));
 		writer.WriteValue(crouchHeight);
 		writer.WriteEndElement();
 
-		writer.WriteStartElement("defaultScale");
-		vector3Writer.Serialize(writer, tempVec3.CopyFrom(defaultScale));
+		writer.WriteStartElement(nameof(defaultScale));
+		vector3Writer.Serialize(writer, Convert.New(defaultScale));
 		writer.WriteEndElement();
 
-		writer.WriteStartElement("standHeight");
+		writer.WriteStartElement(nameof(standHeight));
 		writer.WriteValue(standHeight);
 		writer.WriteEndElement();
 
-		// writer.WriteStartElement("isCrouching");
-		// writer.WriteValue(isCrouching);
-		// writer.WriteEndElement();
+		writer.WriteStartElement(nameof(isCrouching));
+		writer.WriteValue(isCrouching);
+		writer.WriteEndElement();
 
-		writer.WriteStartElement("crouchSpeedModifier");
+		writer.WriteStartElement(nameof(crouchSpeedModifier));
 		writer.WriteValue(crouchSpeedModifier);
 		writer.WriteEndElement();
 
-		writer.WriteStartElement("inventory");
+		writer.WriteStartElement(nameof(inventory));
 		writer.WriteValue((int)inventory);
 		writer.WriteEndElement();
 
-		writer.WriteStartElement("medSyringes");
+		writer.WriteStartElement(nameof(medSyringes));
 		writer.WriteValue(medSyringes);
 		writer.WriteEndElement();
 		
-		writer.WriteStartElement("batteryPacks");
+		writer.WriteStartElement(nameof(batteryPacks));
 		writer.WriteValue(batteryPacks);
 		writer.WriteEndElement();
 	}
 
+
 	public void ReadXml(XmlReader reader)
 	{
 		XmlSerializer vector3Reader = new XmlSerializer(typeof(System.Numerics.Vector3));
-		// reader.MoveToElement();
-		Debug.Log($"Speed it {speed}");
 		speed = reader.ReadElementContentAsFloat();
-		Debug.Log($"Speed it {speed}");
 		groundDistance = reader.ReadElementContentAsFloat();
 		jumpForce = reader.ReadElementContentAsFloat();
 		crouchHeight = reader.ReadElementContentAsFloat();
 		reader.ReadStartElement();
-		defaultScale.CopyFrom((System.Numerics.Vector3)vector3Reader.Deserialize(reader));
+		Convert.Copy((System.Numerics.Vector3)vector3Reader.Deserialize(reader), defaultScale);
 		reader.ReadEndElement();
 		// defaultScale.CopyFrom((System.Numerics.Vector3)reader.ReadElementContentAs(typeof(System.Numerics.Vector3), null));
 		standHeight = reader.ReadElementContentAsFloat();
-		// isCrouching = reader.ReadElementContentAsBoolean();
+		isCrouching = reader.ReadElementContentAsBoolean();
 		crouchSpeedModifier = reader.ReadElementContentAsFloat();
 		// inventory = (Inventory)reader.ReadElementContentAs(typeof(Inventory), null);
 		inventory = (Inventory)reader.ReadElementContentAsInt();

@@ -4,13 +4,62 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Xml;
+using System.Xml.Schema;
 using System.Xml.Serialization;
 using UnityEngine;
 
-// NOTE This whole class is going to be super dodgy
-
 public class GameSave : MonoBehaviour
 {
+
+	public class ObjectData : IXmlSerializable
+	{
+		public string name;
+		public System.Numerics.Vector3 position;
+		public System.Numerics.Quaternion rotation;
+		public System.Numerics.Vector3 localScale;
+		public ObjectData()
+		{
+			position = System.Numerics.Vector3.Zero;
+			rotation = System.Numerics.Quaternion.Identity;
+			localScale = System.Numerics.Vector3.Zero;
+		}
+
+		// Xml Serialization Infrastructure
+
+		public void WriteXml(XmlWriter writer)
+		{
+			XmlSerializer vector3Writer = new XmlSerializer(typeof(System.Numerics.Vector3));
+			XmlSerializer quaternionWriter = new XmlSerializer(typeof(System.Numerics.Quaternion));
+			writer.WriteStartElement(nameof(name));
+			writer.WriteValue(name);
+			writer.WriteEndElement();
+			writer.WriteStartElement(nameof(position));
+			vector3Writer.Serialize(writer, position);
+			writer.WriteEndElement();
+			writer.WriteStartElement(nameof(rotation));
+			quaternionWriter.Serialize(writer, rotation);
+			writer.WriteEndElement();
+			writer.WriteStartElement(nameof(localScale));
+			vector3Writer.Serialize(writer, localScale);
+			writer.WriteEndElement();
+
+		}
+
+		public void ReadXml(XmlReader reader)
+		{
+			XmlSerializer vector3Writer = new XmlSerializer(typeof(System.Numerics.Vector3));
+			XmlSerializer quaternionWriter = new XmlSerializer(typeof(System.Numerics.Quaternion));
+			name = reader.ReadElementContentAsString();
+			position = (System.Numerics.Vector3) vector3Writer.Deserialize(reader);
+			rotation = (System.Numerics.Quaternion) quaternionWriter.Deserialize(reader);
+			localScale = (System.Numerics.Vector3) vector3Writer.Deserialize(reader);
+		}
+
+		public XmlSchema GetSchema()
+		{
+			return (null);
+		}
+	}
 	private void Update()
 	{
 		if (Input.GetKeyDown(KeyCode.F1))
@@ -20,6 +69,7 @@ public class GameSave : MonoBehaviour
 		}
 		else if (Input.GetKeyDown(KeyCode.F2))
 		{
+			Debug.Log("Load button pressed");
 			LoadGame();
 		}
 	}
@@ -28,32 +78,57 @@ public class GameSave : MonoBehaviour
 	{
 		PlayerController playerController = FindObjectOfType<PlayerController>();
 
-		try
+		// try
+		// {
+		XmlSerializer playerWriter = new XmlSerializer(playerController.GetType());
+		Directory.CreateDirectory(Application.dataPath + "/Saves/");
+		XmlSerializer vector3Writer = new XmlSerializer(typeof(System.Numerics.Vector3));
+		XmlSerializer listWriter = new XmlSerializer(typeof(List<ObjectData>));
+
+		using(XmlWriter xmlWriter = XmlWriter.Create((Application.dataPath + "/Saves/Save.xml")))
 		{
-			System.Xml.Serialization.XmlSerializer playerWriter = new XmlSerializer(playerController.GetType());
-			Directory.CreateDirectory(Application.dataPath + "/Saves/");
-			System.Xml.Serialization.XmlSerializer vector3Writer =
-				new System.Xml.Serialization.XmlSerializer(typeof(System.Numerics.Vector3));
+			xmlWriter.WriteStartElement("root");
+			playerWriter.Serialize(xmlWriter, playerController);
 
-			System.Numerics.Vector3 temp = new System.Numerics.Vector3().CopyFrom(transform.position);
-			temp.CopyFrom(transform.position);
+			// Dynamic objects
+			Transform[] allObjects = Resources.FindObjectsOfTypeAll<Transform>() as Transform[];
+			List<ObjectData> dynamicObjects = new List<ObjectData>();
 
-			using(XmlWriter xmlWriter = XmlWriter.Create((Application.dataPath + "/Saves/Save.xml")))
+			foreach (var item in allObjects)
 			{
-				xmlWriter.WriteStartElement("root");
-				playerWriter.Serialize(xmlWriter, playerController);
-				// xmlWriter.WriteEndElement();
-				vector3Writer.Serialize(xmlWriter, temp);
-				// xmlWriter.WriteEndElement();
-				xmlWriter.WriteEndDocument();
+				if (item.gameObject.layer == LayerMask.NameToLayer("Dynamic"))
+				{
+					// Debug.Log($"Old: {item.position} New Object pos: {newObject.position}, rotation: {newObject.rotation}");
+					dynamicObjects.Add(Convert.New(item));
+				}
 			}
 
+
+			System.Numerics.Vector3 test = new System.Numerics.Vector3();
+			Vector3 test2 = new Vector3(1, 5, 4);
+			Debug.Log("Vector is " + test.ToString());
+			Debug.Log("Other Vector is " + test2.ToString());
+			test = Convert.Copy(test2, test);
+			Debug.Log("Vector is " + test.ToString());
+
+			// xmlWriter.WriteEndElement();
+			xmlWriter.WriteStartElement("DynamicObjects");
+			// xmlWriter.WriteValue(dynamicObjects);
+			// XmlSerializer objectDataWriter = new XmlSerializer(typeof(ObjectData));
+			// objectDataWriter.Serialize(xmlWriter, new ObjectData().CopyFrom(this.transform));
+			xmlWriter.WriteEndElement();
+			listWriter.Serialize(xmlWriter, dynamicObjects);
+			// xmlWriter.WriteEndElement();
+
+			xmlWriter.WriteEndDocument();
 		}
-		catch (System.Exception e)
-		{
-			Debug.LogError($"Failed to load at {e.Source} Info: {e.ToString()}");
-			throw;
-		}
+
+		// }
+		// catch (System.Exception e)
+		// {
+		// 	Debug.LogError($"Failed to load at {e.Source} Info: {e.ToString()}");
+		// 	throw;
+		// }
 	}
 
 	public void LoadGame()
@@ -66,8 +141,6 @@ public class GameSave : MonoBehaviour
 			//Directory.CreateDirectory(Application.dataPath + "/Saves/");
 			XmlSerializer vector3Writer = new XmlSerializer(typeof(System.Numerics.Vector3));
 
-			System.Numerics.Vector3 temp = new System.Numerics.Vector3().CopyFrom(transform.position);
-			temp.CopyFrom(transform.position);
 
 			using(var stream = new FileStream(Application.dataPath + "/Saves/Save.xml", FileMode.Open))
 			{
@@ -75,14 +148,9 @@ public class GameSave : MonoBehaviour
 				{
 					xmlReader.ReadStartElement("root"); // root
 
-					xmlReader.ReadStartElement("PlayerController"); // PlayerController
+					xmlReader.ReadStartElement(nameof(PlayerController)); // PlayerController
 					playerController.ReadXml(xmlReader);
 					xmlReader.ReadEndElement(); // PlayerController
-
-					// playerController = (PlayerController) playerWriter.Deserialize(xmlReader);
-					// xmlReader.ReadStartElement(); // Vector3
-					temp = (System.Numerics.Vector3) vector3Writer.Deserialize(xmlReader);
-					// xmlReader.ReadEndElement(); // Vector3
 
 					xmlReader.ReadEndElement(); // root
 				}
@@ -94,21 +162,5 @@ public class GameSave : MonoBehaviour
 			Debug.LogError($"Failed to load at {e.TargetSite} Info: {e.ToString()}", this);
 			throw;
 		}
-	}
-
-	private List<string> ExtractVariables(Type classType)
-	{
-		BindingFlags bindingFlags = BindingFlags.Public |
-			BindingFlags.NonPublic |
-			BindingFlags.Instance |
-			BindingFlags.Static;
-
-		List<string> names = new List<string>();
-		foreach (FieldInfo field in classType.GetFields(bindingFlags))
-		{
-			names.Add(field.Name);
-		}
-
-		return names;
 	}
 }
