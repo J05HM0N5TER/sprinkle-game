@@ -12,7 +12,7 @@ public class SludgeScript : MonoBehaviour
     private bool decreaseSize;
     private Vector3 sizeChange = new Vector3(0.1f, 0.1f,0.0f);
     //sound
-    private AudioSource audio;
+    private AudioSource audioS;
     [Tooltip("sound the sludge makes")]
     public AudioClip sludgeSound;
     [Tooltip("the object that will make the spray sound and have the particles attached to")]
@@ -29,7 +29,7 @@ public class SludgeScript : MonoBehaviour
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
-        audio = GetComponent<AudioSource>();
+        audioS = GetComponent<AudioSource>();
         ps = sprayObject.GetComponent<ParticleSystem>();
     }
 
@@ -46,8 +46,8 @@ public class SludgeScript : MonoBehaviour
 				if (player.GetComponent<PlayerController>().inventory.HasFlag(PlayerController.Inventory.ChemicalSpray))
 				{
                     //PlaySpray();
-                    audio.PlayOneShot(sludgeSound);
-                    audio.PlayOneShot(spraySound);
+                    audioS.PlayOneShot(sludgeSound);
+                    audioS.PlayOneShot(spraySound);
                     decreaseSize = true;
                     //gameObject.SetActive(false);
 				}
