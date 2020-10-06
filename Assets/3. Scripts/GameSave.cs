@@ -11,7 +11,7 @@ using UnityEngine;
 public class GameSave : MonoBehaviour
 {
 
-	public class ObjectData : IXmlSerializable
+	public class ObjectData : IXmlSerializable, IComparable<ObjectData>
 	{
 		public string name;
 		public System.Numerics.Vector3 position;
@@ -59,6 +59,23 @@ public class GameSave : MonoBehaviour
 		{
 			return (null);
 		}
+
+		public int CompareTo(ObjectData other)
+		{
+			int comparison = String.Compare(this.name, other.name, comparisonType : StringComparison.OrdinalIgnoreCase);
+			if (comparison < 0)
+			{
+				return -1;
+			}
+			else if (comparison > 0)
+			{
+				return 1;
+			}
+			else
+			{
+				return 0;
+			}
+		}
 	}
 	private void Update()
 	{
@@ -102,22 +119,14 @@ public class GameSave : MonoBehaviour
 					dynamicObjects.Add(Convert.New(item));
 				}
 			}
-
-
-			System.Numerics.Vector3 test = new System.Numerics.Vector3();
-			Vector3 test2 = new Vector3(1, 5, 4);
-			Debug.Log("Vector is " + test.ToString());
-			Debug.Log("Other Vector is " + test2.ToString());
-			test = Convert.Copy(test2, test);
-			Debug.Log("Vector is " + test.ToString());
-
+			dynamicObjects.Sort();
 			// xmlWriter.WriteEndElement();
 			xmlWriter.WriteStartElement("DynamicObjects");
 			// xmlWriter.WriteValue(dynamicObjects);
 			// XmlSerializer objectDataWriter = new XmlSerializer(typeof(ObjectData));
 			// objectDataWriter.Serialize(xmlWriter, new ObjectData().CopyFrom(this.transform));
-			xmlWriter.WriteEndElement();
 			listWriter.Serialize(xmlWriter, dynamicObjects);
+			xmlWriter.WriteEndElement();
 			// xmlWriter.WriteEndElement();
 
 			xmlWriter.WriteEndDocument();
@@ -140,7 +149,6 @@ public class GameSave : MonoBehaviour
 			XmlSerializer playerWriter = new XmlSerializer(playerController.GetType());
 			//Directory.CreateDirectory(Application.dataPath + "/Saves/");
 			XmlSerializer vector3Writer = new XmlSerializer(typeof(System.Numerics.Vector3));
-
 
 			using(var stream = new FileStream(Application.dataPath + "/Saves/Save.xml", FileMode.Open))
 			{
