@@ -205,8 +205,6 @@ public class LivingArmourAI : MonoBehaviour
 				Debug.LogError ("Couldn't find valid point");
 			}
 		}
-		
-
 	}
 	public static Vector3 RandomNavSphere (Vector3 origin, float distance, int layermask)
 	{
