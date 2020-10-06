@@ -73,13 +73,18 @@ public class GameSave : MonoBehaviour
 			{
 				using(XmlReader xmlReader = XmlReader.Create(stream))
 				{
-					xmlReader.ReadStartElement("root");
+					xmlReader.ReadStartElement("root"); // root
 
+					xmlReader.ReadStartElement("PlayerController"); // PlayerController
 					playerController.ReadXml(xmlReader);
+					xmlReader.ReadEndElement(); // PlayerController
 
 					// playerController = (PlayerController) playerWriter.Deserialize(xmlReader);
+					// xmlReader.ReadStartElement(); // Vector3
 					temp = (System.Numerics.Vector3) vector3Writer.Deserialize(xmlReader);
-					xmlReader.ReadEndElement();
+					// xmlReader.ReadEndElement(); // Vector3
+
+					xmlReader.ReadEndElement(); // root
 				}
 			}
 
