@@ -9,9 +9,10 @@ public class SludgeScript : MonoBehaviour
     public float maxDistanceToInteract;
     [Tooltip("the amnount of time that the spray and animations/shaders will play")]
     public float timeOfplaying;
-
+    private bool decreaseSize;
+    private Vector3 sizeChange = new Vector3(0.1f, 0.1f,0.0f);
     //sound
-    private AudioSource audio;
+    private AudioSource audioS;
     [Tooltip("sound the sludge makes")]
     public AudioClip sludgeSound;
     [Tooltip("the object that will make the spray sound and have the particles attached to")]
@@ -28,7 +29,7 @@ public class SludgeScript : MonoBehaviour
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
-        audio = GetComponent<AudioSource>();
+        audioS = GetComponent<AudioSource>();
         ps = sprayObject.GetComponent<ParticleSystem>();
     }
 
@@ -45,12 +46,21 @@ public class SludgeScript : MonoBehaviour
 				if (player.GetComponent<PlayerController>().inventory.HasFlag(PlayerController.Inventory.ChemicalSpray))
 				{
                     //PlaySpray();
-                    audio.PlayOneShot(sludgeSound);
-                    audio.PlayOneShot(spraySound);
-                    gameObject.SetActive(false);
+                    audioS.PlayOneShot(sludgeSound);
+                    audioS.PlayOneShot(spraySound);
+                    decreaseSize = true;
+                    //gameObject.SetActive(false);
 				}
 			}
 		}
+        if(decreaseSize == true)
+        {
+            gameObject.transform.localScale -= sizeChange;
+            if(gameObject.transform.localScale == new Vector3(0,0,1))
+            {
+                gameObject.SetActive(false);
+            }
+        }
 	}
     private IEnumerator PlaySpray()
     {

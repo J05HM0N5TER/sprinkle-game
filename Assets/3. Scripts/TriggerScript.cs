@@ -10,7 +10,7 @@ public class TriggerScript : MonoBehaviour
     public GameObject animatedObject;
     [Tooltip("The object that will make sound")]
     public GameObject soundSource;
-    private AudioSource audio;
+    private AudioSource audioS;
     [Tooltip("The open sound of the doors")]
     public AudioClip Openclip;
     [Tooltip("The close sound of the doors")]
@@ -30,7 +30,7 @@ public class TriggerScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-       audio = soundSource.GetComponent<AudioSource>();
+       audioS = soundSource.GetComponent<AudioSource>();
        resettimer = timer;
     }
     private void Update()
@@ -39,7 +39,7 @@ public class TriggerScript : MonoBehaviour
         if (thingsInDoorway.Count == 0 && timer <= 0 && doorOpen)
         {
             animatedObject.GetComponent<Animator>().SetTrigger("Close");
-            audio.PlayOneShot(Closeclip);
+            audioS.PlayOneShot(Closeclip);
             doorOpen = false;
             if (oneTimeUse)
             {
@@ -58,7 +58,7 @@ public class TriggerScript : MonoBehaviour
                     if(!doorOpen)
                     {
                         animatedObject.GetComponent<Animator>().SetTrigger("Open");
-                        audio.PlayOneShot(Openclip);
+                        audioS.PlayOneShot(Openclip);
                         timer = resettimer;
                     }
                     thingsInDoorway.Add(other.gameObject);

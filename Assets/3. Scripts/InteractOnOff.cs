@@ -11,7 +11,7 @@ public class InteractOnOff : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if((turnOnStuff != null))
+        if(turnOnStuff != null)
         {
             foreach(var obj in turnOnStuff)
             {
@@ -19,7 +19,7 @@ public class InteractOnOff : MonoBehaviour
             }
         }
         
-        if((turnOffStuff != null))
+        if(turnOffStuff != null)
         {
             foreach(var obj in turnOffStuff)
             {
@@ -35,7 +35,7 @@ public class InteractOnOff : MonoBehaviour
 			if (Physics.Raycast(ray, out RaycastHit hit, maxDistanceToInteract) &&  // Raycast check
 				hit.collider.gameObject == gameObject)
             {
-                if((turnOnStuff != null))
+                if(turnOnStuff != null)
                 {
                     foreach(var obj in turnOnStuff)
                     {
@@ -43,7 +43,7 @@ public class InteractOnOff : MonoBehaviour
                     }
                 }
                 
-                if((turnOffStuff != null))
+                if(turnOffStuff != null)
                 {
                     foreach(var obj in turnOffStuff)
                     {
