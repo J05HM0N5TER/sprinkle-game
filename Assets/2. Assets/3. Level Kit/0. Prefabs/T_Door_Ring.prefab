@@ -1,5 +1,19 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!64 &3867405815224181805
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 292408663471158228}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 14
+  m_Mesh: {fileID: -3998779863113039524, guid: 6608c67ab46b58741b5e29ae0ed29954, type: 3}
 --- !u!64 &7676912634251434637
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -52,6 +66,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7676912634238420939}
     m_Modifications:
+    - target: {fileID: -5197194705717940859, guid: 6608c67ab46b58741b5e29ae0ed29954,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 1468a1d3536a273478667122516bb658, type: 2}
     - target: {fileID: -4216859302048453862, guid: 6608c67ab46b58741b5e29ae0ed29954,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -107,11 +126,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: -1504981713932161579, guid: 6608c67ab46b58741b5e29ae0ed29954,
+    - target: {fileID: -3863298637166676671, guid: 6608c67ab46b58741b5e29ae0ed29954,
         type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 1e4771945ed0cf74abbbe1020d4e07f8, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 1.173
+      objectReference: {fileID: 0}
     - target: {fileID: -927199367670048503, guid: 6608c67ab46b58741b5e29ae0ed29954,
         type: 3}
       propertyPath: m_Name
@@ -122,6 +141,11 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 4294967295
       objectReference: {fileID: 0}
+    - target: {fileID: 5503086875196965132, guid: 6608c67ab46b58741b5e29ae0ed29954,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 1e4771945ed0cf74abbbe1020d4e07f8, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6608c67ab46b58741b5e29ae0ed29954, type: 3}
 --- !u!1 &1848782946992685954 stripped
@@ -133,6 +157,12 @@ GameObject:
 --- !u!4 &3455223620003590545 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: 6608c67ab46b58741b5e29ae0ed29954,
+    type: 3}
+  m_PrefabInstance: {fileID: 7676912634251434635}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &292408663471158228 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -1259029338528798369, guid: 6608c67ab46b58741b5e29ae0ed29954,
     type: 3}
   m_PrefabInstance: {fileID: 7676912634251434635}
   m_PrefabAsset: {fileID: 0}
