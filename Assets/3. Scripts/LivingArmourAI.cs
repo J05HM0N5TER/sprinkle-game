@@ -51,6 +51,8 @@ public class LivingArmourAI : MonoBehaviour
 	private GameObject closestSuit;
 	private GameObject currentSuit;
 	private Camera playerCam;
+	private bool canSwapSuitAgain = true;
+	public float swapTimer = 2;
 
 	//visor colour stuff
 	public GameObject visorLight;
@@ -173,6 +175,7 @@ public class LivingArmourAI : MonoBehaviour
 		if (((gameObject.transform.position - player.transform.position).magnitude > maxDistanceFromPlayer) && !isPlayerVisible)
 		{
 			suits = GameObject.FindGameObjectsWithTag ("Suit");
+			currentSuit = gameObject;
 			foreach (GameObject suit in suits)
 			{
 				// Is the spawn point being seen?
@@ -180,25 +183,28 @@ public class LivingArmourAI : MonoBehaviour
 				{
 					// Find closest valid spawn point
 					float distance = UnityEngine.Vector3.Distance (player.GetComponent<Transform> ().position, suit.GetComponent<Transform> ().position);
+
 					// If their is no points then set this as the current one
-					if (closestSuit == null)
+					if (closestSuit == null && closestSuit != currentSuit)
 					{
 						closestSuit = suit;
 					}
 					// If the point is not the current point
-					else if (transform != currentSuit)
+					else if ((transform != currentSuit) && (distance < (closestSuit.transform.position - player.transform.position).magnitude) )
 					{
 						closestSuit = suit;
 					}
 				}
 			}
 			//! : check if this is still bugged, if range is too small then the suit will turn itself off, if bug is persistant add timer maybe.
-			if (closestSuit != null)
+			if ((closestSuit != currentSuit) && canSwapSuitAgain)
 			{
 				print("changing suit " + closestSuit.name);
 				closestSuit.GetComponent<LivingArmourAI> ().enabled = true;
 				currentSuit = closestSuit;
 				this.enabled = false;
+				canSwapSuitAgain = false;
+				SwapSuit();
 			}
 			else
 			{
@@ -233,15 +239,18 @@ public class LivingArmourAI : MonoBehaviour
 	{
 		Physics.OverlapSphere (gameObject.transform.position, 30);
 	}
-	private IEnumerator LookForPlayer ()
+	private IEnumerator SwapSuit ()
 	{
-		yield return StartCoroutine ("resetLookingForPlayer");
+		yield return StartCoroutine ("SwappingSuitTimer");
 	}
-	private IEnumerator resetLookingForPlayer ()
+	private IEnumerator SwappingSuitTimer ()
 	{
-		yield return new WaitForSeconds (timer);
-		wonderDistance = originalWonder;
-		lightvisor.color = search;
+		// 
+		// wonderDistance = originalWonder;
+		// lightvisor.color = search;
+		yield return new WaitForSeconds (swapTimer);
+		canSwapSuitAgain = true;
+		
 	}
 	private bool IsVisableToPlayer (UnityEngine.Vector3 position)
 	{
