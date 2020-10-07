@@ -506,10 +506,19 @@ MonoBehaviour:
   player: {fileID: 0}
   wonderDistance: 10
   timer: 10
+  normalWalkSpeed: 10
+  chaseSpeed: 20
+  searchSpeed: 5
   lookingDistance: 1
   soundSources: []
   maxHearingRange: 25
-  maxDistanceFromPlayer: 0
+  maxDistanceFromPlayer: 20
+  swapTimer: 2
+  visorLight: {fileID: 6117533550931190785}
+  visorEmission: {fileID: 2100000, guid: 2bc28d29ede581a4899d93b8b19db555, type: 2}
+  chase: {r: 84, g: 31, b: 81, a: 1}
+  investigate: {r: 161, g: 100, b: 16, a: 1}
+  search: {r: 66, g: 94, b: 68, a: 1}
 --- !u!1 &6117533550931190785
 GameObject:
   m_ObjectHideFlags: 0
@@ -523,12 +532,12 @@ GameObject:
   - component: {fileID: 8008219954437089175}
   - component: {fileID: 8947887844545657103}
   m_Layer: 0
-  m_Name: Purple_Light
+  m_Name: Suit_Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &313984463486511066
 Transform:
   m_ObjectHideFlags: 0
