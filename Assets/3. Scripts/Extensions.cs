@@ -56,16 +56,16 @@ public static class Convert
 	public static UnityEngine.Transform Copy(GameSave.ObjectData from, UnityEngine.Transform to)
 	{
 		to.name = from.name;
-		to.position = Convert.Copy(from.position, to.position);
-		to.rotation = Convert.Copy(from.rotation, to.rotation);
+		to.localPosition = Convert.Copy(from.localPosition, to.localPosition);
+		to.localRotation = Convert.Copy(from.localRotation, to.localRotation);
 		to.localScale = Convert.Copy(from.localScale, to.localScale);
 		return to;
 	}
 	public static GameSave.ObjectData Copy(UnityEngine.Transform from, GameSave.ObjectData to)
 	{
 		to.name = from.name;
-		to.position = Convert.Copy(from.position, to.position);
-		to.rotation = Convert.Copy(from.rotation, to.rotation);
+		to.localPosition = Convert.Copy(from.position, to.localPosition);
+		to.localRotation = Convert.Copy(from.rotation, to.localRotation);
 		to.localScale = Convert.Copy(from.localScale, to.localScale);
 		return to;
 	}
