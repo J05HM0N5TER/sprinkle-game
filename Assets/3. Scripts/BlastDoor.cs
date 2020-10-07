@@ -6,11 +6,11 @@ public class BlastDoor : MonoBehaviour
 {
     public bool locked = true;
     public AudioClip Openclip;
-    private AudioSource audio;
+    private AudioSource audioS;
     // Start is called before the first frame update
     void Start()
     {
-        audio = gameObject.GetComponent<AudioSource>();
+        audioS = gameObject.GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -19,7 +19,7 @@ public class BlastDoor : MonoBehaviour
         if(!locked)
         {
             gameObject.GetComponent<Animator>().SetTrigger("Open");
-            audio.PlayOneShot(Openclip);
+            audioS.PlayOneShot(Openclip);
             gameObject.GetComponent<BlastDoor>().enabled = false;
         }
     }
