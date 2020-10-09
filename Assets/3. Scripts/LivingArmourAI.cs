@@ -113,11 +113,15 @@ public class LivingArmourAI : MonoBehaviour
 			visorEmission.EnableKeyword ("_EMISSION");
 		}
 		// TODO: Check that the plaeyr can't be seen, this it for when the AI catches the player
-		if ((agent.transform.position - playerLastSeen).magnitude < 0.5f)
+		if ((agent.transform.position - playerLastSeen).magnitude < 0.5f && !isPlayerVisible)
 		{
 			// Debug.Log("Changing to look for player", this);
 			lookingforplayer = true;
 			wasFollowingPlayer = false;
+		}
+		else if((agent.transform.position - playerLastSeen).magnitude < 0.5f && isPlayerVisible)
+		{
+			player.GetComponent<PlayerController>().health -= 1;
 		}
 		if (!agent.hasPath || agent.path == null)
 		{
@@ -266,5 +270,12 @@ public class LivingArmourAI : MonoBehaviour
 		//    print("Ray hit: " + hitinfo.collider.name + " at: " + hitinfo.point.x + ", " + hitinfo.point.y);
 		// Debug view
 		return InScreenBounds && !rayObstructed;
+	}
+	private void OnCollisionEnter(Collision other) 
+	{
+		if(other.gameObject == player)
+		{
+			gameObject.GetComponent<PlayerController>().health -= 1;
+		}
 	}
 }

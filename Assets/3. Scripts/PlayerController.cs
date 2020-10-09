@@ -63,6 +63,7 @@ public class PlayerController : MonoBehaviour
 	private bool inCrouchTransition;
 	private DateTime crouchTransitionStart;
 
+	public float health = 2;
 	// Start is called before the first frame update
 	void Start()
 	{
@@ -101,6 +102,13 @@ public class PlayerController : MonoBehaviour
 			rb.AddForce(gameObject.transform.up * (isCrouching ? couchJumpForce : jumpForce));
 		}
 		Crouch();
+		if(health <= 0)
+		{
+			//GameObject.FindObjectOfType<GameManager>();
+			PauseMenu.isPaused = true;
+
+			
+		}
 	}
 
 	/// <summary>
