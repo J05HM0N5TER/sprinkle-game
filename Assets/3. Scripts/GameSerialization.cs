@@ -40,6 +40,7 @@ public partial class GameSerialization : MonoBehaviour
 		// Create the directory because an error happens if it doesn't
 		Directory.CreateDirectory(Application.dataPath + "/Saves/");
 		XmlSerializer playerWriter = new XmlSerializer(playerController.GetType());
+		XmlSerializer cameraWriter = new XmlSerializer(camera.GetType());
 		XmlSerializer listWriter = new XmlSerializer(typeof(List<ObjectData>));
 		XmlSerializer objectDataWriter = new XmlSerializer(typeof(GameSerialization.ObjectData));
 
@@ -50,10 +51,10 @@ public partial class GameSerialization : MonoBehaviour
 
 			writer.WriteStartElement("Body");
 			playerWriter.Serialize(writer, playerController);
-			objectDataWriter.Serialize(writer, Convert.New(playerController.transform));
+			// objectDataWriter.Serialize(writer, Convert.New(playerController.transform));
 			writer.WriteEndElement(); // Body
 			writer.WriteStartElement("Camera");
-			objectDataWriter.Serialize(writer, Convert.New(camera.transform));
+			cameraWriter.Serialize(writer, camera);
 			writer.WriteEndElement(); // PlayerCamera
 			writer.WriteEndElement(); // Player
 
@@ -95,7 +96,6 @@ public partial class GameSerialization : MonoBehaviour
 
 		XmlSerializer listWriter = new XmlSerializer(typeof(List<ObjectData>));
 		XmlSerializer objectDataWriter = new XmlSerializer(typeof(GameSerialization.ObjectData));
-		XmlSerializer playerWriter = new XmlSerializer(playerController.GetType());
 
 		List<ObjectData> readObjects = new List<ObjectData>();
 		// Open file
@@ -109,18 +109,24 @@ public partial class GameSerialization : MonoBehaviour
 				reader.ReadStartElement(); // Player
 				reader.ReadStartElement(); // Body
 				reader.ReadStartElement(); // PlayerController
+				// Read monobehavour scripts though the method because Unity doesn't
+				// allow 'new' keyword on monobehavours, which the default
+				// deserialization requires
 				playerController.ReadXml(reader);
 				reader.ReadEndElement(); // PlayerController
 				// xmlReader.ReadStartElement(); // ObjectData
 				//(GameSave.ObjectData) objectDataWriter.Deserialize(xmlReader);
 				GameSerialization.ObjectData readData = new ObjectData();
-				readData.ReadXml(reader);
-				Convert.Copy(from: readData, to: playerController.transform);
+				// readData.ReadXml(reader);
+				// Convert.Copy(from: readData, to: playerController.transform);
 				reader.ReadEndElement(); // Body
 				reader.ReadStartElement(); // Camera
 				// xmlReader.ReadEndElement(); // ObjectData
-				readData.ReadXml(reader);
-				Convert.Copy(from: readData, to: camera.transform);
+				// readData.ReadXml(reader);
+				reader.ReadStartElement(); // CameraController
+				camera.ReadXml(reader);
+				reader.ReadEndElement(); // CameraController
+				// Convert.Copy(from: (ObjectData)objectDataWriter.Deserialize(reader), to: camera.transform);
 				reader.ReadEndElement(); // Camera
 				reader.ReadEndElement(); // Player
 				reader.ReadStartElement(); // DynamicObjects
@@ -137,11 +143,20 @@ public partial class GameSerialization : MonoBehaviour
 		// Retrieve all objects in scene
 		List<Transform> dynamicObjects = new List<Transform>(FindObjectsOfType<Transform>());
 
-		List<Transform> itemsSerialised = new List<Transform>();
-
-		SortSerialiseObjects(dynamicObjects);
-
+		List<Transform> loadObjects = new List<Transform>();
+		// REmove all unwanted objects
 		foreach (var item in dynamicObjects)
+		{
+			// If it has any of the layers that we are serializing
+			if (
+				((1 << item.gameObject.layer) & layersToSerialize) != 0)
+			{
+				// Debug.Log($"Old: {item.position} New Object pos: {newObject.position}, rotation: {newObject.rotation}");
+				loadObjects.Add(item);
+			}
+		}
+
+		foreach (var item in loadObjects)
 		{
 			int position = readObjects.BinarySearch(Convert.New(item));
 			if (position >= 0)
@@ -155,30 +170,5 @@ public partial class GameSerialization : MonoBehaviour
 			}
 		}
 
-	}
-
-	private List<Transform> SortSerialiseObjects(List<Transform> list)
-	{
-		List<Transform> sortedList = new List<Transform>();
-		// REmove all unwanted objects
-		foreach (var item in list)
-		{
-			// If it has any of the layers that we are serializing
-			if (
-				((1 << item.gameObject.layer) & layersToSerialize) != 0)
-			{
-				// Debug.Log($"Old: {item.position} New Object pos: {newObject.position}, rotation: {newObject.rotation}");
-				sortedList.Add(item);
-			}
-		}
-
-		// Sort by the same rules that the Serialised objects are so they hopefully match up
-		sortedList.Sort(
-			delegate(Transform a, Transform b)
-			{
-				return a.GetInstanceID().CompareTo(b.GetInstanceID());
-			});
-
-		return sortedList;
 	}
 }

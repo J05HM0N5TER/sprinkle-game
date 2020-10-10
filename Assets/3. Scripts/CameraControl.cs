@@ -1,7 +1,10 @@
 ﻿using System;
 using UnityEngine;
+using System.Xml;
+using System.Xml.Schema;
+using System.Xml.Serialization;
 
-public class CameraControl : MonoBehaviour
+public class CameraControl : MonoBehaviour, IXmlSerializable
 {
 	private enum LeanState : byte
 	{
@@ -370,4 +373,68 @@ public class CameraControl : MonoBehaviour
 				transform.localRotation.eulerAngles.z + leanRotMod[(int) currentLean]);
 		}
 	}
+
+    public void WriteXml(XmlWriter writer)
+    {
+        XmlSerializer vector3xml = new XmlSerializer(typeof(System.Numerics.Vector3));
+		XmlSerializer dateTimexml = new XmlSerializer(typeof(DateTime));
+
+		writer.WriteStartElement(nameof(YRotation));
+		writer.WriteValue(YRotation);
+		writer.WriteEndElement();
+		
+		writer.WriteStartElement(nameof(defaultPos));
+		vector3xml.Serialize(writer, Convert.New(defaultPos));
+		writer.WriteEndElement();
+		
+		writer.WriteStartElement(nameof(currentLean));
+		writer.WriteValue((int)currentLean);
+		writer.WriteEndElement();
+		
+		writer.WriteStartElement(nameof(previousLean));
+		writer.WriteValue((int)previousLean);
+		writer.WriteEndElement();
+		
+		writer.WriteStartElement(nameof(leanTransitionStartTime));
+		dateTimexml.Serialize(writer, leanTransitionStartTime);
+		writer.WriteEndElement();
+		
+		writer.WriteStartElement(nameof(leanTransitionStartPos));
+		vector3xml.Serialize(writer, Convert.New(leanTransitionStartPos));
+		writer.WriteEndElement();
+		
+		writer.WriteStartElement(nameof(leanTransitionStartRotMod));
+		writer.WriteValue(leanTransitionStartRotMod);
+		writer.WriteEndElement();
+		
+		writer.WriteStartElement(nameof(torchActive));
+		writer.WriteValue(torchActive);
+		writer.WriteEndElement();
+    }
+
+    public void ReadXml(XmlReader reader)
+    {
+		XmlSerializer vector3xml = new XmlSerializer(typeof(System.Numerics.Vector3));
+		XmlSerializer dateTimexml = new XmlSerializer(typeof(DateTime));
+        YRotation = reader.ReadElementContentAsFloat();
+		reader.ReadStartElement();
+		defaultPos = Convert.New((System.Numerics.Vector3)vector3xml.Deserialize(reader));
+		reader.ReadEndElement();
+		currentLean = (LeanState)reader.ReadElementContentAsInt();
+		previousLean = (LeanState)reader.ReadElementContentAsInt();
+		reader.ReadStartElement();
+		leanTransitionStartTime = (DateTime)dateTimexml.Deserialize(reader);
+		reader.ReadEndElement();
+		reader.ReadStartElement();
+		leanTransitionStartPos = Convert.New((System.Numerics.Vector3)vector3xml.Deserialize(reader));
+		reader.ReadEndElement();
+		leanTransitionStartRotMod = reader.ReadElementContentAsFloat();
+		torchActive = reader.ReadElementContentAsBoolean();
+
+    }
+
+    public XmlSchema GetSchema()
+    {
+        return (null);
+    }
 }
