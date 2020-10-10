@@ -64,11 +64,12 @@ public partial class GameSerialization : MonoBehaviour
 			foreach (var item in allObjects)
 			{
 				// If it has any of the layers that we are serializing
-				if (
-					/*( item.gameObject.layer & LayerMask.NameToLayer("Dynamic")) != 0 &&
-										item.gameObject.GetComponent<Rigidbody>() */
-					item.name == "Crate_Small")
+				if (((1 << item.gameObject.layer) & layersToSerialize) != 0
+					//&& item.gameObject.GetComponent<Rigidbody>()
+					/* item.name == "Crate_Small" */
+				)
 				{
+					// Debug.Log(item.gameObject.layer);
 					// Debug.Log($"Old: {item.position} New Object pos: {newObject.position}, rotation: {newObject.rotation}");
 					dynamicObjects.Add(Convert.New(item));
 				}
@@ -145,7 +146,7 @@ public partial class GameSerialization : MonoBehaviour
 			int position = readObjects.BinarySearch(Convert.New(item));
 			if (position >= 0)
 			{
-			Debug.Log($"Binary search found {position} for {item.GetInstanceID()}");
+				Debug.Log($"Binary search found {position} for {item.GetInstanceID()}");
 				Convert.Copy(readObjects[position], item);
 			}
 			else
@@ -163,8 +164,8 @@ public partial class GameSerialization : MonoBehaviour
 		foreach (var item in list)
 		{
 			// If it has any of the layers that we are serializing
-			if (/* (item.gameObject.layer & LayerMask.NameToLayer("Dynamic")) != 0 &&
-				item.gameObject.GetComponent<Rigidbody>() */item.name == "Crate_Small")
+			if (
+				((1 << item.gameObject.layer) & layersToSerialize) != 0)
 			{
 				// Debug.Log($"Old: {item.position} New Object pos: {newObject.position}, rotation: {newObject.rotation}");
 				sortedList.Add(item);
