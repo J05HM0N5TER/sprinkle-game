@@ -8,7 +8,7 @@ using System.Xml.Schema;
 using System.Xml.Serialization;
 using UnityEngine;
 
-public class GameSave : MonoBehaviour
+public class GameSerialization : MonoBehaviour
 {
 	public LayerMask layersToSerialize;
 
@@ -20,9 +20,9 @@ public class GameSave : MonoBehaviour
 		public System.Numerics.Vector3 localScale;
 		public ObjectData()
 		{
-			localPosition = System.Numerics.Vector3.Zero;
-			localRotation = System.Numerics.Quaternion.Identity;
-			localScale = System.Numerics.Vector3.Zero;
+			localPosition = new System.Numerics.Vector3();
+			localRotation = new System.Numerics.Quaternion();
+			localScale = new System.Numerics.Vector3();
 		}
 
 		// Xml Serialization Infrastructure
@@ -125,23 +125,27 @@ public class GameSave : MonoBehaviour
 	public void SaveGame()
 	{
 		PlayerController playerController = FindObjectOfType<PlayerController>();
+		CameraControl camera = FindObjectOfType<CameraControl>();
 
-		// try
-		// {
 		// Create the directory because an error happens if it doesn't
 		Directory.CreateDirectory(Application.dataPath + "/Saves/");
 		XmlSerializer playerWriter = new XmlSerializer(playerController.GetType());
 		XmlSerializer listWriter = new XmlSerializer(typeof(List<ObjectData>));
-		XmlSerializer objectDataWriter = new XmlSerializer(typeof(GameSave.ObjectData));
+		XmlSerializer objectDataWriter = new XmlSerializer(typeof(GameSerialization.ObjectData));
 
-		using(XmlWriter xmlWriter = XmlWriter.Create((Application.dataPath + "/Saves/Save.xml")))
+		using(XmlWriter writer = XmlWriter.Create((Application.dataPath + "/Saves/Save.xml")))
 		{
-			xmlWriter.WriteStartElement("root");
-			xmlWriter.WriteStartElement("Player");
+			writer.WriteStartElement("root");
+			writer.WriteStartElement("Player");
 
-			playerWriter.Serialize(xmlWriter, playerController);
-			objectDataWriter.Serialize(xmlWriter, Convert.New(playerController.transform));
-			xmlWriter.WriteEndElement(); // Player
+			writer.WriteStartElement("Body");
+			playerWriter.Serialize(writer, playerController);
+			objectDataWriter.Serialize(writer, Convert.New(playerController.transform));
+			writer.WriteEndElement(); // Body
+			writer.WriteStartElement("Camera");
+			objectDataWriter.Serialize(writer, Convert.New(camera.transform));
+			writer.WriteEndElement(); // PlayerCamera
+			writer.WriteEndElement(); // Player
 
 			// Dynamic objects
 			Transform[] allObjects = Resources.FindObjectsOfTypeAll<Transform>() as Transform[];
@@ -150,66 +154,63 @@ public class GameSave : MonoBehaviour
 			foreach (var item in allObjects)
 			{
 				// If it has any of the layers that we are serializing
-				if ((item.gameObject.layer & layersToSerialize) != 0)
+				if ((item.gameObject.layer & LayerMask.NameToLayer("Dynamic")) != 0 &&
+					item.gameObject.GetComponent<Rigidbody>())
 				{
 					// Debug.Log($"Old: {item.position} New Object pos: {newObject.position}, rotation: {newObject.rotation}");
 					dynamicObjects.Add(Convert.New(item));
 				}
 			}
+			Debug.Log($"Serialized {dynamicObjects.Count} dynamic objects");
+
 			dynamicObjects.Sort();
 			// xmlWriter.WriteEndElement();
-			xmlWriter.WriteStartElement(nameof(dynamicObjects));
-			listWriter.Serialize(xmlWriter, dynamicObjects);
-			xmlWriter.WriteEndElement();
-			xmlWriter.WriteEndElement();
+			writer.WriteStartElement(nameof(dynamicObjects));
+			listWriter.Serialize(writer, dynamicObjects);
+			writer.WriteEndElement();
+			writer.WriteEndElement();
 
-			xmlWriter.WriteEndDocument();
+			writer.WriteEndDocument();
 		}
-
-		// }
-		// catch (System.Exception e)
-		// {
-		// 	Debug.LogError($"Failed to load at {e.Source} Info: {e.ToString()}");
-		// 	throw;
-		// }
 	}
 
 	public void LoadGame()
 	{
 		// The serializer for the different types
 		PlayerController playerController = FindObjectOfType<PlayerController>();
+		CameraControl camera = FindObjectOfType<CameraControl>();
+
 		XmlSerializer listWriter = new XmlSerializer(typeof(List<ObjectData>));
-		XmlSerializer objectDataWriter = new XmlSerializer(typeof(GameSave.ObjectData));
+		XmlSerializer objectDataWriter = new XmlSerializer(typeof(GameSerialization.ObjectData));
 		XmlSerializer playerWriter = new XmlSerializer(playerController.GetType());
 
-		// try
-		// {
-		//Directory.CreateDirectory(Application.dataPath + "/Saves/");
 		List<ObjectData> readObjects = new List<ObjectData>();
 		// Open file
 		using(var stream = new FileStream(Application.dataPath + "/Saves/Save.xml", FileMode.Open))
 		{
 			// Open xml file reader
-			using(XmlReader xmlReader = XmlReader.Create(stream))
+			using(XmlReader reader = XmlReader.Create(stream))
 			{
-				xmlReader.ReadStartElement("root"); // root
+				reader.ReadStartElement("root"); // root
 
-				xmlReader.ReadStartElement(); // Player
-				xmlReader.ReadStartElement(); // PlayerController
-				playerController.ReadXml(xmlReader);
-				xmlReader.ReadEndElement(); // PlayerController
+				reader.ReadStartElement(); // Player
+				reader.ReadStartElement(); // PlayerController
+				playerController.ReadXml(reader);
+				reader.ReadEndElement(); // PlayerController
 				// xmlReader.ReadStartElement(); // ObjectData
 				//(GameSave.ObjectData) objectDataWriter.Deserialize(xmlReader);
-				GameSave.ObjectData readData = new ObjectData();
-				readData.ReadXml(xmlReader);
+				GameSerialization.ObjectData readData = new ObjectData();
+				readData.ReadXml(reader);
 				Convert.Copy(from: readData, to: playerController.transform);
 				// xmlReader.ReadEndElement(); // ObjectData
-				xmlReader.ReadEndElement(); // Player
-				xmlReader.ReadStartElement(); // DynamicObjects
-				readObjects = (List<ObjectData>) listWriter.Deserialize(xmlReader);
-				xmlReader.ReadEndElement(); // DynamicObjects
+				readData.ReadXml(reader);
+				Convert.Copy(from: readData, to: camera.transform);
+				reader.ReadEndElement(); // Player
+				reader.ReadStartElement(); // DynamicObjects
+				readObjects = (List<ObjectData>) listWriter.Deserialize(reader);
+				reader.ReadEndElement(); // DynamicObjects
 
-				xmlReader.ReadEndElement(); // root
+				reader.ReadEndElement(); // root
 			}
 		}
 
@@ -218,17 +219,42 @@ public class GameSave : MonoBehaviour
 
 		// Retrieve all objects in scene
 		List<Transform> dynamicObjects = new List<Transform>(FindObjectsOfType<Transform>());
-		// Remove all that are not being serialized
-		dynamicObjects = dynamicObjects.FindAll(
-			delegate(Transform item)
-			{
-				// Keep if it has any of the required layers
-				return (item.gameObject.layer & layersToSerialize) != 0;
-			}
-		);
 
-		// Sort by name with the same rules as ObjectData so that the order matches
-		dynamicObjects.Sort(
+		List<Transform> itemsSerialised = new List<Transform>();
+		
+		SortSerialiseObjects(dynamicObjects);
+
+		for (int i = 0; i < dynamicObjects.Count; i++)
+		{
+			if (dynamicObjects[i].name == readObjects[i].name)
+			{
+				Convert.Copy(readObjects[i], dynamicObjects[i]);
+			}
+			else
+			{
+				Debug.LogWarning($"Read object {readObjects[i].name} doesn't match up to {dynamicObjects[i].name}");
+			}
+		}
+	}
+
+	private List<Transform> SortSerialiseObjects(List<Transform> list)
+	{
+		List<Transform> sortedList = new List<Transform>();
+		// REmove all unwanted objects
+		foreach (var item in list)
+		{
+			// If it has any of the layers that we are serializing
+			if ((item.gameObject.layer & LayerMask.NameToLayer("Dynamic")) != 0 &&
+				item.gameObject.GetComponent<Rigidbody>())
+			{
+				// Debug.Log($"Old: {item.position} New Object pos: {newObject.position}, rotation: {newObject.rotation}");
+				//// Add the parent because that is what stores the transform
+				sortedList.Add(item);
+			}
+		}
+
+		// Sort by the same rules that the Serialised objects are so they hopefully match up
+		sortedList.Sort(
 			delegate(Transform a, Transform b)
 			{
 				int comparison = String.Compare(a.name, b.name, comparisonType : StringComparison.OrdinalIgnoreCase);
@@ -244,19 +270,8 @@ public class GameSave : MonoBehaviour
 				{
 					return 0;
 				}
-			}
-		);
+			});
 
-		for (int i = 0; i < dynamicObjects.Count; i++)
-		{
-			Convert.Copy(readObjects[i], dynamicObjects[i]);
-		}
-
-		// }
-		// catch (System.Exception e)
-		// {
-		// 	Debug.LogError($"Failed to load at {e.TargetSite} Info: {e.ToString()}", this);
-		// 	throw;
-		// }
+		return sortedList;
 	}
 }

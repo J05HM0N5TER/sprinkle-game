@@ -53,7 +53,7 @@ public static class UnityMathExtensions
 
 public static class Convert
 {
-	public static UnityEngine.Transform Copy(GameSave.ObjectData from, UnityEngine.Transform to)
+	public static UnityEngine.Transform Copy(GameSerialization.ObjectData from, UnityEngine.Transform to)
 	{
 		to.name = from.name;
 		to.localPosition = Convert.Copy(from.localPosition, to.localPosition);
@@ -61,7 +61,7 @@ public static class Convert
 		to.localScale = Convert.Copy(from.localScale, to.localScale);
 		return to;
 	}
-	public static GameSave.ObjectData Copy(UnityEngine.Transform from, GameSave.ObjectData to)
+	public static GameSerialization.ObjectData Copy(UnityEngine.Transform from, GameSerialization.ObjectData to)
 	{
 		to.name = from.name;
 		to.localPosition = Convert.Copy(from.position, to.localPosition);
@@ -69,9 +69,9 @@ public static class Convert
 		to.localScale = Convert.Copy(from.localScale, to.localScale);
 		return to;
 	}
-	public static GameSave.ObjectData New(UnityEngine.Transform from)
+	public static GameSerialization.ObjectData New(UnityEngine.Transform from)
 	{
-		GameSave.ObjectData newObjectData = new GameSave.ObjectData();
+		GameSerialization.ObjectData newObjectData = new GameSerialization.ObjectData();
 		Copy(from, newObjectData);
 		return newObjectData;
 	}
