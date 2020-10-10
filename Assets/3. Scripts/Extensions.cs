@@ -64,8 +64,9 @@ public static class Convert
 	public static GameSerialization.ObjectData Copy(UnityEngine.Transform from, GameSerialization.ObjectData to)
 	{
 		to.name = from.name;
-		to.localPosition = Convert.Copy(from.position, to.localPosition);
-		to.localRotation = Convert.Copy(from.rotation, to.localRotation);
+		to.instanceID = from.GetInstanceID();
+		to.localPosition = Convert.Copy(from.localPosition, to.localPosition);
+		to.localRotation = Convert.Copy(from.localRotation, to.localRotation);
 		to.localScale = Convert.Copy(from.localScale, to.localScale);
 		return to;
 	}

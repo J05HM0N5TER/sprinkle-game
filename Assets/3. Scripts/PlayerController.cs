@@ -201,7 +201,9 @@ public class PlayerController : MonoBehaviour, /* ISerializable, */ IXmlSerializ
 	public void ReadXml(XmlReader reader)
 	{
 		XmlSerializer vector3Reader = new XmlSerializer(typeof(System.Numerics.Vector3));
+		// reader.ReadStartElement();
 		speed = reader.ReadElementContentAsFloat();
+		// reader.ReadStartElement();
 		groundDistance = reader.ReadElementContentAsFloat();
 		jumpForce = reader.ReadElementContentAsFloat();
 		crouchHeight = reader.ReadElementContentAsFloat();
