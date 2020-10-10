@@ -46,44 +46,55 @@ public partial class GameSerialization : MonoBehaviour
 
 		using(XmlWriter writer = XmlWriter.Create((Application.dataPath + "/Saves/Save.xml")))
 		{
+			// All of the brackets are just to help me keep track with where I am
+				// in the file structure
 			writer.WriteStartElement("root");
-			writer.WriteStartElement("Player");
-
-			writer.WriteStartElement("Body");
-			playerWriter.Serialize(writer, playerController);
-			// objectDataWriter.Serialize(writer, Convert.New(playerController.transform));
-			writer.WriteEndElement(); // Body
-			writer.WriteStartElement("Camera");
-			cameraWriter.Serialize(writer, camera);
-			writer.WriteEndElement(); // PlayerCamera
-			writer.WriteEndElement(); // Player
-
-			// Dynamic objects
-			Transform[] allObjects = Resources.FindObjectsOfTypeAll<Transform>() as Transform[];
-			List<ObjectData> dynamicObjects = new List<ObjectData>();
-
-			foreach (var item in allObjects)
 			{
-				// If it has any of the layers that we are serializing
-				if (((1 << item.gameObject.layer) & layersToSerialize) != 0
-					//&& item.gameObject.GetComponent<Rigidbody>()
-					/* item.name == "Crate_Small" */
-				)
+				writer.WriteStartElement("Player");
 				{
-					// Debug.Log(item.gameObject.layer);
-					// Debug.Log($"Old: {item.position} New Object pos: {newObject.position}, rotation: {newObject.rotation}");
-					dynamicObjects.Add(Convert.New(item));
+					writer.WriteStartElement("Body");
+					{
+						playerWriter.Serialize(writer, playerController);
+						// objectDataWriter.Serialize(writer,
+						// Convert.New(playerController.transform));
+					}
+					writer.WriteEndElement(); // Body
+					writer.WriteStartElement("Camera");
+					{
+						cameraWriter.Serialize(writer, camera);
+					}
+					writer.WriteEndElement(); // PlayerCamera
 				}
+				writer.WriteEndElement(); // Player
+
+				// Dynamic objects
+				Transform[] allObjects = Resources.FindObjectsOfTypeAll<Transform>() as Transform[];
+				List<ObjectData> dynamicObjects = new List<ObjectData>();
+
+				foreach (var item in allObjects)
+				{
+					// If it has any of the layers that we are serializing
+					if (((1 << item.gameObject.layer) & layersToSerialize) != 0
+						//&& item.gameObject.GetComponent<Rigidbody>()
+						/* item.name == "Crate_Small" */
+					)
+					{
+						// Debug.Log(item.gameObject.layer);
+						// Debug.Log($"Old: {item.position} New Object pos: {newObject.position}, rotation: {newObject.rotation}");
+						dynamicObjects.Add(Convert.New(item));
+					}
+				}
+				Debug.Log($"Serialized {dynamicObjects.Count} dynamic objects");
+
+				dynamicObjects.Sort();
+				// xmlWriter.WriteEndElement();
+				writer.WriteStartElement(nameof(dynamicObjects));
+				{
+					listWriter.Serialize(writer, dynamicObjects);
+				}
+				writer.WriteEndElement();
 			}
-			Debug.Log($"Serialized {dynamicObjects.Count} dynamic objects");
-
-			dynamicObjects.Sort();
-			// xmlWriter.WriteEndElement();
-			writer.WriteStartElement(nameof(dynamicObjects));
-			listWriter.Serialize(writer, dynamicObjects);
 			writer.WriteEndElement();
-			writer.WriteEndElement();
-
 			writer.WriteEndDocument();
 		}
 	}
@@ -104,35 +115,42 @@ public partial class GameSerialization : MonoBehaviour
 			// Open xml file reader
 			using(XmlReader reader = XmlReader.Create(stream))
 			{
+				// All of the brackets are just to help me keep track with where I am
+					// in the file structure
 				reader.ReadStartElement("root"); // root
-
-				reader.ReadStartElement(); // Player
-				reader.ReadStartElement(); // Body
-				reader.ReadStartElement(); // PlayerController
-				// Read monobehavour scripts though the method because Unity doesn't
-				// allow 'new' keyword on monobehavours, which the default
-				// deserialization requires
-				playerController.ReadXml(reader);
-				reader.ReadEndElement(); // PlayerController
-				// xmlReader.ReadStartElement(); // ObjectData
-				//(GameSave.ObjectData) objectDataWriter.Deserialize(xmlReader);
-				GameSerialization.ObjectData readData = new ObjectData();
-				// readData.ReadXml(reader);
-				// Convert.Copy(from: readData, to: playerController.transform);
-				reader.ReadEndElement(); // Body
-				reader.ReadStartElement(); // Camera
-				// xmlReader.ReadEndElement(); // ObjectData
-				// readData.ReadXml(reader);
-				reader.ReadStartElement(); // CameraController
-				camera.ReadXml(reader);
-				reader.ReadEndElement(); // CameraController
-				// Convert.Copy(from: (ObjectData)objectDataWriter.Deserialize(reader), to: camera.transform);
-				reader.ReadEndElement(); // Camera
-				reader.ReadEndElement(); // Player
-				reader.ReadStartElement(); // DynamicObjects
-				readObjects = (List<ObjectData>) listWriter.Deserialize(reader);
-				reader.ReadEndElement(); // DynamicObjects
-
+				{
+					reader.ReadStartElement(); // Player
+					{
+						reader.ReadStartElement(); // Body
+						{
+							reader.ReadStartElement(); // PlayerController
+							{
+								// Read monobehavour scripts though the method because Unity doesn't
+								// allow 'new' keyword on monobehavours, which the default
+								// deserialization requires
+								playerController.ReadXml(reader);
+							}
+							reader.ReadEndElement(); // PlayerController
+						}
+						reader.ReadEndElement(); // Body
+						reader.ReadStartElement(); // Camera
+						{
+							// xmlReader.ReadEndElement(); // ObjectData
+							reader.ReadStartElement(); // CameraController
+							{
+								camera.ReadXml(reader);
+							}
+							reader.ReadEndElement(); // CameraController
+						}
+						reader.ReadEndElement(); // Camera
+					}
+					reader.ReadEndElement(); // Player
+					reader.ReadStartElement(); // DynamicObjects
+					{
+						readObjects = (List<ObjectData>) listWriter.Deserialize(reader);
+					}
+					reader.ReadEndElement(); // DynamicObjects
+				}
 				reader.ReadEndElement(); // root
 			}
 		}
