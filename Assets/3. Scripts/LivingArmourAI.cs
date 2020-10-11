@@ -62,6 +62,11 @@ public class LivingArmourAI : MonoBehaviour
 	public Color investigate = new Color (161, 100, 16, 1);
 	public Color search = new Color (66, 94, 68, 1);
 	private Vector3 playerLastSeen = Vector3.zero;
+	[Header("attacking player values")]
+	//attacking player stuff
+	public float attackDistance = 3;
+	public float attackCoolDown = 1;
+	public bool canAttackAgain = true;
 
 	// Start is called before the first frame update
 	void Start ()
@@ -112,12 +117,19 @@ public class LivingArmourAI : MonoBehaviour
 			visorEmission.SetColor ("_EmissiveColor", chase);
 			visorEmission.EnableKeyword ("_EMISSION");
 		}
-		// TODO: Check that the plaeyr can't be seen, this it for when the AI catches the player
-		if ((agent.transform.position - playerLastSeen).magnitude < 0.5f)
+		// TODO: Check that the player can't be seen, this it for when the AI catches the player
+		if ((agent.transform.position - playerLastSeen).magnitude < 0.5f && !isPlayerVisible)
 		{
 			// Debug.Log("Changing to look for player", this);
 			lookingforplayer = true;
 			wasFollowingPlayer = false;
+		}
+		else if((agent.transform.position - playerLastSeen).magnitude < attackDistance && isPlayerVisible && canAttackAgain)
+		{
+			player.GetComponent<PlayerController>().health -= 1;
+			canAttackAgain = false;
+			attackcooldown();
+
 		}
 		if (!agent.hasPath || agent.path == null)
 		{
@@ -266,5 +278,15 @@ public class LivingArmourAI : MonoBehaviour
 		//    print("Ray hit: " + hitinfo.collider.name + " at: " + hitinfo.point.x + ", " + hitinfo.point.y);
 		// Debug view
 		return InScreenBounds && !rayObstructed;
+	}
+	//attacking player cooldown
+	private IEnumerator attackcooldown ()
+	{
+		yield return StartCoroutine ("attackingcooldown");
+	}
+	private IEnumerator attackingcooldown ()
+	{
+		yield return new WaitForSeconds (attackCoolDown);
+		canAttackAgain = true;
 	}
 }
