@@ -39,6 +39,7 @@ public partial class GameSerialization : MonoBehaviour
 
 		// Create the directory because an error happens if it doesn't
 		Directory.CreateDirectory(Application.dataPath + "/Saves/");
+		// XML sterilizers for all the classes needed
 		XmlSerializer playerWriter = new XmlSerializer(playerController.GetType());
 		XmlSerializer cameraWriter = new XmlSerializer(camera.GetType());
 		XmlSerializer listWriter = new XmlSerializer(typeof(List<ObjectData>));
@@ -47,7 +48,7 @@ public partial class GameSerialization : MonoBehaviour
 		using(XmlWriter writer = XmlWriter.Create((Application.dataPath + "/Saves/Save.xml")))
 		{
 			// All of the brackets are just to help me keep track with where I am
-				// in the file structure
+			// in the file structure
 			writer.WriteStartElement("root");
 			{
 				writer.WriteStartElement("Player");
@@ -81,7 +82,7 @@ public partial class GameSerialization : MonoBehaviour
 					{
 						// Debug.Log(item.gameObject.layer);
 						// Debug.Log($"Old: {item.position} New Object pos: {newObject.position}, rotation: {newObject.rotation}");
-						dynamicObjects.Add(Convert.New(item));
+						dynamicObjects.Add(ObjectData.New(item));
 					}
 				}
 				Debug.Log($"Serialized {dynamicObjects.Count} dynamic objects");
@@ -116,7 +117,7 @@ public partial class GameSerialization : MonoBehaviour
 			using(XmlReader reader = XmlReader.Create(stream))
 			{
 				// All of the brackets are just to help me keep track with where I am
-					// in the file structure
+				// in the file structure
 				reader.ReadStartElement("root"); // root
 				{
 					reader.ReadStartElement(); // Player
@@ -125,8 +126,8 @@ public partial class GameSerialization : MonoBehaviour
 						{
 							reader.ReadStartElement(); // PlayerController
 							{
-								// Read monobehavour scripts though the method because Unity doesn't
-								// allow 'new' keyword on monobehavours, which the default
+								// Read MonoBehaviour scripts though the method because Unity doesn't
+								// allow 'new' keyword on MonoBehaviour, which the default
 								// deserialization requires
 								playerController.ReadXml(reader);
 							}
@@ -176,11 +177,11 @@ public partial class GameSerialization : MonoBehaviour
 
 		foreach (var item in loadObjects)
 		{
-			int position = readObjects.BinarySearch(Convert.New(item));
+			int position = readObjects.BinarySearch(ObjectData.New(item));
 			if (position >= 0)
 			{
 				Debug.Log($"Binary search found {position} for {item.GetInstanceID()}");
-				Convert.Copy(readObjects[position], item);
+				ObjectData.Copy(readObjects[position], item);
 			}
 			else
 			{

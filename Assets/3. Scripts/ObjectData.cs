@@ -9,7 +9,7 @@ using UnityEngine;
 
 public partial class GameSerialization
 {
-    public class ObjectData : IXmlSerializable, IComparable<ObjectData>, IComparable<Transform>, IEquatable<Transform>
+	public class ObjectData : IXmlSerializable, IComparable<ObjectData>, IComparable<Transform>, IEquatable<Transform>
 	{
 		public string name;
 		public int instanceID;
@@ -22,8 +22,6 @@ public partial class GameSerialization
 			localRotation = new System.Numerics.Quaternion();
 			localScale = new System.Numerics.Vector3();
 		}
-
-		// Xml Serialization Infrastructure
 
 		/// <summary>
 		/// Used for serializing data
@@ -100,76 +98,122 @@ public partial class GameSerialization
 			return instanceID.CompareTo(other.GetInstanceID());
 		}
 
-        public override bool Equals(object obj)
-        {
-            return obj is ObjectData data &&
-                   instanceID == data.instanceID;
-        }
+		public override bool Equals(object obj)
+		{
+			return obj is ObjectData data &&
+				instanceID == data.instanceID;
+		}
 
-        public override int GetHashCode()
-        {
-            int hashCode = -1470452096;
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(name);
-            hashCode = hashCode * -1521134295 + instanceID.GetHashCode();
-            hashCode = hashCode * -1521134295 + localPosition.GetHashCode();
-            hashCode = hashCode * -1521134295 + localRotation.GetHashCode();
-            hashCode = hashCode * -1521134295 + localScale.GetHashCode();
-            return hashCode;
-        }
+		public override int GetHashCode()
+		{
+			int hashCode = -1470452096;
+			hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(name);
+			hashCode = hashCode * -1521134295 + instanceID.GetHashCode();
+			hashCode = hashCode * -1521134295 + localPosition.GetHashCode();
+			hashCode = hashCode * -1521134295 + localRotation.GetHashCode();
+			hashCode = hashCode * -1521134295 + localScale.GetHashCode();
+			return hashCode;
+		}
 
-        public bool Equals(Transform other)
-        {
-            return this.instanceID == other.GetInstanceID();
-        }
+		public bool Equals(Transform other)
+		{
+			return this.instanceID == other.GetInstanceID();
+		}
 
-        public override string ToString()
-        {
-            return $@"{{{name}, 
+		public override string ToString()
+		{
+			return $@"{{{name}, 
             instanceID: {instanceID}, localPosition: 
             {localPosition.ToString()}, 
             localRotation: {localRotation.ToString()}, 
             localScale: {localScale.ToString()}";
-        }
+		}
 
-        public static bool operator <(ObjectData left, ObjectData right)
-        {
-            return left.CompareTo(right) < 0;
-        }
+		public static bool operator <(ObjectData left, ObjectData right)
+		{
+			return left.CompareTo(right) < 0;
+		}
 
-        public static bool operator <=(ObjectData left, ObjectData right)
-        {
-            return left.CompareTo(right) <= 0;
-        }
+		public static bool operator <=(ObjectData left, ObjectData right)
+		{
+			return left.CompareTo(right) <= 0;
+		}
 
-        public static bool operator >(ObjectData left, ObjectData right)
-        {
-            return left.CompareTo(right) > 0;
-        }
+		public static bool operator >(ObjectData left, ObjectData right)
+		{
+			return left.CompareTo(right) > 0;
+		}
 
-        public static bool operator >=(ObjectData left, ObjectData right)
-        {
-            return left.CompareTo(right) >= 0;
-        }
+		public static bool operator >=(ObjectData left, ObjectData right)
+		{
+			return left.CompareTo(right) >= 0;
+		}
 
-        public static bool operator <(ObjectData left, Transform right)
-        {
-            return left.CompareTo(right) < 0;
-        }
+		public static bool operator <(ObjectData left, Transform right)
+		{
+			return left.CompareTo(right) < 0;
+		}
 
-        public static bool operator <=(ObjectData left, Transform right)
-        {
-            return left.CompareTo(right) <= 0;
-        }
+		public static bool operator <=(ObjectData left, Transform right)
+		{
+			return left.CompareTo(right) <= 0;
+		}
 
-        public static bool operator >(ObjectData left, Transform right)
-        {
-            return left.CompareTo(right) > 0;
-        }
+		public static bool operator >(ObjectData left, Transform right)
+		{
+			return left.CompareTo(right) > 0;
+		}
 
-        public static bool operator >=(ObjectData left, Transform right)
-        {
-            return left.CompareTo(right) >= 0;
-        }
+		public static bool operator >=(ObjectData left, Transform right)
+		{
+			return left.CompareTo(right) >= 0;
+		}
 
-    }
+		/// <summary>
+		/// Copies the values from ObjectData to a Transform
+		/// </summary>
+		/// <param name="from">The data the is being copies</param>
+		/// <param name="to">The data that is being overwritten</param>
+		/// <returns>A reference to the overwritten data</returns>
+		public static UnityEngine.Transform Copy(GameSerialization.ObjectData from, UnityEngine.Transform to)
+		{
+			to.name = from.name;
+			to.localPosition = Convert.Copy(from.localPosition, to.localPosition);
+			to.localRotation = Convert.Copy(from.localRotation, to.localRotation);
+			to.localScale = Convert.Copy(from.localScale, to.localScale);
+			return to;
+		}
+		/// <summary>
+		/// Copies the values from Transform to ObjectData
+		/// </summary>
+		/// <param name="from">The data the is being copies</param>
+		/// <param name="to">The data that is being overwritten</param>
+		/// <returns>A reference to the overwritten data</returns>
+		public static GameSerialization.ObjectData Copy(UnityEngine.Transform from, GameSerialization.ObjectData to)
+		{
+			to.name = from.name;
+			to.instanceID = from.GetInstanceID();
+			to.localPosition = Convert.Copy(from.localPosition, to.localPosition);
+			to.localRotation = Convert.Copy(from.localRotation, to.localRotation);
+			to.localScale = Convert.Copy(from.localScale, to.localScale);
+			return to;
+		}
+		/// <summary>
+		/// Creates a new ObjectData instance with the data from a transform
+		/// </summary>
+		/// <param name="from">The data copied to the new ObjectData</param>
+		/// <returns>The new ObjectData instance</returns>
+		public static GameSerialization.ObjectData New(UnityEngine.Transform from)
+		{
+			GameSerialization.ObjectData newObjectData = new GameSerialization.ObjectData();
+			Copy(from, newObjectData);
+			return newObjectData;
+		}
+	}
+
+}
+
+public static partial class Convert
+{
+
 }

@@ -266,7 +266,7 @@ public class CameraControl : MonoBehaviour, IXmlSerializable
 
 	public void ThrowObject()
 	{
-		// Copy the object becuase DropObject removes it from heldobject
+		// Copy the object because DropObject removes it from heldobject
 		Rigidbody throwObject = heldObject;
 		DropObject();
 		// Add the throw force to the object
@@ -388,11 +388,11 @@ public class CameraControl : MonoBehaviour, IXmlSerializable
 		writer.WriteEndElement();
 		
 		writer.WriteStartElement(nameof(currentLean));
-		writer.WriteValue((int)currentLean);
+		writer.WriteValue(currentLean.ToString());
 		writer.WriteEndElement();
 		
 		writer.WriteStartElement(nameof(previousLean));
-		writer.WriteValue((int)previousLean);
+		writer.WriteValue(previousLean.ToString());
 		writer.WriteEndElement();
 		
 		writer.WriteStartElement(nameof(leanTransitionStartTime));
@@ -420,8 +420,8 @@ public class CameraControl : MonoBehaviour, IXmlSerializable
 		reader.ReadStartElement();
 		defaultPos = Convert.New((System.Numerics.Vector3)vector3xml.Deserialize(reader));
 		reader.ReadEndElement();
-		currentLean = (LeanState)reader.ReadElementContentAsInt();
-		previousLean = (LeanState)reader.ReadElementContentAsInt();
+		currentLean = (LeanState)Enum.Parse(typeof(LeanState),reader.ReadElementContentAsString());
+		previousLean = (LeanState)Enum.Parse(typeof(LeanState),reader.ReadElementContentAsString());
 		reader.ReadStartElement();
 		leanTransitionStartTime = (DateTime)dateTimexml.Deserialize(reader);
 		reader.ReadEndElement();

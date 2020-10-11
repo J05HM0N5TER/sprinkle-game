@@ -185,7 +185,7 @@ public class PlayerController : MonoBehaviour, /* ISerializable, */ IXmlSerializ
 		writer.WriteEndElement();
 
 		writer.WriteStartElement(nameof(inventory));
-		writer.WriteValue((int)inventory);
+		writer.WriteValue(/* (int) */inventory.ToString());
 		writer.WriteEndElement();
 
 		writer.WriteStartElement(nameof(medSyringes));
@@ -214,8 +214,11 @@ public class PlayerController : MonoBehaviour, /* ISerializable, */ IXmlSerializ
 		standHeight = reader.ReadElementContentAsFloat();
 		isCrouching = reader.ReadElementContentAsBoolean();
 		crouchSpeedModifier = reader.ReadElementContentAsFloat();
-		// inventory = (Inventory)reader.ReadElementContentAs(typeof(Inventory), null);
-		inventory = (Inventory)reader.ReadElementContentAsInt();
+		// inventory = (Inventory)reader.ReadElementContentAs(typeof(Inventory),
+		// null);
+		// reader.ReadStartElement();
+		inventory = (Inventory)Enum.Parse(typeof(Inventory), reader.ReadElementContentAsString());
+		// inventory = (Inventory)reader.ReadElementContentAsInt();
 		medSyringes = (ushort)reader.ReadElementContentAsInt();
 		batteryPacks = (ushort)reader.ReadElementContentAsInt();
 	}

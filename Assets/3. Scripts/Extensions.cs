@@ -51,32 +51,9 @@ public static class UnityMathExtensions
 
 }
 
-public static class Convert
+public static partial class Convert
 {
-	public static UnityEngine.Transform Copy(GameSerialization.ObjectData from, UnityEngine.Transform to)
-	{
-		to.name = from.name;
-		to.localPosition = Convert.Copy(from.localPosition, to.localPosition);
-		to.localRotation = Convert.Copy(from.localRotation, to.localRotation);
-		to.localScale = Convert.Copy(from.localScale, to.localScale);
-		return to;
-	}
-	public static GameSerialization.ObjectData Copy(UnityEngine.Transform from, GameSerialization.ObjectData to)
-	{
-		to.name = from.name;
-		to.instanceID = from.GetInstanceID();
-		to.localPosition = Convert.Copy(from.localPosition, to.localPosition);
-		to.localRotation = Convert.Copy(from.localRotation, to.localRotation);
-		to.localScale = Convert.Copy(from.localScale, to.localScale);
-		return to;
-	}
-	public static GameSerialization.ObjectData New(UnityEngine.Transform from)
-	{
-		GameSerialization.ObjectData newObjectData = new GameSerialization.ObjectData();
-		Copy(from, newObjectData);
-		return newObjectData;
-	}
-
+	
 	public static Vector3 Copy(System.Numerics.Vector3 from, UnityEngine.Vector3 to)
 	{
 		to.x = from.X;
