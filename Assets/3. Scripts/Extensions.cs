@@ -51,9 +51,8 @@ public static class UnityMathExtensions
 
 }
 
-public static partial class Convert
+public static class Convert
 {
-	
 	public static Vector3 Copy(System.Numerics.Vector3 from, UnityEngine.Vector3 to)
 	{
 		to.x = from.X;

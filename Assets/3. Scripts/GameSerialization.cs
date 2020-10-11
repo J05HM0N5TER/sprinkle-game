@@ -5,8 +5,9 @@ using System.Reflection;
 using System.Xml;
 using System.Xml.Serialization;
 using UnityEngine;
+using GameSerialization;
 
-public partial class GameSerialization : MonoBehaviour
+public partial class GameSerializationBehaviour : MonoBehaviour
 {
 	public LayerMask layersToSerialize;
 
@@ -42,8 +43,8 @@ public partial class GameSerialization : MonoBehaviour
 		// XML sterilizers for all the classes needed
 		XmlSerializer playerWriter = new XmlSerializer(playerController.GetType());
 		XmlSerializer cameraWriter = new XmlSerializer(camera.GetType());
-		XmlSerializer listWriter = new XmlSerializer(typeof(List<ObjectData>));
-		XmlSerializer objectDataWriter = new XmlSerializer(typeof(GameSerialization.ObjectData));
+		XmlSerializer listWriter = new XmlSerializer(typeof(List<GameObjectData>));
+		XmlSerializer objectDataWriter = new XmlSerializer(typeof(GameObjectData));
 
 		using(XmlWriter writer = XmlWriter.Create((Application.dataPath + "/Saves/Save.xml")))
 		{
@@ -70,7 +71,7 @@ public partial class GameSerialization : MonoBehaviour
 
 				// Dynamic objects
 				Transform[] allObjects = Resources.FindObjectsOfTypeAll<Transform>() as Transform[];
-				List<ObjectData> dynamicObjects = new List<ObjectData>();
+				List<GameObjectData> dynamicObjects = new List<GameObjectData>();
 
 				foreach (var item in allObjects)
 				{
@@ -82,7 +83,7 @@ public partial class GameSerialization : MonoBehaviour
 					{
 						// Debug.Log(item.gameObject.layer);
 						// Debug.Log($"Old: {item.position} New Object pos: {newObject.position}, rotation: {newObject.rotation}");
-						dynamicObjects.Add(ObjectData.New(item));
+						dynamicObjects.Add(GameObjectData.New(item));
 					}
 				}
 				Debug.Log($"Serialized {dynamicObjects.Count} dynamic objects");
@@ -106,10 +107,10 @@ public partial class GameSerialization : MonoBehaviour
 		PlayerController playerController = FindObjectOfType<PlayerController>();
 		CameraControl camera = FindObjectOfType<CameraControl>();
 
-		XmlSerializer listWriter = new XmlSerializer(typeof(List<ObjectData>));
-		XmlSerializer objectDataWriter = new XmlSerializer(typeof(GameSerialization.ObjectData));
+		XmlSerializer listWriter = new XmlSerializer(typeof(List<GameObjectData>));
+		XmlSerializer objectDataWriter = new XmlSerializer(typeof(GameObjectData));
 
-		List<ObjectData> readObjects = new List<ObjectData>();
+		List<GameObjectData> readObjects = new List<GameObjectData>();
 		// Open file
 		using(var stream = new FileStream(Application.dataPath + "/Saves/Save.xml", FileMode.Open))
 		{
@@ -148,7 +149,7 @@ public partial class GameSerialization : MonoBehaviour
 					reader.ReadEndElement(); // Player
 					reader.ReadStartElement(); // DynamicObjects
 					{
-						readObjects = (List<ObjectData>) listWriter.Deserialize(reader);
+						readObjects = (List<GameObjectData>) listWriter.Deserialize(reader);
 					}
 					reader.ReadEndElement(); // DynamicObjects
 				}
@@ -167,8 +168,7 @@ public partial class GameSerialization : MonoBehaviour
 		foreach (var item in dynamicObjects)
 		{
 			// If it has any of the layers that we are serializing
-			if (
-				((1 << item.gameObject.layer) & layersToSerialize) != 0)
+			if (((1 << item.gameObject.layer) & layersToSerialize) != 0)
 			{
 				// Debug.Log($"Old: {item.position} New Object pos: {newObject.position}, rotation: {newObject.rotation}");
 				loadObjects.Add(item);
@@ -177,15 +177,15 @@ public partial class GameSerialization : MonoBehaviour
 
 		foreach (var item in loadObjects)
 		{
-			int position = readObjects.BinarySearch(ObjectData.New(item));
+			int position = readObjects.BinarySearch(GameObjectData.New(item));
 			if (position >= 0)
 			{
 				Debug.Log($"Binary search found {position} for {item.GetInstanceID()}");
-				ObjectData.Copy(readObjects[position], item);
+				GameObjectData.Copy(readObjects[position], item);
 			}
 			else
 			{
-				// Debug.LogWarning($"Could not find {item.ToString()} in serialized objects");
+				Debug.LogWarning($"Could not find {item.ToString()} in serialized objects");
 			}
 		}
 

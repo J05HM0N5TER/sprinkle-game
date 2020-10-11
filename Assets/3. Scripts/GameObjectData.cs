@@ -7,16 +7,16 @@ using System.Xml.Schema;
 using System.Xml.Serialization;
 using UnityEngine;
 
-public partial class GameSerialization
+namespace GameSerialization
 {
-	public class ObjectData : IXmlSerializable, IComparable<ObjectData>, IComparable<Transform>, IEquatable<Transform>
+	public class GameObjectData : IXmlSerializable, IComparable<GameObjectData>, IComparable<Transform>, IEquatable<Transform>
 	{
 		public string name;
 		public int instanceID;
 		public System.Numerics.Vector3 localPosition;
 		public System.Numerics.Quaternion localRotation;
 		public System.Numerics.Vector3 localScale;
-		public ObjectData()
+		public GameObjectData()
 		{
 			localPosition = new System.Numerics.Vector3();
 			localRotation = new System.Numerics.Quaternion();
@@ -83,7 +83,7 @@ public partial class GameSerialization
 		/// </summary>
 		/// <param name="other">The other ObjectData that it is being compared against</param>
 		/// <returns>0 If equal and anything else if not</returns>
-		public int CompareTo(ObjectData other)
+		public int CompareTo(GameObjectData other)
 		{
 			return instanceID.CompareTo(other.instanceID);
 		}
@@ -100,7 +100,7 @@ public partial class GameSerialization
 
 		public override bool Equals(object obj)
 		{
-			return obj is ObjectData data &&
+			return obj is GameObjectData data &&
 				instanceID == data.instanceID;
 		}
 
@@ -129,42 +129,42 @@ public partial class GameSerialization
             localScale: {localScale.ToString()}";
 		}
 
-		public static bool operator <(ObjectData left, ObjectData right)
+		public static bool operator <(GameObjectData left, GameObjectData right)
 		{
 			return left.CompareTo(right) < 0;
 		}
 
-		public static bool operator <=(ObjectData left, ObjectData right)
+		public static bool operator <=(GameObjectData left, GameObjectData right)
 		{
 			return left.CompareTo(right) <= 0;
 		}
 
-		public static bool operator >(ObjectData left, ObjectData right)
+		public static bool operator >(GameObjectData left, GameObjectData right)
 		{
 			return left.CompareTo(right) > 0;
 		}
 
-		public static bool operator >=(ObjectData left, ObjectData right)
+		public static bool operator >=(GameObjectData left, GameObjectData right)
 		{
 			return left.CompareTo(right) >= 0;
 		}
 
-		public static bool operator <(ObjectData left, Transform right)
+		public static bool operator <(GameObjectData left, Transform right)
 		{
 			return left.CompareTo(right) < 0;
 		}
 
-		public static bool operator <=(ObjectData left, Transform right)
+		public static bool operator <=(GameObjectData left, Transform right)
 		{
 			return left.CompareTo(right) <= 0;
 		}
 
-		public static bool operator >(ObjectData left, Transform right)
+		public static bool operator >(GameObjectData left, Transform right)
 		{
 			return left.CompareTo(right) > 0;
 		}
 
-		public static bool operator >=(ObjectData left, Transform right)
+		public static bool operator >=(GameObjectData left, Transform right)
 		{
 			return left.CompareTo(right) >= 0;
 		}
@@ -175,7 +175,7 @@ public partial class GameSerialization
 		/// <param name="from">The data the is being copies</param>
 		/// <param name="to">The data that is being overwritten</param>
 		/// <returns>A reference to the overwritten data</returns>
-		public static UnityEngine.Transform Copy(GameSerialization.ObjectData from, UnityEngine.Transform to)
+		public static UnityEngine.Transform Copy(GameObjectData from, UnityEngine.Transform to)
 		{
 			to.name = from.name;
 			to.localPosition = Convert.Copy(from.localPosition, to.localPosition);
@@ -189,7 +189,7 @@ public partial class GameSerialization
 		/// <param name="from">The data the is being copies</param>
 		/// <param name="to">The data that is being overwritten</param>
 		/// <returns>A reference to the overwritten data</returns>
-		public static GameSerialization.ObjectData Copy(UnityEngine.Transform from, GameSerialization.ObjectData to)
+		public static GameObjectData Copy(UnityEngine.Transform from, GameObjectData to)
 		{
 			to.name = from.name;
 			to.instanceID = from.GetInstanceID();
@@ -203,17 +203,12 @@ public partial class GameSerialization
 		/// </summary>
 		/// <param name="from">The data copied to the new ObjectData</param>
 		/// <returns>The new ObjectData instance</returns>
-		public static GameSerialization.ObjectData New(UnityEngine.Transform from)
+		public static GameObjectData New(UnityEngine.Transform from)
 		{
-			GameSerialization.ObjectData newObjectData = new GameSerialization.ObjectData();
+			GameObjectData newObjectData = new GameObjectData();
 			Copy(from, newObjectData);
 			return newObjectData;
 		}
 	}
-
-}
-
-public static partial class Convert
-{
 
 }

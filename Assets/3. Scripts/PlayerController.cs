@@ -11,7 +11,7 @@ using System.Xml.Serialization;
 using UnityEngine;
 using UnityEngine.Experimental.Rendering.HDPipeline;
 [RequireComponent(typeof(CapsuleCollider), typeof(Rigidbody))]
-public class PlayerController : MonoBehaviour, /* ISerializable, */ IXmlSerializable
+public class PlayerController : MonoBehaviour, IXmlSerializable
 {
 	[Flags] public enum Inventory : byte
 	{
@@ -185,18 +185,17 @@ public class PlayerController : MonoBehaviour, /* ISerializable, */ IXmlSerializ
 		writer.WriteEndElement();
 
 		writer.WriteStartElement(nameof(inventory));
-		writer.WriteValue(/* (int) */inventory.ToString());
+		writer.WriteValue( /* (int) */ inventory.ToString());
 		writer.WriteEndElement();
 
 		writer.WriteStartElement(nameof(medSyringes));
 		writer.WriteValue(medSyringes);
 		writer.WriteEndElement();
-		
+
 		writer.WriteStartElement(nameof(batteryPacks));
 		writer.WriteValue(batteryPacks);
 		writer.WriteEndElement();
 	}
-
 
 	public void ReadXml(XmlReader reader)
 	{
@@ -208,7 +207,7 @@ public class PlayerController : MonoBehaviour, /* ISerializable, */ IXmlSerializ
 		jumpForce = reader.ReadElementContentAsFloat();
 		crouchHeight = reader.ReadElementContentAsFloat();
 		reader.ReadStartElement();
-		Convert.Copy((System.Numerics.Vector3)vector3Reader.Deserialize(reader), defaultScale);
+		Convert.Copy((System.Numerics.Vector3) vector3Reader.Deserialize(reader), defaultScale);
 		reader.ReadEndElement();
 		// defaultScale.CopyFrom((System.Numerics.Vector3)reader.ReadElementContentAs(typeof(System.Numerics.Vector3), null));
 		standHeight = reader.ReadElementContentAsFloat();
@@ -217,10 +216,10 @@ public class PlayerController : MonoBehaviour, /* ISerializable, */ IXmlSerializ
 		// inventory = (Inventory)reader.ReadElementContentAs(typeof(Inventory),
 		// null);
 		// reader.ReadStartElement();
-		inventory = (Inventory)Enum.Parse(typeof(Inventory), reader.ReadElementContentAsString());
+		inventory = (Inventory) Enum.Parse(typeof(Inventory), reader.ReadElementContentAsString());
 		// inventory = (Inventory)reader.ReadElementContentAsInt();
-		medSyringes = (ushort)reader.ReadElementContentAsInt();
-		batteryPacks = (ushort)reader.ReadElementContentAsInt();
+		medSyringes = (ushort) reader.ReadElementContentAsInt();
+		batteryPacks = (ushort) reader.ReadElementContentAsInt();
 	}
 
 	public XmlSchema GetSchema()
