@@ -183,6 +183,7 @@ namespace GameSerialization
 			to.localScale = Convert.Copy(from.localScale, to.localScale);
 			return to;
 		}
+
 		/// <summary>
 		/// Copies the values from Transform to ObjectData
 		/// </summary>
@@ -198,6 +199,7 @@ namespace GameSerialization
 			to.localScale = Convert.Copy(from.localScale, to.localScale);
 			return to;
 		}
+		
 		/// <summary>
 		/// Creates a new ObjectData instance with the data from a transform
 		/// </summary>

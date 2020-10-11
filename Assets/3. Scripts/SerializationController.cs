@@ -4,8 +4,8 @@ using System.IO;
 using System.Reflection;
 using System.Xml;
 using System.Xml.Serialization;
-using UnityEngine;
 using GameSerialization;
+using UnityEngine;
 
 public partial class SerializationController : MonoBehaviour
 {
@@ -43,7 +43,8 @@ public partial class SerializationController : MonoBehaviour
 		// XML sterilizers for all the classes needed
 		XmlSerializer playerWriter = new XmlSerializer(playerController.GetType());
 		XmlSerializer cameraWriter = new XmlSerializer(camera.GetType());
-		XmlSerializer listWriter = new XmlSerializer(typeof(List<GameObjectData>));
+		XmlSerializer goDataListWriter = new XmlSerializer(typeof(List<GameObjectData>));
+		XmlSerializer rbDataListWriter = new XmlSerializer(typeof(List<RigidbodyData>));
 		XmlSerializer objectDataWriter = new XmlSerializer(typeof(GameObjectData));
 
 		using(XmlWriter writer = XmlWriter.Create((Application.dataPath + "/Saves/Save.xml")))
@@ -75,18 +76,21 @@ public partial class SerializationController : MonoBehaviour
 				// Dynamic objects
 				Transform[] allObjects = Resources.FindObjectsOfTypeAll<Transform>() as Transform[];
 				List<GameObjectData> dynamicObjects = new List<GameObjectData>();
+				List<RigidbodyData> rigidbodies = new List<RigidbodyData>();
 
 				foreach (var item in allObjects)
 				{
 					// If it has any of the layers that we are serializing
-					if (((1 << item.gameObject.layer) & layersToSerialize) != 0
-						//&& item.gameObject.GetComponent<Rigidbody>()
-						/* item.name == "Crate_Small" */
-					)
+					if (((1 << item.gameObject.layer) & layersToSerialize) != 0)
 					{
-						// Debug.Log(item.gameObject.layer);
 						// Debug.Log($"Old: {item.position} New Object pos: {newObject.position}, rotation: {newObject.rotation}");
 						dynamicObjects.Add(GameObjectData.New(item));
+
+						Rigidbody rb = item.GetComponent<Rigidbody>();
+						if (rb)
+						{
+							rigidbodies.Add(RigidbodyData.New(rb));
+						}
 					}
 				}
 				Debug.Log($"Serialized {dynamicObjects.Count} dynamic objects");
@@ -96,7 +100,16 @@ public partial class SerializationController : MonoBehaviour
 				writer.WriteStartElement(nameof(dynamicObjects));
 				writer.WriteComment("This is all the objects that can move in the scene");
 				{
-					listWriter.Serialize(writer, dynamicObjects);
+					goDataListWriter.Serialize(writer, dynamicObjects);
+				}
+				writer.WriteEndElement();
+
+				rigidbodies.Sort();
+				// xmlWriter.WriteEndElement();
+				writer.WriteStartElement(nameof(rigidbodies));
+				writer.WriteComment("This is all the rigidbodies from moving objects");
+				{
+					rbDataListWriter.Serialize(writer, rigidbodies);
 				}
 				writer.WriteEndElement();
 			}
@@ -111,10 +124,12 @@ public partial class SerializationController : MonoBehaviour
 		PlayerController playerController = FindObjectOfType<PlayerController>();
 		CameraControl camera = FindObjectOfType<CameraControl>();
 
-		XmlSerializer listWriter = new XmlSerializer(typeof(List<GameObjectData>));
+		XmlSerializer goDataListWriter = new XmlSerializer(typeof(List<GameObjectData>));
+		XmlSerializer rbDataListWriter = new XmlSerializer(typeof(List<RigidbodyData>));
 		XmlSerializer objectDataWriter = new XmlSerializer(typeof(GameObjectData));
 
-		List<GameObjectData> readObjects = new List<GameObjectData>();
+		List<GameObjectData> readGameObjects = new List<GameObjectData>();
+		List<RigidbodyData> readRigidbodys = new List<RigidbodyData>();
 		// Open file
 		using(var stream = new FileStream(Application.dataPath + "/Saves/Save.xml", FileMode.Open))
 		{
@@ -153,7 +168,12 @@ public partial class SerializationController : MonoBehaviour
 					reader.ReadEndElement(); // Player
 					reader.ReadStartElement(); // DynamicObjects
 					{
-						readObjects = (List<GameObjectData>) listWriter.Deserialize(reader);
+						readGameObjects = (List<GameObjectData>) goDataListWriter.Deserialize(reader);
+					}
+					reader.ReadEndElement(); // DynamicObjects
+					reader.ReadStartElement(); // DynamicObjects
+					{
+						readRigidbodys = (List<RigidbodyData>) rbDataListWriter.Deserialize(reader);
 					}
 					reader.ReadEndElement(); // DynamicObjects
 				}
@@ -162,7 +182,8 @@ public partial class SerializationController : MonoBehaviour
 		}
 
 		// Sort the read objects (even though it should already be sorted)
-		readObjects.Sort();
+		readGameObjects.Sort();
+		readRigidbodys.Sort();
 
 		// Retrieve all objects in scene
 		List<Transform> dynamicObjects = new List<Transform>(FindObjectsOfType<Transform>());
@@ -179,13 +200,21 @@ public partial class SerializationController : MonoBehaviour
 			}
 		}
 
+		loadObjects.Sort(
+			delegate(Transform a, Transform b)
+			{
+				return a.GetInstanceID().CompareTo(b.GetInstanceID());
+			}
+		);
+
+		// Apply all loaded gameObject data
 		foreach (var item in loadObjects)
 		{
-			int position = readObjects.BinarySearch(GameObjectData.New(item));
+			int position = readGameObjects.BinarySearch(GameObjectData.New(item));
 			if (position >= 0)
 			{
-				Debug.Log($"Binary search found {position} for {item.GetInstanceID()}");
-				GameObjectData.Copy(readObjects[position], item);
+				// Debug.Log($"Binary search found {position} for {item.GetInstanceID()}");
+				GameObjectData.Copy(readGameObjects[position], item);
 			}
 			else
 			{
@@ -193,5 +222,23 @@ public partial class SerializationController : MonoBehaviour
 			}
 		}
 
+		// Apply all loaded rigidbody data
+		foreach (var item in loadObjects)
+		{
+			Rigidbody rb = item.GetComponent<Rigidbody>();
+			if (rb)
+			{
+				int position = readRigidbodys.BinarySearch(RigidbodyData.New(rb));
+				if (position >= 0)
+				{
+					// Debug.Log($"Binary search found {position} for {item.GetInstanceID()}");
+					RigidbodyData.Copy(readRigidbodys[position], rb);
+				}
+				else
+				{
+					Debug.LogWarning($"Could not find {item.ToString()} in serialized objects");
+				}
+			}
+		}
 	}
 }
