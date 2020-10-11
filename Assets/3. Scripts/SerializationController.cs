@@ -7,7 +7,7 @@ using System.Xml.Serialization;
 using UnityEngine;
 using GameSerialization;
 
-public partial class GameSerializationBehaviour : MonoBehaviour
+public partial class SerializationController : MonoBehaviour
 {
 	public LayerMask layersToSerialize;
 
@@ -53,8 +53,10 @@ public partial class GameSerializationBehaviour : MonoBehaviour
 			writer.WriteStartElement("root");
 			{
 				writer.WriteStartElement("Player");
+				writer.WriteComment("This is the start of all the player data, position data is not stored here");
 				{
 					writer.WriteStartElement("Body");
+					writer.WriteComment("This is for the main player body, which is in charge of player movement");
 					{
 						playerWriter.Serialize(writer, playerController);
 						// objectDataWriter.Serialize(writer,
@@ -62,6 +64,7 @@ public partial class GameSerializationBehaviour : MonoBehaviour
 					}
 					writer.WriteEndElement(); // Body
 					writer.WriteStartElement("Camera");
+					writer.WriteComment("The data controlling player camera movement and grabbing and interacting with objects");
 					{
 						cameraWriter.Serialize(writer, camera);
 					}
@@ -91,6 +94,7 @@ public partial class GameSerializationBehaviour : MonoBehaviour
 				dynamicObjects.Sort();
 				// xmlWriter.WriteEndElement();
 				writer.WriteStartElement(nameof(dynamicObjects));
+				writer.WriteComment("This is all the objects that can move in the scene");
 				{
 					listWriter.Serialize(writer, dynamicObjects);
 				}
