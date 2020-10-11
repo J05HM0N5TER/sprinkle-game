@@ -240,8 +240,8 @@ public class PlayerController : MonoBehaviour, IXmlSerializable
 		writer.WriteValue(isCrouching);
 		writer.WriteEndElement();
 
-		writer.WriteStartElement(nameof(crouchSpeedModifier));
-		writer.WriteValue(crouchSpeedModifier);
+		writer.WriteStartElement(nameof(crouchSpeed));
+		writer.WriteValue(crouchSpeed);
 		writer.WriteEndElement();
 
 		writer.WriteStartElement(nameof(inventory));
@@ -272,7 +272,7 @@ public class PlayerController : MonoBehaviour, IXmlSerializable
 		// defaultScale.CopyFrom((System.Numerics.Vector3)reader.ReadElementContentAs(typeof(System.Numerics.Vector3), null));
 		standHeight = reader.ReadElementContentAsFloat();
 		isCrouching = reader.ReadElementContentAsBoolean();
-		crouchSpeedModifier = reader.ReadElementContentAsFloat();
+		crouchSpeed = reader.ReadElementContentAsFloat();
 		// inventory = (Inventory)reader.ReadElementContentAs(typeof(Inventory),
 		// null);
 		// reader.ReadStartElement();
