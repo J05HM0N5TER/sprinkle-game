@@ -63,7 +63,9 @@ public class PlayerController : MonoBehaviour
 	private bool inCrouchTransition;
 	private DateTime crouchTransitionStart;
 
+	//attacking player stuff
 	public float health = 2;
+	
 	// Start is called before the first frame update
 	void Start()
 	{
@@ -105,9 +107,7 @@ public class PlayerController : MonoBehaviour
 		if(health <= 0)
 		{
 			//GameObject.FindObjectOfType<GameManager>();
-			PauseMenu.isPaused = true;
-
-			
+			GameObject.Find("PauseManager").GetComponent<PauseMenu>().PauseGame();
 		}
 	}
 
