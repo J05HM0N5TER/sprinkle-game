@@ -84,7 +84,8 @@ public class CameraControl : MonoBehaviour, IXmlSerializable
 	// The saved variables from the held object, to be applied when dropped
 	float normalDrag = 0;
 	float normalADrag = 0.05f;
-
+	[Header("Lantern")]
+	public GameObject lantern;
 	[Header("Debug")]
 	[Tooltip("The current magnitude of the velocity of the player")]
 #pragma warning disable IDE0052 // Remove unread private members
@@ -96,7 +97,7 @@ public class CameraControl : MonoBehaviour, IXmlSerializable
 	private PlayerController player;
 	private Rigidbody playerRigidbody;
 
-	public GameObject torch;
+	
 	private bool torchActive = false;
 
 	// Start is called before the first frame update
@@ -146,7 +147,7 @@ public class CameraControl : MonoBehaviour, IXmlSerializable
 			Debug.LogWarning("Cant find player RigidBody", this);
 		}
 #endif
-		torch.SetActive(false);
+		lantern.SetActive(false);
 	}
 
 	// Update is called once per frame
@@ -194,14 +195,14 @@ public class CameraControl : MonoBehaviour, IXmlSerializable
 				heldObject.rotation.eulerAngles.y + mouseX,
 				heldObject.rotation.eulerAngles.z);
 		}
-		if (Input.GetButtonDown("Torch") && !torchActive)
+		if ((Input.GetButtonDown("Lantern") && !torchActive) && player.GetComponent<PlayerController>().inventory.HasFlag(PlayerController.Inventory.Lantern))
 		{
-			torch.SetActive(true);
+			lantern.SetActive(true);
 			torchActive = true;
 		}
-		if (Input.GetButtonDown("Torch") && torchActive)
+		else if ((Input.GetButtonDown("Lantern") && torchActive)&& player.GetComponent<PlayerController>().inventory.HasFlag(PlayerController.Inventory.Lantern))
 		{
-			torch.SetActive(false);
+			lantern.SetActive(false);
 			torchActive = false;
 		}
 		Lean();

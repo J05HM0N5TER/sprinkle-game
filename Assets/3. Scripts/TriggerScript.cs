@@ -10,7 +10,7 @@ public class TriggerScript : MonoBehaviour
     public GameObject animatedObject;
     [Tooltip("The object that will make sound")]
     public GameObject soundSource;
-    private AudioSource audio;
+    private AudioSource audioS;
     [Tooltip("The open sound of the doors")]
     public AudioClip Openclip;
     [Tooltip("The close sound of the doors")]
@@ -26,15 +26,26 @@ public class TriggerScript : MonoBehaviour
     [Tooltip("time till door can close again")]
     public float timer = 5.0f;
     private float resettimer;
+    private bool doorOpen;
     // Start is called before the first frame update
     void Start()
     {
-       audio = soundSource.GetComponent<AudioSource>();
+       audioS = soundSource.GetComponent<AudioSource>();
        resettimer = timer;
     }
     private void Update()
     {
         timer -= Time.deltaTime;
+        if (thingsInDoorway.Count == 0 && timer <= 0 && doorOpen)
+        {
+            animatedObject.GetComponent<Animator>().SetTrigger("Close");
+            audioS.PlayOneShot(Closeclip);
+            doorOpen = false;
+            if (oneTimeUse)
+            {
+                hasplayedonce = true;
+            }
+        }
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -44,10 +55,14 @@ public class TriggerScript : MonoBehaviour
             {
                 if(other.tag == "Player" || other.tag == "Enemy")
                 {
-                    animatedObject.GetComponent<Animator>().SetTrigger("Open");
-                    audio.PlayOneShot(Openclip);
+                    if(!doorOpen)
+                    {
+                        animatedObject.GetComponent<Animator>().SetTrigger("Open");
+                        audioS.PlayOneShot(Openclip);
+                        timer = resettimer;
+                    }
                     thingsInDoorway.Add(other.gameObject);
-                    timer = resettimer;
+                    doorOpen = true;
                     if(oneTimeUse)
                     {
                         hasplayedonce = true;
@@ -64,17 +79,8 @@ public class TriggerScript : MonoBehaviour
             {
                 if (other.tag == "Player" || other.tag == "Enemy")
                 {
-                    
                     thingsInDoorway.Remove(other.gameObject);
-                    if(thingsInDoorway.Count == 0 && timer <= 0)
-                    {
-                        animatedObject.GetComponent<Animator>().SetTrigger("Close");
-                        audio.PlayOneShot(Closeclip);
-                    }
-                    if (oneTimeUse)
-                    {
-                        hasplayedonce = true;
-                    }
+                    
                 }     
             }
         }  
