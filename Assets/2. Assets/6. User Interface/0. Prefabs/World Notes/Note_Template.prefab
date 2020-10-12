@@ -33,8 +33,10 @@ MonoBehaviour:
     keep your written notes, nobody wants to read through a text dump, even an interesting
     on, that's why these notes are only 1 page with large text."
   isActive: 0
-  noteTextBox: {fileID: 0}
-  otherThingToDisable: {fileID: 0}
+  noteTextBoxName: Note_Text
+  otherNoteObjectsNames:
+  - Note_Background
+  redicleName: Reticle
 --- !u!1 &3309479600643558785
 GameObject:
   m_ObjectHideFlags: 0

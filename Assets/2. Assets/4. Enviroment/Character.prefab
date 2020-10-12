@@ -44,7 +44,7 @@ Light:
   serializedVersion: 9
   m_Type: 2
   m_Color: {r: 0.0040939935, g: 0.8679245, b: 0.6958821, a: 1}
-  m_Intensity: 33554432
+  m_Intensity: 131072
   m_Range: 15
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -132,7 +132,7 @@ MonoBehaviour:
   useVolumetric: 1
   featuresFoldout: 1
   showAdditionalSettings: 0
-  displayLightIntensity: 28
+  displayLightIntensity: 20
   displayAreaLightEmissiveMesh: 0
   areaLightCookie: {fileID: 0}
   areaLightShadowCone: 120
@@ -648,13 +648,15 @@ MonoBehaviour:
   speed: 5.3
   groundDistance: 0.04
   jumpForce: 300
+  sprintSpeed: 15
   crouchHeight: 0.373
   crouchTransitionTime: 0.2
   crouchSpeed: 3
   couchJumpForce: 150
-  inventory: 0
+  inventory: 64
   medSyringes: 0
   batteryPacks: 0
+  health: 2
 --- !u!33 &1376844649919263992
 MeshFilter:
   m_ObjectHideFlags: 0
