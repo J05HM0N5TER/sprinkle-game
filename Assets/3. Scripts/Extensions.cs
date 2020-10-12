@@ -61,7 +61,7 @@ public static class Convert
 		return to;
 	}
 
-	public static Vector3 New(System.Numerics.Vector3 from)
+	public static UnityEngine.Vector3 New(System.Numerics.Vector3 from)
 	{
 		UnityEngine.Vector3 to = new Vector3();
 		Copy(from, to);

@@ -5,8 +5,13 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.EventSystems;
 using UnityEngine.UIElements;
+using System.Xml;
+using System.Xml.Schema;
+using System.Xml.Serialization;
+using GameSerialization;
+// End of for serialization
 
-public class LivingArmourAI : MonoBehaviour
+public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 {
 	private NavMeshAgent agent;
 	// The agents camera to see if the player is in the direct view
@@ -39,7 +44,7 @@ public class LivingArmourAI : MonoBehaviour
 
 	//hearing and sound stuff
 	//public GameObject[] soundSources;
-	public List<GameObject> soundSources = new List<GameObject> ();
+	public List<Vector3> soundSources = new List<Vector3> ();
 	[Tooltip ("The detection range of hearing for the AI")]
 	public float maxHearingRange = 5;
 	private bool lookingforplayer = false;
@@ -66,6 +71,7 @@ public class LivingArmourAI : MonoBehaviour
 	//attacking player stuff
 	public float attackDistance = 3;
 	public float attackCoolDown = 1;
+	private float attackcooldownreset;
 	public bool canAttackAgain = true;
 
 	// Start is called before the first frame update
@@ -87,6 +93,7 @@ public class LivingArmourAI : MonoBehaviour
 		agent.acceleration = 20;
 
 		playerCam = Camera.main;
+		attackcooldownreset = attackCoolDown;
 
 	}
 
@@ -128,7 +135,16 @@ public class LivingArmourAI : MonoBehaviour
 		{
 			player.GetComponent<PlayerController>().health -= 1;
 			canAttackAgain = false;
-			attackcooldown();
+			//attackcooldown();
+		}
+		if(!canAttackAgain)
+		{
+			attackCoolDown -= Time.deltaTime;
+			if(attackCoolDown <= 0)
+			{
+				canAttackAgain = true;
+				attackCoolDown = attackcooldownreset;
+			}
 		}
 		if (!agent.hasPath || agent.path == null)
 		{
@@ -164,16 +180,16 @@ public class LivingArmourAI : MonoBehaviour
 		// sound reactions
 		if (!wasFollowingPlayer || !isPlayerVisible)
 		{
-			foreach (GameObject SoundSource in soundSources)
+			foreach (Vector3 SoundSource in soundSources)
 			{
-				if (Vector3.Distance (gameObject.transform.position, SoundSource.transform.position) <= maxHearingRange)
+				if (Vector3.Distance (gameObject.transform.position, SoundSource) <= maxHearingRange)
 				{
-					agent.SetDestination (SoundSource.transform.position);
+					agent.SetDestination (SoundSource);
 					lightvisor.color = investigate;
 					visorEmission.SetColor ("_EmissiveColor", investigate);
 					visorEmission.EnableKeyword ("_EMISSION");
 				}
-				if ((agent.transform.position - SoundSource.transform.position).magnitude < 0.5f)
+				if ((agent.transform.position - SoundSource).magnitude < 0.5f)
 				{
 					agent.stoppingDistance = 0.5f;
 				}
@@ -287,5 +303,74 @@ public class LivingArmourAI : MonoBehaviour
 	{
 		yield return new WaitForSeconds (attackCoolDown);
 		canAttackAgain = true;
+	}
+
+	public void WriteXml(XmlWriter writer)
+	{
+		XmlSerializer vector3xml = new XmlSerializer(typeof(System.Numerics.Vector3));
+		XmlSerializer vector3ListWriter = new XmlSerializer(typeof(List<Vector3>));
+		
+		// XmlSerializer color3xml = new XmlSerializer(typeof(Color));
+
+		writer.WriteStartElement(nameof(isPlayerVisible));// bool
+		writer.WriteValue(isPlayerVisible);
+		writer.WriteEndElement();
+		writer.WriteStartElement(nameof(playerLastSeen)); // vector3
+		vector3xml.Serialize(writer, Convert.New(playerLastSeen));
+		writer.WriteEndElement();
+		writer.WriteStartElement(nameof(timer)); //float
+		writer.WriteValue(timer);
+		writer.WriteEndElement();
+		writer.WriteStartElement(nameof(canAttackAgain)); //bool
+		writer.WriteValue(canAttackAgain);
+		writer.WriteEndElement();
+		writer.WriteStartElement(nameof(canSwapSuitAgain)); //bool
+		writer.WriteValue(canSwapSuitAgain);
+		writer.WriteEndElement();
+		List<System.Numerics.Vector3> soundSourcesWrite = new List<System.Numerics.Vector3>();
+		foreach (var item in soundSources)
+		{
+			soundSourcesWrite.Add(Convert.New(item));
+		}
+		writer.WriteStartElement(nameof(soundSourcesWrite)); // list of vector3's
+		vector3ListWriter.Serialize(writer, soundSourcesWrite);
+		writer.WriteEndElement();
+		writer.WriteStartElement(nameof(agent.destination)); // vector3
+		vector3xml.Serialize(writer, Convert.New(agent.destination));
+		writer.WriteEndElement();
+		
+
+		
+		// is player visable // done
+		//player last seen // done
+		//colour of current visor // ????
+		//timer // done
+		//can attack again //done
+		//canspawnsuit // done
+		//list of sound sources // done
+		// suits current path // done 
+		
+	}
+	public void ReadXml(XmlReader reader)
+	{
+		XmlSerializer vector3xml = new XmlSerializer(typeof(System.Numerics.Vector3));
+		XmlSerializer vector3ListWriter = new XmlSerializer(typeof(List<Vector3>));
+		isPlayerVisible = reader.ReadElementContentAsBoolean();
+		Convert.Copy((System.Numerics.Vector3) vector3xml.Deserialize(reader), playerLastSeen);
+		timer = reader.ReadElementContentAsFloat();
+		canAttackAgain = reader.ReadElementContentAsBoolean();
+		canSwapSuitAgain = reader.ReadElementContentAsBoolean();
+		List<System.Numerics.Vector3> soundSourcesRead = new List<System.Numerics.Vector3>();
+		soundSourcesRead = (List<System.Numerics.Vector3>) vector3ListWriter.Deserialize(reader);
+		foreach (var item in soundSourcesRead)
+		{
+			soundSources.Add(Convert.New(item));
+		}
+		Convert.Copy((System.Numerics.Vector3) vector3xml.Deserialize(reader), agent.destination);
+
+	}
+	public XmlSchema GetSchema()
+	{
+		return (null);
 	}
 }

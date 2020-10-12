@@ -46,7 +46,7 @@ public class CollisionNoise : MonoBehaviour
         { 
             audioSource.PlayOneShot(clip);
             madeSound = true;
-            livingSuit.GetComponent<LivingArmourAI>().soundSources.Add(gameObject);
+            livingSuit.GetComponent<LivingArmourAI>().soundSources.Add(gameObject.transform.position);
             yield return StartCoroutine("removeFromlist");
         }
     }
@@ -58,6 +58,6 @@ public class CollisionNoise : MonoBehaviour
     {
         yield return new WaitForSeconds(timer);
         madeSound = false;
-        livingSuit.GetComponent<LivingArmourAI>().soundSources.Remove(gameObject);
+        livingSuit.GetComponent<LivingArmourAI>().soundSources.Remove(gameObject.transform.position);
     }
 }
