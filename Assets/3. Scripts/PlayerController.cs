@@ -1,11 +1,17 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+// Start of for serialization
+using System.Runtime.Serialization;
+using System.Security.Permissions;
+using System.Xml;
+using System.Xml.Schema;
+using System.Xml.Serialization;
+// End of for serialization
 using UnityEngine;
 using UnityEngine.Experimental.Rendering.HDPipeline;
-
 [RequireComponent(typeof(CapsuleCollider), typeof(Rigidbody))]
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, IXmlSerializable
 {
 	[Flags] public enum Inventory : byte
 	{
@@ -56,9 +62,9 @@ public class PlayerController : MonoBehaviour
 	[Tooltip("What the player has in their inventory")]
 	public Inventory inventory;
 	[Tooltip("How many Med-Syringes the player has in their inventory")]
-	public int medSyringes = 0;
+	public UInt16 medSyringes = 0;
 	[Tooltip("How many Battery Packs the player has in their inventory")]
-	public int batteryPacks = 0;
+	public UInt16 batteryPacks = 0;
 
 	private bool inCrouchTransition;
 	private DateTime crouchTransitionStart;
@@ -192,5 +198,92 @@ public class PlayerController : MonoBehaviour
 		// For some reason when crouched the value for the distace to ground has to be a lot more
 		float distance = ((capsule.height * transform.localScale.y) / 2) + (groundDistance * (isCrouching ? 5 : 1));
 		return Physics.Raycast(ray, distance, ~LayerMask.GetMask("Player"));
+	}
+
+	// Stuff below is for serialization
+	private PlayerController()
+	{
+
+	}
+
+	// Xml Serialization Infrastructure
+
+	public void WriteXml(XmlWriter writer)
+	{
+		XmlSerializer vector3Writer = new XmlSerializer(typeof(System.Numerics.Vector3));
+
+		writer.WriteStartElement(nameof(speed));
+		writer.WriteValue(speed);
+		writer.WriteEndElement();
+
+		writer.WriteStartElement(nameof(groundDistance));
+		writer.WriteValue(groundDistance);
+		writer.WriteEndElement();
+
+		writer.WriteStartElement(nameof(jumpForce));
+		writer.WriteValue(jumpForce);
+		writer.WriteEndElement();
+
+		writer.WriteStartElement(nameof(crouchHeight));
+		writer.WriteValue(crouchHeight);
+		writer.WriteEndElement();
+
+		writer.WriteStartElement(nameof(defaultScale));
+		vector3Writer.Serialize(writer, Convert.New(defaultScale));
+		writer.WriteEndElement();
+
+		writer.WriteStartElement(nameof(standHeight));
+		writer.WriteValue(standHeight);
+		writer.WriteEndElement();
+
+		writer.WriteStartElement(nameof(isCrouching));
+		writer.WriteValue(isCrouching);
+		writer.WriteEndElement();
+
+		writer.WriteStartElement(nameof(crouchSpeed));
+		writer.WriteValue(crouchSpeed);
+		writer.WriteEndElement();
+
+		writer.WriteStartElement(nameof(inventory));
+		writer.WriteValue( /* (int) */ inventory.ToString());
+		writer.WriteEndElement();
+
+		writer.WriteStartElement(nameof(medSyringes));
+		writer.WriteValue(medSyringes);
+		writer.WriteEndElement();
+
+		writer.WriteStartElement(nameof(batteryPacks));
+		writer.WriteValue(batteryPacks);
+		writer.WriteEndElement();
+	}
+
+	public void ReadXml(XmlReader reader)
+	{
+		XmlSerializer vector3Reader = new XmlSerializer(typeof(System.Numerics.Vector3));
+		// reader.ReadStartElement();
+		speed = reader.ReadElementContentAsFloat();
+		// reader.ReadStartElement();
+		groundDistance = reader.ReadElementContentAsFloat();
+		jumpForce = reader.ReadElementContentAsFloat();
+		crouchHeight = reader.ReadElementContentAsFloat();
+		reader.ReadStartElement();
+		Convert.Copy((System.Numerics.Vector3) vector3Reader.Deserialize(reader), defaultScale);
+		reader.ReadEndElement();
+		// defaultScale.CopyFrom((System.Numerics.Vector3)reader.ReadElementContentAs(typeof(System.Numerics.Vector3), null));
+		standHeight = reader.ReadElementContentAsFloat();
+		isCrouching = reader.ReadElementContentAsBoolean();
+		crouchSpeed = reader.ReadElementContentAsFloat();
+		// inventory = (Inventory)reader.ReadElementContentAs(typeof(Inventory),
+		// null);
+		// reader.ReadStartElement();
+		inventory = (Inventory) Enum.Parse(typeof(Inventory), reader.ReadElementContentAsString());
+		// inventory = (Inventory)reader.ReadElementContentAsInt();
+		medSyringes = (ushort) reader.ReadElementContentAsInt();
+		batteryPacks = (ushort) reader.ReadElementContentAsInt();
+	}
+
+	public XmlSchema GetSchema()
+	{
+		return (null);
 	}
 }

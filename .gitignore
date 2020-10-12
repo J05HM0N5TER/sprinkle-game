@@ -3,6 +3,11 @@
 # Get latest from https://github.com/github/gitignore/blob/master/Unity.gitignore
 #
 
+# <Cutom added>
+/Assets/Saves/
+/Assets/Saves.meta
+# </Cutom added>
+
 /[Ll]ibrary/
 /[Tt]emp/
 /[Oo]bj/
@@ -63,3 +68,7 @@ sysinfo.txt
 # Crashlytics generated file
 crashlytics-build.properties
 
+# Manually added
+
+/Assets/Saves
+/Assets/Saves.meta
