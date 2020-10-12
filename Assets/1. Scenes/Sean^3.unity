@@ -16499,7 +16499,7 @@ PrefabInstance:
     - target: {fileID: 4004068573854185775, guid: 6356f2d9fdc39ce4992a932fd141477c,
         type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4004068573854185775, guid: 6356f2d9fdc39ce4992a932fd141477c,
         type: 3}
@@ -20787,7 +20787,7 @@ Animator:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1594193062}
   m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: d684a378a0aeb6849b61aecd9c2e7aee, type: 3}
+  m_Avatar: {fileID: 9000000, guid: a009ed7690288e74ba0bce16c4585f11, type: 3}
   m_Controller: {fileID: 9100000, guid: ef1ae7f68eb69d44cad71f6ec944923d, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
@@ -20953,6 +20953,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Game manager
+      objectReference: {fileID: 0}
+    - target: {fileID: 8753600789978463663, guid: 47b4e47888cd1d2409815c69f3b917a1,
+        type: 3}
+      propertyPath: layersToSerialize.m_Bits
+      value: 3076
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 47b4e47888cd1d2409815c69f3b917a1, type: 3}

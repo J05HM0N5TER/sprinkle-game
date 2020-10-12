@@ -18,7 +18,7 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 	[Tooltip ("The Camera of the AI")]
 	public Camera DirectCam;
 	[Tooltip ("The player Object")]
-	public GameObject player;
+	private GameObject player;
 	[Tooltip ("The max distance the ai will wonder around from its current point, decrease for ai to not move to other rooms as much")]
 	public float wonderDistance = 10.0f;
 	[Tooltip ("How long will the ai be searching in the area that it last saw the player")]
@@ -74,6 +74,8 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 	private float attackcooldownreset;
 	public bool canAttackAgain = true;
 
+	private Animator anim;
+
 	// Start is called before the first frame update
 	void Start ()
 	{
@@ -94,7 +96,8 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 
 		playerCam = Camera.main;
 		attackcooldownreset = attackCoolDown;
-
+		anim = gameObject.GetComponentInChildren<Animator>();
+		player = GameObject.FindGameObjectWithTag("Player");
 	}
 
 	// Update is called once per frame  
@@ -237,6 +240,10 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 			{
 				Debug.LogError ("Couldn't find valid point");
 			}
+		}
+		if(agent.velocity.magnitude >= 0.1f)
+		{
+			anim.SetBool("walking", true);
 		}
 	}
 	public static Vector3 RandomNavSphere (Vector3 origin, float distance, int layermask)
