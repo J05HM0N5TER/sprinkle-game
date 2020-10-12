@@ -129,7 +129,6 @@ public class LivingArmourAI : MonoBehaviour
 			player.GetComponent<PlayerController>().health -= 1;
 			canAttackAgain = false;
 			attackcooldown();
-
 		}
 		if (!agent.hasPath || agent.path == null)
 		{
