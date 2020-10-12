@@ -7,7 +7,7 @@ public class DEVFunctions : MonoBehaviour
     public string DevScene = ""; //The scene that will be loaded.
     public string GameScene = "";
     public string LevelDesignScene = "";
-    public string ProgrammerScene = "";
+    public string Sean3 = "";
 
     void Update()
     {
@@ -39,7 +39,7 @@ public class DEVFunctions : MonoBehaviour
 
         if (Input.GetKey(KeyCode.KeypadMinus))
         {
-            //SceneManager.LoadScene(Sean^3);
+            SceneManager.LoadScene(Sean3);
             Debug.Log("Minus Activated");
         }
     }
