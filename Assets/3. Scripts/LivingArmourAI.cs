@@ -32,6 +32,8 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 
 	[Tooltip ("the area around the last seen point of the player that the ai will search for the player")]
 	public float lookingDistance = 1.0f;
+	public float idleLookTime = 1.0f;
+	private float resetIdleLookTime;
 	// Was the AI previously following the player?
 	private bool wasFollowingPlayer = false;
 	private bool isPlayerVisible = false;
@@ -98,6 +100,8 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 		attackcooldownreset = attackCoolDown;
 		anim = gameObject.GetComponentInChildren<Animator>();
 		player = GameObject.FindGameObjectWithTag("Player");
+
+		resetIdleLookTime = idleLookTime;
 	}
 
 	// Update is called once per frame  
@@ -126,6 +130,8 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 			agent.speed = chaseSpeed;
 			visorEmission.SetColor ("_EmissiveColor", chase);
 			visorEmission.EnableKeyword ("_EMISSION");
+			
+			
 		}
 		// TODO: Check that the player can't be seen, this it for when the AI catches the player
 		if ((agent.transform.position - playerLastSeen).magnitude < 0.5f && !isPlayerVisible)
@@ -158,14 +164,30 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 		if (lookingforplayer)
 		{
 			// Debug.LogError("Looking for player", this);
+			// if((agent.remainingDistance <= 0.5) &&  (idleLookTime > 0))
+			// {
+			// 	idleLookTime -= Time.deltaTime;
+			// 	agent.isStopped = true;
 
-			wonderDistance = lookingDistance;
-			//LookForPlayer();
-			lightvisor.color = investigate;
-			timer -= Time.deltaTime;
-			agent.speed = searchSpeed;
-			visorEmission.SetColor ("_EmissiveColor", investigate);
-			visorEmission.EnableKeyword ("_EMISSION");
+			// }
+			// else
+			//{
+				wonderDistance = lookingDistance;
+				//LookForPlayer();
+				lightvisor.color = investigate;
+				timer -= Time.deltaTime;
+				agent.speed = searchSpeed;
+				visorEmission.SetColor ("_EmissiveColor", investigate);
+				visorEmission.EnableKeyword ("_EMISSION");
+				// if(idleLookTime <= 0)
+				// {
+				// 	idleLookTime = resetIdleLookTime;
+				// }
+				// agent.isStopped = false;
+				// agent.SetDestination (RandomNavSphere (agent.GetComponent<Transform> ().position, wonderDistance, -1));
+			//}
+			//timer -= Time.deltaTime;
+			
 		}
 		// reseting wonder / looking for player further
 		if (timer <= 0 && !isPlayerVisible)
@@ -188,9 +210,10 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 				if (Vector3.Distance (gameObject.transform.position, SoundSource) <= maxHearingRange)
 				{
 					agent.SetDestination (SoundSource);
-					lightvisor.color = investigate;
-					visorEmission.SetColor ("_EmissiveColor", investigate);
-					visorEmission.EnableKeyword ("_EMISSION");
+					lookingforplayer = true;
+					//lightvisor.color = investigate;
+					// visorEmission.SetColor ("_EmissiveColor", investigate);
+					// visorEmission.EnableKeyword ("_EMISSION");
 				}
 				if ((agent.transform.position - SoundSource).magnitude < 0.5f)
 				{

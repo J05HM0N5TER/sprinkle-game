@@ -11,18 +11,18 @@ public class OnOff : MonoBehaviour
     {
         if((turnOnStuff != null))
         {
-            foreach(var obj in turnOnStuff)
-            {
-                obj.SetActive(false);
-            }
+            // foreach(var obj in turnOnStuff)
+            // {
+            //     obj.SetActive(false);
+            // }
         }
         
         if((turnOffStuff != null))
         {
-            foreach(var obj in turnOffStuff)
-            {
-                obj.SetActive(true);
-            }
+            // foreach(var obj in turnOffStuff)
+            // {
+            //     obj.SetActive(true);
+            // }
         }
     }
 
@@ -34,7 +34,15 @@ public class OnOff : MonoBehaviour
             {
                 foreach(var obj in turnOnStuff)
                 {
-                    obj.SetActive(true);
+                    //obj.SetActive(true);
+                    foreach(var childcomp in turnOnStuff)
+                    {
+                        //childcomp.GetComponents<Behaviour>();
+                        foreach(Behaviour child in childcomp.GetComponents<Behaviour>())
+                        {
+                            child.enabled = true;
+                        }
+                    }
                 }
             }
             
@@ -42,7 +50,15 @@ public class OnOff : MonoBehaviour
             {
                 foreach(var obj in turnOffStuff)
                 {
-                    obj.SetActive(false);
+                    //obj.SetActive(false);
+                    foreach(var childcomp in turnOffStuff)
+                    {
+                        //childcomp.GetComponents<Behaviour>();
+                        foreach(Behaviour child in childcomp.GetComponents<Behaviour>())
+                        {
+                            child.enabled = false;
+                        }
+                    }
                 }
             }
             
