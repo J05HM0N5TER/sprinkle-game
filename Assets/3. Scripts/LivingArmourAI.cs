@@ -191,7 +191,7 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 				}
 				if ((agent.transform.position - SoundSource).magnitude < 0.5f)
 				{
-					agent.stoppingDistance = 0.5f;
+					agent.SetDestination (RandomNavSphere (agent.GetComponent<Transform> ().position, wonderDistance, -1));
 				}
 			}
 		}

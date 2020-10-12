@@ -29,12 +29,15 @@ public class PlayerController : MonoBehaviour, IXmlSerializable
 	[Range(1, 15)]
 	[Tooltip("Speed the player moves")]
 	public float speed = 10.0f;
+	private float walkspeed;
 	[Range(0.04f, 0.1f)]
 	[Tooltip("How far the player can be from the ground and still jump")]
 	public float groundDistance = 0.04f;
 	[Range(150, 500)]
 	[Tooltip("The amount of force that goes into jumping (Jump height)")]
 	public float jumpForce = 300;
+
+	public float sprintSpeed = 15;
 
 	[Header("Crouch variables")]
 	[Range(0.1f, 1)]
@@ -71,6 +74,8 @@ public class PlayerController : MonoBehaviour, IXmlSerializable
 
 	//attacking player stuff
 	public float health = 2;
+	private GameObject livingSuit;
+	private bool makingsound = false;
 	
 	// Start is called before the first frame update
 	void Start()
@@ -79,6 +84,8 @@ public class PlayerController : MonoBehaviour, IXmlSerializable
 		capsule = GetComponent<CapsuleCollider>();
 		standHeight = capsule.height;
 		defaultScale = transform.localScale;
+		walkspeed = speed;
+		livingSuit = GameObject.Find("LivingArmour");
 	}
 
 	private void FixedUpdate()
@@ -114,6 +121,27 @@ public class PlayerController : MonoBehaviour, IXmlSerializable
 		{
 			//GameObject.FindObjectOfType<GameManager>();
 			GameObject.Find("PauseManager").GetComponent<PauseMenu>().PauseGame();
+		}
+		if(Input.GetButton("Sprint"))
+		{
+			speed = sprintSpeed;
+			if(!makingsound)
+			{
+				livingSuit.GetComponent<LivingArmourAI>().soundSources.Add(gameObject.transform.position);
+				makingsound = true;
+			}
+				
+            //yield return StartCoroutine("removeFromlist");
+		}
+		else
+		{
+			speed = walkspeed;
+		 	if(makingsound)
+			{
+				livingSuit.GetComponent<LivingArmourAI>().soundSources.Remove(gameObject.transform.position);
+				makingsound = false;
+			}
+			
 		}
 	}
 
