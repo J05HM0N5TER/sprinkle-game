@@ -11,21 +11,21 @@ public class InteractOnOff : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if(turnOnStuff != null)
-        {
-            foreach(var obj in turnOnStuff)
-            {
-                obj.SetActive(false);
-            }
-        }
+        // if(turnOnStuff != null)
+        // {
+        //     foreach(var obj in turnOnStuff)
+        //     {
+        //         obj.SetActive(false);
+        //     }
+        // }
         
-        if(turnOffStuff != null)
-        {
-            foreach(var obj in turnOffStuff)
-            {
-                obj.SetActive(true);
-            }
-        }
+        // if(turnOffStuff != null)
+        // {
+        //     foreach(var obj in turnOffStuff)
+        //     {
+        //         obj.SetActive(true);
+        //     }
+        // }
     }
     private void Update() 
     {
