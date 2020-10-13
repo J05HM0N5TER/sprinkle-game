@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7824060371552867724}
   - component: {fileID: 2149490869950358239}
   - component: {fileID: 1915090688}
+  - component: {fileID: 594472888}
   m_Layer: 0
   m_Name: Sludge_Wall
   m_TagString: Untagged
@@ -48,7 +49,7 @@ MonoBehaviour:
   maxDistanceToInteract: 2
   timeOfplaying: 3
   sludgeSound: {fileID: 8300000, guid: 40cde5f88db998c43a782df309f45373, type: 3}
-  sprayObject: {fileID: 0}
+  sprayObject: {fileID: 8787657693695185778}
   spraySound: {fileID: 8300000, guid: 9b3e80b5788963545b43c60acf8417e4, type: 3}
 --- !u!82 &1915090688
 AudioSource:
@@ -146,19 +147,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!65 &5988743856239091958
+--- !u!65 &594472888
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8787657693695185778}
+  m_GameObject: {fileID: 820309373942321250}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2.8865799e-15, y: 4.25, z: 4.5}
-  m_Center: {x: -9.436896e-16, y: 2.125, z: 0}
+  m_Size: {x: 4.600006, y: 4.4, z: 0.2999878}
+  m_Center: {x: 0.0000023841858, y: 2.1000001, z: -2.250005}
 --- !u!208 &3036376356358027977
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -200,22 +201,22 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: 9859da02fda1096449ffc63ea57117af,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0.0000002150984
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 9859da02fda1096449ffc63ea57117af,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.70710576
+      value: 0.7071057
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 9859da02fda1096449ffc63ea57117af,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0.00000018529664
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 9859da02fda1096449ffc63ea57117af,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.70710784
+      value: 0.7071079
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 9859da02fda1096449ffc63ea57117af,
         type: 3}
@@ -241,7 +242,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: d390b9be5eaa506438939e39a1e439bb, type: 2}
+      objectReference: {fileID: 2100000, guid: cb65822a3860d014daf9acfbf037daa1, type: 2}
     - target: {fileID: -927199367670048503, guid: 9859da02fda1096449ffc63ea57117af,
         type: 3}
       propertyPath: m_Name
