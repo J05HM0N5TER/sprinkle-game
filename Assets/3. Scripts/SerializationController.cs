@@ -11,15 +11,14 @@ public partial class SerializationController : MonoBehaviour
 {
 	public LayerMask layersToSerialize;
 
-	private void Start()
-	{
-		if (layersToSerialize == 0)
-		{
-			layersToSerialize = LayerMask.NameToLayer("Dynamic");
-		}
-	}
+    // Every object in the scene, sorted by InstanceID
+    private SortedDictionary<int, Transform> allObjects = new SortedDictionary<int, Transform>();
+    private List<int> allObjectToSerialize = new List<int>();
 
-	private void Update()
+    public SortedDictionary<int, Transform> AllObjects { get => allObjects; }
+    public List<int> AllObjectToSerialize { get => allObjectToSerialize; }
+
+    private void Update()
 	{
 		if (Input.GetKeyDown(KeyCode.F1))
 		{
@@ -35,6 +34,13 @@ public partial class SerializationController : MonoBehaviour
 
 	public void SaveGame()
 	{
+		// Create lookup tables
+		PopulateLookup();
+
+		Debug.Log("AllObjectsToSerilize size: " + AllObjectToSerialize.Count);
+		Debug.Log("AllObjects size: " + allObjects.Count);
+
+
 		PlayerController playerController = FindObjectOfType<PlayerController>();
 		CameraControl camera = FindObjectOfType<CameraControl>();
 
@@ -74,23 +80,20 @@ public partial class SerializationController : MonoBehaviour
 				writer.WriteEndElement(); // Player
 
 				// Dynamic objects
-				Transform[] allObjects = Resources.FindObjectsOfTypeAll<Transform>() as Transform[];
 				List<GameObjectData> dynamicObjects = new List<GameObjectData>();
 				List<RigidbodyData> rigidbodies = new List<RigidbodyData>();
 
-				foreach (var item in allObjects)
+				// Convert all objects to serialize into a data structure that can be saved
+				foreach (var itemID in AllObjectToSerialize)
 				{
-					// If it has any of the layers that we are serializing
-					if (((1 << item.gameObject.layer) & layersToSerialize) != 0)
-					{
-						// Debug.Log($"Old: {item.position} New Object pos: {newObject.position}, rotation: {newObject.rotation}");
-						dynamicObjects.Add(GameObjectData.New(item));
+					// dynamicObjects.con
+					// Debug.Log($"Old: {item.position} New Object pos: {newObject.position}, rotation: {newObject.rotation}");
+					dynamicObjects.Add(GameObjectData.New(AllObjects[itemID]));
 
-						Rigidbody rb = item.GetComponent<Rigidbody>();
-						if (rb)
-						{
-							rigidbodies.Add(RigidbodyData.New(rb));
-						}
+					Rigidbody rb = AllObjects[itemID].GetComponent<Rigidbody>();
+					if (rb)
+					{
+						rigidbodies.Add(RigidbodyData.New(rb));
 					}
 				}
 				Debug.Log($"Serialized {dynamicObjects.Count} dynamic objects");
@@ -116,10 +119,14 @@ public partial class SerializationController : MonoBehaviour
 			writer.WriteEndElement();
 			writer.WriteEndDocument();
 		}
+		ClearAll();
 	}
 
 	public void LoadGame()
 	{
+		// Create all lookup tables
+		PopulateLookup();
+
 		// The serializer for the different types
 		PlayerController playerController = FindObjectOfType<PlayerController>();
 		CameraControl camera = FindObjectOfType<CameraControl>();
@@ -129,7 +136,7 @@ public partial class SerializationController : MonoBehaviour
 		XmlSerializer objectDataWriter = new XmlSerializer(typeof(GameObjectData));
 
 		List<GameObjectData> readGameObjects = new List<GameObjectData>();
-		List<RigidbodyData> readRigidbodys = new List<RigidbodyData>();
+		List<RigidbodyData> readRigidBodys = new List<RigidbodyData>();
 		// Open file
 		using(var stream = new FileStream(Application.dataPath + "/Saves/Save.xml", FileMode.Open))
 		{
@@ -173,7 +180,7 @@ public partial class SerializationController : MonoBehaviour
 					reader.ReadEndElement(); // DynamicObjects
 					reader.ReadStartElement(); // DynamicObjects
 					{
-						readRigidbodys = (List<RigidbodyData>) rbDataListWriter.Deserialize(reader);
+						readRigidBodys = (List<RigidbodyData>) rbDataListWriter.Deserialize(reader);
 					}
 					reader.ReadEndElement(); // DynamicObjects
 				}
@@ -181,64 +188,98 @@ public partial class SerializationController : MonoBehaviour
 			}
 		}
 
-		// Sort the read objects (even though it should already be sorted)
-		readGameObjects.Sort();
-		readRigidbodys.Sort();
-
-		// Retrieve all objects in scene
-		List<Transform> dynamicObjects = new List<Transform>(FindObjectsOfType<Transform>());
-
-		List<Transform> loadObjects = new List<Transform>();
-		// REmove all unwanted objects
-		foreach (var item in dynamicObjects)
-		{
-			// If it has any of the layers that we are serializing
-			if (((1 << item.gameObject.layer) & layersToSerialize) != 0)
-			{
-				// Debug.Log($"Old: {item.position} New Object pos: {newObject.position}, rotation: {newObject.rotation}");
-				loadObjects.Add(item);
-			}
-		}
-
-		loadObjects.Sort(
-			delegate(Transform a, Transform b)
-			{
-				return a.GetInstanceID().CompareTo(b.GetInstanceID());
-			}
-		);
-
 		// Apply all loaded gameObject data
-		foreach (var item in loadObjects)
+		foreach (var itemID in AllObjectToSerialize)
 		{
-			int position = readGameObjects.BinarySearch(GameObjectData.New(item));
-			if (position >= 0)
+			// GameObject Data
 			{
-				// Debug.Log($"Binary search found {position} for {item.GetInstanceID()}");
-				GameObjectData.Copy(readGameObjects[position], item);
-			}
-			else
-			{
-				Debug.LogWarning($"Could not find {item.ToString()} in serialized objects");
-			}
-		}
-
-		// Apply all loaded rigidbody data
-		foreach (var item in loadObjects)
-		{
-			Rigidbody rb = item.GetComponent<Rigidbody>();
-			if (rb)
-			{
-				int position = readRigidbodys.BinarySearch(RigidbodyData.New(rb));
+				int position = readGameObjects.BinarySearch(GameObjectData.New(AllObjects[itemID]));
 				if (position >= 0)
 				{
 					// Debug.Log($"Binary search found {position} for {item.GetInstanceID()}");
-					RigidbodyData.Copy(readRigidbodys[position], rb);
+					GameObjectData.Copy(readGameObjects[position], allObjects[itemID]);
 				}
 				else
 				{
-					Debug.LogWarning($"Could not find {item.ToString()} in serialized objects");
+					Debug.LogWarning($"Could not find {itemID.ToString()} in serialized objects");
+				}
+			}
+
+			// RigidBody Data
+			Rigidbody rb = AllObjects[itemID].GetComponent<Rigidbody>();
+			if (rb)
+			{
+				int position = readRigidBodys.BinarySearch(RigidbodyData.New(rb));
+				if (position >= 0)
+				{
+					// Debug.Log($"Binary search found {position} for {item.GetInstanceID()}");
+					RigidbodyData.Copy(readRigidBodys[position], rb);
+				}
+				else
+				{
+					Debug.LogWarning($"Could not find {AllObjects[itemID].ToString()} in serialized objects");
 				}
 			}
 		}
+
+		// Release all memory overhead
+		ClearAll();
+	}
+
+	/// <summary>
+	/// Converts an Instance ID to a Transform Reference
+	/// </summary>
+	/// <param name="instanceID">The ID of the object being retrieved</param>
+	/// <returns>THe reference to the object</returns>
+	public Transform InstanceIDToTransform(int instanceID)
+	{
+		return AllObjects[instanceID];
+	}
+
+	/// <summary>
+	/// Populates the lookup tables for all of the objects in the scene
+	/// </summary>
+	public void RefetchAllObjects()
+	{
+		allObjects.Clear();
+		Transform[] allTransforms = FindObjectsOfType<Transform>();
+		foreach (var item in allTransforms)
+		{
+			allObjects.Add(item.GetInstanceID(), item);
+		}
+	}
+
+	/// <summary>
+	/// Populates the lookup tables for all of the objects in the layers to serialize
+	/// </summary>
+	public void PopulateAllObjectToSerialize()
+	{
+		allObjectToSerialize.Clear();
+		foreach (var item in AllObjects)
+		{
+			if ((( 1 << item.Value.gameObject.layer) & layersToSerialize) != 0)
+			{
+				allObjectToSerialize.Add(item.Key);
+			}
+		}
+
+	}
+
+	/// <summary>
+	/// Creates all lookup tables that are needed
+	/// </summary>
+	public void PopulateLookup()
+	{
+		RefetchAllObjects();
+		PopulateAllObjectToSerialize();
+	}
+
+	/// <summary>
+	/// Releases all the memory that the lookup tables are using
+	/// </summary>
+	public void ClearAll()
+	{
+		allObjects.Clear();
+		allObjectToSerialize.Clear();
 	}
 }

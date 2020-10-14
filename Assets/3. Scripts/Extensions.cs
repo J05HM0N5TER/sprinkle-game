@@ -100,6 +100,7 @@ public static class Convert
 		to.X = from.x;
 		to.Y = from.y;
 		to.Z = from.z;
+		to.W = from.w;
 		return to;
 	}
 	public static System.Numerics.Quaternion New(UnityEngine.Quaternion from)
@@ -114,6 +115,7 @@ public static class Convert
 		to.x = from.X;
 		to.y = from.Y;
 		to.z = from.Z;
+		to.w = from.W;
 		return to;
 	}
 

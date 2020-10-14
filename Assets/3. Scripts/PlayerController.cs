@@ -74,6 +74,8 @@ public class PlayerController : MonoBehaviour, IXmlSerializable
 
 	//attacking player stuff
 	public float health = 2;
+
+	// FIXME: Only adds sound to one of the suits
 	private GameObject livingSuit;
 	private bool makingsound = false;
 
