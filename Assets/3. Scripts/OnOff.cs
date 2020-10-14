@@ -4,64 +4,22 @@ using UnityEngine;
 
 public class OnOff : MonoBehaviour
 {
-    public List<GameObject> turnOnStuff;
-    public List<GameObject> turnOffStuff;
-    // Start is called before the first frame update
-    void Start()
-    {
-        if((turnOnStuff != null))
-        {
-            // foreach(var obj in turnOnStuff)
-            // {
-            //     obj.SetActive(false);
-            // }
-        }
-        
-        if((turnOffStuff != null))
-        {
-            // foreach(var obj in turnOffStuff)
-            // {
-            //     obj.SetActive(true);
-            // }
-        }
-    }
+    public List<GameObject> turnOnStuff = new List<GameObject>();
+    public List<GameObject> turnOffStuff = new List<GameObject>();
 
-    private void OnTriggerEnter(Collider other) 
+    private void OnTriggerEnter(Collider other)
     {
-        if(other == GameObject.FindGameObjectWithTag("Player") && (turnOffStuff != null) && (turnOnStuff != null))
+        // If the player entered the trigger
+        if (other.tag == "Player")
         {
-            if((turnOnStuff != null))
+            foreach (var obj in turnOnStuff)
             {
-                foreach(var obj in turnOnStuff)
-                {
-                    obj.SetActive(true);
-                    //foreach(var childcomp in turnOnStuff)
-                    //{
-                    //    //childcomp.GetComponents<Behaviour>();
-                    //    foreach(Behaviour child in childcomp.GetComponents<Behaviour>())
-                    //    {
-                    //        child.enabled = true;
-                    //    }
-                    //}
-                }
+                obj.SetActive(true);
             }
-            
-            if((turnOffStuff != null))
+            foreach (var obj in turnOffStuff)
             {
-                foreach(var obj in turnOffStuff)
-                {
-                    obj.SetActive(false);
-                    //foreach(var childcomp in turnOffStuff)
-                    //{
-                    //    //childcomp.GetComponents<Behaviour>();
-                    //    foreach(Behaviour child in childcomp.GetComponents<Behaviour>())
-                    //    {
-                    //        child.enabled = false;
-                    //    }
-                    //}
-                }
+                obj.SetActive(false);
             }
-            
         }
     }
 }
