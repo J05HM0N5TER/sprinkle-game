@@ -92,7 +92,7 @@ public static class Convert
 	/// <summary>
 	/// Copies values for Unity Quaternion to .Net Quaternion for serialization
 	/// </summary>
-	/// <param name="vector">The current Quaternion</param>
+	/// <param name="to">The current Quaternion</param>
 	/// <param name="from">The Quaternion holding the values to overwrite the current Quaternion</param>
 	/// <returns>The current value with its new values in it</returns>
 	public static System.Numerics.Quaternion Copy(UnityEngine.Quaternion from, System.Numerics.Quaternion to)

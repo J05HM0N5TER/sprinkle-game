@@ -9,16 +9,17 @@ using UnityEngine;
 
 public partial class SerializationController : MonoBehaviour
 {
+	private bool setUp = false;
 	public LayerMask layersToSerialize;
 
-    // Every object in the scene, sorted by InstanceID
-    private SortedDictionary<int, Transform> allObjects = new SortedDictionary<int, Transform>();
-    private List<int> allObjectToSerialize = new List<int>();
+	// Every object in the scene, sorted by InstanceID
+	private SortedDictionary<int, Transform> allObjects = new SortedDictionary<int, Transform>();
+	private List<int> allObjectToSerialize = new List<int>();
 
-    public SortedDictionary<int, Transform> AllObjects { get => allObjects; }
-    public List<int> AllObjectToSerialize { get => allObjectToSerialize; }
+	public SortedDictionary<int, Transform> AllObjects { get => allObjects; }
+	public List<int> AllObjectToSerialize { get => allObjectToSerialize; }
 
-    private void Update()
+	private void Update()
 	{
 		if (Input.GetKeyDown(KeyCode.F1))
 		{
@@ -40,6 +41,18 @@ public partial class SerializationController : MonoBehaviour
 		Debug.Log("AllObjectsToSerilize size: " + AllObjectToSerialize.Count);
 		Debug.Log("AllObjects size: " + allObjects.Count);
 
+		// Find the currently active Living armour AI
+		LivingArmourAI currentLivingArmour = FindObjectOfType<LivingArmourAI>();
+		LivingArmourAI[] livingArmourAIs = FindObjectsOfType<LivingArmourAI>();
+		foreach (var item in livingArmourAIs)
+		{
+			if (item.enabled)
+			{
+				currentLivingArmour = item;
+			}
+		}
+
+		LurkerAi lurker = FindObjectOfType<LurkerAi>();
 
 		PlayerController playerController = FindObjectOfType<PlayerController>();
 		CameraControl camera = FindObjectOfType<CameraControl>();
@@ -47,11 +60,13 @@ public partial class SerializationController : MonoBehaviour
 		// Create the directory because an error happens if it doesn't
 		Directory.CreateDirectory(Application.dataPath + "/Saves/");
 		// XML sterilizers for all the classes needed
-		XmlSerializer playerWriter = new XmlSerializer(playerController.GetType());
-		XmlSerializer cameraWriter = new XmlSerializer(camera.GetType());
-		XmlSerializer goDataListWriter = new XmlSerializer(typeof(List<GameObjectData>));
-		XmlSerializer rbDataListWriter = new XmlSerializer(typeof(List<RigidbodyData>));
-		XmlSerializer objectDataWriter = new XmlSerializer(typeof(GameObjectData));
+		XmlSerializer playerXML = new XmlSerializer(playerController.GetType());
+		XmlSerializer cameraXML = new XmlSerializer(camera.GetType());
+		XmlSerializer goDataListXML = new XmlSerializer(typeof(List<GameObjectData>));
+		XmlSerializer rbDataListXML = new XmlSerializer(typeof(List<RigidbodyData>));
+		XmlSerializer objectDataXML = new XmlSerializer(typeof(GameObjectData));
+		XmlSerializer livingArmourXML = new XmlSerializer(typeof(LivingArmourAI));
+		XmlSerializer lurkerXML = new XmlSerializer(typeof(LurkerAi));
 
 		using(XmlWriter writer = XmlWriter.Create((Application.dataPath + "/Saves/Save.xml")))
 		{
@@ -65,19 +80,28 @@ public partial class SerializationController : MonoBehaviour
 					writer.WriteStartElement("Body");
 					writer.WriteComment("This is for the main player body, which is in charge of player movement");
 					{
-						playerWriter.Serialize(writer, playerController);
-						// objectDataWriter.Serialize(writer,
-						// Convert.New(playerController.transform));
+						playerXML.Serialize(writer, playerController);
 					}
 					writer.WriteEndElement(); // Body
 					writer.WriteStartElement("Camera");
 					writer.WriteComment("The data controlling player camera movement and grabbing and interacting with objects");
 					{
-						cameraWriter.Serialize(writer, camera);
+						cameraXML.Serialize(writer, camera);
 					}
 					writer.WriteEndElement(); // PlayerCamera
 				}
 				writer.WriteEndElement(); // Player
+
+				writer.WriteStartElement("AI-Data");
+				{
+					// Only one living armour is active so record which one that is
+					writer.WriteStartElement("LivingArmourInstanceID");
+					writer.WriteValue(currentLivingArmour.gameObject.GetInstanceID());
+					writer.WriteEndElement();
+					livingArmourXML.Serialize(writer, currentLivingArmour);
+					lurkerXML.Serialize(writer, lurker);
+				}
+				writer.WriteEndElement();
 
 				// Dynamic objects
 				List<GameObjectData> dynamicObjects = new List<GameObjectData>();
@@ -103,7 +127,7 @@ public partial class SerializationController : MonoBehaviour
 				writer.WriteStartElement(nameof(dynamicObjects));
 				writer.WriteComment("This is all the objects that can move in the scene");
 				{
-					goDataListWriter.Serialize(writer, dynamicObjects);
+					goDataListXML.Serialize(writer, dynamicObjects);
 				}
 				writer.WriteEndElement();
 
@@ -112,7 +136,7 @@ public partial class SerializationController : MonoBehaviour
 				writer.WriteStartElement(nameof(rigidbodies));
 				writer.WriteComment("This is all the rigidbodies from moving objects");
 				{
-					rbDataListWriter.Serialize(writer, rigidbodies);
+					rbDataListXML.Serialize(writer, rigidbodies);
 				}
 				writer.WriteEndElement();
 			}
@@ -131,16 +155,22 @@ public partial class SerializationController : MonoBehaviour
 		PlayerController playerController = FindObjectOfType<PlayerController>();
 		CameraControl camera = FindObjectOfType<CameraControl>();
 
-		XmlSerializer goDataListWriter = new XmlSerializer(typeof(List<GameObjectData>));
-		XmlSerializer rbDataListWriter = new XmlSerializer(typeof(List<RigidbodyData>));
-		XmlSerializer objectDataWriter = new XmlSerializer(typeof(GameObjectData));
+		XmlSerializer goDataListXML = new XmlSerializer(typeof(List<GameObjectData>));
+		XmlSerializer rbDataListXML = new XmlSerializer(typeof(List<RigidbodyData>));
+		XmlSerializer objectDataXML = new XmlSerializer(typeof(GameObjectData));
+		XmlSerializer livingArmourXML = new XmlSerializer(typeof(LivingArmourAI));
+		XmlSerializer lurkerXML = new XmlSerializer(typeof(LurkerAi));
+
+		LurkerAi lurker = FindObjectOfType<LurkerAi>();
+
+		LivingArmourAI[] livingArmours = FindObjectsOfType<LivingArmourAI>();
 
 		List<GameObjectData> readGameObjects = new List<GameObjectData>();
 		List<RigidbodyData> readRigidBodys = new List<RigidbodyData>();
 		// Open file
 		using(var stream = new FileStream(Application.dataPath + "/Saves/Save.xml", FileMode.Open))
 		{
-			// Open xml file reader
+			// Open xml file reader 
 			using(XmlReader reader = XmlReader.Create(stream))
 			{
 				// All of the brackets are just to help me keep track with where I am
@@ -173,14 +203,40 @@ public partial class SerializationController : MonoBehaviour
 						reader.ReadEndElement(); // Camera
 					}
 					reader.ReadEndElement(); // Player
+					reader.ReadStartElement(); // AI-Data
+					{
+						int activeLivingArmourInstanceID = reader.ReadElementContentAsInt();
+						reader.ReadStartElement();
+						foreach (var item in livingArmours)
+						{
+							// If it is the one that was active
+							if (item.gameObject.GetInstanceID() == activeLivingArmourInstanceID)
+							{
+								// Copy over the data
+								item.ReadXml(reader);
+							}
+							// If it was disabled when it was saved
+							else
+							{
+								// Make sure that it is disabled still
+								item.enabled = false;
+							}
+						}
+						reader.ReadEndElement();
+						reader.ReadStartElement();
+						// livingArmourXML.Deserialize(reader);
+						lurker.ReadXml(reader);
+						reader.ReadEndElement();
+					}
+					reader.ReadEndElement();
 					reader.ReadStartElement(); // DynamicObjects
 					{
-						readGameObjects = (List<GameObjectData>) goDataListWriter.Deserialize(reader);
+						readGameObjects = (List<GameObjectData>) goDataListXML.Deserialize(reader);
 					}
 					reader.ReadEndElement(); // DynamicObjects
 					reader.ReadStartElement(); // DynamicObjects
 					{
-						readRigidBodys = (List<RigidbodyData>) rbDataListWriter.Deserialize(reader);
+						readRigidBodys = (List<RigidbodyData>) rbDataListXML.Deserialize(reader);
 					}
 					reader.ReadEndElement(); // DynamicObjects
 				}
@@ -231,9 +287,13 @@ public partial class SerializationController : MonoBehaviour
 	/// </summary>
 	/// <param name="instanceID">The ID of the object being retrieved</param>
 	/// <returns>THe reference to the object</returns>
+	/// <warning>If the instance is 0 then assumes that the value serialised was null</warning>
 	public Transform InstanceIDToTransform(int instanceID)
 	{
-		return AllObjects[instanceID];
+		if (instanceID == 0)
+			return null;
+		else
+			return AllObjects[instanceID];
 	}
 
 	/// <summary>
@@ -257,7 +317,7 @@ public partial class SerializationController : MonoBehaviour
 		allObjectToSerialize.Clear();
 		foreach (var item in AllObjects)
 		{
-			if ((( 1 << item.Value.gameObject.layer) & layersToSerialize) != 0)
+			if (((1 << item.Value.gameObject.layer) & layersToSerialize) != 0)
 			{
 				allObjectToSerialize.Add(item.Key);
 			}
@@ -272,6 +332,7 @@ public partial class SerializationController : MonoBehaviour
 	{
 		RefetchAllObjects();
 		PopulateAllObjectToSerialize();
+		setUp = true;
 	}
 
 	/// <summary>
@@ -281,5 +342,33 @@ public partial class SerializationController : MonoBehaviour
 	{
 		allObjects.Clear();
 		allObjectToSerialize.Clear();
+		setUp = false;
+	}
+
+	/// <summary>
+	/// Deserializes gameObjectData, copies over the data and returns the transform
+	/// </summary>
+	/// <param name="reader">The XML Reader that is being used to deserialize the data</param>
+	/// <returns>The reference to the transform that was being used</returns>
+	public Transform DeserializeGameObject(XmlReader reader)
+	{
+		XmlSerializer gameObjectDataXML = new XmlSerializer(typeof(GameObjectData));
+		GameObjectData data = (GameObjectData) gameObjectDataXML.Deserialize(reader);
+		return GameObjectDataToTransform(data);
+	}
+
+	/// <summary>
+	/// Copies over the data and return the transform of the gameObjectData
+	/// </summary>
+	/// <param name="from">The GameObjectData that the transform is retrieved from</param>
+	/// <returns>The reference to the transform that was deserialized </returns>
+	public Transform GameObjectDataToTransform(GameObjectData from)
+	{
+		if (!setUp)
+			return null;
+		Transform to = allObjects[from.instanceID];
+		GameObjectData.Copy(from, to);
+		return to;
+
 	}
 }
