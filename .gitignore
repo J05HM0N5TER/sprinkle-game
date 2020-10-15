@@ -462,4 +462,8 @@ MigrationBackup/
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
 
-# End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,unity,windows,visualstudio
+# End of
+# https://www.toptal.com/developers/gitignore/api/visualstudiocode,unity,windows,visualstudio
+
+# Don't save data for Occlusion Culling because it can be really easy to recreate
+Assets/1. Scenes/**/OcclusionCullingData.asset*
