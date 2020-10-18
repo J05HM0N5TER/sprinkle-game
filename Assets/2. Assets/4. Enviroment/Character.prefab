@@ -205,7 +205,7 @@ GameObject:
   - component: {fileID: 353135309}
   - component: {fileID: 353135310}
   m_Layer: 10
-  m_Name: GameObject
+  m_Name: Station_Hum_Sound
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -714,9 +714,9 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.38184473
-  m_Height: 2
+  m_Height: 2.3
   m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0.14999998, z: 0}
 --- !u!54 &1376844649919263995
 Rigidbody:
   m_ObjectHideFlags: 0
