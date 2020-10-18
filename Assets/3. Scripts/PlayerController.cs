@@ -74,9 +74,11 @@ public class PlayerController : MonoBehaviour, IXmlSerializable
 
 	//attacking player stuff
 	public float health = 2;
+
+	// FIXME: Only adds sound to one of the suits
 	private GameObject livingSuit;
 	private bool makingsound = false;
-	
+
 	// Start is called before the first frame update
 	void Start()
 	{
@@ -117,31 +119,31 @@ public class PlayerController : MonoBehaviour, IXmlSerializable
 			rb.AddForce(gameObject.transform.up * (isCrouching ? couchJumpForce : jumpForce));
 		}
 		Crouch();
-		if(health <= 0)
+		if (health <= 0)
 		{
 			//GameObject.FindObjectOfType<GameManager>();
 			GameObject.Find("PauseManager").GetComponent<PauseMenu>().PauseGame();
 		}
-		if(Input.GetButton("Sprint"))
+		if (Input.GetButton("Sprint"))
 		{
 			speed = sprintSpeed;
-			if(!makingsound)
+			if (!makingsound)
 			{
 				livingSuit.GetComponent<LivingArmourAI>().soundSources.Add(gameObject.transform.position);
 				makingsound = true;
 			}
-				
-            //yield return StartCoroutine("removeFromlist");
+
+			//yield return StartCoroutine("removeFromlist");
 		}
 		else
 		{
 			speed = walkspeed;
-		 	if(makingsound)
+			if (makingsound)
 			{
 				livingSuit.GetComponent<LivingArmourAI>().soundSources.Remove(gameObject.transform.position);
 				makingsound = false;
 			}
-			
+
 		}
 	}
 
@@ -177,7 +179,7 @@ public class PlayerController : MonoBehaviour, IXmlSerializable
 				transform.localScale.z
 			);
 			Vector3 pos = transform.position;
-			pos.y -= ((standHeight - crouchHeight) / (crouchTransitionTime / Time.deltaTime) );
+			pos.y -= ((standHeight - crouchHeight) / (crouchTransitionTime / Time.deltaTime));
 			transform.position = pos;
 		}
 		// Standing up
@@ -238,10 +240,15 @@ public class PlayerController : MonoBehaviour, IXmlSerializable
 
 	public void WriteXml(XmlWriter writer)
 	{
-		XmlSerializer vector3Writer = new XmlSerializer(typeof(System.Numerics.Vector3));
+		XmlSerializer vector3xml = new XmlSerializer(typeof(System.Numerics.Vector3));
+		XmlSerializer dateTime3xml = new XmlSerializer(typeof(TimeSpan));
 
 		writer.WriteStartElement(nameof(speed));
 		writer.WriteValue(speed);
+		writer.WriteEndElement();
+
+		writer.WriteStartElement(nameof(walkspeed));
+		writer.WriteValue(walkspeed);
 		writer.WriteEndElement();
 
 		writer.WriteStartElement(nameof(groundDistance));
@@ -252,16 +259,24 @@ public class PlayerController : MonoBehaviour, IXmlSerializable
 		writer.WriteValue(jumpForce);
 		writer.WriteEndElement();
 
+		writer.WriteStartElement(nameof(sprintSpeed));
+		writer.WriteValue(sprintSpeed);
+		writer.WriteEndElement();
+
 		writer.WriteStartElement(nameof(crouchHeight));
 		writer.WriteValue(crouchHeight);
 		writer.WriteEndElement();
 
 		writer.WriteStartElement(nameof(defaultScale));
-		vector3Writer.Serialize(writer, Convert.New(defaultScale));
+		vector3xml.Serialize(writer, Convert.New(defaultScale));
 		writer.WriteEndElement();
 
 		writer.WriteStartElement(nameof(standHeight));
 		writer.WriteValue(standHeight);
+		writer.WriteEndElement();
+
+		writer.WriteStartElement(nameof(crouchTransitionTime));
+		writer.WriteValue(crouchTransitionTime);
 		writer.WriteEndElement();
 
 		writer.WriteStartElement(nameof(isCrouching));
@@ -270,6 +285,10 @@ public class PlayerController : MonoBehaviour, IXmlSerializable
 
 		writer.WriteStartElement(nameof(crouchSpeed));
 		writer.WriteValue(crouchSpeed);
+		writer.WriteEndElement();
+
+		writer.WriteStartElement(nameof(couchJumpForce));
+		writer.WriteValue(couchJumpForce);
 		writer.WriteEndElement();
 
 		writer.WriteStartElement(nameof(inventory));
@@ -283,31 +302,54 @@ public class PlayerController : MonoBehaviour, IXmlSerializable
 		writer.WriteStartElement(nameof(batteryPacks));
 		writer.WriteValue(batteryPacks);
 		writer.WriteEndElement();
+
+		writer.WriteStartElement(nameof(inCrouchTransition));
+		writer.WriteValue(inCrouchTransition);
+		writer.WriteEndElement();
+
+		writer.WriteStartElement(nameof(crouchTransitionStart));
+		dateTime3xml.Serialize(writer, new TimeSpan((crouchTransitionStart - DateTime.Now).Ticks));
+		writer.WriteEndElement();
+
+		writer.WriteStartElement(nameof(health));
+		writer.WriteValue(health);
+		writer.WriteEndElement();
 	}
 
 	public void ReadXml(XmlReader reader)
 	{
 		XmlSerializer vector3Reader = new XmlSerializer(typeof(System.Numerics.Vector3));
-		// reader.ReadStartElement();
+		XmlSerializer dateTime3xml = new XmlSerializer(typeof(TimeSpan));
+
 		speed = reader.ReadElementContentAsFloat();
-		// reader.ReadStartElement();
+		walkspeed = reader.ReadElementContentAsFloat();
 		groundDistance = reader.ReadElementContentAsFloat();
 		jumpForce = reader.ReadElementContentAsFloat();
+		sprintSpeed = reader.ReadElementContentAsFloat();
 		crouchHeight = reader.ReadElementContentAsFloat();
 		reader.ReadStartElement();
-		Convert.Copy((System.Numerics.Vector3) vector3Reader.Deserialize(reader), defaultScale);
+		Convert.Copy(
+			(System.Numerics.Vector3) vector3Reader.Deserialize(reader),
+			defaultScale);
 		reader.ReadEndElement();
-		// defaultScale.CopyFrom((System.Numerics.Vector3)reader.ReadElementContentAs(typeof(System.Numerics.Vector3), null));
 		standHeight = reader.ReadElementContentAsFloat();
+		crouchTransitionTime = reader.ReadElementContentAsFloat();
 		isCrouching = reader.ReadElementContentAsBoolean();
 		crouchSpeed = reader.ReadElementContentAsFloat();
-		// inventory = (Inventory)reader.ReadElementContentAs(typeof(Inventory),
-		// null);
-		// reader.ReadStartElement();
+		couchJumpForce = reader.ReadElementContentAsFloat();
 		inventory = (Inventory) Enum.Parse(typeof(Inventory), reader.ReadElementContentAsString());
-		// inventory = (Inventory)reader.ReadElementContentAsInt();
 		medSyringes = (ushort) reader.ReadElementContentAsInt();
 		batteryPacks = (ushort) reader.ReadElementContentAsInt();
+		inCrouchTransition = reader.ReadElementContentAsBoolean();
+		// Read time offset from file
+		
+		reader.ReadStartElement();
+		TimeSpan crouchOffset = (TimeSpan) dateTime3xml.Deserialize(reader);
+		reader.ReadEndElement();
+		// Convert to actual time
+		crouchTransitionStart = DateTime.Now + crouchOffset;
+		// crouchTransitionStart += new TimeSpan(1, 1, 1);//crouchTransitionStart + DateTime.Now;
+		health = reader.ReadElementContentAsFloat();
 	}
 
 	public XmlSchema GetSchema()
