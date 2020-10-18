@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 592892365070579061}
   - component: {fileID: 2041028038612847274}
   - component: {fileID: 2973357930517482504}
-  - component: {fileID: 4882551522854496437}
+  - component: {fileID: 785216357655141224}
   m_Layer: 0
   m_Name: TempFloor
   m_TagString: Untagged
@@ -79,8 +79,8 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!64 &4882551522854496437
-MeshCollider:
+--- !u!65 &785216357655141224
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -89,10 +89,9 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Convex: 0
-  m_CookingOptions: 14
-  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 0.2}
+  m_Center: {x: 0, y: 0, z: 0.1}
 --- !u!1 &3045976416777440523
 GameObject:
   m_ObjectHideFlags: 0

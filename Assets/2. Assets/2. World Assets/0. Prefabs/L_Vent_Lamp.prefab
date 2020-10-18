@@ -30,7 +30,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &353661457820761208
 Transform:
@@ -221,7 +221,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &8363457748858637298
 Transform:
@@ -320,10 +320,20 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[1]
       value: 
       objectReference: {fileID: 2100000, guid: bbf3ef9094225ec4c95332285f869f09, type: 2}
+    - target: {fileID: -1504981713932161579, guid: 70c8e816216014a4d8a255eab61c3f2c,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: e4437db3de7836f4f81dcc8b1179a9e9, type: 2}
     - target: {fileID: -927199367670048503, guid: 70c8e816216014a4d8a255eab61c3f2c,
         type: 3}
       propertyPath: m_Name
       value: Vent_Lamp
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 70c8e816216014a4d8a255eab61c3f2c,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 70c8e816216014a4d8a255eab61c3f2c, type: 3}
