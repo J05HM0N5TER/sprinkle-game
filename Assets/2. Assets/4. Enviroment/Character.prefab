@@ -656,7 +656,7 @@ MonoBehaviour:
   inventory: 64
   medSyringes: 0
   batteryPacks: 0
-  health: 2
+  health: 3
 --- !u!33 &1376844649919263992
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -784,11 +784,11 @@ MonoBehaviour:
   grabLayers:
     serializedVersion: 2
     m_Bits: 2048
-  grabDistance: 2.8
-  holdDistance: 2.4
+  grabDistance: 1.8
+  holdDistance: 1.5
   heldObject: {fileID: 0}
   reticleName: Reticle
-  throwForce: 1000
+  throwForce: 500
   leanTilt: -12.4
   leanOffset: 0.828
   leanTransitionTime: 0.15
