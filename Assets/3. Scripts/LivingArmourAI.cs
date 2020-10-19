@@ -1,14 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Xml;
+using System.Xml.Schema;
+using System.Xml.Serialization;
+using GameSerialization;
 using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.EventSystems;
 using UnityEngine.UIElements;
-using System.Xml;
-using System.Xml.Schema;
-using System.Xml.Serialization;
-using GameSerialization;
 using System;
 // End of for serialization
 
@@ -16,13 +16,13 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 {
 	private NavMeshAgent agent;
 	// The agents camera to see if the player is in the direct view
-	[Tooltip ("The Camera of the AI")]
+	[Tooltip("The Camera of the AI")]
 	public Camera DirectCam;
-	[Tooltip ("The player Object")]
+	[Tooltip("The player Object")]
 	private GameObject player;
-	[Tooltip ("The max distance the ai will wonder around from its current point, decrease for ai to not move to other rooms as much")]
+	[Tooltip("The max distance the ai will wonder around from its current point, decrease for ai to not move to other rooms as much")]
 	public float wonderDistance = 10.0f;
-	[Tooltip ("How long will the ai be searching in the area that it last saw the player")]
+	[Tooltip("How long will the ai be searching in the area that it last saw the player")]
 	public float timer = 10.0f;
 	// Stores what the timer was when the game started
 	private float resettimer;
@@ -34,7 +34,7 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 	// The speed that the AI moves at when serching player last know position
 	public float searchSpeed = 5;
 
-	[Tooltip ("the area around the last seen point of the player that the ai will search for the player")]
+	[Tooltip("the area around the last seen point of the player that the ai will search for the player")]
 	public float lookingDistance = 1.0f;
 	public float idleLookTime = 1.0f;
 	private float resetIdleLookTime;
@@ -71,9 +71,9 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 	public GameObject visorLight;
 	public Material visorEmission;
 	private Light lightvisor;
-	public Color chase = new Color (84, 31, 81, 1);
-	public Color investigate = new Color (161, 100, 16, 1);
-	public Color search = new Color (66, 94, 68, 1);
+	public Color chase = new Color(84, 31, 81, 1);
+	public Color investigate = new Color(161, 100, 16, 1);
+	public Color search = new Color(66, 94, 68, 1);
 	private Vector3 playerLastSeen = Vector3.zero;
 	[Header("attacking player values")]
 	//attacking player stuff
@@ -91,24 +91,23 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 		Chasing, // chasing the player 
 		Searching, // searching around for player at last seen pos / going to sound
 		SwapSuit // player to far so swap suit
-		//InvestigatingSound, // heard sound and going to sound
 	}
 	AIStates CurrentState;
 	public bool busyWithState;
 	// Start is called before the first frame update
-	void Start ()
+	void Start()
 	{
-		agent = gameObject.GetComponent<NavMeshAgent> ();
+		agent = gameObject.GetComponent<NavMeshAgent>();
 		originalWonder = wonderDistance;
-		suits = GameObject.FindGameObjectsWithTag ("Suit");
+		suits = GameObject.FindGameObjectsWithTag("Suit");
 		//visorLight = GetComponent<Light>();
-		lightvisor = visorLight.GetComponent<Light> ();
+		lightvisor = visorLight.GetComponent<Light>();
 		lightvisor.color = search;
 		resettimer = timer;
 		agent.speed = normalWalkSpeed;
 
-		visorEmission.SetColor ("_EmissiveColor", search);
-		visorEmission.EnableKeyword ("_EMISSION");
+		visorEmission.SetColor("_EmissiveColor", search);
+		visorEmission.EnableKeyword("_EMISSION");
 		//visorEmission.color = search;
 		agent.autoBraking = true;
 		agent.acceleration = 20;
@@ -124,183 +123,47 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 	
 
 	// Update is called once per frame  
-	void Update ()
+	void Update()
 	{
 		// Player position on the AI camera view
-		Vector3 screenPoint = DirectCam.WorldToViewportPoint (player.GetComponent<Transform> ().position);
+		Vector3 screenPoint = DirectCam.WorldToViewportPoint(player.GetComponent<Transform>().position);
 		// Is the player within the view bounds
 		playerInScreenBounds = screenPoint.z > 0 && screenPoint.x > 0 && screenPoint.x < 1 && screenPoint.y > 0 && screenPoint.y < 1;
 		// The position the player was last seen at by the AI (Updated when the player is discovered)
 		// Is the player within screen bounds and nothing is obstructing view
-		rayObstructed = Physics.Linecast ( /*startPos, endPos,*/ agent.transform.position, player.transform.position, out RaycastHit hitinfo, ~(1 << 10));
+		rayObstructed = Physics.Linecast( /*startPos, endPos,*/ agent.transform.position, player.transform.position, out RaycastHit hitinfo, ~(1 << 10));
 		// Print out what the ray hit
-		//if (rayObstructed)
-		//	print("Ray hit: " + hitinfo.collider.name + " at: " + hitinfo.point.x + ", " + hitinfo.point.y);
 		// Debug view
 		isPlayerVisible = playerInScreenBounds && !rayObstructed;
-		// If the player is currently seen
-		// if (isPlayerVisible)
-		// {
-		// 	playerLastSeen = player.transform.position;
-		// 	// Set the AI to go towards the player
-		// 	agent.SetDestination (playerLastSeen);
-		// 	lightvisor.color = chase;
-		// 	wasFollowingPlayer = true;
-		// 	agent.speed = chaseSpeed;
-		// 	visorEmission.SetColor ("_EmissiveColor", chase);
-		// 	visorEmission.EnableKeyword ("_EMISSION");
-		// }
 		// TODO: Check that the player can't be seen, this it for when the AI catches the player
-		// if ((agent.transform.position - playerLastSeen).magnitude < 0.5f && !isPlayerVisible)
-		// {
-		// 	// Debug.Log("Changing to look for player", this);
-		// 	lookingforplayer = true;
-		// 	wasFollowingPlayer = false;
-		// }
+	
 		if((agent.transform.position - playerLastSeen).magnitude < attackDistance && isPlayerVisible && canAttackAgain)
 		{
 			player.GetComponent<PlayerController>().health -= 1;
 			canAttackAgain = false;
 			//attackcooldown();
 		}
-		if(!canAttackAgain)
+		if (!canAttackAgain)
 		{
 			attackCoolDown -= Time.deltaTime;
-			if(attackCoolDown <= 0)
+			if (attackCoolDown <= 0)
 			{
 				canAttackAgain = true;
 				attackCoolDown = attackcooldownreset;
 			}
 		}
-		//if (!agent.hasPath || agent.path == null)
-		//{
-			// for debug purpose this does work
-			//agent.SetDestination (RandomNavSphere (agent.GetComponent<Transform> ().position, wonderDistance, -1));
-		//}
-		// Searching around previous known position
-		//if (lookingforplayer && !isPlayerVisible)
-		//{
-			//Debug.LogError("Looking for player", this);
-			// if((agent.remainingDistance <= 0.5) &&  (idleLookTime > 0))
-			// {
-			// 	idleLookTime -= Time.deltaTime;
-			// 	agent.isStopped = true;
-
-			// }
-			// else
-			//{
-				//wonderDistance = lookingDistance;
-				//LookForPlayer();
-				//lightvisor.color = investigate;
-				//timer -= Time.deltaTime;
-				//agent.speed = searchSpeed;
-				//visorEmission.SetColor ("_EmissiveColor", investigate);
-				//visorEmission.EnableKeyword ("_EMISSION");
-				// if(idleLookTime <= 0)
-				// {
-				// 	idleLookTime = resetIdleLookTime;
-				// }
-				//agent.isStopped = false;
-				//if(timer <= 0)
-				//agent.SetDestination (RandomNavSphere (agent.GetComponent<Transform> ().position, wonderDistance, -1));
-			//}
-			//timer -= Time.deltaTime;
-			
-		//}
-		// reseting wonder / looking for player further
-		// if (timer <= 0 && !isPlayerVisible)
-		// {
-		// 	// Debug.Log("Timer Up", this);
-
-		// 	lookingforplayer = false;
-		// 	wonderDistance = originalWonder;
-		// 	lightvisor.color = search;
-		// 	timer = resettimer;
-		// 	agent.speed = normalWalkSpeed;
-		// 	visorEmission.SetColor ("_EmissiveColor", search);
-		// 	visorEmission.EnableKeyword ("_EMISSION");
-		// }
-		// sound reactions
-		// if (!wasFollowingPlayer || !isPlayerVisible && soundSources != null)
-		// {
-		// 	foreach (Vector3 SoundSource in soundSources)
-		// 	{
-		// 		if (Vector3.Distance (gameObject.transform.position, SoundSource) <= maxHearingRange)
-		// 		{
-		// 			agent.SetDestination (SoundSource);
-		// 			lookingforplayer = true;
-		// 			lightvisor.color = chase;
-		// 			visorEmission.SetColor ("_EmissiveColor", chase);
-		// 			visorEmission.EnableKeyword ("_EMISSION");
-		// 			agent.speed = chaseSpeed;
-		// 		}
-		// 		if ((agent.transform.position - SoundSource).magnitude < 0.5f)
-		// 		{
-		// 			agent.SetDestination (RandomNavSphere (agent.GetComponent<Transform> ().position, wonderDistance, -1));
-		// 		}
-		// 	}
-		// }
+		
 
 		//TODO: add in information sharing
 
-		// print ("Is seen, trying to find new point...");
-		// if (((gameObject.transform.position - player.transform.position).magnitude > maxDistanceFromPlayer) && !isPlayerVisible)
-		// {
-		// 	suits = GameObject.FindGameObjectsWithTag ("Suit");
-		// 	currentSuit = gameObject;
-		// 	foreach (GameObject suit in suits)
-		// 	{
-		// 		// Is the spawn point being seen?
-		// 		if (!IsVisableToPlayer (suit.transform.position))
-		// 		{
-		// 			// Find closest valid spawn point
-		// 			float distance = UnityEngine.Vector3.Distance (player.GetComponent<Transform> ().position, suit.GetComponent<Transform> ().position);
-
-		// 			// If their is no points then set this as the current one
-		// 			if (closestSuit == null && closestSuit != currentSuit)
-		// 			{
-		// 				closestSuit = suit;
-		// 			}
-		// 			// If the point is not the current point
-		// 			else if ((transform != currentSuit) && (distance < (closestSuit.transform.position - player.transform.position).magnitude) )
-		// 			{
-		// 				closestSuit = suit;
-		// 			}
-		// 		}
-		// 	}
-		// 	//! : check if this is still bugged, if range is too small then the suit will turn itself off, if bug is persistant add timer maybe.
-		// 	if ((closestSuit != currentSuit) && canSwapSuitAgain)
-		// 	{
-		// 		print("changing suit " + closestSuit.name);
-		// 		closestSuit.GetComponent<LivingArmourAI> ().enabled = true;
-		// 		currentSuit = closestSuit;
-		// 		this.enabled = false;
-		// 		canSwapSuitAgain = false;
-		// 		SwapSuit();
-		// 	}
-		// 	else
-		// 	{
-		// 		Debug.LogError ("Couldn't find valid point");
-		// 	}
-		// }
+		
 		if(agent.velocity.magnitude >= 0.1f)
 		{
 			anim.SetBool("walking", true);
 		}
 		anim.speed = agent.speed / 2;
 
-		// if(!isPlayerVisible )
-		// {
-		// 	CurrentState = AIStates.Wondering;
-		// }
-		// else if(isPlayerVisible)
-		// {
-		// 	CurrentState = AIStates.Chasing;
-		// }
-		// else if(!wasFollowingPlayer || !isPlayerVisible && soundSources.Count > 0)
-		// {
-		// 	CurrentState = AIStates.Searching;
-		// }
+		
 		if (((gameObject.transform.position - player.transform.position).magnitude > maxDistanceFromPlayer) && !isPlayerVisible)
 		{
 			CurrentState = AIStates.SwapSuit;
@@ -418,10 +281,10 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 			foreach (GameObject suit in suits)
 			{
 				// Is the spawn point being seen?
-				if (!IsVisableToPlayer (suit.transform.position))
+				if (!IsVisableToPlayer(suit.transform.position))
 				{
 					// Find closest valid spawn point
-					float distance = UnityEngine.Vector3.Distance (player.GetComponent<Transform> ().position, suit.GetComponent<Transform> ().position);
+					float distance = UnityEngine.Vector3.Distance(player.GetComponent<Transform>().position, suit.GetComponent<Transform>().position);
 
 					// If their is no points then set this as the current one
 					if (closestSuit == null && closestSuit != currentSuit)
@@ -429,7 +292,7 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 						closestSuit = suit;
 					}
 					// If the point is not the current point
-					else if ((transform != currentSuit) && (distance < (closestSuit.transform.position - player.transform.position).magnitude) )
+					else if ((transform != currentSuit) && (distance < (closestSuit.transform.position - player.transform.position).magnitude))
 					{
 						closestSuit = suit;
 					}
@@ -439,7 +302,7 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 			if ((closestSuit != currentSuit) && canSwapSuitAgain)
 			{
 				print("changing suit " + closestSuit.name);
-				closestSuit.GetComponent<LivingArmourAI> ().enabled = true;
+				closestSuit.GetComponent<LivingArmourAI>().enabled = true;
 				currentSuit = closestSuit;
 				this.enabled = false;
 				canSwapSuitAgain = false;
@@ -447,23 +310,23 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 			}
 			else
 			{
-				Debug.LogError ("Couldn't find valid point");
+				Debug.LogError("Couldn't find valid point");
 			}
 		}
 
 		Debug.Log(CurrentState.ToString());
 	}
-	public static Vector3 RandomNavSphere (Vector3 origin, float distance, int layermask)
+	public static Vector3 RandomNavSphere(Vector3 origin, float distance, int layermask)
 	{
 		Vector3 randomDirection = UnityEngine.Random.onUnitSphere * distance;
 
 		randomDirection += origin;
 
-		NavMesh.SamplePosition (randomDirection, out NavMeshHit navHit, distance, layermask);
+		NavMesh.SamplePosition(randomDirection, out NavMeshHit navHit, distance, layermask);
 
 		return navHit.position;
 	}
-	private void OnDrawGizmos ()
+	private void OnDrawGizmos()
 	{
 		if (agent)
 		{
@@ -471,62 +334,60 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 				Gizmos.color = Color.red;
 			else
 				Gizmos.color = Color.blue;
-			Gizmos.DrawLine (agent.transform.position, player.transform.position);
+			Gizmos.DrawLine(agent.transform.position, player.transform.position);
 
-			Gizmos.DrawWireSphere (agent.transform.position, wonderDistance);
+			Gizmos.DrawWireSphere(agent.transform.position, wonderDistance);
 		}
 	}
 	private void IfSoundInRange ()
 	{
-		Physics.OverlapSphere (gameObject.transform.position, 30);
+		Physics.OverlapSphere(gameObject.transform.position, 30);
 	}
-	private IEnumerator SwapSuit ()
+	private IEnumerator SwapSuit()
 	{
-		yield return StartCoroutine ("SwappingSuitTimer");
+		yield return StartCoroutine("SwappingSuitTimer");
 	}
-	private IEnumerator SwappingSuitTimer ()
+	private IEnumerator SwappingSuitTimer()
 	{
 		// 
 		// wonderDistance = originalWonder;
 		// lightvisor.color = search;
-		yield return new WaitForSeconds (swapTimer);
+		yield return new WaitForSeconds(swapTimer);
 		canSwapSuitAgain = true;
-		
+
 	}
-	private bool IsVisableToPlayer (UnityEngine.Vector3 position)
+	private bool IsVisableToPlayer(UnityEngine.Vector3 position)
 	{
 		// lurker in player view
-		UnityEngine.Vector3 screenPoint = playerCam.WorldToViewportPoint (position);
+		UnityEngine.Vector3 screenPoint = playerCam.WorldToViewportPoint(position);
 		// Is the player within the view bounds
 		bool InScreenBounds = screenPoint.z > 0 && screenPoint.x > 0 && screenPoint.x < 1 && screenPoint.y > 0 && screenPoint.y < 1;
 		// Is the player within screen bounds and nothing is obstructing view
-		bool rayObstructed = Physics.Linecast ( /*startPos, endPos,*/ position, player.transform.position,
+		bool rayObstructed = Physics.Linecast( /*startPos, endPos,*/ position, player.transform.position,
 			out RaycastHit hitinfo, ~((1 << 9) | (1 << 10))); // ignore layer 9 and 10
 		// Print out what the ray hit
-		//if (rayObstructed)
-		//    print("Ray hit: " + hitinfo.collider.name + " at: " + hitinfo.point.x + ", " + hitinfo.point.y);
 		// Debug view
 		return InScreenBounds && !rayObstructed;
 	}
 	//attacking player cooldown
 	private IEnumerator Attackcooldown ()
 	{
-		yield return StartCoroutine ("attackingcooldown");
+		yield return StartCoroutine("attackingcooldown");
 	}
 	private IEnumerator Attackingcooldown ()
 	{
-		yield return new WaitForSeconds (attackCoolDown);
+		yield return new WaitForSeconds(attackCoolDown);
 		canAttackAgain = true;
 	}
-
+	// saving stuff no touchy touchy
 	public void WriteXml(XmlWriter writer)
 	{
 		XmlSerializer vector3xml = new XmlSerializer(typeof(System.Numerics.Vector3));
-		XmlSerializer vector3ListWriter = new XmlSerializer(typeof(List<Vector3>));
-		
+		XmlSerializer vector3ListWriter = new XmlSerializer(typeof(List<System.Numerics.Vector3>));
+
 		// XmlSerializer color3xml = new XmlSerializer(typeof(Color));
 
-		writer.WriteStartElement(nameof(isPlayerVisible));// bool
+		writer.WriteStartElement(nameof(isPlayerVisible)); // bool
 		writer.WriteValue(isPlayerVisible);
 		writer.WriteEndElement();
 		writer.WriteStartElement(nameof(playerLastSeen)); // vector3
@@ -552,9 +413,7 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 		writer.WriteStartElement(nameof(agent.destination)); // vector3
 		vector3xml.Serialize(writer, Convert.New(agent.destination));
 		writer.WriteEndElement();
-		
 
-		
 		// is player visable // done
 		//player last seen // done
 		//colour of current visor // ????
@@ -563,24 +422,31 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 		//canspawnsuit // done
 		//list of sound sources // done
 		// suits current path // done 
-		
+
 	}
 	public void ReadXml(XmlReader reader)
 	{
 		XmlSerializer vector3xml = new XmlSerializer(typeof(System.Numerics.Vector3));
-		XmlSerializer vector3ListWriter = new XmlSerializer(typeof(List<Vector3>));
+		XmlSerializer vector3ListWriter = new XmlSerializer(typeof(List<System.Numerics.Vector3>));
 		isPlayerVisible = reader.ReadElementContentAsBoolean();
+		reader.ReadStartElement();
 		Convert.Copy((System.Numerics.Vector3) vector3xml.Deserialize(reader), playerLastSeen);
+		reader.ReadEndElement();
 		timer = reader.ReadElementContentAsFloat();
 		canAttackAgain = reader.ReadElementContentAsBoolean();
 		canSwapSuitAgain = reader.ReadElementContentAsBoolean();
 		List<System.Numerics.Vector3> soundSourcesRead = new List<System.Numerics.Vector3>();
+		reader.ReadStartElement();
 		soundSourcesRead = (List<System.Numerics.Vector3>) vector3ListWriter.Deserialize(reader);
+		reader.ReadEndElement();
 		foreach (var item in soundSourcesRead)
 		{
 			soundSources.Add(Convert.New(item));
 		}
+
+		reader.ReadStartElement();
 		Convert.Copy((System.Numerics.Vector3) vector3xml.Deserialize(reader), agent.destination);
+		reader.ReadEndElement();
 
 	}
 	public XmlSchema GetSchema()

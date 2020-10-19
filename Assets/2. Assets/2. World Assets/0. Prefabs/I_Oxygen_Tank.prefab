@@ -1,18 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!65 &2136714627
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 865463231080692162}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.3163452, y: 1.4193447, z: 0.3132019}
-  m_Center: {x: -0.000061035156, y: 0.70967233, z: 0.00000014156103}
 --- !u!54 &2136714626
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -29,6 +16,33 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!65 &2136714627
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 865463231080692162}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.3163452, y: 0.04487908, z: 0.3132019}
+  m_Center: {x: -0.000061035156, y: 0.02243954, z: 0.00000014901161}
+--- !u!136 &2286232468768351420
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 865463231080692162}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.1582698
+  m_Height: 1.4022319
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.7166827, z: -0.0016110837}
 --- !u!1 &4844346148455134960
 GameObject:
   m_ObjectHideFlags: 0
@@ -127,6 +141,31 @@ PrefabInstance:
       propertyPath: m_Name
       value: Oxygen_Tank
       objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: b34458f6b72925e4eb1026a1d4e2d3e7,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 2875678706878500328, guid: b34458f6b72925e4eb1026a1d4e2d3e7,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 477911b6bf74a5748b55761d765bccf2, type: 2}
+    - target: {fileID: 5620425895443072357, guid: b34458f6b72925e4eb1026a1d4e2d3e7,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 477911b6bf74a5748b55761d765bccf2, type: 2}
+    - target: {fileID: 5916033717625029477, guid: b34458f6b72925e4eb1026a1d4e2d3e7,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 477911b6bf74a5748b55761d765bccf2, type: 2}
+    - target: {fileID: 6418481151350705433, guid: b34458f6b72925e4eb1026a1d4e2d3e7,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 56e12b0aadfd4d247b60a8c34f17a799, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b34458f6b72925e4eb1026a1d4e2d3e7, type: 3}
 --- !u!1 &865463231080692162 stripped
