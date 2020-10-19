@@ -9,40 +9,40 @@ public class OnOff : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if((turnOnStuff != null))
-        {
+        //if((turnOnStuff != null))
+       // {
             // foreach(var obj in turnOnStuff)
             // {
             //     obj.SetActive(false);
             // }
-        }
-        
-        if((turnOffStuff != null))
-        {
+       // }
+        //
+        //if((turnOffStuff != null))
+        //{
             // foreach(var obj in turnOffStuff)
             // {
             //     obj.SetActive(true);
             // }
-        }
+       // }
     }
 
     private void OnTriggerEnter(Collider other) 
     {
-        if(other == GameObject.FindGameObjectWithTag("Player") && (turnOffStuff != null) && (turnOnStuff != null))
+        if(other == GameObject.FindGameObjectWithTag("Player"))
         {
             if((turnOnStuff != null))
             {
                 foreach(var obj in turnOnStuff)
                 {
-                    //obj.SetActive(true);
-                    foreach(var childcomp in turnOnStuff)
-                    {
-                        //childcomp.GetComponents<Behaviour>();
-                        foreach(Behaviour child in childcomp.GetComponents<Behaviour>())
-                        {
-                            child.enabled = true;
-                        }
-                    }
+                    obj.SetActive(true);
+                    // foreach(var childcomp in turnOnStuff)
+                    // {
+                    //     //childcomp.GetComponents<Behaviour>();
+                    //     foreach(Behaviour child in childcomp.GetComponents<Behaviour>())
+                    //     {
+                    //         child.enabled = true;
+                    //     }
+                    // }
                 }
             }
             
@@ -50,18 +50,17 @@ public class OnOff : MonoBehaviour
             {
                 foreach(var obj in turnOffStuff)
                 {
-                    //obj.SetActive(false);
-                    foreach(var childcomp in turnOffStuff)
-                    {
-                        //childcomp.GetComponents<Behaviour>();
-                        foreach(Behaviour child in childcomp.GetComponents<Behaviour>())
-                        {
-                            child.enabled = false;
-                        }
-                    }
+                    obj.SetActive(false);
+                    // foreach(var childcomp in turnOffStuff)
+                    // {
+                    //     //childcomp.GetComponents<Behaviour>();
+                    //     foreach(Behaviour child in childcomp.GetComponents<Behaviour>())
+                    //     {
+                    //         child.enabled = false;
+                    //     }
+                    // }
                 }
             }
-            
         }
     }
 }

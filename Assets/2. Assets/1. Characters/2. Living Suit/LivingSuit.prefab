@@ -503,10 +503,11 @@ MonoBehaviour:
   DirectCam: {fileID: 4004068573002737731}
   wonderDistance: 10
   timer: 10
-  normalWalkSpeed: 7
-  chaseSpeed: 10
-  searchSpeed: 3
+  normalWalkSpeed: 3
+  chaseSpeed: 5
+  searchSpeed: 1
   lookingDistance: 1
+  idleLookTime: 1
   soundSources: []
   maxHearingRange: 25
   maxDistanceFromPlayer: 20
