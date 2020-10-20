@@ -205,7 +205,7 @@ GameObject:
   - component: {fileID: 353135309}
   - component: {fileID: 353135310}
   m_Layer: 10
-  m_Name: GameObject
+  m_Name: Station_Hum_Sound
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -656,7 +656,7 @@ MonoBehaviour:
   inventory: 64
   medSyringes: 0
   batteryPacks: 0
-  health: 2
+  health: 3
 --- !u!33 &1376844649919263992
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -710,13 +710,13 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1376844649919263987}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 5a316d12cf92f6140a7fe88345a20772, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.38184473
-  m_Height: 2
+  m_Height: 2.3
   m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0.14999998, z: 0}
 --- !u!54 &1376844649919263995
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -785,10 +785,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 2048
   grabDistance: 2.8
-  holdDistance: 2.4
+  holdDistance: 1.8
   heldObject: {fileID: 0}
   reticleName: Reticle
-  throwForce: 1000
+  throwForce: 500
   leanTilt: -12.4
   leanOffset: 0.828
   leanTransitionTime: 0.15
