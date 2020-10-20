@@ -46,43 +46,37 @@ public class TriggerScript : MonoBehaviour
                 hasplayedonce = true;
             }
         }
+        if(thingsInDoorway.Count > 0 && !locked && !doorOpen)
+        {
+            animatedObject.GetComponent<Animator>().SetTrigger("Open");
+            audioS.PlayOneShot(Openclip);
+            timer = resettimer;
+            doorOpen = true;
+            if(oneTimeUse)
+            {
+                hasplayedonce = true;
+            }
+        }
     }
     private void OnTriggerEnter(Collider other)
     {
-        if(!locked)
+        if (!hasplayedonce)
         {
-            if (!hasplayedonce)
+            if(other.tag == "Player" || other.tag == "Enemy")
             {
-                if(other.tag == "Player" || other.tag == "Enemy")
-                {
-                    if(!doorOpen)
-                    {
-                        animatedObject.GetComponent<Animator>().SetTrigger("Open");
-                        audioS.PlayOneShot(Openclip);
-                        timer = resettimer;
-                    }
-                    thingsInDoorway.Add(other.gameObject);
-                    doorOpen = true;
-                    if(oneTimeUse)
-                    {
-                        hasplayedonce = true;
-                    }
-                }
+                thingsInDoorway.Add(other.gameObject);
             }
-        } 
+        }
     }
     private void OnTriggerExit(Collider other)
     {
-        if(!locked)
+        if (!hasplayedonce)
         {
-            if (!hasplayedonce)
+            if (other.tag == "Player" || other.tag == "Enemy")
             {
-                if (other.tag == "Player" || other.tag == "Enemy")
-                {
-                    thingsInDoorway.Remove(other.gameObject);
-                    
-                }     
-            }
-        }  
+                thingsInDoorway.Remove(other.gameObject);
+                
+            }    
+        }
     }
 }
