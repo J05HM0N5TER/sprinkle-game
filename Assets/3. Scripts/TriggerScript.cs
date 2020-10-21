@@ -36,7 +36,7 @@ public class TriggerScript : MonoBehaviour
     private void Update()
     {
         timer -= Time.deltaTime;
-        if (thingsInDoorway.Count == 0 && timer <= 0 && doorOpen)
+        if (thingsInDoorway.Count == 0 && timer <= 0 && doorOpen && !locked)
         {
             animatedObject.GetComponent<Animator>().SetTrigger("Close");
             audioS.PlayOneShot(Closeclip);

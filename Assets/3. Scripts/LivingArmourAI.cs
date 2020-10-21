@@ -141,7 +141,6 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 		{
 			player.GetComponent<PlayerController>().health -= 1;
 			canAttackAgain = false;
-			anim.SetTrigger("attack");
 			//attackcooldown();
 		}
 		if (!canAttackAgain)
@@ -151,6 +150,7 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 			{
 				canAttackAgain = true;
 				attackCoolDown = attackcooldownreset;
+				anim.SetTrigger("attack");
 			}
 		}
 		
