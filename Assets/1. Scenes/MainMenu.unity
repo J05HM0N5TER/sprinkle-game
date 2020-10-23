@@ -1207,7 +1207,7 @@ Transform:
   m_Children:
   - {fileID: 573206934}
   m_Father: {fileID: 0}
-  m_RootOrder: 17
+  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: -9.459001, y: 32.488003, z: -14.043}
 --- !u!1001 &160169515
 PrefabInstance:
@@ -2927,6 +2927,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ship
       objectReference: {fileID: 0}
+    - target: {fileID: 1694974039946202, guid: 36f14fc52a556dc4aa3a9370f4926096, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4795511566592228, guid: 36f14fc52a556dc4aa3a9370f4926096, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -2973,11 +2977,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4795511566592228, guid: 36f14fc52a556dc4aa3a9370f4926096, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.035067927
+      value: 0.03506793
       objectReference: {fileID: 0}
     - target: {fileID: 4795511566592228, guid: 36f14fc52a556dc4aa3a9370f4926096, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.035067927
+      value: 0.035067935
       objectReference: {fileID: 0}
     - target: {fileID: 4795511566592228, guid: 36f14fc52a556dc4aa3a9370f4926096, type: 3}
       propertyPath: m_LocalScale.z
@@ -11865,7 +11869,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1713429130}
   m_Layer: 0
-  m_Name: 'Rooms:'
+  m_Name: ' Room and Spaceship:'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12107,7 +12111,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 16
+  m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1776806743
 GameObject:
@@ -13211,7 +13215,7 @@ PrefabInstance:
     - target: {fileID: 971041325365455831, guid: 39bf6324f35756342909629e2734e887,
         type: 3}
       propertyPath: displayLightIntensity
-      value: 20.8
+      value: 20.5
       objectReference: {fileID: 0}
     - target: {fileID: 971041325365455831, guid: 39bf6324f35756342909629e2734e887,
         type: 3}
@@ -13222,6 +13226,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_VolumetricDimmer
       value: 0.266
+      objectReference: {fileID: 0}
+    - target: {fileID: 971041325365455831, guid: 39bf6324f35756342909629e2734e887,
+        type: 3}
+      propertyPath: maxSmoothness
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1906221652964350074, guid: 39bf6324f35756342909629e2734e887,
         type: 3}
@@ -13301,7 +13310,7 @@ PrefabInstance:
     - target: {fileID: 3552817936935039743, guid: 39bf6324f35756342909629e2734e887,
         type: 3}
       propertyPath: m_Intensity
-      value: 228209.48
+      value: 185363.8
       objectReference: {fileID: 0}
     - target: {fileID: 3552817936935039743, guid: 39bf6324f35756342909629e2734e887,
         type: 3}
@@ -13333,10 +13342,30 @@ PrefabInstance:
       propertyPath: m_Range
       value: 250
       objectReference: {fileID: 0}
+    - target: {fileID: 3552817936935039743, guid: 39bf6324f35756342909629e2734e887,
+        type: 3}
+      propertyPath: m_UseColorTemperature
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3552817936935039743, guid: 39bf6324f35756342909629e2734e887,
+        type: 3}
+      propertyPath: m_ColorTemperature
+      value: 10762
+      objectReference: {fileID: 0}
+    - target: {fileID: 3552817936935039743, guid: 39bf6324f35756342909629e2734e887,
+        type: 3}
+      propertyPath: m_BounceIntensity
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7325063322908038586, guid: 39bf6324f35756342909629e2734e887,
         type: 3}
       propertyPath: shadowResolution
       value: 2048
+      objectReference: {fileID: 0}
+    - target: {fileID: 7325063322908038586, guid: 39bf6324f35756342909629e2734e887,
+        type: 3}
+      propertyPath: contactShadows
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 39bf6324f35756342909629e2734e887, type: 3}
