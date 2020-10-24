@@ -86,8 +86,8 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
-  far clip plane: 7
+  near clip plane: 0.1
+  far clip plane: 10
   field of view: 120
   orthographic: 0
   orthographic size: 5
@@ -218,6 +218,25 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.16641729, y: 0.15483502, z: 0.43418318}
   m_Center: {x: -0.00000023059283, y: 0.11119856, z: 0.091281}
+--- !u!95 &9180972486494097200
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3040450411406294385}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 3a17051b21e3f4545b075a1b18467f0b, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!65 &9060875025365168158
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -322,6 +341,36 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Security_Camera
+      objectReference: {fileID: 0}
+    - target: {fileID: -693371405339356623, guid: 5ac27d7ed35973f4ab6ebed95ee39530,
+        type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: -693371405339356623, guid: 5ac27d7ed35973f4ab6ebed95ee39530,
+        type: 3}
+      propertyPath: m_Layer
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 4224801822505238522, guid: 5ac27d7ed35973f4ab6ebed95ee39530,
+        type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 4224801822505238522, guid: 5ac27d7ed35973f4ab6ebed95ee39530,
+        type: 3}
+      propertyPath: m_Layer
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 5004207433397427991, guid: 5ac27d7ed35973f4ab6ebed95ee39530,
+        type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 5004207433397427991, guid: 5ac27d7ed35973f4ab6ebed95ee39530,
+        type: 3}
+      propertyPath: m_Layer
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 6493381743401599007, guid: 5ac27d7ed35973f4ab6ebed95ee39530,
         type: 3}

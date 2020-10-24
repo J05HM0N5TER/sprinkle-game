@@ -233,6 +233,19 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 1
   m_Center: {x: -1.2520001, y: 0.2, z: -0.003}
   m_TimeToStationary: 0.5
+--- !u!65 &780337794887238862
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2954163527558456342}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 5, y: 0.049856067, z: 0.5}
+  m_Center: {x: 0.0013995171, y: 0.01894766, z: -0.000000029802322}
 --- !u!65 &3007094940457503335
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -272,19 +285,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.2999997, y: 4.1, z: 0.5}
   m_Center: {x: -2.3486006, y: 2.05, z: -0.000000029802322}
---- !u!65 &780337794887238862
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2954163527558456342}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 5, y: 0.049856067, z: 0.5}
-  m_Center: {x: 0.0013995171, y: 0.01894766, z: -0.000000029802322}
 --- !u!95 &868213770
 Animator:
   serializedVersion: 3
@@ -1249,7 +1249,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 88c81744765c87046a3ed0f9ca78e76d, type: 2}
+      objectReference: {fileID: 2100000, guid: 8e8647554befe3e459e734dc0d2244a6, type: 2}
     - target: {fileID: -640454165277164310, guid: 4fddc230767ab20449b3c1043a072e4a,
         type: 3}
       propertyPath: m_Materials.Array.data[1]
