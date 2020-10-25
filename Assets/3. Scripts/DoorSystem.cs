@@ -31,8 +31,6 @@ public class DoorSystem : MonoBehaviour
         {
             thingsInDoorway.Add(other.gameObject);
         }
-        
-
     }
     
     private void OnTriggerExit(Collider other) 
