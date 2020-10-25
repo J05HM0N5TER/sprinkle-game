@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 289307834447143562}
+  - component: {fileID: 5046955764991214045}
   m_Layer: 0
   m_Name: M_Bin_Waste
   m_TagString: Untagged
@@ -31,6 +32,25 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!205 &5046955764991214045
+LODGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 289307834447143557}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: 0, y: 0.92362165, z: 0}
+  m_Size: 1.8472433
+  m_FadeMode: 0
+  m_AnimateCrossFading: 0
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0.025099756
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 8007093286538633983}
+  m_Enabled: 1
 --- !u!65 &5795927386779953816
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -132,6 +152,12 @@ GameObject:
 --- !u!4 &4717915608845919280 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: 7553efb4b21afff4fa3699a9eb7fa51b,
+    type: 3}
+  m_PrefabInstance: {fileID: 289307834868404010}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &8007093286538633983 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -1504981713932161579, guid: 7553efb4b21afff4fa3699a9eb7fa51b,
     type: 3}
   m_PrefabInstance: {fileID: 289307834868404010}
   m_PrefabAsset: {fileID: 0}
