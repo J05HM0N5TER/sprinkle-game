@@ -76,9 +76,10 @@ public class PlayerController : MonoBehaviour, IXmlSerializable
 	public float health = 2;
 
 	// FIXME: Only adds sound to one of the suits
-	private GameObject livingSuit;
+	//private GameObject livingSuit;
 	private bool makingsound = false;
-
+    // All of the suits in the scene
+	private LivingArmourAI[] suits;
 	// Start is called before the first frame update
 	void Start()
 	{
@@ -87,7 +88,7 @@ public class PlayerController : MonoBehaviour, IXmlSerializable
 		standHeight = capsule.height;
 		defaultScale = transform.localScale;
 		walkspeed = speed;
-		livingSuit = GameObject.Find("LivingArmour");
+		suits = FindObjectsOfType<LivingArmourAI>();
 	}
 
 	private void FixedUpdate()
@@ -129,20 +130,19 @@ public class PlayerController : MonoBehaviour, IXmlSerializable
 			speed = sprintSpeed;
 			if (!makingsound)
 			{
-				livingSuit.GetComponent<LivingArmourAI>().soundSources.Add(gameObject.transform.position);
+				foreach(var suit in suits)
+				{
+					if(suit.isActiveAndEnabled == true)
+					{
+						suit.soundSources.Add(gameObject.transform.position);
+					}
+				}
 				makingsound = true;
 			}
-
-			//yield return StartCoroutine("removeFromlist");
 		}
 		else
 		{
 			speed = walkspeed;
-			if (makingsound)
-			{
-				livingSuit.GetComponent<LivingArmourAI>().soundSources.Remove(gameObject.transform.position);
-				makingsound = false;
-			}
 
 		}
 	}
@@ -231,12 +231,12 @@ public class PlayerController : MonoBehaviour, IXmlSerializable
 	}
 
 	// Stuff below is for serialization
+	// Xml Serialization Infrastructure
 	private PlayerController()
 	{
 
 	}
 
-	// Xml Serialization Infrastructure
 
 	public void WriteXml(XmlWriter writer)
 	{
