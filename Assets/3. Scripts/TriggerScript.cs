@@ -27,14 +27,26 @@ public class TriggerScript : MonoBehaviour
     public float timer = 5.0f;
     private float resettimer;
     private bool doorOpen;
+
+    public Material unlockedmat;
+    public Material lockedmat;
+    public GameObject keypadLeft;
+    public GameObject ledLeft;
+    public GameObject keypadRight;
+    public GameObject ledRight;
     // Start is called before the first frame update
     void Start()
     {
        audioS = soundSource.GetComponent<AudioSource>();
        resettimer = timer;
+       keypadLeft.GetComponent<MeshRenderer>().material = unlockedmat;
+       ledLeft.GetComponent<MeshRenderer>().material = unlockedmat;
+       keypadRight.GetComponent<MeshRenderer>().material = unlockedmat;
+       ledRight.GetComponent<MeshRenderer>().material = unlockedmat;
     }
     private void Update()
     {
+        if(!locked)
         timer -= Time.deltaTime;
         if (thingsInDoorway.Count == 0 && timer <= 0 && doorOpen && !locked)
         {
@@ -56,6 +68,20 @@ public class TriggerScript : MonoBehaviour
             {
                 hasplayedonce = true;
             }
+        }
+        if(locked)
+        {
+            keypadLeft.GetComponent<MeshRenderer>().material = lockedmat;
+            ledLeft.GetComponent<MeshRenderer>().material = lockedmat;
+            keypadRight.GetComponent<MeshRenderer>().material = lockedmat;
+            ledRight.GetComponent<MeshRenderer>().material = lockedmat;
+        }
+        else
+        {
+            keypadLeft.GetComponent<MeshRenderer>().material = unlockedmat;
+            ledLeft.GetComponent<MeshRenderer>().material = unlockedmat;
+            keypadRight.GetComponent<MeshRenderer>().material = unlockedmat;
+            ledRight.GetComponent<MeshRenderer>().material = unlockedmat;
         }
     }
     private void OnTriggerEnter(Collider other)

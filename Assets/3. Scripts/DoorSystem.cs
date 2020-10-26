@@ -20,7 +20,7 @@ public class DoorSystem : MonoBehaviour
         {
             door.GetComponent<TriggerScript>().locked = true;
         }
-        if(thingsInDoorway.Count < 0)
+        if(thingsInDoorway.Count <= 0)
         {
             door.GetComponent<TriggerScript>().locked = false;
         }
