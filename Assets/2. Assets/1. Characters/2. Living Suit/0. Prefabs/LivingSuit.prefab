@@ -23039,9 +23039,12 @@ MonoBehaviour:
   swapTimer: 2
   visorLight: {fileID: 5776743038343315935}
   visorEmission: {fileID: 2100000, guid: 2bc28d29ede581a4899d93b8b19db555, type: 2}
-  chase: {r: 84, g: 31, b: 81, a: 1}
-  investigate: {r: 161, g: 100, b: 16, a: 1}
-  search: {r: 66, g: 94, b: 68, a: 1}
+  chase: {fileID: 2100000, guid: 5471723233a754f4da222a9d17f40af6, type: 2}
+  investigate: {fileID: 2100000, guid: fbf012aa0c14a9d4286cbc28de7a5894, type: 2}
+  search: {fileID: 2100000, guid: 54638cbff7ff39c4a97d673600aa3688, type: 2}
+  chaseLight: {r: 84, g: 31, b: 81, a: 1}
+  investigateLight: {r: 161, g: 100, b: 16, a: 1}
+  searchLight: {r: 66, g: 94, b: 68, a: 1}
   attackDistance: 3
   attackCoolDown: 1
   canAttackAgain: 1
