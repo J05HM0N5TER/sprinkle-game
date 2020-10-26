@@ -27,6 +27,7 @@ public class TriggerScript : MonoBehaviour
     public float timer = 5.0f;
     private float resettimer;
     private bool doorOpen;
+    [HideInInspector] public bool thingInbetweenDoors;
 
     public Material unlockedmat;
     public Material lockedmat;
@@ -46,9 +47,9 @@ public class TriggerScript : MonoBehaviour
     }
     private void Update()
     {
-        if(!locked)
+        
         timer -= Time.deltaTime;
-        if (thingsInDoorway.Count == 0 && timer <= 0 && doorOpen && !locked)
+        if (thingsInDoorway.Count == 0 && timer <= 0 && doorOpen && !locked && !thingInbetweenDoors)
         {
             animatedObject.GetComponent<Animator>().SetTrigger("Close");
             audioS.PlayOneShot(Closeclip);
