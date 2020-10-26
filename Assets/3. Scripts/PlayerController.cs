@@ -78,8 +78,9 @@ public class PlayerController : MonoBehaviour, IXmlSerializable
 	// FIXME: Only adds sound to one of the suits
 	//private GameObject livingSuit;
 	private bool makingsound = false;
-    // All of the suits in the scene
+	// All of the suits in the scene
 	private LivingArmourAI[] suits;
+	private CollisionNoiseManager noiseManager;
 	// Start is called before the first frame update
 	void Start()
 	{
@@ -89,6 +90,13 @@ public class PlayerController : MonoBehaviour, IXmlSerializable
 		defaultScale = transform.localScale;
 		walkspeed = speed;
 		suits = FindObjectsOfType<LivingArmourAI>();
+		noiseManager = FindObjectOfType<CollisionNoiseManager>();
+#if (UNITY_EDITOR)
+		if (noiseManager == null)
+		{
+			Debug.LogWarning($"Could not find {nameof(CollisionNoiseManager)}", this);
+		}
+#endif
 	}
 
 	private void FixedUpdate()
@@ -130,9 +138,9 @@ public class PlayerController : MonoBehaviour, IXmlSerializable
 			speed = sprintSpeed;
 			if (!makingsound)
 			{
-				foreach(var suit in suits)
+				foreach (var suit in suits)
 				{
-					if(suit.isActiveAndEnabled == true)
+					if (suit.isActiveAndEnabled == true)
 					{
 						suit.soundSources.Add(gameObject.transform.position);
 					}
@@ -230,13 +238,21 @@ public class PlayerController : MonoBehaviour, IXmlSerializable
 		return Physics.Raycast(ray, distance, ~LayerMask.GetMask("Player"));
 	}
 
+	private void OnCollisionEnter(Collision other)
+	{
+
+		if (other.gameObject.layer == LayerMask.NameToLayer("Dynamic"))
+		{
+			noiseManager.Add(other.gameObject);
+		}
+	}
+
 	// Stuff below is for serialization
 	// Xml Serialization Infrastructure
 	private PlayerController()
 	{
 
 	}
-
 
 	public void WriteXml(XmlWriter writer)
 	{
@@ -342,7 +358,7 @@ public class PlayerController : MonoBehaviour, IXmlSerializable
 		batteryPacks = (ushort) reader.ReadElementContentAsInt();
 		inCrouchTransition = reader.ReadElementContentAsBoolean();
 		// Read time offset from file
-		
+
 		reader.ReadStartElement();
 		TimeSpan crouchOffset = (TimeSpan) dateTime3xml.Deserialize(reader);
 		reader.ReadEndElement();
