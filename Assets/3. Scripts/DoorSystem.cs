@@ -18,11 +18,11 @@ public class DoorSystem : MonoBehaviour
     {
         if(thingsInDoorway.Count > 0)
         {
-            door.GetComponent<TriggerScript>().locked = true;
+            door.GetComponent<TriggerScript>().thingInbetweenDoors = true;
         }
         if(thingsInDoorway.Count <= 0)
         {
-            door.GetComponent<TriggerScript>().locked = false;
+            door.GetComponent<TriggerScript>().thingInbetweenDoors = false;
         }
     }
     private void OnTriggerEnter(Collider other) 
