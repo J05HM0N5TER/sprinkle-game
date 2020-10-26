@@ -125,9 +125,11 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 
 		resetIdleLookTime = idleLookTime;
 		CurrentState = AIStates.Wondering;
+
 		anim.gameObject.GetComponent<Animator>().enabled = true;
 
 		lookAroundTimerReset = lookAroundTimer;
+
 
 	}
 	
@@ -160,7 +162,6 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 			{
 				canAttackAgain = true;
 				attackCoolDown = attackcooldownreset;
-				anim.SetTrigger("attack");
 			}
 		}
 		
@@ -332,7 +333,6 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 				print("changing suit " + closestSuit.name);
 				closestSuit.GetComponent<LivingArmourAI>().enabled = true;
 				currentSuit = closestSuit;
-				anim.gameObject.GetComponent<Animator>().enabled = false;
 				this.enabled = false;
 				canSwapSuitAgain = false;
 				SwapSuit();
