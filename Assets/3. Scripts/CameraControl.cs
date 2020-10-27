@@ -100,6 +100,8 @@ public class CameraControl : MonoBehaviour, IXmlSerializable
 	
 	private bool torchActive = false;
 
+	CollisionNoiseManager noiseManager;
+
 	// Start is called before the first frame update
 	void Start()
 	{
@@ -131,6 +133,7 @@ public class CameraControl : MonoBehaviour, IXmlSerializable
 
 		reticle = GameObject.Find(reticleName).GetComponent<RectTransform>();
 		cursorPosition = new Vector2(reticle.position.x / Screen.width, reticle.position.y / Screen.height);
+		noiseManager = FindObjectOfType<CollisionNoiseManager>();
 
 		// Check that everything was retrieved successfully
 #if UNITY_EDITOR
@@ -145,6 +148,10 @@ public class CameraControl : MonoBehaviour, IXmlSerializable
 		if (playerRigidbody == null)
 		{
 			Debug.LogWarning("Cant find player RigidBody", this);
+		}
+		if (noiseManager == null)
+		{
+			Debug.LogWarning("Cant find CollisioNoiseManager", this);
 		}
 #endif
 		lantern.SetActive(false);
@@ -239,7 +246,11 @@ public class CameraControl : MonoBehaviour, IXmlSerializable
 				// Stop the object to rotating
 				heldObject.constraints = heldObject.constraints | RigidbodyConstraints.FreezeRotation;
 
-				//heldObject.gameObject.transform.position = PlayerCamera.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, holdDistance));
+				//heldObject.gameObject.transform.position =
+				//PlayerCamera.ViewportToWorldPoint(new Vector3(0.5f, 0.5f,
+				//holdDistance));
+				
+				noiseManager.Add(heldObject.gameObject);
 			}
 		}
 	}
