@@ -47,10 +47,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxDistanceToInteract: 2
-  timeOfplaying: 3
-  sludgeSound: {fileID: 8300000, guid: 40cde5f88db998c43a782df309f45373, type: 3}
+  timeOfplaying: 5
+  sludgeSound: {fileID: 8300000, guid: 2cdf75d8f95a6d84c8f54a2014fed9ab, type: 3}
   sprayObject: {fileID: 1320018134967476139}
-  spraySound: {fileID: 8300000, guid: 9b3e80b5788963545b43c60acf8417e4, type: 3}
+  spraySound: {fileID: 8300000, guid: 65036d37972ff2f4785a5819dbcbf8df, type: 3}
 --- !u!65 &718486292
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -75,7 +75,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -85,7 +85,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 25
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0
@@ -120,7 +120,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
