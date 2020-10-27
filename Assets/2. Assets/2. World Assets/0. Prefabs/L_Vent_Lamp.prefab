@@ -31,7 +31,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &353661457820761208
 Transform:
   m_ObjectHideFlags: 0
@@ -57,8 +57,8 @@ Light:
   serializedVersion: 9
   m_Type: 2
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 16384
-  m_Range: 5
+  m_Intensity: 32768
+  m_Range: 15
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
@@ -100,8 +100,8 @@ Light:
   m_LightShadowCasterMode: 2
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
-  m_ColorTemperature: 6570
-  m_UseColorTemperature: 0
+  m_ColorTemperature: 7816
+  m_UseColorTemperature: 1
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
@@ -145,7 +145,7 @@ MonoBehaviour:
   useVolumetric: 1
   featuresFoldout: 1
   showAdditionalSettings: 0
-  displayLightIntensity: 17
+  displayLightIntensity: 18
   displayAreaLightEmissiveMesh: 0
   areaLightCookie: {fileID: 0}
   areaLightShadowCone: 120
@@ -317,14 +317,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -1504981713932161579, guid: 70c8e816216014a4d8a255eab61c3f2c,
         type: 3}
-      propertyPath: m_Materials.Array.data[1]
-      value: 
-      objectReference: {fileID: 2100000, guid: bbf3ef9094225ec4c95332285f869f09, type: 2}
-    - target: {fileID: -1504981713932161579, guid: 70c8e816216014a4d8a255eab61c3f2c,
-        type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: e4437db3de7836f4f81dcc8b1179a9e9, type: 2}
+    - target: {fileID: -1504981713932161579, guid: 70c8e816216014a4d8a255eab61c3f2c,
+        type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: bbf3ef9094225ec4c95332285f869f09, type: 2}
     - target: {fileID: -927199367670048503, guid: 70c8e816216014a4d8a255eab61c3f2c,
         type: 3}
       propertyPath: m_Name
