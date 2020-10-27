@@ -23042,12 +23042,10 @@ MonoBehaviour:
   chase: {fileID: 2100000, guid: 5471723233a754f4da222a9d17f40af6, type: 2}
   investigate: {fileID: 2100000, guid: fbf012aa0c14a9d4286cbc28de7a5894, type: 2}
   search: {fileID: 2100000, guid: 54638cbff7ff39c4a97d673600aa3688, type: 2}
-  chaseLight: {r: 84, g: 31, b: 81, a: 1}
-  investigateLight: {r: 161, g: 100, b: 16, a: 1}
-  searchLight: {r: 66, g: 94, b: 68, a: 1}
   attackDistance: 3
   attackCoolDown: 1
   canAttackAgain: 1
+  lookAroundTimer: 4
   busyWithState: 0
 --- !u!1 &5776743038438947450
 GameObject:
@@ -24347,8 +24345,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5776743038514909404}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.01, y: 0.893, z: -0.01}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.009612813, y: 1.7680001, z: 0.076797515}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5776743038438315087}
@@ -24379,7 +24377,7 @@ Camera:
     height: 1
   near clip plane: 0.1
   far clip plane: 1000
-  field of view: 38.055767
+  field of view: 112.07217
   orthographic: 0
   orthographic size: 5
   m_Depth: 0

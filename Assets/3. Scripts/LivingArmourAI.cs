@@ -87,7 +87,7 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 	public bool canAttackAgain = true;
 
 	private Animator anim;
-	private float lookAroundTimer = 2;
+	public float lookAroundTimer = 4;
 	private float lookAroundTimerReset;
 
 	public enum AIStates
@@ -152,6 +152,8 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 		if((agent.transform.position - playerLastSeen).magnitude < attackDistance && isPlayerVisible && canAttackAgain)
 		{
 			player.GetComponent<PlayerController>().health -= 1;
+			anim.SetBool("attack", true);
+			//anim.SetBool("attack", false);
 			canAttackAgain = false;
 			//attackcooldown();
 		}
@@ -169,14 +171,14 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 		//TODO: add in information sharing
 
 		
-		if(agent.velocity.magnitude >= 0.1f)
-		{
-			anim.SetBool("walking", true);
-		}
+		// if(agent.velocity.magnitude >= 0.1f)
+		// {
+		// 	anim.SetBool("walking", true);
+		// }
 		anim.speed = agent.speed / 2;
 
 		
-		if (((gameObject.transform.position - player.transform.position).magnitude > maxDistanceFromPlayer) && !isPlayerVisible)
+		if (((gameObject.transform.position - player.transform.position).magnitude > maxDistanceFromPlayer) && !isPlayerVisible && suits.Length >= 1)
 		{
 			CurrentState = AIStates.SwapSuit;
 		}
@@ -188,6 +190,7 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 		}
 		if(CurrentState == AIStates.Wondering)
 		{
+			anim.SetBool("walking", true);
 			if (agent.remainingDistance <= 1)
 			{
 				// for debug purpose this does work
@@ -216,6 +219,8 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 		}
 		if(CurrentState == AIStates.Chasing)
 		{
+			anim.SetBool("running", true);
+			anim.SetBool("walking", false);
 			if(isPlayerVisible)
 			{
 				playerLastSeen = player.transform.position;
@@ -232,10 +237,13 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 			if((agent.transform.position - playerLastSeen).magnitude < 1)
 			{
 				CurrentState = AIStates.Searching;
+				anim.SetBool("walking", true);
+				anim.SetBool("running", false);
 			}
 		}
 		if(CurrentState == AIStates.Searching)
 		{
+			anim.SetBool("attack", false);
 			if(soundSources.Count == 0)
 			{
 				// if (agent.remainingDistance <= 0.5)
@@ -249,15 +257,19 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 				lightvisor.color = investigateLight;
 				timer -= Time.deltaTime;
 				visorEmission = investigate;
-
+				anim.SetBool("walking", true);
 				if(agent.remainingDistance <= 0.5)
 				{
 					//stand and do looking animation //TODO: add look around animation
 					lookAroundTimer -= Time.deltaTime;
+					anim.SetBool("searching", true);
+					anim.SetBool("walking", false);
 					if(lookAroundTimer <= 0)
 					{
 						agent.SetDestination (RandomNavSphere (agent.GetComponent<Transform> ().position, wonderDistance, NavMesh.AllAreas));
 						lookAroundTimer = lookAroundTimerReset;
+						anim.SetBool("searching", false);
+						anim.SetBool("walking", true);
 					}
 				}
 				
