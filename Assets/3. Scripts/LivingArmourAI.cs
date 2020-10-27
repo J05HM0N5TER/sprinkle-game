@@ -442,16 +442,6 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 		writer.WriteStartElement(nameof(agent.destination)); // vector3
 		vector3xml.Serialize(writer, Convert.New(agent.destination));
 		writer.WriteEndElement();
-
-		// is player visable // done
-		//player last seen // done
-		//colour of current visor // ????
-		//timer // done
-		//can attack again //done
-		//canspawnsuit // done
-		//list of sound sources // done
-		// suits current path // done 
-
 	}
 	public void ReadXml(XmlReader reader)
 	{
