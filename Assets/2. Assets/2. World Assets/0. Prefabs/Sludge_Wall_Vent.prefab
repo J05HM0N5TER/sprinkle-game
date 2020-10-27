@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 329314050830746939}
   - component: {fileID: 8489802724777882216}
   - component: {fileID: 2338234847358472131}
+  - component: {fileID: 981578919585811197}
+  - component: {fileID: 7863011816086018927}
   m_Layer: 0
   m_Name: Sludge_Wall_Vent
   m_TagString: Untagged
@@ -146,26 +148,26 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!65 &8230854722487901441
+--- !u!65 &981578919585811197
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8814940205734563612}
+  m_GameObject: {fileID: 7162697106708234453}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 0.32977423, y: 4.25, z: 4.500001}
   m_Center: {x: -0.022844523, y: 2.125, z: -5.7379765e-15}
---- !u!208 &4961792387672672652
+--- !u!208 &7863011816086018927
 NavMeshObstacle:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8814940205734563612}
+  m_GameObject: {fileID: 7162697106708234453}
   m_Enabled: 1
   serializedVersion: 3
   m_Shape: 1
