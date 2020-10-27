@@ -25,6 +25,7 @@ public class PlayerController : MonoBehaviour, IXmlSerializable
 		Lantern = 1 << 6
 	}
 
+	[Header("Movement")]
 	private Rigidbody rb;
 	[Range(1, 15)]
 	[Tooltip("Speed the player moves")]
@@ -38,6 +39,10 @@ public class PlayerController : MonoBehaviour, IXmlSerializable
 	public float jumpForce = 300;
 
 	public float sprintSpeed = 15;
+	[Tooltip("The FOV of the camera when the player is walking")]
+	public float walkFOV = 75;
+	[Tooltip("The FOV of the camera when the player is sprinting")]
+	public float sprintFOV = 85;
 
 	[Header("Crouch variables")]
 	[Range(0.1f, 1)]
@@ -74,16 +79,17 @@ public class PlayerController : MonoBehaviour, IXmlSerializable
 
 	//attacking player stuff
 	public float health = 2;
-
-	// FIXME: Only adds sound to one of the suits
-	//private GameObject livingSuit;
 	private bool makingsound = false;
 	// All of the suits in the scene
 	private LivingArmourAI[] suits;
+	// The script that is in charge of adding and removing CollisionNoise scripts to objects
 	private CollisionNoiseManager noiseManager;
+	// The players camera
+	private Camera playerCamera;
 	// Start is called before the first frame update
 	void Start()
 	{
+		playerCamera = GetComponentInChildren<Camera>();
 		rb = gameObject.GetComponent<Rigidbody>();
 		capsule = GetComponent<CapsuleCollider>();
 		standHeight = capsule.height;
@@ -94,7 +100,11 @@ public class PlayerController : MonoBehaviour, IXmlSerializable
 #if (UNITY_EDITOR)
 		if (noiseManager == null)
 		{
-			Debug.LogWarning($"Could not find {nameof(CollisionNoiseManager)}", this);
+			Debug.LogError($"Could not find {nameof(CollisionNoiseManager)}", this);
+		}
+		if (playerCamera == null)
+		{
+			Debug.LogError($"Could not find {nameof(Camera)}", this);
 		}
 #endif
 	}
@@ -135,6 +145,7 @@ public class PlayerController : MonoBehaviour, IXmlSerializable
 		}
 		if (Input.GetButton("Sprint"))
 		{
+			playerCamera.fieldOfView = sprintFOV;
 			speed = sprintSpeed;
 			if (!makingsound)
 			{
@@ -150,6 +161,7 @@ public class PlayerController : MonoBehaviour, IXmlSerializable
 		}
 		else
 		{
+			playerCamera.fieldOfView = walkFOV;
 			speed = walkspeed;
 
 		}
