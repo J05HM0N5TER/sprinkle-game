@@ -1128,16 +1128,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 8828099536965303338}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f0844abc55237ce45bb35b22dc768da6, type: 3}
+  m_Script: {fileID: 11500000, guid: 14d49f3ae4c475c4cbfccc2873349991, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   animatedObject: {fileID: 2994276943422120458}
   soundSource: {fileID: 8827715868091986648}
-  Openclip: {fileID: 8300000, guid: 195fd571edd03cd4d8998273fe76e625, type: 3}
-  Closeclip: {fileID: 8300000, guid: 9e826818ba69788458ceb3e77a56c2bc, type: 3}
+  Openclip: {fileID: 0}
+  Closeclip: {fileID: 0}
   oneTimeUse: 0
   locked: 0
   timer: 5
+  thingInbetweenDoors: 0
+  unlockedmat: {fileID: 0}
+  lockedmat: {fileID: 0}
+  keypadLeft: {fileID: 0}
+  ledLeft: {fileID: 0}
+  keypadRight: {fileID: 0}
+  ledRight: {fileID: 0}
 --- !u!1001 &6533634621955783427
 PrefabInstance:
   m_ObjectHideFlags: 0
