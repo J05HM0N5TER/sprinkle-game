@@ -6690,6 +6690,16 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[1]
       value: 
       objectReference: {fileID: 2100000, guid: 9c2f8e6a403c2184681db4dc879ed2ef, type: 2}
+    - target: {fileID: 2927803113894265932, guid: 565ab5156dc58664cb6d5913e9277bb7,
+        type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4841744872119873388, guid: 565ab5156dc58664cb6d5913e9277bb7,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6193824156263820092, guid: 565ab5156dc58664cb6d5913e9277bb7,
         type: 3}
       propertyPath: m_Name
@@ -14300,7 +14310,7 @@ PrefabInstance:
     - target: {fileID: 971041325365455831, guid: 39bf6324f35756342909629e2734e887,
         type: 3}
       propertyPath: displayLightIntensity
-      value: 20.5
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 971041325365455831, guid: 39bf6324f35756342909629e2734e887,
         type: 3}
@@ -14395,7 +14405,7 @@ PrefabInstance:
     - target: {fileID: 3552817936935039743, guid: 39bf6324f35756342909629e2734e887,
         type: 3}
       propertyPath: m_Intensity
-      value: 185363.8
+      value: 131072
       objectReference: {fileID: 0}
     - target: {fileID: 3552817936935039743, guid: 39bf6324f35756342909629e2734e887,
         type: 3}

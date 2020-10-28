@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3437779535549572632}
   - component: {fileID: 7339198685902516094}
   m_Layer: 0
-  m_Name: Quad
+  m_Name: SludgeClumpTemp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -102,6 +102,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3065622126645581625}
+  - component: {fileID: 7584967246708919084}
   m_Layer: 0
   m_Name: Sludge_Cluster
   m_TagString: Untagged
@@ -125,6 +126,25 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!205 &7584967246708919084
+LODGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2466750994798659097}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: 0, y: 0.058, z: 0}
+  m_Size: 2.8000004
+  m_FadeMode: 0
+  m_AnimateCrossFading: 0
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0.12195497
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 3437779535549572632}
+  m_Enabled: 1
 --- !u!1001 &5774742782072018867
 PrefabInstance:
   m_ObjectHideFlags: 0
