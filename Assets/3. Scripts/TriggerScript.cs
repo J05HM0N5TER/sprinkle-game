@@ -89,7 +89,7 @@ public class TriggerScript : MonoBehaviour
     {
         if (!hasplayedonce)
         {
-            if(other.tag == "Player" || other.tag == "Enemy")
+            if(other.tag == "Player" || other.tag == "Suit")
             {
                 thingsInDoorway.Add(other.gameObject);
             }
@@ -99,7 +99,7 @@ public class TriggerScript : MonoBehaviour
     {
         if (!hasplayedonce)
         {
-            if (other.tag == "Player" || other.tag == "Enemy")
+            if (other.tag == "Player" || other.tag == "Suit")
             {
                 thingsInDoorway.Remove(other.gameObject);
                 

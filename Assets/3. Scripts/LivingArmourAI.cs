@@ -85,6 +85,7 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 	public float attackCoolDown = 1;
 	private float attackcooldownreset;
 	public bool canAttackAgain = true;
+	public float knockBack = 5000;
 
 	private Animator anim;
 	public float lookAroundTimer = 4;
@@ -153,6 +154,8 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 		{
 			player.GetComponent<PlayerController>().health -= 1;
 			anim.SetBool("attack", true);
+			var dir = (player.transform.position - transform.position).normalized;
+			player.GetComponent<Rigidbody>().AddForce(knockBack * dir);
 			//anim.SetBool("attack", false);
 			canAttackAgain = false;
 			//attackcooldown();
@@ -171,10 +174,10 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 		//TODO: add in information sharing
 
 		
-		// if(agent.velocity.magnitude >= 0.1f)
-		// {
-		// 	anim.SetBool("walking", true);
-		// }
+		if(agent.velocity.magnitude >= 0.1f)
+		{
+			anim.SetBool("walking", true);
+		}
 		anim.speed = agent.speed / 2;
 
 		
@@ -244,6 +247,7 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 		if(CurrentState == AIStates.Searching)
 		{
 			anim.SetBool("attack", false);
+			anim.SetBool("walking", true);
 			if(soundSources.Count == 0)
 			{
 				// if (agent.remainingDistance <= 0.5)
@@ -266,10 +270,11 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 					anim.SetBool("walking", false);
 					if(lookAroundTimer <= 0)
 					{
-						agent.SetDestination (RandomNavSphere (agent.GetComponent<Transform> ().position, wonderDistance, NavMesh.AllAreas));
-						lookAroundTimer = lookAroundTimerReset;
 						anim.SetBool("searching", false);
 						anim.SetBool("walking", true);
+						agent.SetDestination (RandomNavSphere (agent.GetComponent<Transform> ().position, wonderDistance, NavMesh.AllAreas));
+						lookAroundTimer = lookAroundTimerReset;
+						
 					}
 				}
 				
@@ -290,6 +295,8 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 						// visorEmission.SetColor ("_EmissiveColor", investigate);
 						// visorEmission.EnableKeyword ("_EMISSION");
 						agent.speed = normalWalkSpeed;
+						anim.SetBool("searching", false);
+						anim.SetBool("walking", true);
 					}
 					if ((agent.transform.position - soundSource).magnitude < 0.5f)
 					{
@@ -306,6 +313,7 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 				//lightvisor.color = search;
 				timer = resettimer;
 				CurrentState = AIStates.Wondering;
+				anim.SetBool("searching", false);
 				// Debug.Log("Timer Up", this);
 			}
 			if(isPlayerVisible)
