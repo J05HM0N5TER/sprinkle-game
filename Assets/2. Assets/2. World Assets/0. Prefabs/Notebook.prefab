@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1509986178466902537}
+  - component: {fileID: 6996994654001981773}
   m_Layer: 0
   m_Name: Notebook
   m_TagString: Untagged
@@ -31,6 +32,25 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!205 &6996994654001981773
+LODGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1509986178466902536}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: 0, y: 0.023200002, z: 0}
+  m_Size: 0.6268376
+  m_FadeMode: 0
+  m_AnimateCrossFading: 0
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0.02136003
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 1509986178671317068}
+  m_Enabled: 1
 --- !u!54 &3552115171768870215
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -146,6 +166,12 @@ GameObject:
 --- !u!4 &1509986178669023906 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 7aedcf377a2595a40bcc0f5331df325e,
+    type: 3}
+  m_PrefabInstance: {fileID: 1509986178669414434}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &1509986178671317068 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 2300014, guid: 7aedcf377a2595a40bcc0f5331df325e,
     type: 3}
   m_PrefabInstance: {fileID: 1509986178669414434}
   m_PrefabAsset: {fileID: 0}
