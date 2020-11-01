@@ -17,8 +17,8 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_StaticEditorFlags: 4294967295
+  m_IsActive: 0
 --- !u!4 &2103324273
 Transform:
   m_ObjectHideFlags: 0
@@ -30,8 +30,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0.536, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 8546523316618287577}
-  m_RootOrder: 0
+  m_Father: {fileID: 401705112998605111}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!108 &2103324276
 Light:
@@ -165,7 +165,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Version: 1
-  shadowResolution: 1080
+  shadowResolution: 512
   shadowDimmer: 1
   volumetricShadowDimmer: 1
   shadowFadeDistance: 10000
@@ -205,8 +205,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.5354642, y: 0.17073637, z: 0.6341572}
-  m_Center: {x: 0.020038635, y: 0.61360776, z: 6.272157e-17}
+  m_Size: {x: 0.33845872, y: 0.17073631, z: 0.6341572}
+  m_Center: {x: -0.078464165, y: 0.61360776, z: -2.2686465e-16}
 --- !u!65 &7118777449308031992
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -218,8 +218,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.41196704, y: 0.53303564, z: 0.1270231}
-  m_Center: {x: 0.0059835315, y: 0.26651782, z: 0.0019361712}
+  m_Size: {x: 0.28870833, y: 0.5238458, z: 0.1270231}
+  m_Center: {x: 0.07873893, y: 0.40055805, z: 0.0019361675}
 --- !u!65 &8098734364652713407
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -231,8 +231,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.5354642, y: 0.12750614, z: 0.41311258}
-  m_Center: {x: 0.020038635, y: 0.0625962, z: 0.0033113807}
+  m_Size: {x: 0.41865584, y: 0.12750614, z: 0.41311258}
+  m_Center: {x: 0.0022416785, y: 0.0625962, z: 0.0033113807}
 --- !u!1 &6316228856934388743
 GameObject:
   m_ObjectHideFlags: 0
@@ -242,12 +242,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 401705112998605111}
+  - component: {fileID: 2534462707946967758}
   m_Layer: 0
   m_Name: M_Desk_Lamp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &401705112998605111
 Transform:
@@ -261,9 +262,29 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 8546523316618287577}
+  - {fileID: 2103324273}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
+--- !u!205 &2534462707946967758
+LODGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6316228856934388743}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: 0.020038635, y: 0.34890956, z: 0}
+  m_Size: 0.70013285
+  m_FadeMode: 0
+  m_AnimateCrossFading: 0
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0.011508656
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 6412235782863757078}
+  m_Enabled: 1
 --- !u!1001 &3738530172169220803
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -351,6 +372,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 5a7adac5cfcaf584390ae84329cd428c,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5a7adac5cfcaf584390ae84329cd428c, type: 3}
 --- !u!1 &4665729712712494026 stripped
@@ -362,6 +388,12 @@ GameObject:
 --- !u!4 &8546523316618287577 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: 5a7adac5cfcaf584390ae84329cd428c,
+    type: 3}
+  m_PrefabInstance: {fileID: 3738530172169220803}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &6412235782863757078 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -1504981713932161579, guid: 5a7adac5cfcaf584390ae84329cd428c,
     type: 3}
   m_PrefabInstance: {fileID: 3738530172169220803}
   m_PrefabAsset: {fileID: 0}

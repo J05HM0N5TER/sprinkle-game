@@ -36,7 +36,7 @@ public class PlayerController : MonoBehaviour, IXmlSerializable
 	[Range(0.04f, 0.1f)]
 	[Tooltip("How far the player can be from the ground and still jump")]
 	public float groundDistance = 0.04f;
-	[Range(150, 500)]
+	[Range(150, 10000)]
 	[Tooltip("The amount of force that goes into jumping (Jump height)")]
 	public float jumpForce = 300;
 
