@@ -14,7 +14,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &4601733145028279462
 Transform:
@@ -31,8 +31,8 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &6855777700831786135
-BoxCollider:
+--- !u!64 &2646125866990173491
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -41,9 +41,10 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.24801879, y: 0.47473392, z: 0.24776502}
-  m_Center: {x: 0.000000014901161, y: 0.23736279, z: -0.0006471202}
+  serializedVersion: 3
+  m_Convex: 1
+  m_CookingOptions: 14
+  m_Mesh: {fileID: -1232787380734310401, guid: 8b11404a2a6bae0419896976dbc1b967, type: 3}
 --- !u!114 &19792186
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -124,11 +125,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 290f96644278b2646a59628699cfcd6d, type: 2}
+      objectReference: {fileID: 2100000, guid: c3c32e84221eac3458daa41f59e04c6f, type: 2}
     - target: {fileID: -927199367670048503, guid: 8b11404a2a6bae0419896976dbc1b967,
         type: 3}
       propertyPath: m_Name
       value: Chemical_Spray
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 8b11404a2a6bae0419896976dbc1b967,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8b11404a2a6bae0419896976dbc1b967, type: 3}

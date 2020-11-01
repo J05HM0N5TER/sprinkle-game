@@ -13,6 +13,7 @@ using UnityEngine.Experimental.Rendering.HDPipeline;
 [RequireComponent(typeof(CapsuleCollider), typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour, IXmlSerializable
 {
+	// NOTE: If there is more then 8 different values then need to change from byte
 	[Flags] public enum Inventory : byte
 	{
 		none = 0,
@@ -22,9 +23,11 @@ public class PlayerController : MonoBehaviour, IXmlSerializable
 		EscapePodPasscard = 1 << 3,
 		ChemicalSpray = 1 << 4,
 		SolderingIron = 1 << 5,
-		Lantern = 1 << 6
+		Lantern = 1 << 6,
+		Engineering = 1 << 7
 	}
 
+	[Header("Movement")]
 	private Rigidbody rb;
 	[Range(1, 15)]
 	[Tooltip("Speed the player moves")]
@@ -38,6 +41,10 @@ public class PlayerController : MonoBehaviour, IXmlSerializable
 	public float jumpForce = 300;
 
 	public float sprintSpeed = 15;
+	[Tooltip("The FOV of the camera when the player is walking")]
+	public float walkFOV = 75;
+	[Tooltip("The FOV of the camera when the player is sprinting")]
+	public float sprintFOV = 85;
 
 	[Header("Crouch variables")]
 	[Range(0.1f, 1)]
@@ -74,20 +81,34 @@ public class PlayerController : MonoBehaviour, IXmlSerializable
 
 	//attacking player stuff
 	public float health = 2;
-
-	// FIXME: Only adds sound to one of the suits
-	private GameObject livingSuit;
 	private bool makingsound = false;
-
+	// All of the suits in the scene
+	private LivingArmourAI[] suits;
+	// The script that is in charge of adding and removing CollisionNoise scripts to objects
+	private CollisionNoiseManager noiseManager;
+	// The players camera
+	private Camera playerCamera;
 	// Start is called before the first frame update
 	void Start()
 	{
+		playerCamera = GetComponentInChildren<Camera>();
 		rb = gameObject.GetComponent<Rigidbody>();
 		capsule = GetComponent<CapsuleCollider>();
 		standHeight = capsule.height;
 		defaultScale = transform.localScale;
 		walkspeed = speed;
-		livingSuit = GameObject.Find("LivingArmour");
+		suits = FindObjectsOfType<LivingArmourAI>();
+		noiseManager = FindObjectOfType<CollisionNoiseManager>();
+#if (UNITY_EDITOR)
+		if (noiseManager == null)
+		{
+			Debug.LogError($"Could not find {nameof(CollisionNoiseManager)}", this);
+		}
+		if (playerCamera == null)
+		{
+			Debug.LogError($"Could not find {nameof(Camera)}", this);
+		}
+#endif
 	}
 
 	private void FixedUpdate()
@@ -126,23 +147,24 @@ public class PlayerController : MonoBehaviour, IXmlSerializable
 		}
 		if (Input.GetButton("Sprint"))
 		{
+			playerCamera.fieldOfView = sprintFOV;
 			speed = sprintSpeed;
 			if (!makingsound)
 			{
-				livingSuit.GetComponent<LivingArmourAI>().soundSources.Add(gameObject.transform.position);
+				foreach (var suit in suits)
+				{
+					if (suit.isActiveAndEnabled == true)
+					{
+						suit.soundSources.Add(gameObject.transform.position);
+					}
+				}
 				makingsound = true;
 			}
-
-			//yield return StartCoroutine("removeFromlist");
 		}
 		else
 		{
+			playerCamera.fieldOfView = walkFOV;
 			speed = walkspeed;
-			if (makingsound)
-			{
-				livingSuit.GetComponent<LivingArmourAI>().soundSources.Remove(gameObject.transform.position);
-				makingsound = false;
-			}
 
 		}
 	}
@@ -230,13 +252,21 @@ public class PlayerController : MonoBehaviour, IXmlSerializable
 		return Physics.Raycast(ray, distance, ~LayerMask.GetMask("Player"));
 	}
 
+	private void OnCollisionEnter(Collision other)
+	{
+
+		if (other.gameObject.layer == LayerMask.NameToLayer("Dynamic"))
+		{
+			noiseManager.Add(other.gameObject);
+		}
+	}
+
 	// Stuff below is for serialization
+	// Xml Serialization Infrastructure
 	private PlayerController()
 	{
 
 	}
-
-	// Xml Serialization Infrastructure
 
 	public void WriteXml(XmlWriter writer)
 	{
@@ -342,7 +372,7 @@ public class PlayerController : MonoBehaviour, IXmlSerializable
 		batteryPacks = (ushort) reader.ReadElementContentAsInt();
 		inCrouchTransition = reader.ReadElementContentAsBoolean();
 		// Read time offset from file
-		
+
 		reader.ReadStartElement();
 		TimeSpan crouchOffset = (TimeSpan) dateTime3xml.Deserialize(reader);
 		reader.ReadEndElement();

@@ -14,7 +14,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &3055249239881006168
 Transform:
@@ -4812,9 +4812,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   doorToOpen: {fileID: 0}
   neededKeyCard: 0
-  maxDistanceToInteract: 1
-  brokenTerminal: 1
+  maxDistanceToInteract: 3
+  brokenTerminal: 0
   brokenParticles: {fileID: 3882055329403096894}
+  screenMaterial: {fileID: 2100000, guid: f6e7d1ebe77111d49aed3440e7bd162f, type: 2}
+  brokenMaterial: {fileID: 2100000, guid: 71f4ae9fb51874a4d99c9642aa76b294, type: 2}
+  unlockedMaterial: {fileID: 2100000, guid: 6ae8bcf138d023f4fa5759a550d3d3f8, type: 2}
+  lockedMaterial: {fileID: 2100000, guid: 320c49166ec48b14e81911101835fc55, type: 2}
 --- !u!1001 &722715186673934812
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4891,6 +4895,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Terminal
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 291fdc8af9350dd419d253728c856ebe,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 291fdc8af9350dd419d253728c856ebe, type: 3}

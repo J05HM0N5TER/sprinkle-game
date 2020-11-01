@@ -9,12 +9,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1160237763414516140}
+  - component: {fileID: 2118020717331158473}
   m_Layer: 0
   m_Name: L_Tunnel_Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1160237763414516140
 Transform:
@@ -31,6 +32,25 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!205 &2118020717331158473
+LODGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1898411881068051782}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: 0, y: 0.011706972, z: -0.0000006109476}
+  m_Size: 0.32771158
+  m_FadeMode: 0
+  m_AnimateCrossFading: 0
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0.0061259908
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 3075913298318083358}
+  m_Enabled: 1
 --- !u!1 &5831450665482516764
 GameObject:
   m_ObjectHideFlags: 0
@@ -48,7 +68,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 0
 --- !u!4 &114517446303455108
 Transform:
@@ -114,7 +134,7 @@ Light:
     serializedVersion: 2
     m_Bits: 4294967295
   m_RenderingLayerMask: 1
-  m_Lightmapping: 2
+  m_Lightmapping: 1
   m_LightShadowCasterMode: 2
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -291,7 +311,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: d95dc037d231b6840abb635b8777ece3, type: 2}
+      objectReference: {fileID: 2100000, guid: e4437db3de7836f4f81dcc8b1179a9e9, type: 2}
     - target: {fileID: -1504981713932161579, guid: 2e7d9c0d27f9ac7419c3491d495da24f,
         type: 3}
       propertyPath: m_Materials.Array.data[1]
@@ -302,11 +322,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tunnel_Floor_Light
       objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 2e7d9c0d27f9ac7419c3491d495da24f,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2e7d9c0d27f9ac7419c3491d495da24f, type: 3}
 --- !u!4 &344623285073511377 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: 2e7d9c0d27f9ac7419c3491d495da24f,
+    type: 3}
+  m_PrefabInstance: {fileID: 4734107583478704331}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &3075913298318083358 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -1504981713932161579, guid: 2e7d9c0d27f9ac7419c3491d495da24f,
     type: 3}
   m_PrefabInstance: {fileID: 4734107583478704331}
   m_PrefabAsset: {fileID: 0}

@@ -16,7 +16,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &7851225913234426773
 Transform:
@@ -224,16 +224,36 @@ PrefabInstance:
       propertyPath: m_Name
       value: Vent_Basic
       objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 590dc319132af724ea741e7c111295e8,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     - target: {fileID: -866818317709608069, guid: 590dc319132af724ea741e7c111295e8,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 038a2395244d9094aa9eb3b361f0490a, type: 2}
+    - target: {fileID: 718038766823819976, guid: 590dc319132af724ea741e7c111295e8,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 6427524032952470004, guid: 590dc319132af724ea741e7c111295e8,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     - target: {fileID: 8548751355953419777, guid: 590dc319132af724ea741e7c111295e8,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 038a2395244d9094aa9eb3b361f0490a, type: 2}
+    - target: {fileID: 8929857762313665894, guid: 590dc319132af724ea741e7c111295e8,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 590dc319132af724ea741e7c111295e8, type: 3}
 --- !u!4 &6391853458599047910 stripped

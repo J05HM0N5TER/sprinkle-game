@@ -59,7 +59,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2af80e8ee56ef9642975beabbb7d6ead, type: 2}
+  - {fileID: 2100000, guid: 3113b02b9107e644a96e498e7ba2e5b4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -108,5 +108,6 @@ MonoBehaviour:
   inscription: Welcome to the Developer room. Here you'll find an assortment of concepts
     and assets changed or discarded during development.
   isActive: 0
-  nameOfNoteTextBox: Note_Text
-  nameotherThingToDisable: Note_Background
+  noteTextBoxName: 
+  otherNoteObjectsNames: []
+  redicleName: Reticle

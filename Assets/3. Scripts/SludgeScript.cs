@@ -5,12 +5,13 @@ using UnityEngine;
 public class SludgeScript : MonoBehaviour
 {
     private GameObject player;
+    private Camera playerCamera;
     [Tooltip("max distance away to interact with")]
     public float maxDistanceToInteract;
     [Tooltip("the amnount of time that the spray and animations/shaders will play")]
     public float timeOfplaying;
     private bool decreaseSize;
-    private Vector3 sizeChange = new Vector3(0.1f, 0.1f,0.0f);
+    private Vector3 sizeChange = new Vector3(0.1f, 0.1f, 0.0f);
     //sound
     private AudioSource audioS;
     [Tooltip("sound the sludge makes")]
@@ -23,45 +24,44 @@ public class SludgeScript : MonoBehaviour
     //public GameObject sprayParticles;
     private ParticleSystem ps;
 
-    //
-
     // Start is called before the first frame update
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
         audioS = GetComponent<AudioSource>();
         ps = sprayObject.GetComponent<ParticleSystem>();
+        playerCamera = player.GetComponentInChildren<Camera>();
     }
 
     // Update is called once per frame
     void Update()
     {
-		if (Input.GetButtonDown("Interact"))
-		{
-			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-			if (Physics.Raycast(ray, out RaycastHit hit) &&  // Raycast check
-				hit.collider.gameObject == gameObject && // Raycast hit this object
-				Vector3.Distance(hit.transform.position, gameObject.transform.position) <= maxDistanceToInteract)  // The player is in range 
-			{
-				if (player.GetComponent<PlayerController>().inventory.HasFlag(PlayerController.Inventory.ChemicalSpray))
-				{
+        if (Input.GetButtonDown("Interact"))
+        {
+            Ray ray = playerCamera.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out RaycastHit hit) && // Raycast check
+                hit.collider.gameObject == gameObject && // Raycast hit this object
+                Vector3.Distance(hit.point, playerCamera.transform.position) <= maxDistanceToInteract) // The player is in range 
+            {
+                if (player.GetComponent<PlayerController>().inventory.HasFlag(PlayerController.Inventory.ChemicalSpray))
+                {
                     //PlaySpray();
                     audioS.PlayOneShot(sludgeSound);
                     audioS.PlayOneShot(spraySound);
                     decreaseSize = true;
                     //gameObject.SetActive(false);
-				}
-			}
-		}
-        if(decreaseSize == true)
+                }
+            }
+        }
+        if (decreaseSize == true)
         {
             gameObject.transform.localScale -= sizeChange;
-            if(gameObject.transform.localScale == new Vector3(0,0,1))
+            if (gameObject.transform.localScale == new Vector3(0, 0, 1))
             {
                 gameObject.SetActive(false);
             }
         }
-	}
+    }
     private IEnumerator PlaySpray()
     {
         // var em = ps.emission;
@@ -79,4 +79,3 @@ public class SludgeScript : MonoBehaviour
     }
 
 }
-
