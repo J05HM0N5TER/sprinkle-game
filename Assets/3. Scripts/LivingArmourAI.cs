@@ -83,6 +83,8 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 	//attacking player stuff
 	public float attackDistance = 3;
 	public float attackCoolDown = 1;
+	public float stopafterattacktime = 1;
+	private float stopafterattacktimereset;
 	private float attackcooldownreset;
 	public bool canAttackAgain = true;
 	public float knockBack = 5000;
@@ -130,6 +132,7 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 		anim.gameObject.GetComponent<Animator>().enabled = true;
 
 		lookAroundTimerReset = lookAroundTimer;
+		stopafterattacktimereset = stopafterattacktime;
 
 
 	}
@@ -158,6 +161,8 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 			player.GetComponent<Rigidbody>().AddForce(knockBack * dir);
 			//anim.SetBool("attack", false);
 			canAttackAgain = false;
+			CurrentState = AIStates.Idle;
+
 			//attackcooldown();
 		}
 		if (!canAttackAgain)
@@ -165,6 +170,7 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 			attackCoolDown -= Time.deltaTime;
 			if (attackCoolDown <= 0)
 			{
+				
 				canAttackAgain = true;
 				attackCoolDown = attackcooldownreset;
 			}
@@ -189,10 +195,22 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 		
 		if(CurrentState == AIStates.Idle)
 		{
-
+			agent.isStopped = true;
+			if(CurrentState == AIStates.Idle)
+			{
+				stopafterattacktime -= Time.deltaTime;
+				if(stopafterattacktime <= 0)
+				{
+					stopafterattacktime = stopafterattacktimereset;
+					anim.SetBool("attack", false);
+					agent.isStopped = false;
+					CurrentState = AIStates.Searching;
+				}
+			}
 		}
 		if(CurrentState == AIStates.Wondering)
 		{
+			
 			anim.SetBool("walking", true);
 			if (agent.remainingDistance <= 1)
 			{
@@ -222,6 +240,7 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 		}
 		if(CurrentState == AIStates.Chasing)
 		{
+			
 			anim.SetBool("running", true);
 			anim.SetBool("walking", false);
 			if(isPlayerVisible)
@@ -246,7 +265,7 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 		}
 		if(CurrentState == AIStates.Searching)
 		{
-			anim.SetBool("attack", false);
+			
 			anim.SetBool("walking", true);
 			if(soundSources.Count == 0)
 			{
@@ -364,6 +383,7 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 		}
 
 		Debug.Log(CurrentState.ToString());
+		Debug.Log(" can attack again: " + canAttackAgain + ", time until next attack: " + attackCoolDown + ", bool of animaition attack: "+ anim.GetBool("attack"));
 	}
 	public static Vector3 RandomNavSphere(Vector3 origin, float distance, int layermask)
 	{

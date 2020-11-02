@@ -16312,6 +16312,21 @@ PrefabInstance:
       propertyPath: maxDistanceFromPlayer
       value: 50
       objectReference: {fileID: 0}
+    - target: {fileID: 5776743038438315076, guid: 6356f2d9fdc39ce4992a932fd141477c,
+        type: 3}
+      propertyPath: attackCoolDown
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5776743038438315076, guid: 6356f2d9fdc39ce4992a932fd141477c,
+        type: 3}
+      propertyPath: knockBack
+      value: 5000
+      objectReference: {fileID: 0}
+    - target: {fileID: 5776743038438315076, guid: 6356f2d9fdc39ce4992a932fd141477c,
+        type: 3}
+      propertyPath: attackDistance
+      value: 1.5
+      objectReference: {fileID: 0}
     - target: {fileID: 5776743038438315087, guid: 6356f2d9fdc39ce4992a932fd141477c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -25416,6 +25431,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_RootOrder
       value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 5776743038438315087, guid: 6356f2d9fdc39ce4992a932fd141477c,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.99
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6356f2d9fdc39ce4992a932fd141477c, type: 3}
