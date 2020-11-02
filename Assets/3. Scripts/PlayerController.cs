@@ -13,6 +13,7 @@ using UnityEngine.Experimental.Rendering.HDPipeline;
 [RequireComponent(typeof(CapsuleCollider), typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour, IXmlSerializable
 {
+	// NOTE: If there is more then 8 different values then need to change from byte
 	[Flags] public enum Inventory : byte
 	{
 		none = 0,
@@ -22,7 +23,8 @@ public class PlayerController : MonoBehaviour, IXmlSerializable
 		EscapePodPasscard = 1 << 3,
 		ChemicalSpray = 1 << 4,
 		SolderingIron = 1 << 5,
-		Lantern = 1 << 6
+		Lantern = 1 << 6,
+		Engineering = 1 << 7
 	}
 
 	[Header("Movement")]
@@ -34,7 +36,7 @@ public class PlayerController : MonoBehaviour, IXmlSerializable
 	[Range(0.04f, 0.1f)]
 	[Tooltip("How far the player can be from the ground and still jump")]
 	public float groundDistance = 0.04f;
-	[Range(150, 500)]
+	[Range(150, 10000)]
 	[Tooltip("The amount of force that goes into jumping (Jump height)")]
 	public float jumpForce = 300;
 

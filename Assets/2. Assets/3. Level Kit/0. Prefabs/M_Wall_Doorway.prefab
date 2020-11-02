@@ -292,8 +292,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 5, y: 0.049856067, z: 0.5}
-  m_Center: {x: 0.0013995171, y: 0.01894766, z: -0.000000029802322}
+  m_Size: {x: 5, y: 0.3999998, z: 0.5}
+  m_Center: {x: 0.0013995171, y: -0.1999999, z: -0.000000029802322}
 --- !u!65 &3007094940457503335
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1306,8 +1306,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animatedObject: {fileID: 2994276943422120458}
   soundSource: {fileID: 8827715868091986648}
-  Openclip: {fileID: 0}
-  Closeclip: {fileID: 0}
+  Openclip: {fileID: 8300000, guid: 195fd571edd03cd4d8998273fe76e625, type: 3}
+  Closeclip: {fileID: 8300000, guid: 9e826818ba69788458ceb3e77a56c2bc, type: 3}
   oneTimeUse: 0
   locked: 0
   timer: 5
