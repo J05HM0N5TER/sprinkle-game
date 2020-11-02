@@ -145,7 +145,7 @@ public class PlayerController : MonoBehaviour, IXmlSerializable
 		// 	//GameObject.FindObjectOfType<GameManager>();
 		// 	GameObject.Find("PauseManager").GetComponent<PauseMenu>().PauseGame();
 		// }
-		if (Input.GetButton("Sprint") && !isCrouching)
+		if (Input.GetButton("Sprint") && !isCrouching && (gameObject.GetComponent<Rigidbody>().velocity.magnitude >= 0.1))
 		{
 			playerCamera.fieldOfView = sprintFOV;
 			speed = sprintSpeed;

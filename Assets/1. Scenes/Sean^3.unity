@@ -5769,6 +5769,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.y
       value: 18.898
       objectReference: {fileID: 0}
+    - target: {fileID: 4224801822505238522, guid: f1b59db54ff28f5499a432cf944e7fe8,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f1b59db54ff28f5499a432cf944e7fe8, type: 3}
 --- !u!1001 &496187439
@@ -11414,7 +11419,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &958013188
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27482,6 +27487,26 @@ PrefabInstance:
     - target: {fileID: 6694337340705900340, guid: 0da51782187b7bf4680912663f0764e9,
         type: 3}
       propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7412804904125909025, guid: 0da51782187b7bf4680912663f0764e9,
+        type: 3}
+      propertyPath: m_textInfo.characterCount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7412804904125909025, guid: 0da51782187b7bf4680912663f0764e9,
+        type: 3}
+      propertyPath: m_textInfo.wordCount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7412804904125909025, guid: 0da51782187b7bf4680912663f0764e9,
+        type: 3}
+      propertyPath: m_textInfo.lineCount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7412804904125909025, guid: 0da51782187b7bf4680912663f0764e9,
+        type: 3}
+      propertyPath: m_textInfo.pageCount
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7437027849266534200, guid: 0da51782187b7bf4680912663f0764e9,

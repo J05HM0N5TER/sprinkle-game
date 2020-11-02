@@ -195,7 +195,6 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 		{
 			CurrentState = AIStates.SwapSuit;
 		}
-
 		
 		if(CurrentState == AIStates.Idle)
 		{
