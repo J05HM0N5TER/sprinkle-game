@@ -156,6 +156,10 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 		if((agent.transform.position - playerLastSeen).magnitude < attackDistance && isPlayerVisible && canAttackAgain)
 		{
 			player.GetComponent<PlayerController>().health -= 1;
+			if(player.GetComponent<PlayerController>().health <= 0)
+			{
+				GameObject.Find("PauseManager").GetComponent<PauseMenu>().PauseGame();
+			}
 			anim.SetBool("attack", true);
 			var dir = (player.transform.position - transform.position).normalized;
 			player.GetComponent<Rigidbody>().AddForce(knockBack * dir);
