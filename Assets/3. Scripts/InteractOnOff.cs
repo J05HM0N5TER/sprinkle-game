@@ -8,6 +8,7 @@ public class InteractOnOff : MonoBehaviour
     public List<GameObject> turnOnStuff;
     public List<GameObject> turnOffStuff;
     public float maxDistanceToInteract = 2;
+    private bool activated = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -66,7 +67,12 @@ public class InteractOnOff : MonoBehaviour
                         }
                     }
                 }
+                activated = true;
             }
+        }
+        if(activated)
+        {
+            this.enabled = false;
         }
     }
 }

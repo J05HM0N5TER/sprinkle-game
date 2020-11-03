@@ -22913,7 +22913,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &5776743038438315087
 Transform:
   m_ObjectHideFlags: 0
@@ -23044,7 +23044,9 @@ MonoBehaviour:
   search: {fileID: 2100000, guid: 54638cbff7ff39c4a97d673600aa3688, type: 2}
   attackDistance: 3
   attackCoolDown: 1
+  stopafterattacktime: 1
   canAttackAgain: 1
+  knockBack: 5000
   lookAroundTimer: 4
   busyWithState: 0
 --- !u!1 &5776743038438947450
