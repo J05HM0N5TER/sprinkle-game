@@ -14,6 +14,32 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300006, guid: e2d0436d36b8a6a4f87a7a978e87f9c2, type: 3}
+--- !u!65 &7092949323932998593
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1011384713526301669}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 99.01522, y: 5.916047, z: 75.01642}
+  m_Center: {x: -210.57726, y: 77.46067, z: 3.123708}
+--- !u!65 &1911195368209802693
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1011384713526301669}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 98.18829, y: 5.916047, z: 75.01642}
+  m_Center: {x: 211.07652, y: 77.46067, z: 3.1237066}
 --- !u!1 &1011384714047462009
 GameObject:
   m_ObjectHideFlags: 0
