@@ -140,31 +140,31 @@ public class PlayerController : MonoBehaviour, IXmlSerializable
 			rb.AddForce(gameObject.transform.up * (isCrouching ? couchJumpForce : jumpForce));
 		}
 		Crouch();
-		if (health <= 0)
-		{
-			//GameObject.FindObjectOfType<GameManager>();
-			GameObject.Find("PauseManager").GetComponent<PauseMenu>().PauseGame();
-		}
-		if (Input.GetButton("Sprint"))
+		// if (health <= 0)
+		// {
+		// 	//GameObject.FindObjectOfType<GameManager>();
+		// 	GameObject.Find("PauseManager").GetComponent<PauseMenu>().PauseGame();
+		// }
+		if (Input.GetButton("Sprint") && !isCrouching && (gameObject.GetComponent<Rigidbody>().velocity.magnitude >= 0.1))
 		{
 			playerCamera.fieldOfView = sprintFOV;
 			speed = sprintSpeed;
-			if (!makingsound)
+			
+			foreach (var suit in suits)
 			{
-				foreach (var suit in suits)
+				if (suit.isActiveAndEnabled == true)
 				{
-					if (suit.isActiveAndEnabled == true)
-					{
-						suit.soundSources.Add(gameObject.transform.position);
-					}
+					suit.soundSources.Add(gameObject.transform.position);
 				}
-				makingsound = true;
 			}
+				//makingsound = true;
+			
 		}
 		else
 		{
 			playerCamera.fieldOfView = walkFOV;
 			speed = walkspeed;
+			
 
 		}
 	}
@@ -176,7 +176,7 @@ public class PlayerController : MonoBehaviour, IXmlSerializable
 	{
 
 		// Check if a transition needs to start
-		if (!inCrouchTransition && Input.GetButtonDown("Crouch"))
+		if (!inCrouchTransition && Input.GetButtonDown("Crouch") && !PauseMenu.isPaused)
 		{
 			isCrouching = !isCrouching;
 			inCrouchTransition = true;
