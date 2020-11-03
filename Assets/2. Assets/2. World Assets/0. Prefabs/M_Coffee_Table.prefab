@@ -48,6 +48,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8885253707886999234}
+  - component: {fileID: 6454171673777394960}
   m_Layer: 0
   m_Name: M_Coffee_Table
   m_TagString: Untagged
@@ -70,6 +71,25 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!205 &6454171673777394960
+LODGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8885253707886999233}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: 0, y: 0.3334031, z: 0}
+  m_Size: 1.6386721
+  m_FadeMode: 0
+  m_AnimateCrossFading: 0
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0.017595042
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 1176556818462987879}
+  m_Enabled: 1
 --- !u!1001 &8885253706666326962
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -158,6 +178,12 @@ GameObject:
 --- !u!4 &4482339354781946024 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: 7e5ae279f71c7394e88544d8a6a59799,
+    type: 3}
+  m_PrefabInstance: {fileID: 8885253706666326962}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &1176556818462987879 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -1504981713932161579, guid: 7e5ae279f71c7394e88544d8a6a59799,
     type: 3}
   m_PrefabInstance: {fileID: 8885253706666326962}
   m_PrefabAsset: {fileID: 0}
