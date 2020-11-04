@@ -93,13 +93,22 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 	public float lookAroundTimer = 4;
 	private float lookAroundTimerReset;
 
+	
+	public float detectionTimer = 1;
+	private float detectionTimerReset;
+	public float crouchDetectionTimer = 2;
+	private float crouchDetectionTimerReset;
+	private Quaternion lookRotation;
+    private Vector3 direction;
+
 	public enum AIStates
 	{
 		Idle, // stopping and idleing in spot / taking a break
 		Wondering, // roaming the map
 		Chasing, // chasing the player 
 		Searching, // searching around for player at last seen pos / going to sound
-		SwapSuit // player to far so swap suit
+		SwapSuit, // player to far so swap suit
+		DetectingPlayer // seeing and detection timer stuff
 	}
 	AIStates CurrentState;
 	public bool busyWithState;
@@ -133,6 +142,9 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 
 		lookAroundTimerReset = lookAroundTimer;
 		stopafterattacktimereset = stopafterattacktime;
+		detectionTimerReset = detectionTimer;
+		crouchDetectionTimerReset = crouchDetectionTimer;
+		
 
 
 	}
@@ -234,7 +246,7 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 			// Change state
 			if(isPlayerVisible)
 			{
-				CurrentState = AIStates.Chasing;
+				CurrentState = AIStates.DetectingPlayer;
 			}
 			else if((!wasFollowingPlayer || !isPlayerVisible) && soundSources.Count >= 1)
 			{
@@ -382,6 +394,38 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 			else
 			{
 				Debug.LogError("Couldn't find valid point");
+			}
+		}
+		if(CurrentState == AIStates.DetectingPlayer)
+		{
+			
+			if(isPlayerVisible)
+			{
+				agent.isStopped = true;
+				direction = (player.transform.position - transform.position).normalized;
+				//set the current looking rotation the direction the target is at
+				lookRotation = Quaternion.LookRotation(direction);
+				lightvisor.color = investigateLight;
+				visorEmission = investigate;
+				transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime);
+				anim.SetBool("walking", false);
+				anim.SetBool("idle", true);
+				if(player.GetComponent<PlayerController>().isCrouching)
+				{
+					crouchDetectionTimer -= Time.deltaTime;
+				}
+				else
+				{
+					detectionTimer -= Time.deltaTime;
+				}
+				if(detectionTimer <= 0 || crouchDetectionTimer <= 0)
+				{
+					agent.isStopped = false;
+					CurrentState = AIStates.Chasing;
+					detectionTimer = detectionTimerReset;
+					crouchDetectionTimer = crouchDetectionTimerReset;
+				}
+				
 			}
 		}
 

@@ -36,6 +36,8 @@ public class Notes : MonoBehaviour
 	PauseMenu pauseManager;
 
 	bool isFirstFrame = true;
+	[Tooltip("How close you have to be to the note to interact with it")]
+	public float maxInteractDistance = 1;
 
 	// Start is called before the first frame update
 	void Start()
@@ -99,7 +101,7 @@ public class Notes : MonoBehaviour
 #endif
 			Ray ray = Camera.main.ScreenPointToRay(new Vector2(cursorPosition.x * Screen.width, cursorPosition.y * Screen.height));
 
-			if (Physics.Raycast(ray, out RaycastHit hit))
+			if (Physics.Raycast(ray, out RaycastHit hit, maxInteractDistance))
 			{
 				if (hit.collider.gameObject == gameObject)
 				{
