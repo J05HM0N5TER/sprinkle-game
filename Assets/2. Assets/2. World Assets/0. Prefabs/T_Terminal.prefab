@@ -4808,7 +4808,7 @@ Animator:
   m_GameObject: {fileID: 8729793246184978645}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 1d890dc9828b51d42a6be3a9617af00d, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -4834,7 +4834,7 @@ MonoBehaviour:
   maxDistanceToInteract: 2
   brokenTerminal: 0
   brokenParticles: {fileID: 3882055329403096894}
-  screenMaterial: {fileID: 2100000, guid: f6e7d1ebe77111d49aed3440e7bd162f, type: 2}
+  screenMaterial: {fileID: 2100000, guid: e49253f1e0f5fd349a56d6fb27e16e27, type: 2}
   brokenMaterial: {fileID: 2100000, guid: 71f4ae9fb51874a4d99c9642aa76b294, type: 2}
   unlockedMaterial: {fileID: 2100000, guid: 6ae8bcf138d023f4fa5759a550d3d3f8, type: 2}
   lockedMaterial: {fileID: 2100000, guid: 320c49166ec48b14e81911101835fc55, type: 2}
@@ -4909,7 +4909,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[1]
       value: 
-      objectReference: {fileID: 2100000, guid: e49253f1e0f5fd349a56d6fb27e16e27, type: 2}
+      objectReference: {fileID: 2100000, guid: 6aee76a3a4ac73e40973aa344f73c941, type: 2}
     - target: {fileID: -927199367670048503, guid: 291fdc8af9350dd419d253728c856ebe,
         type: 3}
       propertyPath: m_Name
