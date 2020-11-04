@@ -18,7 +18,7 @@ Material:
   stringTagMap:
     MotionVector: User
   disabledShaderPasses:
-  - MOTIONVECTORS
+  - TransparentBackface
   - DistortionVectors
   - DBufferMesh_M
   - DBufferMesh_AO
@@ -27,10 +27,14 @@ Material:
   - DBufferMesh_MS
   - DBufferMesh_AOS
   - DBufferMesh_MAOS
-  - TransparentBackface
+  - MOTIONVECTORS
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - Texture2D_7890FA10:
+        m_Texture: {fileID: 2800000, guid: 98535a67e049a964594f66629df3e3e3, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _AnisotropyMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -217,7 +221,7 @@ Material:
     - _PPDMinSamples: 5
     - _PPDPrimitiveLength: 1
     - _PPDPrimitiveWidth: 1
-    - _ReceivesSSR: 1
+    - _ReceivesSSR: 0
     - _RefractionModel: 0
     - _RenderQueueType: 1
     - _RequireSplitLighting: 0
