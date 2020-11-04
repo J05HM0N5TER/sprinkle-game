@@ -24,22 +24,21 @@ public class Reticle : MonoBehaviour
         Physics.Raycast(playerCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0.5f)), out RaycastHit RayOut, grabDistance, 1 << 11);
         if(RayOut.collider == null)
         {
-            
             lootIcon.SetActive(false);
             pressIcon.SetActive(false);
             grabIcon.SetActive(false);
             //Debug.Log("didnt hit shit");
         }
     
-        if(RayOut.collider.tag == "Keyitem")
+        if(RayOut.collider.gameObject.tag == "Keyitem")
         {
             lootIcon.SetActive(true);
         }
-        if(RayOut.collider.tag == "interact")
+        if(RayOut.collider.gameObject.tag == "Interact")
         {
             pressIcon.SetActive(true);
         }
-        if(RayOut.collider.tag == "Dynamic")
+        if (RayOut.collider.gameObject.layer == LayerMask.NameToLayer("Dynamic"))
         {
             grabIcon.SetActive(true);
         }
