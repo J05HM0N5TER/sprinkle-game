@@ -15,7 +15,7 @@ public class Reticle : MonoBehaviour
     void Start()
     {
         playerCamera = gameObject.GetComponent<Camera>();
-        
+
     }
 
     // Update is called once per frame
@@ -24,7 +24,6 @@ public class Reticle : MonoBehaviour
         Physics.Raycast(playerCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0.5f)), out RaycastHit RayOut, grabDistance, 1 << 11);
         if(RayOut.collider == null)
         {
-            
             lootIcon.SetActive(false);
             pressIcon.SetActive(false);
             grabIcon.SetActive(false);

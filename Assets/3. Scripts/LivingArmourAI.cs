@@ -269,7 +269,7 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 			agent.speed = chaseSpeed;
 			lightvisor.color = chaseLight;
 			//visorEmission = chase;
-			visorEmission.SetColor ("_EmissiveColor", chaseLight);
+			visorEmission.SetColor ("_EmissiveColor", chaseLight * 10000);
 			visorEmission.EnableKeyword ("_EMISSION");
 			if((agent.transform.position - playerLastSeen).magnitude < 1)
 			{
@@ -433,6 +433,7 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 
 		Debug.Log(CurrentState.ToString());
 		Debug.Log(" can attack again: " + canAttackAgain + ", time until next attack: " + attackCoolDown + ", bool of animaition attack: "+ anim.GetBool("attack"));
+		
 	}
 	public static Vector3 RandomNavSphere(Vector3 origin, float distance, int layermask)
 	{
