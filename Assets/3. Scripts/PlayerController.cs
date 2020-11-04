@@ -60,7 +60,7 @@ public class PlayerController : MonoBehaviour, IXmlSerializable
 	// The collider for the player
 	private CapsuleCollider capsule;
 	// Is the player currently couching?
-	private bool isCrouching = false;
+	[HideInInspector]public bool isCrouching = false;
 	[Range(0, 10)]
 	[Tooltip("The effect that crouching has on speed, this is a percentage impact (0.5 make it so crouching make the player half speed)")]
 	public float crouchSpeed = 5f;
