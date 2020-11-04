@@ -8152,6 +8152,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6128061836971473961, guid: 47b4e47888cd1d2409815c69f3b917a1,
+        type: 3}
+      propertyPath: gameCredits
+      value: CreditsScene
+      objectReference: {fileID: 0}
     - target: {fileID: 6128061836971473966, guid: 47b4e47888cd1d2409815c69f3b917a1,
         type: 3}
       propertyPath: m_Name
@@ -8198,6 +8203,7 @@ MonoBehaviour:
   GameScene: Game Scene
   LevelDesignScene: Dev Room
   Sean3: Sean3
+  Credits: CreditsScene
 --- !u!1001 &1476598588
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11817,6 +11823,11 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1450913629}
+    - target: {fileID: 1316352225247649474, guid: 99d40d595ceca6f48919504f1093d24a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1428414732812619721, guid: 99d40d595ceca6f48919504f1093d24a,
         type: 3}
       propertyPath: m_textInfo.characterCount
@@ -11887,6 +11898,36 @@ PrefabInstance:
       propertyPath: m_textInfo.pageCount
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6731146656947212877, guid: 99d40d595ceca6f48919504f1093d24a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731146656947212877, guid: 99d40d595ceca6f48919504f1093d24a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_BoolArgument
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731146656947212877, guid: 99d40d595ceca6f48919504f1093d24a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1450913629}
+    - target: {fileID: 6731146656947212877, guid: 99d40d595ceca6f48919504f1093d24a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: LaunchGameCredits
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731146656947212877, guid: 99d40d595ceca6f48919504f1093d24a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7156665521840856003, guid: 99d40d595ceca6f48919504f1093d24a,
+        type: 3}
+      propertyPath: m_Name
+      value: Credits Text
+      objectReference: {fileID: 0}
     - target: {fileID: 7494252610592462836, guid: 99d40d595ceca6f48919504f1093d24a,
         type: 3}
       propertyPath: m_textInfo.characterCount
@@ -11906,9 +11947,42 @@ PrefabInstance:
         type: 3}
       propertyPath: m_textInfo.pageCount
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7681056402262007848, guid: 99d40d595ceca6f48919504f1093d24a,
+        type: 3}
+      propertyPath: m_text
+      value: Credits
+      objectReference: {fileID: 0}
+    - target: {fileID: 7681056402262007848, guid: 99d40d595ceca6f48919504f1093d24a,
+        type: 3}
+      propertyPath: m_textInfo.characterCount
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 99d40d595ceca6f48919504f1093d24a, type: 3}
+--- !u!1 &1316352225193083859 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1316352225112560347, guid: 99d40d595ceca6f48919504f1093d24a,
+    type: 3}
+  m_PrefabInstance: {fileID: 1316352225193083858}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1316352225193083860
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1316352225193083859}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e79d668317d67b94a9caa732aca1e3be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DevScene: Dev Museum
+  GameScene: Game Scene
+  LevelDesignScene: Dev Room
+  Sean3: Sean3
+  Credits: CreditsScene
 --- !u!20 &1376844650190263262
 Camera:
   m_ObjectHideFlags: 0
