@@ -5,7 +5,6 @@ using UnityEngine;
 public class Reticle : MonoBehaviour
 {
     [Tooltip("The object on the canvas that has the reticle sprite")]
-    public GameObject reticleSprite;
     public GameObject lootIcon;
     public GameObject pressIcon;
     public GameObject grabIcon;
@@ -16,7 +15,7 @@ public class Reticle : MonoBehaviour
     void Start()
     {
         playerCamera = gameObject.GetComponent<Camera>();
-        reticleSprite.SetActive(false);
+        
     }
 
     // Update is called once per frame
@@ -25,17 +24,13 @@ public class Reticle : MonoBehaviour
         Physics.Raycast(playerCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0.5f)), out RaycastHit RayOut, grabDistance, 1 << 11);
         if(RayOut.collider == null)
         {
-            reticleSprite.SetActive(false);
+            
             lootIcon.SetActive(false);
             pressIcon.SetActive(false);
             grabIcon.SetActive(false);
             //Debug.Log("didnt hit shit");
         }
-        else//(RayOut.collider.gameObject.layer == LayerMask.NameToLayer("Dynamic"))
-        {
-            reticleSprite.SetActive(true);
-            //Debug.Log("dynamic hit "+ RayOut.transform.gameObject.name);
-        }
+    
         if(RayOut.collider.tag == "Keyitem")
         {
             lootIcon.SetActive(true);
