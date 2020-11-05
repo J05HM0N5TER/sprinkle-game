@@ -30,15 +30,15 @@ public class Reticle : MonoBehaviour
             //Debug.Log("didnt hit shit");
         }
     
-        if(RayOut.collider.tag == "Keyitem")
+        if(RayOut.collider.gameObject.tag == "Keyitem")
         {
             lootIcon.SetActive(true);
         }
-        if(RayOut.collider.tag == "interact")
+        if(RayOut.collider.gameObject.tag == "Interact")
         {
             pressIcon.SetActive(true);
         }
-        if(RayOut.collider.tag == "Dynamic")
+        if (RayOut.collider.gameObject.layer == LayerMask.NameToLayer("Dynamic"))
         {
             grabIcon.SetActive(true);
         }
