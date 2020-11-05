@@ -123,10 +123,10 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 		lightvisor.color = searchLight;
 		resettimer = timer;
 		agent.speed = normalWalkSpeed;
-		visorEmission = search;
-		// visorEmission.SetColor("_EmissiveColor", search);
-		// visorEmission.EnableKeyword("_EMISSION");
-		//visorEmission.color = search;
+		//visorEmission = search;
+		visorEmission.SetColor("_EmissiveColor", searchLight);
+		visorEmission.EnableKeyword("_EMISSION");
+		visorEmission.color = searchLight;
 		agent.autoBraking = true;
 		agent.acceleration = 20;
 
@@ -239,9 +239,9 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 				
 			}
 			lightvisor.color = searchLight;
-			visorEmission = search;
-			// visorEmission.SetColor ("_EmissiveColor", search);
-			// visorEmission.EnableKeyword ("_EMISSION");
+			//visorEmission = search;
+			visorEmission.SetColor ("_EmissiveColor", searchLight);
+			visorEmission.EnableKeyword ("_EMISSION");
 
 			// Change state
 			if(isPlayerVisible)
@@ -268,9 +268,9 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 			wasFollowingPlayer = true;
 			agent.speed = chaseSpeed;
 			lightvisor.color = chaseLight;
-			visorEmission = chase;
-			// visorEmission.SetColor ("_EmissiveColor", chase);
-			// visorEmission.EnableKeyword ("_EMISSION");
+			//visorEmission = chase;
+			visorEmission.SetColor ("_EmissiveColor", chaseLight * 10000);
+			visorEmission.EnableKeyword ("_EMISSION");
 			if((agent.transform.position - playerLastSeen).magnitude < 1)
 			{
 				CurrentState = AIStates.Searching;
@@ -294,7 +294,7 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 				//LookForPlayer();
 				lightvisor.color = investigateLight;
 				timer -= Time.deltaTime;
-				visorEmission = investigate;
+				//visorEmission = investigate;
 				anim.SetBool("walking", true);
 				if(agent.remainingDistance <= 0.5)
 				{
@@ -313,8 +313,8 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 				}
 				
 
-				// visorEmission.SetColor ("_EmissiveColor", investigate);
-				// visorEmission.EnableKeyword ("_EMISSION");
+				visorEmission.SetColor ("_EmissiveColor", investigateLight);
+				visorEmission.EnableKeyword ("_EMISSION");
 			}
 			else
 			{
@@ -325,9 +325,9 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 						agent.SetDestination (soundSource);
 						lookingforplayer = true;
 						lightvisor.color = investigateLight;
-						visorEmission = investigate;
-						// visorEmission.SetColor ("_EmissiveColor", investigate);
-						// visorEmission.EnableKeyword ("_EMISSION");
+						//visorEmission = investigate;
+						visorEmission.SetColor ("_EmissiveColor", investigateLight);
+						visorEmission.EnableKeyword ("_EMISSION");
 						agent.speed = normalWalkSpeed;
 						anim.SetBool("searching", false);
 						anim.SetBool("walking", true);
@@ -406,7 +406,9 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 				//set the current looking rotation the direction the target is at
 				lookRotation = Quaternion.LookRotation(direction);
 				lightvisor.color = investigateLight;
-				visorEmission = investigate;
+				//visorEmission = investigate;
+				visorEmission.SetColor ("_EmissiveColor", investigateLight);
+				visorEmission.EnableKeyword ("_EMISSION");
 				transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime);
 				anim.SetBool("walking", false);
 				anim.SetBool("idle", true);
@@ -431,6 +433,7 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 
 		Debug.Log(CurrentState.ToString());
 		Debug.Log(" can attack again: " + canAttackAgain + ", time until next attack: " + attackCoolDown + ", bool of animaition attack: "+ anim.GetBool("attack"));
+		
 	}
 	public static Vector3 RandomNavSphere(Vector3 origin, float distance, int layermask)
 	{
