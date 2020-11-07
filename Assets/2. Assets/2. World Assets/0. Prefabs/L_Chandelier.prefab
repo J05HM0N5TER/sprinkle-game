@@ -22,6 +22,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8492776723688831153}
+  - component: {fileID: 3306172307481392919}
   m_Layer: 0
   m_Name: L_Chandelier
   m_TagString: Untagged
@@ -44,6 +45,25 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!205 &3306172307481392919
+LODGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8492776723688831152}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: 0.00000023841858, y: -1.8430454, z: -0.00000011920929}
+  m_Size: 3.7195504
+  m_FadeMode: 0
+  m_AnimateCrossFading: 0
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0.08196268
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 2216154145235156771}
+  m_Enabled: 1
 --- !u!1001 &8492776722844701430
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -137,6 +157,12 @@ GameObject:
 --- !u!4 &3505722045315217900 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: fa4746451a1b8004491a3941eb098afe,
+    type: 3}
+  m_PrefabInstance: {fileID: 8492776722844701430}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &2216154145235156771 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -1504981713932161579, guid: fa4746451a1b8004491a3941eb098afe,
     type: 3}
   m_PrefabInstance: {fileID: 8492776722844701430}
   m_PrefabAsset: {fileID: 0}

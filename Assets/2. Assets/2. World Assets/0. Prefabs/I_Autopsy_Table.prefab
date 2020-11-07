@@ -35,6 +35,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4073994112284537831}
+  - component: {fileID: 908629726613569039}
   m_Layer: 0
   m_Name: I_Autopsy_Table
   m_TagString: Untagged
@@ -57,6 +58,25 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!205 &908629726613569039
+LODGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4073994112284537824}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: 0, y: 0.575, z: 0}
+  m_Size: 3.074367
+  m_FadeMode: 0
+  m_AnimateCrossFading: 0
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0.026665201
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 4073994111979097975}
+  m_Enabled: 1
 --- !u!1001 &4073994111981393687
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -131,6 +151,12 @@ GameObject:
 --- !u!4 &4073994111980998039 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 7abc69a455d45e844829398bf6780240,
+    type: 3}
+  m_PrefabInstance: {fileID: 4073994111981393687}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &4073994111979097975 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 2300000, guid: 7abc69a455d45e844829398bf6780240,
     type: 3}
   m_PrefabInstance: {fileID: 4073994111981393687}
   m_PrefabAsset: {fileID: 0}
