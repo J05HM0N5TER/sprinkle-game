@@ -11,11 +11,11 @@ public class CreditsTimer : MonoBehaviour
     public string nextScene;
     public GameObject Thankyou;
 
-    void Start()
-    {
-        //StartCoroutine("LoseTime");
-        //Time.timeScale = 1; //Setting the correct time scale
-    }
+    //void Start()
+    //{
+    //    //StartCoroutine("LoseTime");
+    //    //Time.timeScale = 1; //Setting the correct time scale
+    //}
     void FixedUpdate()
     {
         timeLeft -= Time.deltaTime;

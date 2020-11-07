@@ -3599,7 +3599,7 @@ GameObject:
   - component: {fileID: 700152972}
   m_Layer: 10
   m_Name: MainMenuCamera
-  m_TagString: Untagged
+  m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5900,17 +5900,17 @@ PrefabInstance:
     - target: {fileID: 5137496257752083823, guid: cc555332403ef4446bfd25cbd9e26564,
         type: 3}
       propertyPath: m_textInfo.characterCount
-      value: 18
+      value: 21
       objectReference: {fileID: 0}
     - target: {fileID: 5137496257752083823, guid: cc555332403ef4446bfd25cbd9e26564,
         type: 3}
       propertyPath: m_textInfo.spaceCount
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5137496257752083823, guid: cc555332403ef4446bfd25cbd9e26564,
         type: 3}
       propertyPath: m_textInfo.wordCount
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 5137496257752083823, guid: cc555332403ef4446bfd25cbd9e26564,
         type: 3}
@@ -5925,7 +5925,7 @@ PrefabInstance:
     - target: {fileID: 5137496257752083823, guid: cc555332403ef4446bfd25cbd9e26564,
         type: 3}
       propertyPath: m_text
-      value: November 10th 2020
+      value: Deep Space Station 13
       objectReference: {fileID: 0}
     - target: {fileID: 5137496257752083823, guid: cc555332403ef4446bfd25cbd9e26564,
         type: 3}
@@ -5952,12 +5952,22 @@ PrefabInstance:
     - target: {fileID: 5137496257752083823, guid: cc555332403ef4446bfd25cbd9e26564,
         type: 3}
       propertyPath: m_firstOverflowCharacterIndex
-      value: 0
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 5137496257752083823, guid: cc555332403ef4446bfd25cbd9e26564,
         type: 3}
       propertyPath: m_fontStyle
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5137496257752083823, guid: cc555332403ef4446bfd25cbd9e26564,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 3.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5137496257752083823, guid: cc555332403ef4446bfd25cbd9e26564,
+        type: 3}
+      propertyPath: m_fontSizeBase
+      value: 3.5
       objectReference: {fileID: 0}
     - target: {fileID: 5875510414043631854, guid: cc555332403ef4446bfd25cbd9e26564,
         type: 3}
@@ -10888,11 +10898,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Security_Camera
       objectReference: {fileID: 0}
-    - target: {fileID: 1193554325630033754, guid: b05d832c76e87be40971d2ae0e2e2c68,
-        type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 4294967295
-      objectReference: {fileID: 0}
     - target: {fileID: 1193554325630033755, guid: b05d832c76e87be40971d2ae0e2e2c68,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -10948,30 +10953,7 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1888597790696705799, guid: b05d832c76e87be40971d2ae0e2e2c68,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.019012744
-      objectReference: {fileID: 0}
-    - target: {fileID: 1888597790696705799, guid: b05d832c76e87be40971d2ae0e2e2c68,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3040450411406294385, guid: b05d832c76e87be40971d2ae0e2e2c68,
-        type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 4294967295
-      objectReference: {fileID: 0}
-    - target: {fileID: 7183723281723710338, guid: b05d832c76e87be40971d2ae0e2e2c68,
-        type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 4294967295
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 7645900953091783708, guid: b05d832c76e87be40971d2ae0e2e2c68, type: 3}
-    - {fileID: 9060875025365168158, guid: b05d832c76e87be40971d2ae0e2e2c68, type: 3}
-    - {fileID: 6761852374866755221, guid: b05d832c76e87be40971d2ae0e2e2c68, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b05d832c76e87be40971d2ae0e2e2c68, type: 3}
 --- !u!4 &1900378110 stripped
 Transform:
