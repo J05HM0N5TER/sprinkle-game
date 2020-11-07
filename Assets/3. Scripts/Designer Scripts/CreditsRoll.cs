@@ -8,7 +8,7 @@ public class CreditsRoll : MonoBehaviour
     public int travelDistance;
     public float moveSpeed;
 
-    void Update()
+    void FixedUpdate()
     {
         Vector2 pos = creditsPanel.transform.position;
         for (int i = 0; i < travelDistance; i++)

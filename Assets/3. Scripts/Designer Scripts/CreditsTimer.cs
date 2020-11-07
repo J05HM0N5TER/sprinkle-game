@@ -6,27 +6,26 @@ using System.Threading;
 
 public class CreditsTimer : MonoBehaviour
 {
-
-    public int timeLeft = 60; //Seconds overall
+    public float timeLeft = 60f;
     public Text countdown; //UI countdown timer
     public string nextScene;
     public GameObject Thankyou;
 
     void Start()
     {
-        StartCoroutine("LoseTime");
-        Time.timeScale = 1; //Setting the correct time scale
+        //StartCoroutine("LoseTime");
+        //Time.timeScale = 1; //Setting the correct time scale
     }
-    void Update()
+    void FixedUpdate()
     {
+        timeLeft -= Time.deltaTime;
         countdown.text = ("" + timeLeft); //Showing the time on the Canvas
-
         if (timeLeft <= 0.0f)
         {
             UnityEngine.SceneManagement.SceneManager.LoadScene(nextScene);
         }
 
-        if (timeLeft <= 7.0f)
+        if (timeLeft <= 5.0f)
         {
             Thankyou.SetActive(true);
         }
@@ -37,15 +36,15 @@ public class CreditsTimer : MonoBehaviour
         }
 
     }
-    //Coroutine
-    IEnumerator LoseTime()
-    {
-        while (true)
-        {
-            yield return new WaitForSeconds(1);
-            timeLeft--;
-        }
+    ////Coroutine
+    //IEnumerator LoseTime()
+    //{
+    //    while (true)
+    //    {
+    //        yield return new WaitForSeconds(1);
+    //        timeLeft--;
+    //    }
 
-    }
+    //}
 
 }
