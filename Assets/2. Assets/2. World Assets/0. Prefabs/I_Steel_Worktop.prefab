@@ -51,8 +51,8 @@ LODGroup:
     renderers:
     - renderer: {fileID: 4523381333672131050}
   m_Enabled: 1
---- !u!64 &4523381333670224271
-MeshCollider:
+--- !u!65 &2491805303796630661
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -61,10 +61,22 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Convex: 0
-  m_CookingOptions: 14
-  m_Mesh: {fileID: 4300000, guid: b8d30c9b6630c3f40a5f34be0b271cc8, type: 3}
+  serializedVersion: 2
+  m_Size: {x: 184.10432, y: 117.88694, z: 100.36606}
+  m_Center: {x: 0, y: 58.94347, z: 0}
+--- !u!65 &937255001373084986
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4523381333670127402}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 184.10432, y: 22.06409, z: 1.9263744}
+  m_Center: {x: 0, y: 124.32507, z: -47.84958}
 --- !u!1001 &4523381333670224266
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -94,15 +106,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: b8d30c9b6630c3f40a5f34be0b271cc8, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: b8d30c9b6630c3f40a5f34be0b271cc8, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: b8d30c9b6630c3f40a5f34be0b271cc8, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: b8d30c9b6630c3f40a5f34be0b271cc8, type: 3}
       propertyPath: m_LocalRotation.w
