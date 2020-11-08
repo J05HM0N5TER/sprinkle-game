@@ -88,6 +88,10 @@ public class PlayerController : MonoBehaviour, IXmlSerializable
 	private CollisionNoiseManager noiseManager;
 	// The players camera
 	private Camera playerCamera;
+
+	public float currentFOV;
+	public float FOVSPeedChange = 0.4f;
+	private float FOVInterp = 0.0f;
 	// Start is called before the first frame update
 	void Start()
 	{
@@ -121,12 +125,21 @@ public class PlayerController : MonoBehaviour, IXmlSerializable
 
 		// Modify speed based on if the player is crouching
 		float currentSpeed = isCrouching ? crouchSpeed : speed;
-
+		
+		if(Input.GetKey(KeyCode.S))
+		{
+			currentSpeed *= 0.6f; 
+		}
+		
 		// Move the player using the input, keep the downwards velocity for when they fall.
 		Vector3 vel = new Vector3(0, rb.velocity.y, 0);
+		
 		vel += gameObject.transform.forward * input.z * currentSpeed;
 		vel += gameObject.transform.right * input.x * currentSpeed;
+		
 		rb.velocity = vel;
+		
+		
 	}
 
 	// Update is called once per frame
@@ -140,14 +153,18 @@ public class PlayerController : MonoBehaviour, IXmlSerializable
 			rb.AddForce(gameObject.transform.up * (isCrouching ? couchJumpForce : jumpForce));
 		}
 		Crouch();
-		// if (health <= 0)
-		// {
-		// 	//GameObject.FindObjectOfType<GameManager>();
-		// 	GameObject.Find("PauseManager").GetComponent<PauseMenu>().PauseGame();
-		// }
+		
 		if (Input.GetButton("Sprint") && !isCrouching && (gameObject.GetComponent<Rigidbody>().velocity.magnitude >= 0.1))
 		{
-			playerCamera.fieldOfView = sprintFOV;
+			currentFOV = playerCamera.fieldOfView;
+			if (currentFOV < sprintFOV)
+            {
+				playerCamera.fieldOfView = Mathf.Lerp(walkFOV, sprintFOV, FOVInterp);
+				FOVInterp += FOVSPeedChange * Time.deltaTime;
+				FOVInterp = Mathf.Clamp(FOVInterp, 0, 1);
+			}
+			//playerCamera.fieldOfView = sprintFOV;
+			
 			speed = sprintSpeed;
 			
 			foreach (var suit in suits)
@@ -160,9 +177,13 @@ public class PlayerController : MonoBehaviour, IXmlSerializable
 				//makingsound = true;
 			
 		}
-		else
+		else if(currentFOV > walkFOV)
 		{
-			playerCamera.fieldOfView = walkFOV;
+
+			playerCamera.fieldOfView = Mathf.Lerp(walkFOV, sprintFOV, FOVInterp);
+			FOVInterp += -FOVSPeedChange * Time.deltaTime;
+			FOVInterp = Mathf.Clamp(FOVInterp, 0, 1);
+			currentFOV = playerCamera.fieldOfView;
 			speed = walkspeed;
 			
 

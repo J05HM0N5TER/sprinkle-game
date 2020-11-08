@@ -15,6 +15,7 @@ public class Reticle : MonoBehaviour
     void Start()
     {
         playerCamera = gameObject.GetComponent<Camera>();
+        
 
     }
 
@@ -36,6 +37,12 @@ public class Reticle : MonoBehaviour
             {
                 grabIcon.SetActive(true);
             }
+            else 
+            {
+                lootIcon.SetActive(false);
+                pressIcon.SetActive(false);
+                grabIcon.SetActive(false);
+            }
         }
         else
         {
@@ -43,40 +50,5 @@ public class Reticle : MonoBehaviour
             pressIcon.SetActive(false);
             grabIcon.SetActive(false);
         }
-        // if(RayOut.collider == null)
-        // {
-        //     lootIcon.SetActive(false);
-        //     pressIcon.SetActive(false);
-        //     grabIcon.SetActive(false);
-        //     //Debug.Log("didnt hit shit");
-        // }
-        // if (Physics.Raycast(ray, out RaycastHit hit, grabDistance) && hit.collider.gameObject.tag == "keyitem")
-        // {
-        //     lootIcon.SetActive(true);
-        // }
-        // if (Physics.Raycast(ray, out RaycastHit hit, grabDistance) && hit.collider.gameObject.tag == "Interact")
-        // {
-        //     pressIcon.SetActive(true);
-        // }
-        // if (Physics.Raycast(ray, out RaycastHit hit, grabDistance) && hit.collider.gameObject.tag == "keyitem")
-        // {
-
-        // }
-        // if(RayOut.collider. == "Keyitem")
-        // {
-        //     lootIcon.SetActive(true);
-        // }
-        // else if(RayOut.collider.gameObject.layer == LayerMask.NameToLayer("Interact"))
-        // {
-        //     pressIcon.SetActive(true);
-        // }
-        // else if (RayOut.collider.gameObject.layer == LayerMask.NameToLayer("Dynamic"))
-        // {
-        //     grabIcon.SetActive(true);
-        // }
-        // else 
-        // {
-        //     return;
-        // }
     }
 }

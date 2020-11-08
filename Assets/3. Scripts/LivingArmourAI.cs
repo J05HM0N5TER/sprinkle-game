@@ -164,8 +164,8 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 		// Debug view
 		isPlayerVisible = playerInScreenBounds && !rayObstructed;
 		// TODO: Check that the player can't be seen, this it for when the AI catches the player
-	
-		if((agent.transform.position - playerLastSeen).magnitude < attackDistance && isPlayerVisible && canAttackAgain)
+		//TODO: add this into the chasing
+		if(((agent.transform.position - player.transform.position).magnitude < attackDistance) && isPlayerVisible && canAttackAgain)
 		{
 			player.GetComponent<PlayerController>().health -= 1;
 			if(player.GetComponent<PlayerController>().health <= 0)
@@ -358,7 +358,6 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 		//TODO: make sure animations stop on the living suits
 		if(CurrentState == AIStates.SwapSuit)
 		{
-			
 			suits = GameObject.FindGameObjectsWithTag ("Suit");
 			currentSuit = gameObject;
 			foreach (GameObject suit in suits)
@@ -384,8 +383,10 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 			//! : check if this is still bugged, if range is too small then the suit will turn itself off, if bug is persistant add timer maybe.
 			if ((closestSuit != currentSuit) && canSwapSuitAgain)
 			{
+				anim.enabled = false;
 				print("changing suit " + closestSuit.name);
 				closestSuit.GetComponent<LivingArmourAI>().enabled = true;
+				closestSuit.GetComponent<LivingArmourAI>().anim.enabled = true;
 				currentSuit = closestSuit;
 				this.enabled = false;
 				canSwapSuitAgain = false;
@@ -427,7 +428,6 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 					detectionTimer = detectionTimerReset;
 					crouchDetectionTimer = crouchDetectionTimerReset;
 				}
-				
 			}
 		}
 
