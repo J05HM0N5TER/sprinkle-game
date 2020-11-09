@@ -83,12 +83,23 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 	//attacking player stuff
 	public float attackDistance = 3;
 	public float attackCoolDown = 1;
+	public float stopafterattacktime = 1;
+	private float stopafterattacktimereset;
 	private float attackcooldownreset;
 	public bool canAttackAgain = true;
+	public float knockBack = 5000;
 
 	private Animator anim;
 	public float lookAroundTimer = 4;
 	private float lookAroundTimerReset;
+
+	
+	public float detectionTimer = 1;
+	private float detectionTimerReset;
+	public float crouchDetectionTimer = 2;
+	private float crouchDetectionTimerReset;
+	private Quaternion lookRotation;
+    private Vector3 direction;
 
 	public enum AIStates
 	{
@@ -96,7 +107,8 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 		Wondering, // roaming the map
 		Chasing, // chasing the player 
 		Searching, // searching around for player at last seen pos / going to sound
-		SwapSuit // player to far so swap suit
+		SwapSuit, // player to far so swap suit
+		DetectingPlayer // seeing and detection timer stuff
 	}
 	AIStates CurrentState;
 	public bool busyWithState;
@@ -111,10 +123,10 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 		lightvisor.color = searchLight;
 		resettimer = timer;
 		agent.speed = normalWalkSpeed;
-		visorEmission = search;
-		// visorEmission.SetColor("_EmissiveColor", search);
-		// visorEmission.EnableKeyword("_EMISSION");
-		//visorEmission.color = search;
+		//visorEmission = search;
+		visorEmission.SetColor("_EmissiveColor", searchLight);
+		visorEmission.EnableKeyword("_EMISSION");
+		visorEmission.color = searchLight;
 		agent.autoBraking = true;
 		agent.acceleration = 20;
 
@@ -129,6 +141,10 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 		anim.gameObject.GetComponent<Animator>().enabled = true;
 
 		lookAroundTimerReset = lookAroundTimer;
+		stopafterattacktimereset = stopafterattacktime;
+		detectionTimerReset = detectionTimer;
+		crouchDetectionTimerReset = crouchDetectionTimer;
+		
 
 
 	}
@@ -148,13 +164,21 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 		// Debug view
 		isPlayerVisible = playerInScreenBounds && !rayObstructed;
 		// TODO: Check that the player can't be seen, this it for when the AI catches the player
-	
-		if((agent.transform.position - playerLastSeen).magnitude < attackDistance && isPlayerVisible && canAttackAgain)
+		//TODO: add this into the chasing
+		if(((agent.transform.position - player.transform.position).magnitude < attackDistance) && isPlayerVisible && canAttackAgain)
 		{
 			player.GetComponent<PlayerController>().health -= 1;
+			if(player.GetComponent<PlayerController>().health <= 0)
+			{
+				GameObject.Find("PauseManager").GetComponent<PauseMenu>().PauseGame();
+			}
 			anim.SetBool("attack", true);
+			var dir = (player.transform.position - transform.position).normalized;
+			player.GetComponent<Rigidbody>().AddForce(knockBack * dir);
 			//anim.SetBool("attack", false);
 			canAttackAgain = false;
+			CurrentState = AIStates.Idle;
+
 			//attackcooldown();
 		}
 		if (!canAttackAgain)
@@ -162,6 +186,7 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 			attackCoolDown -= Time.deltaTime;
 			if (attackCoolDown <= 0)
 			{
+				
 				canAttackAgain = true;
 				attackCoolDown = attackcooldownreset;
 			}
@@ -171,10 +196,10 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 		//TODO: add in information sharing
 
 		
-		// if(agent.velocity.magnitude >= 0.1f)
-		// {
-		// 	anim.SetBool("walking", true);
-		// }
+		if(agent.velocity.magnitude >= 0.1f)
+		{
+			anim.SetBool("walking", true);
+		}
 		anim.speed = agent.speed / 2;
 
 		
@@ -182,14 +207,25 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 		{
 			CurrentState = AIStates.SwapSuit;
 		}
-
 		
 		if(CurrentState == AIStates.Idle)
 		{
-
+			agent.isStopped = true;
+			if(CurrentState == AIStates.Idle)
+			{
+				stopafterattacktime -= Time.deltaTime;
+				if(stopafterattacktime <= 0)
+				{
+					stopafterattacktime = stopafterattacktimereset;
+					anim.SetBool("attack", false);
+					agent.isStopped = false;
+					CurrentState = AIStates.Searching;
+				}
+			}
 		}
 		if(CurrentState == AIStates.Wondering)
 		{
+			
 			anim.SetBool("walking", true);
 			if (agent.remainingDistance <= 1)
 			{
@@ -203,14 +239,14 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 				
 			}
 			lightvisor.color = searchLight;
-			visorEmission = search;
-			// visorEmission.SetColor ("_EmissiveColor", search);
-			// visorEmission.EnableKeyword ("_EMISSION");
+			//visorEmission = search;
+			visorEmission.SetColor ("_EmissiveColor", searchLight);
+			visorEmission.EnableKeyword ("_EMISSION");
 
 			// Change state
 			if(isPlayerVisible)
 			{
-				CurrentState = AIStates.Chasing;
+				CurrentState = AIStates.DetectingPlayer;
 			}
 			else if((!wasFollowingPlayer || !isPlayerVisible) && soundSources.Count >= 1)
 			{
@@ -219,6 +255,7 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 		}
 		if(CurrentState == AIStates.Chasing)
 		{
+			
 			anim.SetBool("running", true);
 			anim.SetBool("walking", false);
 			if(isPlayerVisible)
@@ -231,9 +268,9 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 			wasFollowingPlayer = true;
 			agent.speed = chaseSpeed;
 			lightvisor.color = chaseLight;
-			visorEmission = chase;
-			// visorEmission.SetColor ("_EmissiveColor", chase);
-			// visorEmission.EnableKeyword ("_EMISSION");
+			//visorEmission = chase;
+			visorEmission.SetColor ("_EmissiveColor", chaseLight * 10000);
+			visorEmission.EnableKeyword ("_EMISSION");
 			if((agent.transform.position - playerLastSeen).magnitude < 1)
 			{
 				CurrentState = AIStates.Searching;
@@ -243,7 +280,8 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 		}
 		if(CurrentState == AIStates.Searching)
 		{
-			anim.SetBool("attack", false);
+			
+			anim.SetBool("walking", true);
 			if(soundSources.Count == 0)
 			{
 				// if (agent.remainingDistance <= 0.5)
@@ -256,7 +294,7 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 				//LookForPlayer();
 				lightvisor.color = investigateLight;
 				timer -= Time.deltaTime;
-				visorEmission = investigate;
+				//visorEmission = investigate;
 				anim.SetBool("walking", true);
 				if(agent.remainingDistance <= 0.5)
 				{
@@ -266,16 +304,17 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 					anim.SetBool("walking", false);
 					if(lookAroundTimer <= 0)
 					{
-						agent.SetDestination (RandomNavSphere (agent.GetComponent<Transform> ().position, wonderDistance, NavMesh.AllAreas));
-						lookAroundTimer = lookAroundTimerReset;
 						anim.SetBool("searching", false);
 						anim.SetBool("walking", true);
+						agent.SetDestination (RandomNavSphere (agent.GetComponent<Transform> ().position, wonderDistance, NavMesh.AllAreas));
+						lookAroundTimer = lookAroundTimerReset;
+						
 					}
 				}
 				
 
-				// visorEmission.SetColor ("_EmissiveColor", investigate);
-				// visorEmission.EnableKeyword ("_EMISSION");
+				visorEmission.SetColor ("_EmissiveColor", investigateLight);
+				visorEmission.EnableKeyword ("_EMISSION");
 			}
 			else
 			{
@@ -286,10 +325,12 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 						agent.SetDestination (soundSource);
 						lookingforplayer = true;
 						lightvisor.color = investigateLight;
-						visorEmission = investigate;
-						// visorEmission.SetColor ("_EmissiveColor", investigate);
-						// visorEmission.EnableKeyword ("_EMISSION");
+						//visorEmission = investigate;
+						visorEmission.SetColor ("_EmissiveColor", investigateLight);
+						visorEmission.EnableKeyword ("_EMISSION");
 						agent.speed = normalWalkSpeed;
+						anim.SetBool("searching", false);
+						anim.SetBool("walking", true);
 					}
 					if ((agent.transform.position - soundSource).magnitude < 0.5f)
 					{
@@ -306,6 +347,7 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 				//lightvisor.color = search;
 				timer = resettimer;
 				CurrentState = AIStates.Wondering;
+				anim.SetBool("searching", false);
 				// Debug.Log("Timer Up", this);
 			}
 			if(isPlayerVisible)
@@ -316,7 +358,6 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 		//TODO: make sure animations stop on the living suits
 		if(CurrentState == AIStates.SwapSuit)
 		{
-			
 			suits = GameObject.FindGameObjectsWithTag ("Suit");
 			currentSuit = gameObject;
 			foreach (GameObject suit in suits)
@@ -342,8 +383,10 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 			//! : check if this is still bugged, if range is too small then the suit will turn itself off, if bug is persistant add timer maybe.
 			if ((closestSuit != currentSuit) && canSwapSuitAgain)
 			{
+				anim.enabled = false;
 				print("changing suit " + closestSuit.name);
 				closestSuit.GetComponent<LivingArmourAI>().enabled = true;
+				closestSuit.GetComponent<LivingArmourAI>().anim.enabled = true;
 				currentSuit = closestSuit;
 				this.enabled = false;
 				canSwapSuitAgain = false;
@@ -354,8 +397,43 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 				Debug.LogError("Couldn't find valid point");
 			}
 		}
+		if(CurrentState == AIStates.DetectingPlayer)
+		{
+			
+			if(isPlayerVisible)
+			{
+				agent.isStopped = true;
+				direction = (player.transform.position - transform.position).normalized;
+				//set the current looking rotation the direction the target is at
+				lookRotation = Quaternion.LookRotation(direction);
+				lightvisor.color = investigateLight;
+				//visorEmission = investigate;
+				visorEmission.SetColor ("_EmissiveColor", investigateLight);
+				visorEmission.EnableKeyword ("_EMISSION");
+				transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime);
+				anim.SetBool("walking", false);
+				anim.SetBool("idle", true);
+				if(player.GetComponent<PlayerController>().isCrouching)
+				{
+					crouchDetectionTimer -= Time.deltaTime;
+				}
+				else
+				{
+					detectionTimer -= Time.deltaTime;
+				}
+				if(detectionTimer <= 0 || crouchDetectionTimer <= 0)
+				{
+					agent.isStopped = false;
+					CurrentState = AIStates.Chasing;
+					detectionTimer = detectionTimerReset;
+					crouchDetectionTimer = crouchDetectionTimerReset;
+				}
+			}
+		}
 
 		Debug.Log(CurrentState.ToString());
+		Debug.Log(" can attack again: " + canAttackAgain + ", time until next attack: " + attackCoolDown + ", bool of animaition attack: "+ anim.GetBool("attack"));
+		
 	}
 	public static Vector3 RandomNavSphere(Vector3 origin, float distance, int layermask)
 	{

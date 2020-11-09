@@ -27,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 196430329}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0, y: 1.206, z: -0.198}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1376844649919263993}
@@ -44,8 +44,8 @@ Light:
   serializedVersion: 9
   m_Type: 2
   m_Color: {r: 0.9162809, g: 0.9103774, b: 1, a: 1}
-  m_Intensity: 524288
-  m_Range: 15
+  m_Intensity: 131072
+  m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
@@ -126,13 +126,13 @@ MonoBehaviour:
   shapeHeight: 0.5
   aspectRatio: 1
   shapeRadius: 0
-  maxSmoothness: 0.35
+  maxSmoothness: 0.25
   applyRangeAttenuation: 1
   useOldInspector: 0
   useVolumetric: 1
   featuresFoldout: 1
   showAdditionalSettings: 0
-  displayLightIntensity: 22
+  displayLightIntensity: 20
   displayAreaLightEmissiveMesh: 0
   areaLightCookie: {fileID: 0}
   areaLightShadowCone: 120
@@ -165,7 +165,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Version: 1
-  shadowResolution: 1080
+  shadowResolution: 512
   shadowDimmer: 1
   volumetricShadowDimmer: 1
   shadowFadeDistance: 10000
@@ -339,7 +339,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &916796668
 Transform:
   m_ObjectHideFlags: 0
@@ -645,18 +645,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc56d65854554404e9931f8062cb785d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 4.7
+  speed: 4.5
   groundDistance: 0.04
   jumpForce: 300
-  sprintSpeed: 7
+  sprintSpeed: 6.5
+  walkFOV: 75
+  sprintFOV: 85
   crouchHeight: 0.373
   crouchTransitionTime: 0.2
-  crouchSpeed: 3
-  couchJumpForce: 250
+  isCrouching: 0
+  crouchSpeed: 2
+  couchJumpForce: 300
   inventory: 64
   medSyringes: 0
   batteryPacks: 0
   health: 3
+  currentFOV: 0
+  FOVSPeedChange: 16
 --- !u!33 &1376844649919263992
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -746,6 +751,7 @@ GameObject:
   - component: {fileID: 7590235112788743765}
   - component: {fileID: 8365309257839724994}
   - component: {fileID: 1376844650062081159}
+  - component: {fileID: 9045914602888049845}
   m_Layer: 10
   m_Name: Camera
   m_TagString: MainCamera
@@ -761,7 +767,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6416419460254581596}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.2, z: 0}
+  m_LocalPosition: {x: -0, y: 1.3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1376844649919263993}
@@ -951,6 +957,22 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+--- !u!114 &9045914602888049845
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6416419460254581596}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 870c94ef46d292143a21d37110200b1c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lootIcon: {fileID: 0}
+  pressIcon: {fileID: 0}
+  grabIcon: {fileID: 0}
+  grabDistance: 3
 --- !u!114 &6183614188393528494
 MonoBehaviour:
   m_ObjectHideFlags: 0

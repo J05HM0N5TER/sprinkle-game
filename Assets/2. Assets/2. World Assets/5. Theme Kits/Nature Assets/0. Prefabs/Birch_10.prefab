@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 459420}
   - component: {fileID: 3379262}
   - component: {fileID: 2394354}
+  - component: {fileID: -420705917926549005}
   m_Layer: 0
   m_Name: Birch_10
   m_TagString: Untagged
@@ -82,3 +83,22 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!205 &-420705917926549005
+LODGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 139582}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: 0.30706787, y: 4.6219053, z: -0.48528767}
+  m_Size: 9.548794
+  m_FadeMode: 0
+  m_AnimateCrossFading: 0
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0.09517849
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 2394354}
+  m_Enabled: 1

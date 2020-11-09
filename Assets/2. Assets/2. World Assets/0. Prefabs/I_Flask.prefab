@@ -16,19 +16,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!65 &5287354929024448116
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1396388078828477497}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.09234569, y: 0.28251114, z: 0.088796325}
-  m_Center: {x: -0.000018212944, y: 0.14125551, z: 0.0006800536}
 --- !u!65 &2918203745891046593
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -42,6 +29,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.25150782, y: 0.026749149, z: 0.24520186}
   m_Center: {x: 1.009742e-28, y: 0.013374515, z: 0.000000029802322}
+--- !u!65 &5287354929024448116
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1396388078828477497}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.09234569, y: 0.28251114, z: 0.088796325}
+  m_Center: {x: -0.000018212944, y: 0.14125551, z: 0.0006800536}
 --- !u!1 &3258859989394164048
 GameObject:
   m_ObjectHideFlags: 0
@@ -51,6 +51,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 31475762067491249}
+  - component: {fileID: 4148093968280587023}
   m_Layer: 0
   m_Name: I_Flask
   m_TagString: Untagged
@@ -73,6 +74,25 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!205 &4148093968280587023
+LODGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3258859989394164048}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: 0, y: 0.14125551, z: 0.000000029802322}
+  m_Size: 0.28251114
+  m_FadeMode: 0
+  m_AnimateCrossFading: 0
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0.006882784
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 818566081394993381}
+  m_Enabled: 1
 --- !u!1001 &6935854146652603696
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -161,6 +181,12 @@ GameObject:
 --- !u!4 &2682929694948437546 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: 0f99592438e7d24458f0136e7abae14b,
+    type: 3}
+  m_PrefabInstance: {fileID: 6935854146652603696}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &818566081394993381 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -1504981713932161579, guid: 0f99592438e7d24458f0136e7abae14b,
     type: 3}
   m_PrefabInstance: {fileID: 6935854146652603696}
   m_PrefabAsset: {fileID: 0}

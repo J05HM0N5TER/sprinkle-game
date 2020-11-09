@@ -39,7 +39,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8982077944449506249}
   serializedVersion: 2
-  m_Mass: 3
+  m_Mass: 2
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -125,12 +125,12 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: 00e032cf148e61946881f61e50b04ffc,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.99
+      value: 1.01
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 00e032cf148e61946881f61e50b04ffc,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.99
+      value: 1.01
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 00e032cf148e61946881f61e50b04ffc,
         type: 3}
@@ -141,7 +141,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: a1da4897b4118c74ea6522601018b7a8, type: 2}
+      objectReference: {fileID: 2100000, guid: 1468a1d3536a273478667122516bb658, type: 2}
     - target: {fileID: -927199367670048503, guid: 00e032cf148e61946881f61e50b04ffc,
         type: 3}
       propertyPath: m_Name

@@ -11,8 +11,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.08930725, y: 0.6068458, z: 0.09306701}
-  m_Center: {x: 0, y: 0.3034229, z: 0.0018798821}
+  m_Size: {x: 0.10010635, y: 0.8136734, z: 0.12207468}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &7723011867557251828
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -124,11 +124,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 2eb2f53e0cc64ef49981309476b7ac36, type: 2}
+      objectReference: {fileID: 2100000, guid: 2374de1c5e111e348bf9ca668bd5eaf9, type: 2}
     - target: {fileID: -927199367670048503, guid: 35fe18e30a60e5648925bcf654f4158a,
         type: 3}
       propertyPath: m_Name
       value: Soldering_Iron
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 35fe18e30a60e5648925bcf654f4158a,
+        type: 3}
+      propertyPath: m_TagString
+      value: Keyitem
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 35fe18e30a60e5648925bcf654f4158a, type: 3}
