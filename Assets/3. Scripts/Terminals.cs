@@ -9,7 +9,7 @@ public class Terminals : MonoBehaviour
 	public GameObject doorToOpen;
 	[Tooltip("They keycard that is needed to use the terminal")]
 	public PlayerController.Inventory neededKeyCard;
-	private PlayerController player;
+	private PlayerController playerinv;
 	[Tooltip("the max distance that the player can be from the terminal and still interact with it")]
 	public float maxDistanceToInteract = 2;
 	public bool brokenTerminal = false;
@@ -23,12 +23,13 @@ public class Terminals : MonoBehaviour
 	public GameObject screen;
 
 	public Material[] mats;
-	
+	private CameraControl cameraControl;
 	// Start is called before the first frame update
 	void Start()
 	{
 		cameraControl = FindObjectOfType<CameraControl>();
-		player = GameObject.FindGameObjectWithTag("Player")?.GetComponent<PlayerController>();
+		
+		playerinv = GameObject.FindGameObjectWithTag("Player")?.GetComponent<PlayerController>();
 		ps = brokenParticles.GetComponent<ParticleSystem>();
 		var em = ps.emission;
 		if (brokenTerminal)
@@ -80,7 +81,7 @@ public class Terminals : MonoBehaviour
 					// Unlock Animation
 					gameObject.GetComponent<Animator>().SetTrigger("Unlock");
 				}
-				if (player.inventory.HasFlag(PlayerController.Inventory.SolderingIron) && brokenTerminal)
+				if (playerinv.inventory.HasFlag(PlayerController.Inventory.SolderingIron) && brokenTerminal)
 				{
 					brokenTerminal = false;
 					var em = ps.emission;
@@ -91,9 +92,6 @@ public class Terminals : MonoBehaviour
 				UpdateDisplay();
 			}
 		}
-		// mats = gameObject.GetComponent<Renderer>().materials;
-		// mats[1] = unlockedMaterial;
-		// gameObject.GetComponent<Renderer>().materials = mats;
 		UpdateDisplay();
 	}
 
@@ -136,7 +134,7 @@ public class Terminals : MonoBehaviour
 
 	private bool PlayerHasKeyCards()
 	{
-		return (player.inventory & neededKeyCard) == neededKeyCard;
+		return (playerinv.inventory & neededKeyCard) == neededKeyCard;
 	}
 
 	private void SetColours(Color newColor)

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 1546.7443, g: 2180.7847, b: 3457.941, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -25904,21 +25904,6 @@ PrefabInstance:
       propertyPath: doorToOpen
       value: 
       objectReference: {fileID: 186670640}
-    - target: {fileID: 5354241723790479219, guid: e7024e7595042d54d974c44c3f727661,
-        type: 3}
-      propertyPath: maxDistanceToInteract
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 5354241723790479219, guid: e7024e7595042d54d974c44c3f727661,
-        type: 3}
-      propertyPath: screenMaterial
-      value: 
-      objectReference: {fileID: 2100000, guid: 6aee76a3a4ac73e40973aa344f73c941, type: 2}
-    - target: {fileID: 8729793246184978645, guid: e7024e7595042d54d974c44c3f727661,
-        type: 3}
-      propertyPath: m_Layer
-      value: 12
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e7024e7595042d54d974c44c3f727661, type: 3}
 --- !u!4 &2042098353 stripped

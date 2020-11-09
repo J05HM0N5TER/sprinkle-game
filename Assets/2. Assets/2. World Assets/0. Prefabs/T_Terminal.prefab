@@ -4834,10 +4834,12 @@ MonoBehaviour:
   maxDistanceToInteract: 2
   brokenTerminal: 0
   brokenParticles: {fileID: 3882055329403096894}
-  screenMaterial: {fileID: 2100000, guid: e49253f1e0f5fd349a56d6fb27e16e27, type: 2}
+  screenMaterial: {fileID: 2100000, guid: 6aee76a3a4ac73e40973aa344f73c941, type: 2}
   brokenMaterial: {fileID: 2100000, guid: 71f4ae9fb51874a4d99c9642aa76b294, type: 2}
   unlockedMaterial: {fileID: 2100000, guid: 6ae8bcf138d023f4fa5759a550d3d3f8, type: 2}
   lockedMaterial: {fileID: 2100000, guid: 320c49166ec48b14e81911101835fc55, type: 2}
+  screen: {fileID: 0}
+  mats: []
 --- !u!1001 &722715186673934812
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4917,13 +4919,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -927199367670048503, guid: 291fdc8af9350dd419d253728c856ebe,
         type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 4294967295
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: -927199367670048503, guid: 291fdc8af9350dd419d253728c856ebe,
         type: 3}
       propertyPath: m_TagString
       value: Interact
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 291fdc8af9350dd419d253728c856ebe,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 291fdc8af9350dd419d253728c856ebe, type: 3}

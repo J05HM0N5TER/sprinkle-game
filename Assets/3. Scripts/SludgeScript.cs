@@ -29,7 +29,7 @@ public class SludgeScript : MonoBehaviour
     public float fadespeed = 0.5f;
     private Color color;
 
-
+    private CameraControl cameraControl;
     // Start is called before the first frame update
     void Start()
     {
@@ -39,7 +39,7 @@ public class SludgeScript : MonoBehaviour
         playerCamera = player.GetComponentInChildren<Camera>();
         //rend = sludgePlane.GetComponent<Renderer>();
         color = sludgePlane.GetComponent<SkinnedMeshRenderer>().material.color;
-
+        cameraControl = FindObjectOfType<CameraControl>();
     }
 
     // Update is called once per frame
@@ -47,7 +47,7 @@ public class SludgeScript : MonoBehaviour
     {
         if (Input.GetButtonDown("Interact"))
         {
-            if (Physics.Raycast(cameraControl.CursorToRay(), out RaycastHit hit) && // Raycast check
+             if (Physics.Raycast(cameraControl.CursorToRay(), out RaycastHit hit) && // Raycast check
                 hit.collider.gameObject == gameObject && // Raycast hit this object
                 Vector3.Distance(hit.point, playerCamera.transform.position) <= maxDistanceToInteract) // The player is in range 
             {
