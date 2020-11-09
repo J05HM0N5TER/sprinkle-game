@@ -51,6 +51,9 @@ MonoBehaviour:
   sludgeSound: {fileID: 8300000, guid: 2cdf75d8f95a6d84c8f54a2014fed9ab, type: 3}
   sprayObject: {fileID: 1320018134967476139}
   spraySound: {fileID: 8300000, guid: 65036d37972ff2f4785a5819dbcbf8df, type: 3}
+  timeTillDelete: 2
+  sludgePlane: {fileID: 1320018134967476139}
+  fadespeed: 0.95
 --- !u!65 &718486292
 BoxCollider:
   m_ObjectHideFlags: 0

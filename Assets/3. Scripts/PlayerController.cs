@@ -14,7 +14,7 @@ using UnityEngine.Experimental.Rendering.HDPipeline;
 public class PlayerController : MonoBehaviour, IXmlSerializable
 {
 	// NOTE: If there is more then 8 different values then need to change from byte
-	[Flags] public enum Inventory : byte
+	[Flags] public enum Inventory
 	{
 		none = 0,
 		Astrogeology = 1 << 0,
@@ -24,7 +24,9 @@ public class PlayerController : MonoBehaviour, IXmlSerializable
 		ChemicalSpray = 1 << 4,
 		SolderingIron = 1 << 5,
 		Lantern = 1 << 6,
-		Engineering = 1 << 7
+		Engineering = 1 << 7,
+		MedicalSyringe = 1 << 8
+
 	}
 
 	[Header("Movement")]
@@ -92,6 +94,8 @@ public class PlayerController : MonoBehaviour, IXmlSerializable
 	public float currentFOV;
 	public float FOVSPeedChange = 0.4f;
 	private float FOVInterp = 0.0f;
+
+	public float syringeHealAmount = 30.0f;
 	// Start is called before the first frame update
 	void Start()
 	{
@@ -187,6 +191,15 @@ public class PlayerController : MonoBehaviour, IXmlSerializable
 			speed = walkspeed;
 			
 
+		}
+		if(Input.GetButton("med-Gun") && medSyringes > 0)
+		{
+			health += syringeHealAmount;
+			medSyringes --;
+			if(health >= 100)
+			{
+				health = 100;
+			}
 		}
 	}
 
