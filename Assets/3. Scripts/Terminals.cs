@@ -20,6 +20,10 @@ public class Terminals : MonoBehaviour
 	public Material brokenMaterial;
 	public Material unlockedMaterial;
 	public Material lockedMaterial;
+	public GameObject screen;
+
+	public Material[] mats;
+	
 	// Start is called before the first frame update
 	void Start()
 	{
@@ -39,14 +43,14 @@ public class Terminals : MonoBehaviour
 		}
 
 		// UpdateDisplay();
-#if (UNITY_EDITOR)
+	#if (UNITY_EDITOR)
 		{
 			if (player == null)
 			{
 				Debug.LogError("Failed to find player", this);
 			}
 		}
-#endif
+	#endif
 	}
 
 	// Update is called once per frame
@@ -56,34 +60,6 @@ public class Terminals : MonoBehaviour
 		{
 			return;
 		}
-		screenMaterial.SetColor("_EmissiveColor", new Color (161, 100, 16, 1));
-		screenMaterial.SetColor("_EmissionColor", new Color (161, 100, 16, 1));
-		screenMaterial.EnableKeyword("_EMISSION");
-		try
-		{
-
-			if (brokenTerminal)
-			{
-				screenMaterial.SetColor("_EmissiveColor", new Color(84, 31, 81, 1));
-				screenMaterial.EnableKeyword("_EMISSION");
-			}
-			else if (!PlayerHasKeyCards())
-			{
-				screenMaterial.SetColor("_EmissiveColor", new Color(161, 100, 16, 1));
-				screenMaterial.EnableKeyword("_EMISSION");
-			}
-			else
-			{
-				screenMaterial.SetColor("_EmissiveColor", new Color(66, 94, 68, 1));
-				screenMaterial.EnableKeyword("_EMISSION");
-			}
-		}
-		catch (System.Exception e)
-		{
-			Debug.LogError(e.ToString());
-			throw;
-		}
-
 		// UpdateDisplay();
 		if (Input.GetButtonDown("Interact"))
 		{
@@ -118,21 +94,46 @@ public class Terminals : MonoBehaviour
 				UpdateDisplay();
 			}
 		}
+		// mats = gameObject.GetComponent<Renderer>().materials;
+		// mats[1] = unlockedMaterial;
+		// gameObject.GetComponent<Renderer>().materials = mats;
+		UpdateDisplay();
 	}
 
 	private void UpdateDisplay()
 	{
+		//if broked
 		if (brokenTerminal)
 		{
-			SetColours(new Color(84, 31, 81, 1));
+			mats = gameObject.GetComponent<Renderer>().materials;
+			mats[1] = brokenMaterial;
+			gameObject.GetComponent<Renderer>().materials = mats;
 		}
-		else if (!PlayerHasKeyCards())
+		//if unlocked
+		else
 		{
-			SetColours(new Color(161, 100, 16, 1));
+			mats = gameObject.GetComponent<Renderer>().materials;
+			mats[1] = unlockedMaterial;
+			gameObject.GetComponent<Renderer>().materials = mats;
+		}
+		//if locked
+		if (doorToOpen.name == "BlastDoor")
+		{
+			if(doorToOpen.GetComponent<BlastDoor>().locked == true)
+			{
+				mats = gameObject.GetComponent<Renderer>().materials;
+				mats[1] = lockedMaterial;
+				gameObject.GetComponent<Renderer>().materials = mats;
+			}
 		}
 		else
 		{
-			SetColours(new Color(66, 94, 68, 1));
+			if(doorToOpen.GetComponent<TriggerScript>().locked == true)
+			{
+				mats = gameObject.GetComponent<Renderer>().materials;
+				mats[1] = lockedMaterial;
+				gameObject.GetComponent<Renderer>().materials = mats;
+			}
 		}
 	}
 

@@ -192,7 +192,7 @@ public class PlayerController : MonoBehaviour, IXmlSerializable
 			
 
 		}
-		if(Input.GetButton("med-Gun") && medSyringes > 0)
+		if(Input.GetButton("Med-Gun") && medSyringes > 0)
 		{
 			health += syringeHealAmount;
 			medSyringes --;

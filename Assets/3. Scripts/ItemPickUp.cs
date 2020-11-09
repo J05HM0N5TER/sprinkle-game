@@ -33,6 +33,5 @@ public class ItemPickUp : MonoBehaviour
                 Destroy(gameObject);
             }
         }
-
     }
 }
