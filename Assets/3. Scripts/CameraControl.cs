@@ -15,6 +15,8 @@ public class CameraControl : MonoBehaviour, IXmlSerializable
 
 	[Tooltip("Mouse Sensitivity")]
 	public float mouseSen = 100f;
+	[Tooltip("How sensitive the mouse scroll wheel is (adjusting distance to held objects)")]
+	public float scrollSen = 1;
 	[Tooltip("Player Object")]
 	public Transform PlayerBody;
 	private float YRotation = 0f;
@@ -29,6 +31,10 @@ public class CameraControl : MonoBehaviour, IXmlSerializable
 	[Range(0.1f, 5)]
 	[Tooltip("How far the object is held from the player once picked up")]
 	public float holdDistance = 0.5f;
+	[Tooltip("The furthest the player can hold an object")]
+	public float maxHoldDistance = 3;
+	[Tooltip("The closest the player can hold an object")]
+	public float minHoldDistance = 0.5f;
 	// The object that is in the players hand (null if player isn't holding anything)
 	[HideInInspector] public Rigidbody heldObject = null;
 	// The position on the screen where it detects click at (decimal percentage)
@@ -169,6 +175,10 @@ public class CameraControl : MonoBehaviour, IXmlSerializable
 		// Get input
 		float mouseX = Input.GetAxis("Mouse X") * mouseSen * Time.deltaTime;
 		float mouseY = Input.GetAxis("Mouse Y") * mouseSen * Time.deltaTime;
+
+		holdDistance += Input.mouseScrollDelta.y * scrollSen;
+
+		holdDistance = Mathf.Clamp(holdDistance, min:minHoldDistance, max:maxHoldDistance);
 
 		// Vertical mouse movement goes on camera transform
 		YRotation -= mouseY;
