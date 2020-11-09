@@ -8,22 +8,20 @@ public class Reticle : MonoBehaviour
     public GameObject lootIcon;
     public GameObject pressIcon;
     public GameObject grabIcon;
+    private CameraControl cameraControl;
     private Camera playerCamera;
     [Tooltip("Should be the same as the grabbing distance, just the distance that the ray goes to check whats in front")]
     public float grabDistance = 30;
     // Start is called before the first frame update
     void Start()
     {
-        playerCamera = gameObject.GetComponent<Camera>();
-        
-
+        cameraControl = FindObjectOfType<CameraControl>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out RaycastHit hit, grabDistance))
+        if (Physics.Raycast(cameraControl.CursorToRay(), out RaycastHit hit, grabDistance))
         {
             if(hit.collider.gameObject.tag == "Keyitem")
             {

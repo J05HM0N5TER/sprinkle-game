@@ -27,6 +27,7 @@ public class Terminals : MonoBehaviour
 	// Start is called before the first frame update
 	void Start()
 	{
+		cameraControl = FindObjectOfType<CameraControl>();
 		player = GameObject.FindGameObjectWithTag("Player")?.GetComponent<PlayerController>();
 		ps = brokenParticles.GetComponent<ParticleSystem>();
 		var em = ps.emission;
@@ -45,10 +46,7 @@ public class Terminals : MonoBehaviour
 		// UpdateDisplay();
 	#if (UNITY_EDITOR)
 		{
-			if (player == null)
-			{
-				Debug.LogError("Failed to find player", this);
-			}
+			Debug.LogError("Failed to find player", this);
 		}
 	#endif
 	}
@@ -63,8 +61,7 @@ public class Terminals : MonoBehaviour
 		// UpdateDisplay();
 		if (Input.GetButtonDown("Interact"))
 		{
-			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-			if (Physics.Raycast(ray, out RaycastHit hit, maxDistanceToInteract) && // Raycast check
+			if (Physics.Raycast(cameraControl.CursorToRay(), out RaycastHit hit, maxDistanceToInteract) && // Raycast check
 				hit.collider.gameObject == gameObject) //&& // Raycast hit this object
 			//hit.distance <= maxDistanceToInteract)  // The player is in range 
 			{
