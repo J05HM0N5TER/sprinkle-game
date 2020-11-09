@@ -171,12 +171,16 @@ public class CameraControl : MonoBehaviour, IXmlSerializable
 #if UNITY_EDITOR
 		cursorPosition = new Vector2(reticle.position.x / Screen.width, reticle.position.y / Screen.height);
 #endif
-
 		// Get input
 		float mouseX = Input.GetAxis("Mouse X") * mouseSen * Time.deltaTime;
 		float mouseY = Input.GetAxis("Mouse Y") * mouseSen * Time.deltaTime;
 
-		if (Input.GetKey(KeyCode.R))
+		// Changing distance for held objects
+		holdDistance += Input.mouseScrollDelta.y * scrollSen;
+		holdDistance = Mathf.Clamp(holdDistance, min : minHoldDistance, max : maxHoldDistance);
+
+		// Rotating held object
+		if (heldObject && Input.GetButton("Rotate Object"))
 		{
 			heldObject.transform.Rotate(-this.transform.up, mouseX, Space.World);
 			heldObject.transform.Rotate(this.transform.right, mouseY, Space.World);
@@ -187,14 +191,9 @@ public class CameraControl : MonoBehaviour, IXmlSerializable
 			YRotation -= mouseY;
 			YRotation = Mathf.Clamp(YRotation, -90f, 90f);
 			transform.localRotation = Quaternion.Euler(YRotation, 0, 0);
+			// Horizontal mouse movement goes on player body transform
 			PlayerBody.Rotate(Vector3.up * mouseX);
 		}
-
-		holdDistance += Input.mouseScrollDelta.y * scrollSen;
-
-		holdDistance = Mathf.Clamp(holdDistance, min : minHoldDistance, max : maxHoldDistance);
-
-		// Horizontal mouse movement goes on player body transform
 
 		// Picking up objects
 		if (!heldObject && Input.GetButtonDown("Interact"))
@@ -215,9 +214,6 @@ public class CameraControl : MonoBehaviour, IXmlSerializable
 		if (heldObject != null)
 		{
 			// Only in editor update reticle position every frame
-#if UNITY_EDITOR
-			cursorPosition = new Vector2(reticle.position.x / Screen.width, reticle.position.y / Screen.height);
-#endif
 			// Adjust the held object spring to in front of the player
 			grabSpring.connectedAnchor = PlayerCamera.ViewportToWorldPoint(new Vector3(cursorPosition.x, cursorPosition.y, holdDistance));
 
