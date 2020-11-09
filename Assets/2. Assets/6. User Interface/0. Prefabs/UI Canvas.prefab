@@ -2847,16 +2847,6 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 70
       objectReference: {fileID: 0}
-    - target: {fileID: 3851353463004171286, guid: a6d9a5a72bdef7c4983abf32597bb922,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 7437027850061811719}
-    - target: {fileID: 3851353463004171286, guid: a6d9a5a72bdef7c4983abf32597bb922,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 3851353463169260735, guid: a6d9a5a72bdef7c4983abf32597bb922,
         type: 3}
       propertyPath: m_SizeDelta.x
@@ -2972,12 +2962,6 @@ MonoBehaviour:
 --- !u!224 &7437027850791949069 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3851353463915646024, guid: a6d9a5a72bdef7c4983abf32597bb922,
-    type: 3}
-  m_PrefabInstance: {fileID: 5928814072824700741}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &7437027850061811719 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3851353462513241922, guid: a6d9a5a72bdef7c4983abf32597bb922,
     type: 3}
   m_PrefabInstance: {fileID: 5928814072824700741}
   m_PrefabAsset: {fileID: 0}
