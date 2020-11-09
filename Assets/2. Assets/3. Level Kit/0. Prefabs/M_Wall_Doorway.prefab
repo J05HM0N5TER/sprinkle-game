@@ -258,7 +258,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2145256608544068185}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -2.83}
+  m_LocalPosition: {x: 0, y: 0, z: -2.53}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6168945611044700362}
@@ -477,7 +477,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4870635333854218726}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -1.8}
+  m_LocalPosition: {x: 0, y: 0, z: -2.03}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6168945611044700362}
@@ -1315,6 +1315,8 @@ MonoBehaviour:
   ledLeft: {fileID: 3687169752903027414}
   keypadRight: {fileID: 1691238443927080838}
   ledRight: {fileID: 3720397428082864636}
+  nvLinkStart: {fileID: 2145256608544068185}
+  nvLinkEnd: {fileID: 4870635333854218726}
 --- !u!1001 &6533634621955783427
 PrefabInstance:
   m_ObjectHideFlags: 0
