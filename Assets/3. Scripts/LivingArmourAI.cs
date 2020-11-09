@@ -281,7 +281,7 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 		if(CurrentState == AIStates.Searching)
 		{
 			
-			anim.SetBool("walking", true);
+			//anim.SetBool("walking", true);
 			if(soundSources.Count == 0)
 			{
 				// if (agent.remainingDistance <= 0.5)
