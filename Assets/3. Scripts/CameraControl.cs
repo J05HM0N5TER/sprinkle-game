@@ -15,6 +15,8 @@ public class CameraControl : MonoBehaviour, IXmlSerializable
 
 	[Tooltip("Mouse Sensitivity")]
 	public float mouseSen = 100f;
+	[Tooltip("How sensitive the mouse scroll wheel is (adjusting distance to held objects)")]
+	public float scrollSen = 1;
 	[Tooltip("Player Object")]
 	public Transform PlayerBody;
 	private float YRotation = 0f;
@@ -29,6 +31,10 @@ public class CameraControl : MonoBehaviour, IXmlSerializable
 	[Range(0.1f, 5)]
 	[Tooltip("How far the object is held from the player once picked up")]
 	public float holdDistance = 0.5f;
+	[Tooltip("The furthest the player can hold an object")]
+	public float maxHoldDistance = 3;
+	[Tooltip("The closest the player can hold an object")]
+	public float minHoldDistance = 0.5f;
 	// The object that is in the players hand (null if player isn't holding anything)
 	[HideInInspector] public Rigidbody heldObject = null;
 	// The position on the screen where it detects click at (decimal percentage)
@@ -165,18 +171,29 @@ public class CameraControl : MonoBehaviour, IXmlSerializable
 #if UNITY_EDITOR
 		cursorPosition = new Vector2(reticle.position.x / Screen.width, reticle.position.y / Screen.height);
 #endif
-
 		// Get input
 		float mouseX = Input.GetAxis("Mouse X") * mouseSen * Time.deltaTime;
 		float mouseY = Input.GetAxis("Mouse Y") * mouseSen * Time.deltaTime;
 
-		// Vertical mouse movement goes on camera transform
-		YRotation -= mouseY;
-		YRotation = Mathf.Clamp(YRotation, -90f, 90f);
-		transform.localRotation = Quaternion.Euler(YRotation, 0, 0);
+		// Changing distance for held objects
+		holdDistance += Input.mouseScrollDelta.y * scrollSen;
+		holdDistance = Mathf.Clamp(holdDistance, min : minHoldDistance, max : maxHoldDistance);
 
-		// Horizontal mouse movement goes on player body transform
-		PlayerBody.Rotate(Vector3.up * mouseX);
+		// Rotating held object
+		if (heldObject && Input.GetButton("Rotate Object"))
+		{
+			heldObject.transform.Rotate(-this.transform.up, mouseX, Space.World);
+			heldObject.transform.Rotate(this.transform.right, mouseY, Space.World);
+		}
+		else
+		{
+			// Vertical mouse movement goes on camera transform
+			YRotation -= mouseY;
+			YRotation = Mathf.Clamp(YRotation, -90f, 90f);
+			transform.localRotation = Quaternion.Euler(YRotation, 0, 0);
+			// Horizontal mouse movement goes on player body transform
+			PlayerBody.Rotate(Vector3.up * mouseX);
+		}
 
 		// Picking up objects
 		if (!heldObject && Input.GetButtonDown("Interact"))
@@ -197,9 +214,6 @@ public class CameraControl : MonoBehaviour, IXmlSerializable
 		if (heldObject != null)
 		{
 			// Only in editor update reticle position every frame
-#if UNITY_EDITOR
-			cursorPosition = new Vector2(reticle.position.x / Screen.width, reticle.position.y / Screen.height);
-#endif
 			// Adjust the held object spring to in front of the player
 			grabSpring.connectedAnchor = PlayerCamera.ViewportToWorldPoint(new Vector3(cursorPosition.x, cursorPosition.y, holdDistance));
 
