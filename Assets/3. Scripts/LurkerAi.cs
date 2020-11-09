@@ -47,6 +47,7 @@ public class LurkerAi : MonoBehaviour, IXmlSerializable
 		// Is the lurker being seen?
 		if (IsVisableToPlayer(transform.position) || unseenTimer <= 0.0f)// gameObject.GetComponent<Renderer>().isVisible)
 		{
+			unseenTimer = resetUnseenTimer;
 			if (Random.value <= chanceOfAppearing)
 			{
 				appearsNearPlayer = true;
