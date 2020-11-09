@@ -150,4 +150,6 @@ public class Notes : MonoBehaviour
 			note.CloseNote();
 		}
 	}
+	
+
 }
