@@ -20,9 +20,11 @@ public class Terminals : MonoBehaviour
 	public Material brokenMaterial;
 	public Material unlockedMaterial;
 	public Material lockedMaterial;
+	private CameraControl cameraControl;
 	// Start is called before the first frame update
 	void Start()
 	{
+		cameraControl = FindObjectOfType<CameraControl>();
 		player = GameObject.FindGameObjectWithTag("Player")?.GetComponent<PlayerController>();
 		ps = brokenParticles.GetComponent<ParticleSystem>();
 		var em = ps.emission;
@@ -39,12 +41,14 @@ public class Terminals : MonoBehaviour
 		}
 
 		// UpdateDisplay();
-#if (UNITY_EDITOR)
+#if UNITY_EDITOR
+		if (player == null)
 		{
-			if (player == null)
-			{
-				Debug.LogError("Failed to find player", this);
-			}
+			Debug.LogError("Failed to find player", this);
+		}
+		if (cameraControl == null)
+		{
+			Debug.LogError(("Couldn't find cameraControl", this));
 		}
 #endif
 	}
@@ -56,8 +60,8 @@ public class Terminals : MonoBehaviour
 		{
 			return;
 		}
-		screenMaterial.SetColor("_EmissiveColor", new Color (161, 100, 16, 1));
-		screenMaterial.SetColor("_EmissionColor", new Color (161, 100, 16, 1));
+		screenMaterial.SetColor("_EmissiveColor", new Color(161, 100, 16, 1));
+		screenMaterial.SetColor("_EmissionColor", new Color(161, 100, 16, 1));
 		screenMaterial.EnableKeyword("_EMISSION");
 		try
 		{
@@ -87,8 +91,7 @@ public class Terminals : MonoBehaviour
 		// UpdateDisplay();
 		if (Input.GetButtonDown("Interact"))
 		{
-			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-			if (Physics.Raycast(ray, out RaycastHit hit, maxDistanceToInteract) && // Raycast check
+			if (Physics.Raycast(cameraControl.CursorToRay(), out RaycastHit hit, maxDistanceToInteract) && // Raycast check
 				hit.collider.gameObject == gameObject) //&& // Raycast hit this object
 			//hit.distance <= maxDistanceToInteract)  // The player is in range 
 			{
