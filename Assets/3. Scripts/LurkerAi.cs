@@ -28,6 +28,9 @@ public class LurkerAi : MonoBehaviour, IXmlSerializable
 	private bool appearsNearPlayer = false;
 	[Tooltip("The place that the lurker goes when it is not supposed to be seen")]
 	public GameObject lurkerWaitingPoint;
+
+	private Animator anim;
+	bool hasbeenseen = false;
 	// Start is called before the first frame update
 	void Start()
 	{
@@ -38,12 +41,15 @@ public class LurkerAi : MonoBehaviour, IXmlSerializable
 		}
 		resetUnseenTimer = unseenTimer;
 		resettimer = spookyTimer;
+		anim = gameObject.GetComponent<Animator>();
+		anim.enabled = true;
 	}
 
 	// Update is called once per frame
 	void Update()
 	{
 		unseenTimer -= Time.deltaTime;
+		
 		// Is the lurker being seen?
 		if (IsVisableToPlayer(transform.position) || unseenTimer <= 0.0f)// gameObject.GetComponent<Renderer>().isVisible)
 		{
@@ -57,7 +63,7 @@ public class LurkerAi : MonoBehaviour, IXmlSerializable
 				appearsNearPlayer = false;
 			}
 			
-			print("Is seen, trying to find new point...");
+			//print("Is seen, trying to find new point...");
 			if (appearsNearPlayer)
 			{
 				foreach (GameObject Lurkerpoint in lurkerPoints)
@@ -97,11 +103,40 @@ public class LurkerAi : MonoBehaviour, IXmlSerializable
 					gameObject.GetComponent<Transform>().rotation = closestLurkerPoint.transform.rotation;
 					currentLurkingPoint = closestLurkerPoint;
 					spookyTimer = resettimer;
+					hasbeenseen = false;
 				}
 			}
 			else
 			{
 				Debug.LogError("Couldn't find valid point");
+			}
+			//is it visable to player and has it already started playing
+			if(IsVisableToPlayer(transform.position) && hasbeenseen == false)
+			{
+				//set to say it has already started to play
+				hasbeenseen = true;
+				// pick a random number
+				var randomNum = Random.Range(1, 4);
+				//play run away
+				if(randomNum == 1)
+				{
+					anim.Play("Lurker_Abscond_GameExport");
+				}
+				// play howl
+				else if(randomNum == 2)
+				{
+					anim.Play("Lurker_Howl_GameExport");
+				}
+				//play peak
+				else if(randomNum == 3)
+				{
+					anim.Play("Lurker_Peak_GameExport");
+				}
+				//play stalk
+				else if(randomNum == 4)
+				{
+					anim.Play("Lurker_Stalk_GameExport");
+				}
 			}
 		}
 	}

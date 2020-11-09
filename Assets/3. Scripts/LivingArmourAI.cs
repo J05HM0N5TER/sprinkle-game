@@ -281,7 +281,6 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 		}
 		if(CurrentState == AIStates.Searching)
 		{
-			
 			//anim.SetBool("walking", true);
 			if(soundSources.Count == 0)
 			{
@@ -312,8 +311,6 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 						
 					}
 				}
-				
-
 				visorEmission.SetColor ("_EmissiveColor", investigateLight);
 				visorEmission.EnableKeyword ("_EMISSION");
 			}
