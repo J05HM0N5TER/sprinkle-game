@@ -24,9 +24,6 @@ public class SludgeScript : MonoBehaviour
     //particles
     //public GameObject sprayParticles;
     private ParticleSystem ps;
-
-    public Shader dissolveShader;
-    private Renderer rend;
     public float timeTillDelete = 2;
     public GameObject sludgePlane;
     public float fadespeed = 0.5f;
@@ -59,10 +56,7 @@ public class SludgeScript : MonoBehaviour
                     //PlaySpray();
                     audioS.PlayOneShot(sludgeSound);
                     audioS.PlayOneShot(spraySound);
-                    //rend.material.shader = dissolveShader;
                     
-                    //color.a -= Time.deltaTime * fadespeed;
-                    //sludgePlane.GetComponent<SkinnedMeshRenderer>().material.color = color;
                     gameObject.GetComponent<Collider>().enabled = false;
                     decreaseSize = true;
                     //gameObject.SetActive(false);
@@ -72,9 +66,7 @@ public class SludgeScript : MonoBehaviour
         if (decreaseSize == true)
         {
             
-            //color.a -= Time.deltaTime * fadespeed;
-           // color.a = 0.1f;
-            //sludgePlane.GetComponent<Renderer>().material.color = color;
+            
             color = sludgePlane.GetComponent<Renderer>().material.GetColor("_BaseColor");
             color.a -= Time.deltaTime * fadespeed;
             sludgePlane.GetComponent<Renderer>().material.SetColor("_BaseColor", color);
@@ -89,9 +81,7 @@ public class SludgeScript : MonoBehaviour
                 gameObject.SetActive(false);
             }
         }
-        // color = sludgePlane.GetComponent<Renderer>().material.GetColor("_BaseColor");
-        // color.a = fadespeed;
-        // sludgePlane.GetComponent<Renderer>().material.SetColor("_BaseColor", color);
+        
     }
     private IEnumerator PlaySpray()
     {

@@ -25,6 +25,10 @@ public class ItemPickUp : MonoBehaviour
 			if (Physics.Raycast(ray, out RaycastHit hit, maxDistanceToInteract) &&  // Raycast check
 				hit.collider.gameObject == gameObject)
             {
+                if(item == PlayerController.Inventory.MedicalSyringe)
+                {
+                    player.GetComponent<PlayerController>().medSyringes ++;
+                }
                 player.GetComponent<PlayerController>().inventory |= item; 
                 Destroy(gameObject);
             }

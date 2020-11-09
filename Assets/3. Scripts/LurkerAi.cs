@@ -114,7 +114,7 @@ public class LurkerAi : MonoBehaviour, IXmlSerializable
 		bool InScreenBounds = screenPoint.z > 0 && screenPoint.x > 0 && screenPoint.x < 1 && screenPoint.y > 0 && screenPoint.y < 1;
 		// Is the player within screen bounds and nothing is obstructing view
 		bool rayObstructed = Physics.Linecast(/*startPos, endPos,*/ position, player.transform.position,
-			out RaycastHit hitinfo, ~((1 << 9) | (1 << 10))); // ignore layer 9 and 10
+			out RaycastHit hitinfo, ~((1 << 9) | (1 << 10) | (1 << 14))); // ignore layer 9 and 10
 															  // Print out what the ray hit
 		//if (rayObstructed)
 		//    print("Ray hit: " + hitinfo.collider.name + " at: " + hitinfo.point.x + ", " + hitinfo.point.y);

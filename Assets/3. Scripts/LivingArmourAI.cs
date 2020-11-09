@@ -100,6 +100,7 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 	private float crouchDetectionTimerReset;
 	private Quaternion lookRotation;
     private Vector3 direction;
+	public float AIDamage = 40.0f;
 
 	public enum AIStates
 	{
@@ -167,7 +168,7 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 		//TODO: add this into the chasing
 		if(((agent.transform.position - player.transform.position).magnitude < attackDistance) && isPlayerVisible && canAttackAgain)
 		{
-			player.GetComponent<PlayerController>().health -= 1;
+			player.GetComponent<PlayerController>().health -= AIDamage;
 			if(player.GetComponent<PlayerController>().health <= 0)
 			{
 				GameObject.Find("PauseManager").GetComponent<PauseMenu>().PauseGame();
