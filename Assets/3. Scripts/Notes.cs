@@ -92,32 +92,62 @@ public class Notes : MonoBehaviour
 			{
 				if (hit.collider.gameObject == gameObject)
 				{
-					noteTextBox.SetActive(true);
-					foreach (var item in otherNoteObjects)
-					{
-						item.SetActive(true);
-					}
-					textBoxText.enabled = true;
-					textBoxText.text = inscription;
-					pauseManager.PauseGame();
-					pauseManager.pauseMenu.SetActive(false);
-					UnityEngine.Cursor.lockState = CursorLockMode.None;
-					isActive = true;
+					Vector3 DirectionToNote = playerCamera.transform.position - transform.position;
+					Ray temp = playerCamera.CursorToRay();
+
+					OpenNote();
 				}
 			}
 		}
 		if (Input.GetButtonDown("Pause") && isActive)
 		{
-			isActive = false;
-			noteTextBox.SetActive(false);
-			foreach (var item in otherNoteObjects)
-			{
-				item.SetActive(false);
-			}
-			textBoxText.enabled = false;
-			textBoxText.text = " ";
-			pauseManager.ResumeGame();
+			CloseNote();
+		}
+	}
 
+	/// <summary>
+	/// Opens the note on the screen
+	/// </summary>
+	public void OpenNote()
+	{
+		noteTextBox.SetActive(true);
+		foreach (var item in otherNoteObjects)
+		{
+			item.SetActive(true);
+		}
+		textBoxText.enabled = true;
+		textBoxText.text = inscription;
+		pauseManager.PauseGame();
+		pauseManager.pauseMenu.SetActive(false);
+		UnityEngine.Cursor.lockState = CursorLockMode.None;
+		isActive = true;
+	}
+
+	/// <summary>
+	/// Closes this note when it is open
+	/// </summary>
+	public void CloseNote()
+	{
+		isActive = false;
+		noteTextBox.SetActive(false);
+		foreach (var item in otherNoteObjects)
+		{
+			item.SetActive(false);
+		}
+		textBoxText.enabled = false;
+		textBoxText.text = " ";
+		pauseManager.ResumeGame();
+	}
+
+	/// <summary>
+	/// Can be called by anything and closes all open notes in the scene
+	/// </summary>
+	public void CloseAllNotes()
+	{
+		Notes[] Notes = FindObjectsOfType<Notes>();
+		foreach (var note in Notes)
+		{
+			note.CloseNote();
 		}
 	}
 }

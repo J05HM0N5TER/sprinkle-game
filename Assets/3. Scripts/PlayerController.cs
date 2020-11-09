@@ -107,14 +107,14 @@ public class PlayerController : MonoBehaviour, IXmlSerializable
 		walkspeed = speed;
 		suits = FindObjectsOfType<LivingArmourAI>();
 		noiseManager = FindObjectOfType<CollisionNoiseManager>();
-#if (UNITY_EDITOR)
+#if UNITY_EDITOR
 		if (noiseManager == null)
 		{
-			Debug.LogError($"Could not find {nameof(CollisionNoiseManager)}", this);
+			Debug.LogError($"Failed to find {noiseManager.GetType()}, please add one to the scene", this);
 		}
 		if (playerCamera == null)
 		{
-			Debug.LogError($"Could not find {nameof(Camera)}", this);
+			Debug.LogError($"Could not find {playerCamera.GetType()} on player", this);
 		}
 #endif
 	}

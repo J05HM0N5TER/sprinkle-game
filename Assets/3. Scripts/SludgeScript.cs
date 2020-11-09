@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
 public class SludgeScript : MonoBehaviour
 {
     private GameObject player;
@@ -28,7 +27,7 @@ public class SludgeScript : MonoBehaviour
     public GameObject sludgePlane;
     public float fadespeed = 0.5f;
     private Color color;
-
+    private CameraControl cameraControl;
 
     // Start is called before the first frame update
     void Start()
@@ -39,7 +38,14 @@ public class SludgeScript : MonoBehaviour
         playerCamera = player.GetComponentInChildren<Camera>();
         //rend = sludgePlane.GetComponent<Renderer>();
         color = sludgePlane.GetComponent<SkinnedMeshRenderer>().material.color;
+        cameraControl = FindObjectOfType<CameraControl>();
 
+#if UNITY_EDITOR
+        if (cameraControl == null)
+        {
+            Debug.LogError("Couldn't find cameraController", this);
+        }
+#endif
     }
 
     // Update is called once per frame
@@ -56,7 +62,7 @@ public class SludgeScript : MonoBehaviour
                     //PlaySpray();
                     audioS.PlayOneShot(sludgeSound);
                     audioS.PlayOneShot(spraySound);
-                    
+
                     gameObject.GetComponent<Collider>().enabled = false;
                     decreaseSize = true;
                     //gameObject.SetActive(false);
@@ -65,23 +71,22 @@ public class SludgeScript : MonoBehaviour
         }
         if (decreaseSize == true)
         {
-            
-            
+
             color = sludgePlane.GetComponent<Renderer>().material.GetColor("_BaseColor");
             color.a -= Time.deltaTime * fadespeed;
             sludgePlane.GetComponent<Renderer>().material.SetColor("_BaseColor", color);
-            if(color.a == 0)
+            if (color.a == 0)
             {
                 color.a = 0;
             }
-            
+
             timeTillDelete -= Time.deltaTime;
             if (timeTillDelete <= 0)
             {
                 gameObject.SetActive(false);
             }
         }
-        
+
     }
     private IEnumerator PlaySpray()
     {

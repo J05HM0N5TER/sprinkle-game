@@ -240,7 +240,7 @@ public class CameraControl : MonoBehaviour, IXmlSerializable
 	/// </summary>
 	public void GrabObject()
 	{
-		if (Physics.Raycast(PlayerCamera.ViewportPointToRay(new Vector3(cursorPosition.x, cursorPosition.y, 0.5f)), out RaycastHit RayOut, grabDistance, grabLayers))
+		if (Physics.Raycast(CursorToRay(), out RaycastHit RayOut, grabDistance, grabLayers))
 		{
 			if (RayOut.rigidbody != null)
 			{
@@ -408,7 +408,9 @@ public class CameraControl : MonoBehaviour, IXmlSerializable
 
 	public Ray CursorToRay()
 	{
-		return PlayerCamera.ScreenPointToRay(cursorPosition);
+		// Note: DO NOT USE SCREENPOINTTORAY BECAUSE FOR SOME REASON IT IS ALWAYS
+		// FACING 90∘ TO THE LEFT! WHY!!!!
+		return PlayerCamera.ViewportPointToRay(new Vector3(cursorPosition.x, cursorPosition.y, 0.5f));
 	}
 
 	public void WriteXml(XmlWriter writer)
