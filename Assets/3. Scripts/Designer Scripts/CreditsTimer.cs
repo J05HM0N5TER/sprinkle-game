@@ -35,6 +35,11 @@ public class CreditsTimer : MonoBehaviour
             UnityEngine.SceneManagement.SceneManager.LoadScene(nextScene);
         }
 
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            UnityEngine.SceneManagement.SceneManager.LoadScene(nextScene);
+        }
+
     }
     ////Coroutine
     //IEnumerator LoseTime()
