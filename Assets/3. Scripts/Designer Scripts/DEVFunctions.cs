@@ -8,6 +8,7 @@ public class DEVFunctions : MonoBehaviour
     public string GameScene = "";
     public string LevelDesignScene = "";
     public string Sean3 = "";
+    public string Credits = "";
 
     void Update()
     {
@@ -16,7 +17,7 @@ public class DEVFunctions : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.BackQuote))
         {
             SceneManager.LoadScene(DevScene);
-            Debug.Log("Developer Room Loaded");
+            Debug.Log("Developer Room Entered");
         }
 
         if (Input.GetKey(KeyCode.KeypadMultiply)) //Loads the main game.
@@ -34,13 +35,19 @@ public class DEVFunctions : MonoBehaviour
         if (Input.GetKey(KeyCode.KeypadPlus))
         {
             SceneManager.LoadScene(LevelDesignScene);
-            Debug.Log("Plus Activated");
+            Debug.Log("Level Design Room Entered");
         }
 
-        if (Input.GetKey(KeyCode.KeypadMinus))
+        //if (Input.GetKey(KeyCode.KeypadMinus))
+        //{
+        //    SceneManager.LoadScene(Sean3);
+        //    Debug.Log("Sean Sean Sean sEntered");
+        //}
+
+        if (Input.GetKey(KeyCode.KeypadEnter))
         {
-            SceneManager.LoadScene(Sean3);
-            Debug.Log("Minus Activated");
+            SceneManager.LoadScene(Credits);
+            Debug.Log("Credits Entered");
         }
     }
 }

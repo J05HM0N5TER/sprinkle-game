@@ -4082,8 +4082,8 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 76d52c29b6913a943b8ef2fb144d9dc8, type: 2}
-  - {fileID: 2100000, guid: d2e0b83c23d21b546ac882ef36d925ea, type: 2}
+  - {fileID: 2100000, guid: 1b88d0346ea585b4a93630fa211a7479, type: 2}
+  - {fileID: 2100000, guid: 7b033c9eabf94804d964e230c4dd2360, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -7145,7 +7145,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 76d52c29b6913a943b8ef2fb144d9dc8, type: 2}
+  - {fileID: 2100000, guid: 1b88d0346ea585b4a93630fa211a7479, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -8809,7 +8809,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 76d52c29b6913a943b8ef2fb144d9dc8, type: 2}
+  - {fileID: 2100000, guid: 1b88d0346ea585b4a93630fa211a7479, type: 2}
   - {fileID: 2100000, guid: 2bc28d29ede581a4899d93b8b19db555, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -16794,7 +16794,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 76d52c29b6913a943b8ef2fb144d9dc8, type: 2}
+  - {fileID: 2100000, guid: 1b88d0346ea585b4a93630fa211a7479, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -19338,7 +19338,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f40c8009ea015e949b2141f6147c042d, type: 2}
+  - {fileID: 2100000, guid: a4ab1a40d51fded4ebe94c1c98e32720, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -20281,7 +20281,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: e1f3a22d955c72840b27a42715e5ef29, type: 2}
+  - {fileID: 2100000, guid: 1b88d0346ea585b4a93630fa211a7479, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -23048,6 +23048,8 @@ MonoBehaviour:
   canAttackAgain: 1
   knockBack: 5000
   lookAroundTimer: 4
+  detectionTimer: 1
+  crouchDetectionTimer: 2
   busyWithState: 0
 --- !u!1 &5776743038438947450
 GameObject:

@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     [Header("Scene names:")]
     [SerializeField] private string mainMenu;
     [SerializeField] private string mainGame;
+    [SerializeField] private string gameCredits;
 #pragma warning restore 649
 
     /// <summary>
@@ -30,6 +31,11 @@ public class GameManager : MonoBehaviour
     /// Navigates to the main menu scene
     /// </summary>
     public void LaunchMainMenu() => SceneChange(mainMenu);
+
+    /// <summary>
+    /// Navigates to the main menu scene
+    /// </summary>
+    public void LaunchGameCredits() => SceneChange(gameCredits);
 
     /// <summary>
     /// Quits the game
