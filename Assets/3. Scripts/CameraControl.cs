@@ -32,7 +32,7 @@ public class CameraControl : MonoBehaviour, IXmlSerializable
 	// The object that is in the players hand (null if player isn't holding anything)
 	[HideInInspector] public Rigidbody heldObject = null;
 	// The position on the screen where it detects click at (decimal percentage)
-	private Vector2 cursorPosition = new Vector2(0.5f, 0.5f);
+	[HideInInspector] public Vector2 cursorPosition = new Vector2(0.5f, 0.5f);
 	[Tooltip("The name of the game object that is the reticle that the player can see")]
 	public string reticleName = "Reticle";
 	// The info from the reticle used to calculate where to click
@@ -68,7 +68,7 @@ public class CameraControl : MonoBehaviour, IXmlSerializable
 	[Tooltip("How fast the player has to be moving before they can no longer lean")]
 	public float maxSpeedWhileLeaning = 0.25f;
 
-	private Camera PlayerCamera;
+	[HideInInspector] public Camera PlayerCamera;
 
 	[Header("Spring variables")]
 	[Tooltip("How \"Snappy\" the holding is")]
@@ -97,14 +97,15 @@ public class CameraControl : MonoBehaviour, IXmlSerializable
 	private PlayerController player;
 	private Rigidbody playerRigidbody;
 
-	
 	private bool torchActive = false;
 
+	[Tooltip("The name of the game object that is the reticle that the player can see")]
 	CollisionNoiseManager noiseManager;
 
 	// Start is called before the first frame update
 	void Start()
 	{
+
 		leanTransitionStartTime = DateTime.Now.AddSeconds(-leanTransitionTime);
 
 		Cursor.lockState = CursorLockMode.Locked;
@@ -139,19 +140,19 @@ public class CameraControl : MonoBehaviour, IXmlSerializable
 #if UNITY_EDITOR
 		if (PlayerCamera == null)
 		{
-			Debug.LogWarning("Can't find Camera", this);
+			Debug.LogError("Can't find Camera", this);
 		}
 		if (player == null)
 		{
-			Debug.LogWarning("Can't find PlayerController", this);
+			Debug.LogError("Can't find PlayerController", this);
 		}
 		if (playerRigidbody == null)
 		{
-			Debug.LogWarning("Cant find player RigidBody", this);
+			Debug.LogError("Cant find player RigidBody", this);
 		}
 		if (noiseManager == null)
 		{
-			Debug.LogWarning("Cant find CollisioNoiseManager", this);
+			Debug.LogError("Cant find CollisioNoiseManager", this);
 		}
 #endif
 		lantern.SetActive(false);
@@ -160,6 +161,11 @@ public class CameraControl : MonoBehaviour, IXmlSerializable
 	// Update is called once per frame
 	void Update()
 	{
+
+#if UNITY_EDITOR
+		cursorPosition = new Vector2(reticle.position.x / Screen.width, reticle.position.y / Screen.height);
+#endif
+
 		// Get input
 		float mouseX = Input.GetAxis("Mouse X") * mouseSen * Time.deltaTime;
 		float mouseY = Input.GetAxis("Mouse Y") * mouseSen * Time.deltaTime;
@@ -207,7 +213,7 @@ public class CameraControl : MonoBehaviour, IXmlSerializable
 			lantern.SetActive(true);
 			torchActive = true;
 		}
-		else if ((Input.GetButtonDown("Lantern") && torchActive)&& player.GetComponent<PlayerController>().inventory.HasFlag(PlayerController.Inventory.Lantern))
+		else if ((Input.GetButtonDown("Lantern") && torchActive) && player.GetComponent<PlayerController>().inventory.HasFlag(PlayerController.Inventory.Lantern))
 		{
 			lantern.SetActive(false);
 			torchActive = false;
@@ -249,7 +255,7 @@ public class CameraControl : MonoBehaviour, IXmlSerializable
 				//heldObject.gameObject.transform.position =
 				//PlayerCamera.ViewportToWorldPoint(new Vector3(0.5f, 0.5f,
 				//holdDistance));
-				
+
 				noiseManager.Add(heldObject.gameObject);
 			}
 		}
@@ -384,6 +390,11 @@ public class CameraControl : MonoBehaviour, IXmlSerializable
 				transform.localRotation.eulerAngles.y,
 				transform.localRotation.eulerAngles.z + leanRotMod[(int) currentLean]);
 		}
+	}
+
+	public Ray CursorToRay()
+	{
+		return PlayerCamera.ScreenPointToRay(cursorPosition);
 	}
 
 	public void WriteXml(XmlWriter writer)

@@ -9,8 +9,8 @@ public class SludgeScript : MonoBehaviour
     private Camera playerCamera;
     [Tooltip("max distance away to interact with")]
     public float maxDistanceToInteract;
-    [Tooltip("the amnount of time that the spray and animations/shaders will play")]
-    public float timeOfplaying;
+    [Tooltip("the amount of time that the spray and animations/shaders will play")]
+    public float timeOfPlaying;
     private bool decreaseSize;
     private Vector3 sizeChange = new Vector3(0.1f, 0.1f, 0.0f);
     //sound
@@ -29,6 +29,7 @@ public class SludgeScript : MonoBehaviour
     public float fadespeed = 0.5f;
     private Color color;
 
+
     // Start is called before the first frame update
     void Start()
     {
@@ -46,8 +47,7 @@ public class SludgeScript : MonoBehaviour
     {
         if (Input.GetButtonDown("Interact"))
         {
-            Ray ray = playerCamera.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out RaycastHit hit) && // Raycast check
+            if (Physics.Raycast(cameraControl.CursorToRay(), out RaycastHit hit) && // Raycast check
                 hit.collider.gameObject == gameObject && // Raycast hit this object
                 Vector3.Distance(hit.point, playerCamera.transform.position) <= maxDistanceToInteract) // The player is in range 
             {
@@ -92,7 +92,7 @@ public class SludgeScript : MonoBehaviour
     }
     private IEnumerator TimeOfSpray()
     {
-        yield return new WaitForSeconds(timeOfplaying);
+        yield return new WaitForSeconds(timeOfPlaying);
         // var em = ps.emission;
         // em.enabled = false;
         // ps.Stop();
