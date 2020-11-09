@@ -176,17 +176,25 @@ public class CameraControl : MonoBehaviour, IXmlSerializable
 		float mouseX = Input.GetAxis("Mouse X") * mouseSen * Time.deltaTime;
 		float mouseY = Input.GetAxis("Mouse Y") * mouseSen * Time.deltaTime;
 
+		if (Input.GetKey(KeyCode.R))
+		{
+			heldObject.transform.Rotate(-this.transform.up, mouseX, Space.World);
+			heldObject.transform.Rotate(this.transform.right, mouseY, Space.World);
+		}
+		else
+		{
+			// Vertical mouse movement goes on camera transform
+			YRotation -= mouseY;
+			YRotation = Mathf.Clamp(YRotation, -90f, 90f);
+			transform.localRotation = Quaternion.Euler(YRotation, 0, 0);
+			PlayerBody.Rotate(Vector3.up * mouseX);
+		}
+
 		holdDistance += Input.mouseScrollDelta.y * scrollSen;
 
-		holdDistance = Mathf.Clamp(holdDistance, min:minHoldDistance, max:maxHoldDistance);
-
-		// Vertical mouse movement goes on camera transform
-		YRotation -= mouseY;
-		YRotation = Mathf.Clamp(YRotation, -90f, 90f);
-		transform.localRotation = Quaternion.Euler(YRotation, 0, 0);
+		holdDistance = Mathf.Clamp(holdDistance, min : minHoldDistance, max : maxHoldDistance);
 
 		// Horizontal mouse movement goes on player body transform
-		PlayerBody.Rotate(Vector3.up * mouseX);
 
 		// Picking up objects
 		if (!heldObject && Input.GetButtonDown("Interact"))
