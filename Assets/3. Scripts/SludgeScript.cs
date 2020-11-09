@@ -53,7 +53,7 @@ public class SludgeScript : MonoBehaviour
     {
         if (Input.GetButtonDown("Interact"))
         {
-            if (Physics.Raycast(cameraControl.CursorToRay(), out RaycastHit hit) && // Raycast check
+             if (Physics.Raycast(cameraControl.CursorToRay(), out RaycastHit hit) && // Raycast check
                 hit.collider.gameObject == gameObject && // Raycast hit this object
                 Vector3.Distance(hit.point, playerCamera.transform.position) <= maxDistanceToInteract) // The player is in range 
             {

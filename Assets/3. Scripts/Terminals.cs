@@ -2,14 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using UnityEngine.UIElements;
+using TMPro;
 public class Terminals : MonoBehaviour
 {
 	[Tooltip("The door that this terminal will open")]
 	public GameObject doorToOpen;
 	[Tooltip("They keycard that is needed to use the terminal")]
 	public PlayerController.Inventory neededKeyCard;
-	private PlayerController player;
+	private PlayerController playerinv;
 	[Tooltip("the max distance that the player can be from the terminal and still interact with it")]
 	public float maxDistanceToInteract = 2;
 	public bool brokenTerminal = false;
@@ -20,12 +21,17 @@ public class Terminals : MonoBehaviour
 	public Material brokenMaterial;
 	public Material unlockedMaterial;
 	public Material lockedMaterial;
+	public Material[] mats;
 	private CameraControl cameraControl;
+	private TextMeshPro screentext;
+	public float textFadeOutTime = 2;
+	
 	// Start is called before the first frame update
 	void Start()
 	{
 		cameraControl = FindObjectOfType<CameraControl>();
-		player = GameObject.FindGameObjectWithTag("Player")?.GetComponent<PlayerController>();
+		
+		playerinv = GameObject.FindGameObjectWithTag("Player")?.GetComponent<PlayerController>();
 		ps = brokenParticles.GetComponent<ParticleSystem>();
 		var em = ps.emission;
 		if (brokenTerminal)
@@ -39,18 +45,8 @@ public class Terminals : MonoBehaviour
 			ps.Stop();
 
 		}
-
-		// UpdateDisplay();
-#if UNITY_EDITOR
-		if (player == null)
-		{
-			Debug.LogError("Failed to find player", this);
-		}
-		if (cameraControl == null)
-		{
-			Debug.LogError(("Couldn't find cameraControl", this));
-		}
-#endif
+		screentext = gameObject.GetComponentInChildren<TextMeshPro>();
+		
 	}
 
 	// Update is called once per frame
@@ -60,34 +56,6 @@ public class Terminals : MonoBehaviour
 		{
 			return;
 		}
-		screenMaterial.SetColor("_EmissiveColor", new Color(161, 100, 16, 1));
-		screenMaterial.SetColor("_EmissionColor", new Color(161, 100, 16, 1));
-		screenMaterial.EnableKeyword("_EMISSION");
-		try
-		{
-
-			if (brokenTerminal)
-			{
-				screenMaterial.SetColor("_EmissiveColor", new Color(84, 31, 81, 1));
-				screenMaterial.EnableKeyword("_EMISSION");
-			}
-			else if (!PlayerHasKeyCards())
-			{
-				screenMaterial.SetColor("_EmissiveColor", new Color(161, 100, 16, 1));
-				screenMaterial.EnableKeyword("_EMISSION");
-			}
-			else
-			{
-				screenMaterial.SetColor("_EmissiveColor", new Color(66, 94, 68, 1));
-				screenMaterial.EnableKeyword("_EMISSION");
-			}
-		}
-		catch (System.Exception e)
-		{
-			Debug.LogError(e.ToString());
-			throw;
-		}
-
 		// UpdateDisplay();
 		if (Input.GetButtonDown("Interact"))
 		{
@@ -108,40 +76,74 @@ public class Terminals : MonoBehaviour
 						doorToOpen.GetComponent<TriggerScript>().locked = false;
 					}
 					// Unlock Animation
-					gameObject.GetComponent<Animator>().SetTrigger("Unlock");
+					//gameObject.GetComponent<Animator>().SetTrigger("Unlock");
+					screentext.text = "Unlocked";
+					textFadeout();
 				}
-				if (player.inventory.HasFlag(PlayerController.Inventory.SolderingIron) && brokenTerminal)
+				if (playerinv.inventory.HasFlag(PlayerController.Inventory.SolderingIron) && brokenTerminal)
 				{
 					brokenTerminal = false;
 					var em = ps.emission;
 					em.enabled = false;
 					ps.Stop();
-					gameObject.GetComponent<Animator>().SetTrigger("FixTerminal");
+					//gameObject.GetComponent<Animator>().SetTrigger("FixTerminal");
 				}
+				if(!PlayerHasKeyCards() && !brokenTerminal)
+				{
+					screentext.text = neededKeyCard.ToString();
+					textFadeout();
+				}
+				
 				UpdateDisplay();
 			}
 		}
+		UpdateDisplay();
 	}
 
 	private void UpdateDisplay()
 	{
+		//if borked
 		if (brokenTerminal)
 		{
-			SetColours(new Color(84, 31, 81, 1));
+			mats = gameObject.GetComponent<Renderer>().materials;
+			mats[1] = brokenMaterial;
+			gameObject.GetComponent<Renderer>().materials = mats;
 		}
-		else if (!PlayerHasKeyCards())
-		{
-			SetColours(new Color(161, 100, 16, 1));
-		}
+		//if unlocked
 		else
 		{
-			SetColours(new Color(66, 94, 68, 1));
+			mats = gameObject.GetComponent<Renderer>().materials;
+			mats[1] = unlockedMaterial;
+			gameObject.GetComponent<Renderer>().materials = mats;
 		}
+		//if locked
+		if(!brokenTerminal)
+		{
+			if (doorToOpen.name == "BlastDoor")
+			{
+				if(doorToOpen.GetComponent<BlastDoor>().locked == true)
+				{
+					mats = gameObject.GetComponent<Renderer>().materials;
+					mats[1] = lockedMaterial;
+					gameObject.GetComponent<Renderer>().materials = mats;
+				}
+			}
+			else
+			{
+				if(doorToOpen.GetComponent<TriggerScript>().locked == true)
+				{
+					mats = gameObject.GetComponent<Renderer>().materials;
+					mats[1] = lockedMaterial;
+					gameObject.GetComponent<Renderer>().materials = mats;
+				}
+			}
+		}
+		
 	}
 
 	private bool PlayerHasKeyCards()
 	{
-		return (player.inventory & neededKeyCard) == neededKeyCard;
+		return (playerinv.inventory & neededKeyCard) == neededKeyCard;
 	}
 
 	private void SetColours(Color newColor)
@@ -151,4 +153,14 @@ public class Terminals : MonoBehaviour
 		screenMaterial.EnableKeyword("_EMISSION");
 		// screenMaterial.color = newColor;
 	}
+	private  void textFadeout()
+    {
+		Debug.Log("textfadeout called");
+        StartCoroutine("fade");
+    }
+    private IEnumerator fade()
+    {
+        yield return new WaitForSeconds(textFadeOutTime);
+        screentext.text = "";
+    }
 }
