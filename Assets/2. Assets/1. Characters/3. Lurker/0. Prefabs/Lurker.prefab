@@ -1,5 +1,24 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!95 &8877803008567933228
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1286720160430216961}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: f46ee1ebd1f068e4a8d1f557f1cd862d, type: 3}
+  m_Controller: {fileID: 9100000, guid: e96dd00c108b87040938e523a148516d, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &6827374590095928713
 GameObject:
   m_ObjectHideFlags: 0
@@ -47,7 +66,7 @@ MonoBehaviour:
   spookyTimer: 1.5
   playerCam: {fileID: 0}
   unseenTimer: 20
-  chanceOfAppearing: 0.5
+  chanceOfAppearing: 1
   lurkerWaitingPoint: {fileID: 0}
 --- !u!1001 &3175389716352167800
 PrefabInstance:
@@ -246,6 +265,12 @@ GameObject:
 --- !u!4 &7596434375026197602 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: d60575a5649ac724fb2360f87ffa5d03,
+    type: 3}
+  m_PrefabInstance: {fileID: 3175389716352167800}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1286720160430216961 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4452398895512664185, guid: d60575a5649ac724fb2360f87ffa5d03,
     type: 3}
   m_PrefabInstance: {fileID: 3175389716352167800}
   m_PrefabAsset: {fileID: 0}

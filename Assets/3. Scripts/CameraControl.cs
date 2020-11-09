@@ -15,6 +15,8 @@ public class CameraControl : MonoBehaviour, IXmlSerializable
 
 	[Tooltip("Mouse Sensitivity")]
 	public float mouseSen = 100f;
+	[Tooltip("How sensitive the mouse scroll wheel is (adjusting distance to held objects)")]
+	public float scrollSen = 1;
 	[Tooltip("Player Object")]
 	public Transform PlayerBody;
 	private float YRotation = 0f;
@@ -29,10 +31,14 @@ public class CameraControl : MonoBehaviour, IXmlSerializable
 	[Range(0.1f, 5)]
 	[Tooltip("How far the object is held from the player once picked up")]
 	public float holdDistance = 0.5f;
+	[Tooltip("The furthest the player can hold an object")]
+	public float maxHoldDistance = 3;
+	[Tooltip("The closest the player can hold an object")]
+	public float minHoldDistance = 0.5f;
 	// The object that is in the players hand (null if player isn't holding anything)
 	[HideInInspector] public Rigidbody heldObject = null;
 	// The position on the screen where it detects click at (decimal percentage)
-	private Vector2 cursorPosition = new Vector2(0.5f, 0.5f);
+	[HideInInspector] public Vector2 cursorPosition = new Vector2(0.5f, 0.5f);
 	[Tooltip("The name of the game object that is the reticle that the player can see")]
 	public string reticleName = "Reticle";
 	// The info from the reticle used to calculate where to click
@@ -68,7 +74,7 @@ public class CameraControl : MonoBehaviour, IXmlSerializable
 	[Tooltip("How fast the player has to be moving before they can no longer lean")]
 	public float maxSpeedWhileLeaning = 0.25f;
 
-	private Camera PlayerCamera;
+	[HideInInspector] public Camera PlayerCamera;
 
 	[Header("Spring variables")]
 	[Tooltip("How \"Snappy\" the holding is")]
@@ -97,14 +103,15 @@ public class CameraControl : MonoBehaviour, IXmlSerializable
 	private PlayerController player;
 	private Rigidbody playerRigidbody;
 
-	
 	private bool torchActive = false;
 
+	[Tooltip("The name of the game object that is the reticle that the player can see")]
 	CollisionNoiseManager noiseManager;
 
 	// Start is called before the first frame update
 	void Start()
 	{
+
 		leanTransitionStartTime = DateTime.Now.AddSeconds(-leanTransitionTime);
 
 		Cursor.lockState = CursorLockMode.Locked;
@@ -139,19 +146,19 @@ public class CameraControl : MonoBehaviour, IXmlSerializable
 #if UNITY_EDITOR
 		if (PlayerCamera == null)
 		{
-			Debug.LogWarning("Can't find Camera", this);
+			Debug.LogError("Can't find Camera", this);
 		}
 		if (player == null)
 		{
-			Debug.LogWarning("Can't find PlayerController", this);
+			Debug.LogError("Can't find PlayerController", this);
 		}
 		if (playerRigidbody == null)
 		{
-			Debug.LogWarning("Cant find player RigidBody", this);
+			Debug.LogError("Cant find player RigidBody", this);
 		}
 		if (noiseManager == null)
 		{
-			Debug.LogWarning("Cant find CollisioNoiseManager", this);
+			Debug.LogError("Cant find CollisioNoiseManager", this);
 		}
 #endif
 		lantern.SetActive(false);
@@ -160,17 +167,33 @@ public class CameraControl : MonoBehaviour, IXmlSerializable
 	// Update is called once per frame
 	void Update()
 	{
+
+#if UNITY_EDITOR
+		cursorPosition = new Vector2(reticle.position.x / Screen.width, reticle.position.y / Screen.height);
+#endif
 		// Get input
 		float mouseX = Input.GetAxis("Mouse X") * mouseSen * Time.deltaTime;
 		float mouseY = Input.GetAxis("Mouse Y") * mouseSen * Time.deltaTime;
 
-		// Vertical mouse movement goes on camera transform
-		YRotation -= mouseY;
-		YRotation = Mathf.Clamp(YRotation, -90f, 90f);
-		transform.localRotation = Quaternion.Euler(YRotation, 0, 0);
+		// Changing distance for held objects
+		holdDistance += Input.mouseScrollDelta.y * scrollSen;
+		holdDistance = Mathf.Clamp(holdDistance, min : minHoldDistance, max : maxHoldDistance);
 
-		// Horizontal mouse movement goes on player body transform
-		PlayerBody.Rotate(Vector3.up * mouseX);
+		// Rotating held object
+		if (heldObject && Input.GetButton("Rotate Object"))
+		{
+			heldObject.transform.Rotate(-this.transform.up, mouseX, Space.World);
+			heldObject.transform.Rotate(this.transform.right, mouseY, Space.World);
+		}
+		else
+		{
+			// Vertical mouse movement goes on camera transform
+			YRotation -= mouseY;
+			YRotation = Mathf.Clamp(YRotation, -90f, 90f);
+			transform.localRotation = Quaternion.Euler(YRotation, 0, 0);
+			// Horizontal mouse movement goes on player body transform
+			PlayerBody.Rotate(Vector3.up * mouseX);
+		}
 
 		// Picking up objects
 		if (!heldObject && Input.GetButtonDown("Interact"))
@@ -191,9 +214,6 @@ public class CameraControl : MonoBehaviour, IXmlSerializable
 		if (heldObject != null)
 		{
 			// Only in editor update reticle position every frame
-#if UNITY_EDITOR
-			cursorPosition = new Vector2(reticle.position.x / Screen.width, reticle.position.y / Screen.height);
-#endif
 			// Adjust the held object spring to in front of the player
 			grabSpring.connectedAnchor = PlayerCamera.ViewportToWorldPoint(new Vector3(cursorPosition.x, cursorPosition.y, holdDistance));
 
@@ -207,7 +227,7 @@ public class CameraControl : MonoBehaviour, IXmlSerializable
 			lantern.SetActive(true);
 			torchActive = true;
 		}
-		else if ((Input.GetButtonDown("Lantern") && torchActive)&& player.GetComponent<PlayerController>().inventory.HasFlag(PlayerController.Inventory.Lantern))
+		else if ((Input.GetButtonDown("Lantern") && torchActive) && player.GetComponent<PlayerController>().inventory.HasFlag(PlayerController.Inventory.Lantern))
 		{
 			lantern.SetActive(false);
 			torchActive = false;
@@ -220,7 +240,7 @@ public class CameraControl : MonoBehaviour, IXmlSerializable
 	/// </summary>
 	public void GrabObject()
 	{
-		if (Physics.Raycast(PlayerCamera.ViewportPointToRay(new Vector3(cursorPosition.x, cursorPosition.y, 0.5f)), out RaycastHit RayOut, grabDistance, grabLayers))
+		if (Physics.Raycast(CursorToRay(), out RaycastHit RayOut, grabDistance, grabLayers))
 		{
 			if (RayOut.rigidbody != null)
 			{
@@ -249,7 +269,7 @@ public class CameraControl : MonoBehaviour, IXmlSerializable
 				//heldObject.gameObject.transform.position =
 				//PlayerCamera.ViewportToWorldPoint(new Vector3(0.5f, 0.5f,
 				//holdDistance));
-				
+
 				noiseManager.Add(heldObject.gameObject);
 			}
 		}
@@ -384,6 +404,13 @@ public class CameraControl : MonoBehaviour, IXmlSerializable
 				transform.localRotation.eulerAngles.y,
 				transform.localRotation.eulerAngles.z + leanRotMod[(int) currentLean]);
 		}
+	}
+
+	public Ray CursorToRay()
+	{
+		// Note: DO NOT USE SCREENPOINTTORAY BECAUSE FOR SOME REASON IT IS ALWAYS
+		// FACING 90∘ TO THE LEFT! WHY!!!!
+		return PlayerCamera.ViewportPointToRay(new Vector3(cursorPosition.x, cursorPosition.y, 0.5f));
 	}
 
 	public void WriteXml(XmlWriter writer)

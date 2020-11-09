@@ -4796,8 +4796,27 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.48044547, y: 1.0142791, z: 1.7341368}
-  m_Center: {x: 0.049871102, y: 0.131688, z: -0.0018279552}
+  m_Size: {x: 0.58044547, y: 1.0142791, z: 1.7341368}
+  m_Center: {x: -0.00012889504, y: 0.131688, z: -0.0018279552}
+--- !u!95 &3590154896982487371
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8729793246184978645}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 1d890dc9828b51d42a6be3a9617af00d, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &5354241723790479219
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4812,10 +4831,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   doorToOpen: {fileID: 0}
   neededKeyCard: 0
-  maxDistanceToInteract: 3
+  maxDistanceToInteract: 2
   brokenTerminal: 0
   brokenParticles: {fileID: 3882055329403096894}
-  screenMaterial: {fileID: 2100000, guid: f6e7d1ebe77111d49aed3440e7bd162f, type: 2}
+  screenMaterial: {fileID: 2100000, guid: e49253f1e0f5fd349a56d6fb27e16e27, type: 2}
   brokenMaterial: {fileID: 2100000, guid: 71f4ae9fb51874a4d99c9642aa76b294, type: 2}
   unlockedMaterial: {fileID: 2100000, guid: 6ae8bcf138d023f4fa5759a550d3d3f8, type: 2}
   lockedMaterial: {fileID: 2100000, guid: 320c49166ec48b14e81911101835fc55, type: 2}
@@ -4890,7 +4909,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[1]
       value: 
-      objectReference: {fileID: 2100000, guid: f6e7d1ebe77111d49aed3440e7bd162f, type: 2}
+      objectReference: {fileID: 2100000, guid: 6aee76a3a4ac73e40973aa344f73c941, type: 2}
     - target: {fileID: -927199367670048503, guid: 291fdc8af9350dd419d253728c856ebe,
         type: 3}
       propertyPath: m_Name
@@ -4900,6 +4919,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_StaticEditorFlags
       value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 291fdc8af9350dd419d253728c856ebe,
+        type: 3}
+      propertyPath: m_TagString
+      value: Interact
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 291fdc8af9350dd419d253728c856ebe, type: 3}

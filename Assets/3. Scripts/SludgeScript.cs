@@ -8,8 +8,8 @@ public class SludgeScript : MonoBehaviour
     private Camera playerCamera;
     [Tooltip("max distance away to interact with")]
     public float maxDistanceToInteract;
-    [Tooltip("the amnount of time that the spray and animations/shaders will play")]
-    public float timeOfplaying;
+    [Tooltip("the amount of time that the spray and animations/shaders will play")]
+    public float timeOfPlaying;
     private bool decreaseSize;
     private Vector3 sizeChange = new Vector3(0.1f, 0.1f, 0.0f);
     //sound
@@ -23,6 +23,11 @@ public class SludgeScript : MonoBehaviour
     //particles
     //public GameObject sprayParticles;
     private ParticleSystem ps;
+    public float timeTillDelete = 2;
+    public GameObject sludgePlane;
+    public float fadespeed = 0.5f;
+    private Color color;
+    private CameraControl cameraControl;
 
     // Start is called before the first frame update
     void Start()
@@ -31,6 +36,16 @@ public class SludgeScript : MonoBehaviour
         audioS = GetComponent<AudioSource>();
         ps = sprayObject.GetComponent<ParticleSystem>();
         playerCamera = player.GetComponentInChildren<Camera>();
+        //rend = sludgePlane.GetComponent<Renderer>();
+        color = sludgePlane.GetComponent<SkinnedMeshRenderer>().material.color;
+        cameraControl = FindObjectOfType<CameraControl>();
+
+#if UNITY_EDITOR
+        if (cameraControl == null)
+        {
+            Debug.LogError("Couldn't find cameraController", this);
+        }
+#endif
     }
 
     // Update is called once per frame
@@ -38,8 +53,7 @@ public class SludgeScript : MonoBehaviour
     {
         if (Input.GetButtonDown("Interact"))
         {
-            Ray ray = playerCamera.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out RaycastHit hit) && // Raycast check
+            if (Physics.Raycast(cameraControl.CursorToRay(), out RaycastHit hit) && // Raycast check
                 hit.collider.gameObject == gameObject && // Raycast hit this object
                 Vector3.Distance(hit.point, playerCamera.transform.position) <= maxDistanceToInteract) // The player is in range 
             {
@@ -48,6 +62,8 @@ public class SludgeScript : MonoBehaviour
                     //PlaySpray();
                     audioS.PlayOneShot(sludgeSound);
                     audioS.PlayOneShot(spraySound);
+
+                    gameObject.GetComponent<Collider>().enabled = false;
                     decreaseSize = true;
                     //gameObject.SetActive(false);
                 }
@@ -55,12 +71,22 @@ public class SludgeScript : MonoBehaviour
         }
         if (decreaseSize == true)
         {
-            gameObject.transform.localScale -= sizeChange;
-            if (gameObject.transform.localScale == new Vector3(0, 0, 1))
+
+            color = sludgePlane.GetComponent<Renderer>().material.GetColor("_BaseColor");
+            color.a -= Time.deltaTime * fadespeed;
+            sludgePlane.GetComponent<Renderer>().material.SetColor("_BaseColor", color);
+            if (color.a == 0)
+            {
+                color.a = 0;
+            }
+
+            timeTillDelete -= Time.deltaTime;
+            if (timeTillDelete <= 0)
             {
                 gameObject.SetActive(false);
             }
         }
+
     }
     private IEnumerator PlaySpray()
     {
@@ -71,7 +97,7 @@ public class SludgeScript : MonoBehaviour
     }
     private IEnumerator TimeOfSpray()
     {
-        yield return new WaitForSeconds(timeOfplaying);
+        yield return new WaitForSeconds(timeOfPlaying);
         // var em = ps.emission;
         // em.enabled = false;
         // ps.Stop();

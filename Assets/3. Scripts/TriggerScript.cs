@@ -35,6 +35,8 @@ public class TriggerScript : MonoBehaviour
     public GameObject ledLeft;
     public GameObject keypadRight;
     public GameObject ledRight;
+    public GameObject nvLinkStart;
+    public GameObject nvLinkEnd;
     // Start is called before the first frame update
     void Start()
     {
@@ -76,6 +78,9 @@ public class TriggerScript : MonoBehaviour
             ledLeft.GetComponent<MeshRenderer>().material = lockedmat;
             keypadRight.GetComponent<MeshRenderer>().material = lockedmat;
             ledRight.GetComponent<MeshRenderer>().material = lockedmat;
+
+            nvLinkStart.SetActive(false);
+            nvLinkEnd.SetActive(false);
         }
         else
         {
@@ -83,13 +88,16 @@ public class TriggerScript : MonoBehaviour
             ledLeft.GetComponent<MeshRenderer>().material = unlockedmat;
             keypadRight.GetComponent<MeshRenderer>().material = unlockedmat;
             ledRight.GetComponent<MeshRenderer>().material = unlockedmat;
+
+            nvLinkStart.SetActive(false);
+            nvLinkEnd.SetActive(false);
         }
     }
     private void OnTriggerEnter(Collider other)
     {
         if (!hasplayedonce)
         {
-            if(other.tag == "Player" || other.tag == "Enemy")
+            if (other.tag == "Player" || other.tag == "Suit")
             {
                 thingsInDoorway.Add(other.gameObject);
             }
@@ -99,7 +107,7 @@ public class TriggerScript : MonoBehaviour
     {
         if (!hasplayedonce)
         {
-            if (other.tag == "Player" || other.tag == "Enemy")
+            if (other.tag == "Player" || other.tag == "Suit")
             {
                 thingsInDoorway.Remove(other.gameObject);
                 

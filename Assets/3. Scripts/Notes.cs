@@ -24,25 +24,20 @@ public class Notes : MonoBehaviour
 	// All of the other things that will be disabled other then when a note is being looked at
 	private List<GameObject> otherNoteObjects;
 
-	[Tooltip("The name of the game object that is the redicle that the player can see")]
-	public string redicleName = "Reticle";
-	// The info from the redicle used to calculate where to click
-	private RectTransform redicle;
-	// Same as previous
-	private Vector2 cursorPosition = new Vector2(0.5f, 0.5f);
-
-	// Cashe
+	// Cache 
 	TextMeshProUGUI textBoxText;
 	PauseMenu pauseManager;
 
 	bool isFirstFrame = true;
+	[Tooltip("How close you have to be to the note to interact with it")]
+	public float maxInteractDistance = 1;
+	CameraControl playerCamera;
 
 	// Start is called before the first frame update
 	void Start()
 	{
+		playerCamera = FindObjectOfType<CameraControl>();
 		otherNoteObjects = new List<GameObject>();
-		redicle = GameObject.Find(redicleName).GetComponent<RectTransform>();
-		cursorPosition = new Vector2(redicle.position.x / Screen.width, redicle.position.y / Screen.height);
 		noteTextBox = GameObject.Find(noteTextBoxName);
 		if (noteTextBox == null)
 			Debug.LogError($"Text box of name \"{noteTextBoxName}\" was not found", this);
@@ -64,8 +59,6 @@ public class Notes : MonoBehaviour
 
 		// Only in editor check and warn if not filled out properly in inspector
 #if UNITY_EDITOR
-		if (redicle == null)
-			Debug.LogError($"No Reticle of name \"{redicleName}\" was found", this);
 		if (noteTextBox == null)
 			Debug.LogError($"Text box of name \"{noteTextBoxName}\" was not found", this);
 #endif
@@ -82,7 +75,7 @@ public class Notes : MonoBehaviour
 			{
 				Debug.LogError("No text box", this);
 			}
-			Debug.Log("Desabling text", this);
+			Debug.Log("Disabling text", this);
 
 			foreach (var obj in otherNoteObjects)
 			{
@@ -93,42 +86,68 @@ public class Notes : MonoBehaviour
 
 		if (Input.GetButtonDown("Interact"))
 		{
-			// Only in editor update redicle position every click
-#if UNITY_EDITOR
-			cursorPosition = new Vector2(redicle.position.x / Screen.width, redicle.position.y / Screen.height);
-#endif
-			Ray ray = Camera.main.ScreenPointToRay(new Vector2(cursorPosition.x * Screen.width, cursorPosition.y * Screen.height));
+			// Only in editor update reticle position every click
 
-			if (Physics.Raycast(ray, out RaycastHit hit))
+			if (Physics.Raycast(playerCamera.CursorToRay(), out RaycastHit hit, maxInteractDistance))
 			{
 				if (hit.collider.gameObject == gameObject)
 				{
-					noteTextBox.SetActive(true);
-					foreach (var item in otherNoteObjects)
-					{
-						item.SetActive(true);
-					}
-					textBoxText.enabled = true;
-					textBoxText.text = inscription;
-					pauseManager.PauseGame();
-					pauseManager.pauseMenu.SetActive(false);
-					UnityEngine.Cursor.lockState = CursorLockMode.None;
-					isActive = true;
+					Vector3 DirectionToNote = playerCamera.transform.position - transform.position;
+					Ray temp = playerCamera.CursorToRay();
+
+					OpenNote();
 				}
 			}
 		}
 		if (Input.GetButtonDown("Pause") && isActive)
 		{
-			isActive = false;
-			noteTextBox.SetActive(false);
-			foreach (var item in otherNoteObjects)
-			{
-				item.SetActive(false);
-			}
-			textBoxText.enabled = false;
-			textBoxText.text = " ";
-			pauseManager.ResumeGame();
+			CloseNote();
+		}
+	}
 
+	/// <summary>
+	/// Opens the note on the screen
+	/// </summary>
+	public void OpenNote()
+	{
+		noteTextBox.SetActive(true);
+		foreach (var item in otherNoteObjects)
+		{
+			item.SetActive(true);
+		}
+		textBoxText.enabled = true;
+		textBoxText.text = inscription;
+		pauseManager.PauseGame();
+		pauseManager.pauseMenu.SetActive(false);
+		UnityEngine.Cursor.lockState = CursorLockMode.None;
+		isActive = true;
+	}
+
+	/// <summary>
+	/// Closes this note when it is open
+	/// </summary>
+	public void CloseNote()
+	{
+		isActive = false;
+		noteTextBox.SetActive(false);
+		foreach (var item in otherNoteObjects)
+		{
+			item.SetActive(false);
+		}
+		textBoxText.enabled = false;
+		textBoxText.text = " ";
+		pauseManager.ResumeGame();
+	}
+
+	/// <summary>
+	/// Can be called by anything and closes all open notes in the scene
+	/// </summary>
+	public void CloseAllNotes()
+	{
+		Notes[] Notes = FindObjectsOfType<Notes>();
+		foreach (var note in Notes)
+		{
+			note.CloseNote();
 		}
 	}
 }

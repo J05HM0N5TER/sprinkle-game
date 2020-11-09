@@ -14,7 +14,7 @@ using UnityEngine.Experimental.Rendering.HDPipeline;
 public class PlayerController : MonoBehaviour, IXmlSerializable
 {
 	// NOTE: If there is more then 8 different values then need to change from byte
-	[Flags] public enum Inventory : byte
+	[Flags] public enum Inventory
 	{
 		none = 0,
 		Astrogeology = 1 << 0,
@@ -24,7 +24,9 @@ public class PlayerController : MonoBehaviour, IXmlSerializable
 		ChemicalSpray = 1 << 4,
 		SolderingIron = 1 << 5,
 		Lantern = 1 << 6,
-		Engineering = 1 << 7
+		Engineering = 1 << 7,
+		MedicalSyringe = 1 << 8
+
 	}
 
 	[Header("Movement")]
@@ -36,7 +38,7 @@ public class PlayerController : MonoBehaviour, IXmlSerializable
 	[Range(0.04f, 0.1f)]
 	[Tooltip("How far the player can be from the ground and still jump")]
 	public float groundDistance = 0.04f;
-	[Range(150, 500)]
+	[Range(150, 10000)]
 	[Tooltip("The amount of force that goes into jumping (Jump height)")]
 	public float jumpForce = 300;
 
@@ -60,7 +62,7 @@ public class PlayerController : MonoBehaviour, IXmlSerializable
 	// The collider for the player
 	private CapsuleCollider capsule;
 	// Is the player currently couching?
-	private bool isCrouching = false;
+	[HideInInspector]public bool isCrouching = false;
 	[Range(0, 10)]
 	[Tooltip("The effect that crouching has on speed, this is a percentage impact (0.5 make it so crouching make the player half speed)")]
 	public float crouchSpeed = 5f;
@@ -88,6 +90,12 @@ public class PlayerController : MonoBehaviour, IXmlSerializable
 	private CollisionNoiseManager noiseManager;
 	// The players camera
 	private Camera playerCamera;
+
+	public float currentFOV;
+	public float FOVSPeedChange = 0.4f;
+	private float FOVInterp = 0.0f;
+
+	public float syringeHealAmount = 30.0f;
 	// Start is called before the first frame update
 	void Start()
 	{
@@ -99,14 +107,14 @@ public class PlayerController : MonoBehaviour, IXmlSerializable
 		walkspeed = speed;
 		suits = FindObjectsOfType<LivingArmourAI>();
 		noiseManager = FindObjectOfType<CollisionNoiseManager>();
-#if (UNITY_EDITOR)
+#if UNITY_EDITOR
 		if (noiseManager == null)
 		{
-			Debug.LogError($"Could not find {nameof(CollisionNoiseManager)}", this);
+			Debug.LogError($"Failed to find {noiseManager.GetType()}, please add one to the scene", this);
 		}
 		if (playerCamera == null)
 		{
-			Debug.LogError($"Could not find {nameof(Camera)}", this);
+			Debug.LogError($"Could not find {playerCamera.GetType()} on player", this);
 		}
 #endif
 	}
@@ -121,12 +129,21 @@ public class PlayerController : MonoBehaviour, IXmlSerializable
 
 		// Modify speed based on if the player is crouching
 		float currentSpeed = isCrouching ? crouchSpeed : speed;
-
+		
+		if(Input.GetKey(KeyCode.S))
+		{
+			currentSpeed *= 0.6f; 
+		}
+		
 		// Move the player using the input, keep the downwards velocity for when they fall.
 		Vector3 vel = new Vector3(0, rb.velocity.y, 0);
+		
 		vel += gameObject.transform.forward * input.z * currentSpeed;
 		vel += gameObject.transform.right * input.x * currentSpeed;
+		
 		rb.velocity = vel;
+		
+		
 	}
 
 	// Update is called once per frame
@@ -140,32 +157,49 @@ public class PlayerController : MonoBehaviour, IXmlSerializable
 			rb.AddForce(gameObject.transform.up * (isCrouching ? couchJumpForce : jumpForce));
 		}
 		Crouch();
-		if (health <= 0)
+		
+		if (Input.GetButton("Sprint") && !isCrouching && (gameObject.GetComponent<Rigidbody>().velocity.magnitude >= 0.1))
 		{
-			//GameObject.FindObjectOfType<GameManager>();
-			GameObject.Find("PauseManager").GetComponent<PauseMenu>().PauseGame();
-		}
-		if (Input.GetButton("Sprint"))
-		{
-			playerCamera.fieldOfView = sprintFOV;
-			speed = sprintSpeed;
-			if (!makingsound)
-			{
-				foreach (var suit in suits)
-				{
-					if (suit.isActiveAndEnabled == true)
-					{
-						suit.soundSources.Add(gameObject.transform.position);
-					}
-				}
-				makingsound = true;
+			currentFOV = playerCamera.fieldOfView;
+			if (currentFOV < sprintFOV)
+            {
+				playerCamera.fieldOfView = Mathf.Lerp(walkFOV, sprintFOV, FOVInterp);
+				FOVInterp += FOVSPeedChange * Time.deltaTime;
+				FOVInterp = Mathf.Clamp(FOVInterp, 0, 1);
 			}
+			//playerCamera.fieldOfView = sprintFOV;
+			
+			speed = sprintSpeed;
+			
+			foreach (var suit in suits)
+			{
+				if (suit.isActiveAndEnabled == true)
+				{
+					suit.soundSources.Add(gameObject.transform.position);
+				}
+			}
+				//makingsound = true;
+			
 		}
-		else
+		else if(currentFOV > walkFOV)
 		{
-			playerCamera.fieldOfView = walkFOV;
-			speed = walkspeed;
 
+			playerCamera.fieldOfView = Mathf.Lerp(walkFOV, sprintFOV, FOVInterp);
+			FOVInterp += -FOVSPeedChange * Time.deltaTime;
+			FOVInterp = Mathf.Clamp(FOVInterp, 0, 1);
+			currentFOV = playerCamera.fieldOfView;
+			speed = walkspeed;
+			
+
+		}
+		if(Input.GetButton("med-Gun") && medSyringes > 0)
+		{
+			health += syringeHealAmount;
+			medSyringes --;
+			if(health >= 100)
+			{
+				health = 100;
+			}
 		}
 	}
 
@@ -176,7 +210,7 @@ public class PlayerController : MonoBehaviour, IXmlSerializable
 	{
 
 		// Check if a transition needs to start
-		if (!inCrouchTransition && Input.GetButtonDown("Crouch"))
+		if (!inCrouchTransition && Input.GetButtonDown("Crouch") && !PauseMenu.isPaused)
 		{
 			isCrouching = !isCrouching;
 			inCrouchTransition = true;

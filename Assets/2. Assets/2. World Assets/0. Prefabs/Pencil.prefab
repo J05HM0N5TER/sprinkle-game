@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3955256680235678386}
+  - component: {fileID: 3289065453870361757}
   m_Layer: 0
   m_Name: Pencil
   m_TagString: Untagged
@@ -31,6 +32,25 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!205 &3289065453870361757
+LODGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3955256680235678389}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: 0.010157213, y: 0.000000026077032, z: -0.01659529}
+  m_Size: 0.27349606
+  m_FadeMode: 0
+  m_AnimateCrossFading: 0
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0.016736263
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 3955256680828544700}
+  m_Enabled: 1
 --- !u!54 &7726387918085854459
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -147,6 +167,12 @@ GameObject:
 --- !u!4 &3955256680830444636 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 513ee5d0665f31347b2c4cefeac1df5b,
+    type: 3}
+  m_PrefabInstance: {fileID: 3955256680830582492}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &3955256680828544700 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 2300000, guid: 513ee5d0665f31347b2c4cefeac1df5b,
     type: 3}
   m_PrefabInstance: {fileID: 3955256680830582492}
   m_PrefabAsset: {fileID: 0}
