@@ -1,5 +1,21 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!208 &1559524686064561818
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1946067865671306249}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 2.5, y: 2.25, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 2.25, z: -2.25}
+  m_TimeToStationary: 0.5
 --- !u!65 &7503066796781163786
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -39,22 +55,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 5, y: 0.5, z: 0.50001955}
   m_Center: {x: 2.5, y: -0.25, z: -0.24999012}
---- !u!208 &1559524686064561818
-NavMeshObstacle:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1946067865671306249}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 2.5, y: 2.25, z: 0.5}
-  m_MoveThreshold: 0.1
-  m_Carve: 1
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 2.25, z: -2.25}
-  m_TimeToStationary: 0.5
 --- !u!1 &7503066797524808941
 GameObject:
   m_ObjectHideFlags: 0
@@ -117,7 +117,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: ea7973b2f81bb2644a3fbcc4201c705a, type: 2}
+      objectReference: {fileID: 2100000, guid: 80ab88fd7ccf7b8479669df225553966, type: 2}
     - target: {fileID: -6612079720209622665, guid: 276c916e687af21428777a9d97265471,
         type: 3}
       propertyPath: m_StaticEditorFlags
@@ -187,7 +187,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: a4e4c81165c36ca45ac036b9a9521a02, type: 2}
+      objectReference: {fileID: 2100000, guid: c534a1d4517c9c548b8d50326f4ed6a8, type: 2}
     - target: {fileID: -927199367670048503, guid: 276c916e687af21428777a9d97265471,
         type: 3}
       propertyPath: m_Name
@@ -240,7 +240,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: a4e4c81165c36ca45ac036b9a9521a02, type: 2}
+      objectReference: {fileID: 2100000, guid: c534a1d4517c9c548b8d50326f4ed6a8, type: 2}
     - target: {fileID: 5903982356259812452, guid: 276c916e687af21428777a9d97265471,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -290,7 +290,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: ea7973b2f81bb2644a3fbcc4201c705a, type: 2}
+      objectReference: {fileID: 2100000, guid: 80ab88fd7ccf7b8479669df225553966, type: 2}
     - target: {fileID: 8336222578977181620, guid: 276c916e687af21428777a9d97265471,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
