@@ -456,6 +456,12 @@ MonoBehaviour:
   sprintSpeed: 6.5
   walkFOV: 75
   sprintFOV: 85
+  footstepSounds:
+  - {fileID: 8300000, guid: 245fc242d583aad44b8fe198491a7997, type: 3}
+  - {fileID: 8300000, guid: 032b2305f86ab2d4abd3f96b352d8044, type: 3}
+  - {fileID: 8300000, guid: 2eda136a756c2874788ca67b0de7c2df, type: 3}
+  - {fileID: 8300000, guid: a37979b49fd1161498e7f32325f58c14, type: 3}
+  footstepFrequency: 2
   crouchHeight: 0.373
   crouchTransitionTime: 0.2
   isCrouching: 0

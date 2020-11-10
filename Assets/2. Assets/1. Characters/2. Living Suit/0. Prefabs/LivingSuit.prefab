@@ -23042,6 +23042,12 @@ MonoBehaviour:
   chase: {fileID: 2100000, guid: 5471723233a754f4da222a9d17f40af6, type: 2}
   investigate: {fileID: 2100000, guid: fbf012aa0c14a9d4286cbc28de7a5894, type: 2}
   search: {fileID: 2100000, guid: 54638cbff7ff39c4a97d673600aa3688, type: 2}
+  footstepSounds:
+  - {fileID: 8300000, guid: 6ea72c363f5d9a9469fd6cde84acac8e, type: 3}
+  - {fileID: 8300000, guid: dad4a9900dfa0af428e2f53d571698b3, type: 3}
+  - {fileID: 8300000, guid: e94ae143a3f91d947a19786a181bc45d, type: 3}
+  - {fileID: 8300000, guid: 8603f12bc2306f14ab9c66c551ed2d1a, type: 3}
+  footstepFrequency: 2
   attackDistance: 3
   attackCoolDown: 1
   stopafterattacktime: 1
@@ -23050,7 +23056,16 @@ MonoBehaviour:
   lookAroundTimer: 4
   detectionTimer: 1
   crouchDetectionTimer: 2
+  AIDamage: 40
   busyWithState: 0
+  playerHelmetCrackDecal1: {fileID: 0}
+  playerHelmetCrackDecal2: {fileID: 0}
+  playerHelmetCrackDecal3: {fileID: 0}
+  playerHelmetCrackDecal4: {fileID: 0}
+  playerDamaged: {fileID: 0}
+  playerCriticle: {fileID: 0}
+  decalFadeTime: 2
+  suitJump: 1
 --- !u!1 &5776743038438947450
 GameObject:
   m_ObjectHideFlags: 0
