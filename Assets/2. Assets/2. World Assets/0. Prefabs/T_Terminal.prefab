@@ -56,7 +56,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 5484521312776986435, guid: 69271d94d7da1fd4bac95422b8f8216a, type: 2}
+  - {fileID: 5484521312776986435, guid: 5802c8dc589e29b449de279eda953fa8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -111,17 +111,17 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '[...]'
+  m_text: 
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 69271d94d7da1fd4bac95422b8f8216a, type: 2}
-  m_sharedMaterial: {fileID: 5484521312776986435, guid: 69271d94d7da1fd4bac95422b8f8216a,
+  m_fontAsset: {fileID: 11400000, guid: 5802c8dc589e29b449de279eda953fa8, type: 2}
+  m_sharedMaterial: {fileID: 5484521312776986435, guid: 5802c8dc589e29b449de279eda953fa8,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190080
+    rgba: 4294967295
   m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -181,13 +181,13 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0.007923901}
   m_textInfo:
     textComponent: {fileID: 5989298929797679256}
-    characterCount: 5
+    characterCount: 0
     spriteCount: 0
     spaceCount: 0
-    wordCount: 1
+    wordCount: 0
     linkCount: 0
-    lineCount: 1
-    pageCount: 1
+    lineCount: 0
+    pageCount: 0
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
@@ -9896,8 +9896,8 @@ MonoBehaviour:
   brokenParticles: {fileID: 7814067896979382871}
   screenMaterial: {fileID: 2100000, guid: 6aee76a3a4ac73e40973aa344f73c941, type: 2}
   brokenMaterial: {fileID: 2100000, guid: 451ebc866b1d8f644a95932df12cd4aa, type: 2}
-  unlockedMaterial: {fileID: 2100000, guid: 88c81744765c87046a3ed0f9ca78e76d, type: 2}
-  lockedMaterial: {fileID: 2100000, guid: 53f25bb73491a71408bff7d5e3634d40, type: 2}
+  unlockedMaterial: {fileID: 2100000, guid: 3d5fd51d99116a94d8d2a5b432ec6ac3, type: 2}
+  lockedMaterial: {fileID: 2100000, guid: 8fd8f919024b2ec4f8caecc26c869757, type: 2}
   mats: []
   textFadeOutTime: 2
 --- !u!1001 &722715186673934812
