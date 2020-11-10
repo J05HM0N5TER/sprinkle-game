@@ -464,7 +464,7 @@ Assets/1. Scenes/**/OcclusionCullingData.asset*
 
 # FMOD Ignores
 # https://www.fmod.com/resources/documentation-unity?version=2.1&page=user-guide.html#using-source-control
-# Assets/Plugins/FMOD/Cache/
-# Assets/StreamingAssets/**/*.bank
-# Assets/StreamingAssets/**/*.bank.meta
-# fmod_editor.log
+Assets/Plugins/FMOD/Cache/
+Assets/StreamingAssets/**/*.bank
+Assets/StreamingAssets/**/*.bank.meta
+fmod_editor.log
