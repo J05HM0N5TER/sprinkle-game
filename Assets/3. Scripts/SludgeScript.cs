@@ -37,6 +37,7 @@ public class SludgeScript : MonoBehaviour
         ps = sprayObject.GetComponent<ParticleSystem>();
         playerCamera = player.GetComponentInChildren<Camera>();
         //rend = sludgePlane.GetComponent<Renderer>();
+        sludgePlane = transform.GetChild(0).gameObject;
         color = sludgePlane.GetComponent<SkinnedMeshRenderer>().material.color;
         cameraControl = FindObjectOfType<CameraControl>();
 

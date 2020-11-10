@@ -9,7 +9,8 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.EventSystems;
 using UnityEngine.UIElements;
-using System;
+//using System;
+
 // End of for serialization
 
 public class LivingArmourAI : MonoBehaviour, IXmlSerializable
@@ -113,6 +114,13 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 	}
 	AIStates CurrentState;
 	public bool busyWithState;
+	private GameObject playerHelmetCrackDecal1;
+	private GameObject playerHelmetCrackDecal2;
+	private GameObject playerHelmetCrackDecal3;
+	private GameObject playerHelmetCrackDecal4;
+	private GameObject playerDamaged;
+	private GameObject playerCriticle;
+	public float decalFadeTime = 2;
 	// Start is called before the first frame update
 	void Start()
 	{
@@ -145,8 +153,20 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 		stopafterattacktimereset = stopafterattacktime;
 		detectionTimerReset = detectionTimer;
 		crouchDetectionTimerReset = crouchDetectionTimer;
-		
+		//cracks
+		playerHelmetCrackDecal1 = GameObject.Find("Cracks_1");
+		playerHelmetCrackDecal2 = GameObject.Find("Cracks_2");
+		playerHelmetCrackDecal3 = GameObject.Find("Cracks_3");
+		playerHelmetCrackDecal4 = GameObject.Find("Cracks_4");
+		playerHelmetCrackDecal1.SetActive(false);
+		playerHelmetCrackDecal2.SetActive(false); 
+		playerHelmetCrackDecal3.SetActive(false); 
+		playerHelmetCrackDecal4.SetActive(false);  
 
+		playerDamaged = GameObject.Find("Hit_First");
+		playerCriticle = GameObject.Find("Hit_Second");
+		playerDamaged .SetActive(false);
+		playerCriticle.SetActive(false);
 
 	}
 	
@@ -164,14 +184,47 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 		// Print out what the ray hit
 		// Debug view
 		isPlayerVisible = playerInScreenBounds && !rayObstructed;
-		// TODO: Check that the player can't be seen, this it for when the AI catches the player
-		//TODO: add this into the chasing
+		
 		if(((agent.transform.position - player.transform.position).magnitude < attackDistance) && isPlayerVisible && canAttackAgain)
 		{
 			player.GetComponent<PlayerController>().health -= AIDamage;
+			
+			var randomNum = Random.Range(1, 4);
+			if(randomNum == 1)
+			{
+				playerHelmetCrackDecal1.SetActive(true);
+			}
+			else if(randomNum == 2)
+			{
+				playerHelmetCrackDecal2.SetActive(true);
+			}
+			else if(randomNum == 3)
+			{
+				playerHelmetCrackDecal3.SetActive(true);
+			}
+			else if(randomNum == 4)
+			{
+				playerHelmetCrackDecal4.SetActive(true);
+			}
+			decalFadeAway();
 			if(player.GetComponent<PlayerController>().health <= 0)
 			{
 				GameObject.Find("PauseManager").GetComponent<PauseMenu>().PauseGame();
+			}
+			
+			if(player.GetComponent<PlayerController>().health <= 60.0f)
+			{
+				playerDamaged.SetActive(true);
+				if(player.GetComponent<PlayerController>().health <= 40.0f )
+				{
+					playerDamaged.SetActive(false);
+					playerCriticle.SetActive(true);
+				}
+			}
+			else
+			{
+				playerDamaged.SetActive(false);
+				playerCriticle.SetActive(false);
 			}
 			anim.SetBool("attack", true);
 			var dir = (player.transform.position - transform.position).normalized;
@@ -194,7 +247,7 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 		}
 		
 
-		//TODO: add in information sharing
+		
 
 		
 		if(agent.velocity.magnitude >= 0.1f)
@@ -298,7 +351,7 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 				anim.SetBool("walking", true);
 				if(agent.remainingDistance <= 0.5)
 				{
-					//stand and do looking animation //TODO: add look around animation
+					//stand and do looking animation 
 					lookAroundTimer -= Time.deltaTime;
 					anim.SetBool("searching", true);
 					anim.SetBool("walking", false);
@@ -353,7 +406,6 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 				CurrentState = AIStates.Chasing;
 			}
 		}
-		//TODO: make sure animations stop on the living suits
 		if(CurrentState == AIStates.SwapSuit)
 		{
 			suits = GameObject.FindGameObjectsWithTag ("Suit");
@@ -487,14 +539,26 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 		return InScreenBounds && !rayObstructed;
 	}
 	//attacking player cooldown
-	private IEnumerator Attackcooldown ()
+	// private IEnumerator Attackcooldown ()
+	// {
+	// 	yield return StartCoroutine("attackingcooldown");
+	// }
+	// private IEnumerator Attackingcooldown ()
+	// {
+	// 	yield return new WaitForSeconds(attackCoolDown);
+	// 	canAttackAgain = true;
+	// }
+	private void decalFadeAway()
 	{
-		yield return StartCoroutine("attackingcooldown");
+		StartCoroutine("decalFade");
 	}
-	private IEnumerator Attackingcooldown ()
+	private IEnumerator decalFade ()
 	{
-		yield return new WaitForSeconds(attackCoolDown);
-		canAttackAgain = true;
+		yield return new WaitForSeconds(decalFadeTime);
+		playerHelmetCrackDecal1.SetActive(false);
+		playerHelmetCrackDecal2.SetActive(false); 
+		playerHelmetCrackDecal3.SetActive(false); 
+		playerHelmetCrackDecal4.SetActive(false);  
 	}
 	// saving stuff no touchy touchy
 	public void WriteXml(XmlWriter writer)
