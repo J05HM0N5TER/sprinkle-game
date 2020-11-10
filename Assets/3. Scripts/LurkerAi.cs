@@ -89,7 +89,6 @@ public class LurkerAi : MonoBehaviour, IXmlSerializable
 			}
 			if(!appearsNearPlayer)
 			{
-				// FIXME: Check that there is a closestLurkerPoint set before modifying
 				closestLurkerPoint.transform.position = lurkerWaitingPoint.transform.position;
 			}
 			//actually moving the bloody thing
