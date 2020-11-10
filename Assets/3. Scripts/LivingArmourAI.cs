@@ -114,12 +114,12 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 	}
 	AIStates CurrentState;
 	public bool busyWithState;
-	public GameObject playerHelmetCrackDecal1;
-	public GameObject playerHelmetCrackDecal2;
-	public GameObject playerHelmetCrackDecal3;
-	public GameObject playerHelmetCrackDecal4;
-	public GameObject playerDamaged;
-	public GameObject playerCriticle;
+	private GameObject playerHelmetCrackDecal1;
+	private GameObject playerHelmetCrackDecal2;
+	private GameObject playerHelmetCrackDecal3;
+	private GameObject playerHelmetCrackDecal4;
+	private GameObject playerDamaged;
+	private GameObject playerCriticle;
 	public float decalFadeTime = 2;
 	// Start is called before the first frame update
 	void Start()
