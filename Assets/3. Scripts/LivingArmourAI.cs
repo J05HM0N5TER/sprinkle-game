@@ -184,8 +184,7 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 		// Print out what the ray hit
 		// Debug view
 		isPlayerVisible = playerInScreenBounds && !rayObstructed;
-		// TODO: Check that the player can't be seen, this it for when the AI catches the player
-		//TODO: add this into the chasing
+		
 		if(((agent.transform.position - player.transform.position).magnitude < attackDistance) && isPlayerVisible && canAttackAgain)
 		{
 			player.GetComponent<PlayerController>().health -= AIDamage;
@@ -248,7 +247,7 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 		}
 		
 
-		//TODO: add in information sharing
+		
 
 		
 		if(agent.velocity.magnitude >= 0.1f)
@@ -352,7 +351,7 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 				anim.SetBool("walking", true);
 				if(agent.remainingDistance <= 0.5)
 				{
-					//stand and do looking animation //TODO: add look around animation
+					//stand and do looking animation 
 					lookAroundTimer -= Time.deltaTime;
 					anim.SetBool("searching", true);
 					anim.SetBool("walking", false);
@@ -407,7 +406,6 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 				CurrentState = AIStates.Chasing;
 			}
 		}
-		//TODO: make sure animations stop on the living suits
 		if(CurrentState == AIStates.SwapSuit)
 		{
 			suits = GameObject.FindGameObjectsWithTag ("Suit");
