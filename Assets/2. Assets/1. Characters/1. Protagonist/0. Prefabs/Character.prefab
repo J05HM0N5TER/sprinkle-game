@@ -662,6 +662,7 @@ MonoBehaviour:
   health: 3
   currentFOV: 0
   FOVSPeedChange: 16
+  syringeHealAmount: 30
 --- !u!33 &1376844649919263992
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -753,6 +754,7 @@ GameObject:
   - component: {fileID: 7590235112788743765}
   - component: {fileID: 8365309257839724994}
   - component: {fileID: 144981852}
+  - component: {fileID: 2108349392}
   m_Layer: 10
   m_Name: Camera
   m_TagString: MainCamera
@@ -787,19 +789,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mouseSen: 100
+  scrollSen: 1
   PlayerBody: {fileID: 1376844649919263993}
   grabLayers:
     serializedVersion: 2
     m_Bits: 2048
   grabDistance: 3
   holdDistance: 1.8
+  maxHoldDistance: 3
+  minHoldDistance: 0.5
   heldObject: {fileID: 0}
+  cursorPosition: {x: 0.5, y: 0.5}
   reticleName: Reticle
   throwForce: 500
   leanTilt: -12.4
   leanOffset: 0.828
   leanTransitionTime: 0.15
   maxSpeedWhileLeaning: 0.25
+  PlayerCamera: {fileID: 0}
   springStrength: 200
   damper: 20
   minDistance: 0
@@ -993,6 +1000,20 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &2108349392
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6416419460254581596}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attenuationObject: {fileID: 0}
+  ListenerNumber: -1
 --- !u!114 &6183614188393528494
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1006,19 +1027,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mouseSen: 100
+  scrollSen: 1
   PlayerBody: {fileID: 1376844649919263993}
   grabLayers:
     serializedVersion: 2
     m_Bits: 1831
   grabDistance: 3.5
   holdDistance: 2.5
+  maxHoldDistance: 3
+  minHoldDistance: 0.5
   heldObject: {fileID: 0}
+  cursorPosition: {x: 0.5, y: 0.5}
   reticleName: Reticle
   throwForce: 5
   leanTilt: 0
   leanOffset: 0
   leanTransitionTime: 1
   maxSpeedWhileLeaning: 0.25
+  PlayerCamera: {fileID: 0}
   springStrength: 50
   damper: 5
   minDistance: 0

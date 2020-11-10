@@ -25,17 +25,29 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// Navigates to the main game scene
     /// </summary>
-    public void LaunchMainGame() => SceneChange(mainGame);
+    public void LaunchMainGame()
+    {
+        FindObjectOfType<FMODAudioManager>().ChangeState(FMODAudioManager.AudioState.GameEnter);
+        // FindObjectOfType<FMODAudioManager>().eventInstance.setParameterByName("Game enter", 1);
+        SceneChange(mainGame);
+    }
 
     /// <summary>
     /// Navigates to the main menu scene
     /// </summary>
-    public void LaunchMainMenu() => SceneChange(mainMenu);
+    public void LaunchMainMenu()
+    {
+        SceneChange(mainMenu);
+    }
 
     /// <summary>
     /// Navigates to the main menu scene
     /// </summary>
-    public void LaunchGameCredits() => SceneChange(gameCredits);
+    public void LaunchGameCredits()
+    {
+        FindObjectOfType<FMODAudioManager>().ChangeState(FMODAudioManager.AudioState.Credits);
+        SceneChange(gameCredits);
+    }
 
     /// <summary>
     /// Quits the game

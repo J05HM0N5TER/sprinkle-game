@@ -158,7 +158,7 @@ public class CameraControl : MonoBehaviour, IXmlSerializable
 		}
 		if (noiseManager == null)
 		{
-			Debug.LogError("Cant find CollisioNoiseManager", this);
+			Debug.LogError("Cant find CollisionNoiseManager", this);
 		}
 #endif
 		lantern.SetActive(false);
@@ -408,7 +408,7 @@ public class CameraControl : MonoBehaviour, IXmlSerializable
 
 	public Ray CursorToRay()
 	{
-		// Note: DO NOT USE SCREENPOINTTORAY BECAUSE FOR SOME REASON IT IS ALWAYS
+		// Note: DO NOT USE ScreenPointToRay BECAUSE FOR SOME REASON IT IS ALWAYS
 		// FACING 90∘ TO THE LEFT! WHY!!!!
 		return PlayerCamera.ViewportPointToRay(new Vector3(cursorPosition.x, cursorPosition.y, 0.5f));
 	}
