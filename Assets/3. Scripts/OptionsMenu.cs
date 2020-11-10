@@ -7,7 +7,6 @@ public class OptionsMenu : MonoBehaviour
 {
     public Slider VolumeSlider;
     private GameObject player;
-    public GameObject cam;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,7 +18,5 @@ public class OptionsMenu : MonoBehaviour
     void Update()
     {
         AudioListener.volume = VolumeSlider.value;
-        
-        
     }
 }

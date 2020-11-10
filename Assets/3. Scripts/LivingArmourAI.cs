@@ -114,12 +114,12 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 	}
 	AIStates CurrentState;
 	public bool busyWithState;
-	private GameObject playerHelmetCrackDecal1;
-	private GameObject playerHelmetCrackDecal2;
-	private GameObject playerHelmetCrackDecal3;
-	private GameObject playerHelmetCrackDecal4;
-	private GameObject playerDamaged;
-	private GameObject playerCriticle;
+	[HideInInspector] public  GameObject playerHelmetCrackDecal1;
+	[HideInInspector] public GameObject playerHelmetCrackDecal2;
+	[HideInInspector] public GameObject playerHelmetCrackDecal3;
+	[HideInInspector] public GameObject playerHelmetCrackDecal4;
+	[HideInInspector] public GameObject playerDamaged;
+	[HideInInspector] public GameObject playerCriticle;
 	public float decalFadeTime = 2;
 	// Start is called before the first frame update
 	void Start()
@@ -437,6 +437,12 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 				print("changing suit " + closestSuit.name);
 				closestSuit.GetComponent<LivingArmourAI>().enabled = true;
 				closestSuit.GetComponent<LivingArmourAI>().anim.enabled = true;
+				closestSuit.GetComponent<LivingArmourAI>().playerHelmetCrackDecal1 = playerHelmetCrackDecal1;
+				closestSuit.GetComponent<LivingArmourAI>().playerHelmetCrackDecal2 = playerHelmetCrackDecal2;
+				closestSuit.GetComponent<LivingArmourAI>().playerHelmetCrackDecal3 = playerHelmetCrackDecal3;
+				closestSuit.GetComponent<LivingArmourAI>().playerHelmetCrackDecal4 = playerHelmetCrackDecal4;
+				closestSuit.GetComponent<LivingArmourAI>().playerDamaged = playerDamaged;
+				closestSuit.GetComponent<LivingArmourAI>().playerCriticle = playerCriticle;
 				currentSuit = closestSuit;
 				this.enabled = false;
 				canSwapSuitAgain = false;
