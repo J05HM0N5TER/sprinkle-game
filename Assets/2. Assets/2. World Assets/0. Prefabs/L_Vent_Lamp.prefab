@@ -31,7 +31,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &7860654654086536979
 Transform:
   m_ObjectHideFlags: 0
@@ -57,7 +57,7 @@ Light:
   serializedVersion: 9
   m_Type: 2
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 524288
+  m_Intensity: 32768
   m_Range: 15
   m_SpotAngle: 120
   m_InnerSpotAngle: 1
@@ -178,7 +178,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Version: 1
-  shadowResolution: 512
+  shadowResolution: 1080
   shadowDimmer: 1
   volumetricShadowDimmer: 1
   shadowFadeDistance: 10000

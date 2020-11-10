@@ -15,7 +15,9 @@ public class tutorial : MonoBehaviour
 		lean,
 		jump,
 		sprint, 
-		lantern
+		lantern,
+        rotate,
+        toss,
 	}
 	[Tooltip("What button needs to pressed to 'complete' the tutorial")]
 	public Tutorial tutorialButton;
@@ -53,10 +55,20 @@ public class tutorial : MonoBehaviour
 			case Tutorial.sprint:
 				buttonToPress = "Sprint";
 				break;
+
 			case Tutorial.lantern:
 				buttonToPress = "Lantern";
 				break;
-		}
+
+            case Tutorial.rotate:
+                buttonToPress = "Rotate Object";
+                break;
+
+            case Tutorial.toss:
+                buttonToPress = "Throw object";
+                break;
+
+        }
 		if(altButtonToPress == null)
 		{
 			altButtonToPress = "";
