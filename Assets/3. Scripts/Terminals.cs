@@ -1,9 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
+using Unity.Profiling;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
-using TMPro;
 public class Terminals : MonoBehaviour
 {
 	[Tooltip("The door that this terminal will open")]
@@ -25,12 +26,12 @@ public class Terminals : MonoBehaviour
 	private CameraControl cameraControl;
 	private TextMeshPro screentext;
 	public float textFadeOutTime = 2;
-	
+
 	// Start is called before the first frame update
 	void Start()
 	{
 		cameraControl = FindObjectOfType<CameraControl>();
-		
+
 		playerinv = GameObject.FindGameObjectWithTag("Player")?.GetComponent<PlayerController>();
 		ps = brokenParticles.GetComponent<ParticleSystem>();
 		var em = ps.emission;
@@ -46,7 +47,7 @@ public class Terminals : MonoBehaviour
 
 		}
 		screentext = gameObject.GetComponentInChildren<TextMeshPro>();
-		
+
 	}
 
 	// Update is called once per frame
@@ -88,12 +89,12 @@ public class Terminals : MonoBehaviour
 					ps.Stop();
 					//gameObject.GetComponent<Animator>().SetTrigger("FixTerminal");
 				}
-				if(!PlayerHasKeyCards() && !brokenTerminal)
+				if (!PlayerHasKeyCards() && !brokenTerminal)
 				{
 					screentext.text = neededKeyCard.ToString();
 					textFadeout();
 				}
-				
+
 				UpdateDisplay();
 			}
 		}
@@ -102,43 +103,54 @@ public class Terminals : MonoBehaviour
 
 	private void UpdateDisplay()
 	{
+		// Get the array of all the materials on the renderer
+		Renderer ren = gameObject.GetComponent<Renderer>();
+		// Material[] copiedMaterials = new Material[ren.materials.Length];
+
+		mats = ren.materials;
+		// Profiler.BeginSample("UpdateDisplay");
+		// Profiler
 		//if borked
 		if (brokenTerminal)
 		{
-			mats = gameObject.GetComponent<Renderer>().materials;
+			// You have to destoy any that you replace becuase GC doesn't take care
+			// of it "It is your responsibility to destroy the materials when the
+			// game object is being destroyed"
+			// https://docs.unity3d.com/ScriptReference/Renderer-material.html;
+			Destroy(mats[1]);
 			mats[1] = brokenMaterial;
-			gameObject.GetComponent<Renderer>().materials = mats;
+			ren.materials = mats;
 		}
 		//if unlocked
 		else
 		{
-			mats = gameObject.GetComponent<Renderer>().materials;
+			// Destroy(mats[0]);
+			Destroy(mats[1]);
 			mats[1] = unlockedMaterial;
-			gameObject.GetComponent<Renderer>().materials = mats;
-		}
-		//if locked
-		if(!brokenTerminal)
-		{
+			ren.materials = mats;
+
 			if (doorToOpen.name == "BlastDoor")
 			{
-				if(doorToOpen.GetComponent<BlastDoor>().locked == true)
+				if (doorToOpen.GetComponent<BlastDoor>().locked == true)
 				{
-					mats = gameObject.GetComponent<Renderer>().materials;
+					// Destroy(mats[0]);
+					Destroy(mats[1]);
 					mats[1] = lockedMaterial;
-					gameObject.GetComponent<Renderer>().materials = mats;
+					ren.materials = mats;
 				}
 			}
 			else
 			{
-				if(doorToOpen.GetComponent<TriggerScript>().locked == true)
+				if (doorToOpen.GetComponent<TriggerScript>().locked == true)
 				{
-					mats = gameObject.GetComponent<Renderer>().materials;
+					// Destroy(mats[0]);
+					Destroy(mats[1]);
 					mats[1] = lockedMaterial;
-					gameObject.GetComponent<Renderer>().materials = mats;
+					ren.materials = mats;
 				}
 			}
 		}
-		
+
 	}
 
 	private bool PlayerHasKeyCards()
@@ -153,14 +165,14 @@ public class Terminals : MonoBehaviour
 		screenMaterial.EnableKeyword("_EMISSION");
 		// screenMaterial.color = newColor;
 	}
-	private  void textFadeout()
-    {
+	private void textFadeout()
+	{
 		Debug.Log("textfadeout called");
-        StartCoroutine("fade");
-    }
-    private IEnumerator fade()
-    {
-        yield return new WaitForSeconds(textFadeOutTime);
-        screentext.text = "";
-    }
+		StartCoroutine("fade");
+	}
+	private IEnumerator fade()
+	{
+		yield return new WaitForSeconds(textFadeOutTime);
+		screentext.text = "";
+	}
 }
