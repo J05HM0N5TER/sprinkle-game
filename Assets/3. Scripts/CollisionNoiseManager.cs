@@ -11,14 +11,16 @@ public class CollisionNoiseManager : MonoBehaviour
     {
         public DateTime timeAdded;
         public CollisionNoise script;
-        public CollisionObject(CollisionNoise noise)
+        public AudioSource audio;
+        public CollisionObject(CollisionNoise newScript, AudioSource newAudio)
         {
             timeAdded = DateTime.Now;
-            script = noise;
+            script = newScript;
+            audio = newAudio;
         }
     }
 
-    List<CollisionObject> noises = new List<CollisionObject>(10);
+    List<CollisionObject> noisesScripts = new List<CollisionObject>(10);
 
     void Update()
     {
@@ -27,22 +29,22 @@ public class CollisionNoiseManager : MonoBehaviour
 
     public void RemoveOld()
     {
-        foreach (var item in noises)
+        foreach (var item in noisesScripts)
         {
             // If there is one that is too old
             if ((DateTime.Now - item.timeAdded).TotalSeconds > scriptLifeTime)
             {
                 // Remove
-                noises.Remove(item);
+                noisesScripts.Remove(item);
                 Destroy(item.script);
             }
         }
     }
 
-    public void Add(CollisionNoise newNoise)
+    public void Add(CollisionNoise newNoise, AudioSource newAudio)
     {
-        CollisionObject temp = new CollisionObject(newNoise);
-        noises.Add(temp);
+        CollisionObject temp = new CollisionObject(newNoise, newAudio);
+        noisesScripts.Add(temp);
     }
 
     public void Add(GameObject objectInteractedWith)
@@ -52,7 +54,7 @@ public class CollisionNoiseManager : MonoBehaviour
         if (oldScript)
         {
             // Find it in the array
-            CollisionObject oldObject = noises.Find(
+            CollisionObject oldObject = noisesScripts.Find(
                 delegate(CollisionObject a)
                 {
                     return (a.script == oldScript);
@@ -64,7 +66,8 @@ public class CollisionNoiseManager : MonoBehaviour
         else
         {
             CollisionNoise newScript = objectInteractedWith.AddComponent<CollisionNoise>();
-            Add(newScript);
+            AudioSource newAudio = objectInteractedWith.AddComponent<AudioSource>();
+            Add(newScript, newAudio);
         }
     }
 }
