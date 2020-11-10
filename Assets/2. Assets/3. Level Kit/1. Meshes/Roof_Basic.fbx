@@ -7,12 +7,12 @@ FBXHeaderExtension:  {
 	CreationTimeStamp:  {
 		Version: 1000
 		Year: 2020
-		Month: 8
-		Day: 31
+		Month: 11
+		Day: 10
 		Hour: 10
-		Minute: 36
-		Second: 1
-		Millisecond: 159
+		Minute: 15
+		Second: 28
+		Millisecond: 954
 	}
 	Creator: "FBX SDK/FBX Plugins version 2019.2"
 	SceneInfo: "SceneInfo::GlobalInfo", "UserData" {
@@ -34,15 +34,15 @@ FBXHeaderExtension:  {
 			P: "Original|ApplicationVendor", "KString", "", "", "Autodesk"
 			P: "Original|ApplicationName", "KString", "", "", "Maya"
 			P: "Original|ApplicationVersion", "KString", "", "", "201900"
-			P: "Original|DateTime_GMT", "DateTime", "", "", "31/08/2020 00:36:01.152"
+			P: "Original|DateTime_GMT", "DateTime", "", "", "09/11/2020 23:15:28.949"
 			P: "Original|FileName", "KString", "", "", "C:\Users\Samuel\Desktop\End of year project\Exports\GreyBox\Greybox (Working)\Roof_Basic.fbx"
 			P: "LastSaved", "Compound", "", ""
 			P: "LastSaved|ApplicationVendor", "KString", "", "", "Autodesk"
 			P: "LastSaved|ApplicationName", "KString", "", "", "Maya"
 			P: "LastSaved|ApplicationVersion", "KString", "", "", "201900"
-			P: "LastSaved|DateTime_GMT", "DateTime", "", "", "31/08/2020 00:36:01.152"
+			P: "LastSaved|DateTime_GMT", "DateTime", "", "", "09/11/2020 23:15:28.949"
 			P: "Original|ApplicationActiveProject", "KString", "", "", "C:\Users\Samuel\Desktop\End of year project\Exports\GreyBox\Greybox (Working)"
-			P: "Original|ApplicationNativeFile", "KString", "", "", "C:\Users\Samuel\Desktop\End of year project\Scenes\Game Modular Assets(Working)\Game_Modular_AssetsV2.0050.ma"
+			P: "Original|ApplicationNativeFile", "KString", "", "", "C:\Users\Samuel\Desktop\End of year project\Scenes\Game Modular Assets(Working)\Game_Modular_AssetsV2.0092.ma"
 		}
 	}
 }
@@ -65,7 +65,7 @@ GlobalSettings:  {
 		P: "TimeProtocol", "enum", "", "",2
 		P: "SnapOnFrameMode", "enum", "", "",0
 		P: "TimeSpanStart", "KTime", "Time", "",0
-		P: "TimeSpanStop", "KTime", "Time", "",230930790000
+		P: "TimeSpanStop", "KTime", "Time", "",577326975000
 		P: "CustomFrameRate", "double", "Number", "",-1
 		P: "TimeMarker", "Compound", "", ""
 		P: "CurrentTimeMarker", "int", "Integer", "",-1
@@ -77,7 +77,7 @@ GlobalSettings:  {
 
 Documents:  {
 	Count: 1
-	Document: 1813555907328, "", "Scene" {
+	Document: 2507105446368, "", "Scene" {
 		Properties70:  {
 			P: "SourceObject", "object", "", ""
 			P: "ActiveAnimStackName", "KString", "", "", "Take 001"
@@ -250,7 +250,7 @@ Definitions:  {
 ;------------------------------------------------------------------
 
 Objects:  {
-	Geometry: 1813146048000, "Geometry::", "Mesh" {
+	Geometry: 2507102167904, "Geometry::", "Mesh" {
 		Vertices: *12 {
 			a: -250,450,250,250,450,250,-250,450,-250,250,450,-250
 		} 
@@ -279,7 +279,7 @@ Objects:  {
 			MappingInformationType: "ByPolygonVertex"
 			ReferenceInformationType: "IndexToDirect"
 			UV: *8 {
-				a: 0.0273951888084412,0.0273951888084412,0.972604811191559,0.0273951888084412,0.972604811191559,0.972604811191559,0.0273951888084412,0.972604811191559
+				a: 0.000609219074249268,0.000609219074249268,0.999390780925751,0.000609219074249268,0.999390780925751,0.999390780925751,0.000609219074249268,0.999390780925751
 			} 
 			UVIndex: *4 {
 				a: 0,1,2,3
@@ -323,7 +323,7 @@ Objects:  {
 			}
 		}
 	}
-	Model: 1813160074656, "Model::Roof_Basic", "Mesh" {
+	Model: 2506995041568, "Model::Roof_Basic", "Mesh" {
 		Version: 232
 		Properties70:  {
 			P: "RotationPivot", "Vector3D", "Vector", "",0,1.06581410364015e-14,0
@@ -337,7 +337,7 @@ Objects:  {
 		Shading: T
 		Culling: "CullingOff"
 	}
-	Material: 1813566389248, "Material::lambert5", "" {
+	Material: 2507105715376, "Material::lambert5", "" {
 		Version: 102
 		ShadingModel: "lambert"
 		MultiLayer: 0
@@ -352,13 +352,13 @@ Objects:  {
 			P: "Opacity", "double", "Number", "",1
 		}
 	}
-	AnimationStack: 1813421097136, "AnimStack::Take 001", "" {
+	AnimationStack: 2507098239856, "AnimStack::Take 001", "" {
 		Properties70:  {
-			P: "LocalStop", "KTime", "Time", "",230930790000
-			P: "ReferenceStop", "KTime", "Time", "",230930790000
+			P: "LocalStop", "KTime", "Time", "",577326975000
+			P: "ReferenceStop", "KTime", "Time", "",577326975000
 		}
 	}
-	AnimationLayer: 1813554539392, "AnimLayer::BaseLayer", "" {
+	AnimationLayer: 2507105851152, "AnimLayer::BaseLayer", "" {
 	}
 }
 
@@ -368,16 +368,16 @@ Objects:  {
 Connections:  {
 	
 	;Model::Roof_Basic, Model::RootNode
-	C: "OO",1813160074656,0
+	C: "OO",2506995041568,0
 	
 	;AnimLayer::BaseLayer, AnimStack::Take 001
-	C: "OO",1813554539392,1813421097136
+	C: "OO",2507105851152,2507098239856
 	
 	;Geometry::, Model::Roof_Basic
-	C: "OO",1813146048000,1813160074656
+	C: "OO",2507102167904,2506995041568
 	
 	;Material::lambert5, Model::Roof_Basic
-	C: "OO",1813566389248,1813160074656
+	C: "OO",2507105715376,2506995041568
 }
 ;Takes section
 ;----------------------------------------------------
@@ -386,7 +386,7 @@ Takes:  {
 	Current: "Take 001"
 	Take: "Take 001" {
 		FileName: "Take_001.tak"
-		LocalTime: 0,230930790000
-		ReferenceTime: 0,230930790000
+		LocalTime: 0,577326975000
+		ReferenceTime: 0,577326975000
 	}
 }
