@@ -207,10 +207,10 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 				playerHelmetCrackDecal4.SetActive(true);
 			}
 			decalFadeAway();
-			if(player.GetComponent<PlayerController>().health <= 0)
-			{
-				GameObject.Find("PauseManager").GetComponent<PauseMenu>().PauseGame();
-			}
+			// if(player.GetComponent<PlayerController>().health <= 0)
+			// {
+			// 	GameObject.Find("PauseManager").GetComponent<PauseMenu>().PauseGame();
+			// }
 			
 			if(player.GetComponent<PlayerController>().health <= 60.0f)
 			{
