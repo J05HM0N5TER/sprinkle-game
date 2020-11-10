@@ -121,6 +121,8 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 	[HideInInspector] public GameObject playerDamaged;
 	[HideInInspector] public GameObject playerCriticle;
 	public float decalFadeTime = 2;
+
+	public bool suitJump = true;
 	// Start is called before the first frame update
 	void Start()
 	{
@@ -259,7 +261,12 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 		
 		if (((gameObject.transform.position - player.transform.position).magnitude > maxDistanceFromPlayer) && !isPlayerVisible && suits.Length >= 1)
 		{
-			CurrentState = AIStates.SwapSuit;
+			suits = GameObject.FindGameObjectsWithTag ("Suit");
+			if(suits.Length > 1)
+			{
+				CurrentState = AIStates.SwapSuit;
+			}
+			//CurrentState = AIStates.SwapSuit;
 		}
 		
 		if(CurrentState == AIStates.Idle)
