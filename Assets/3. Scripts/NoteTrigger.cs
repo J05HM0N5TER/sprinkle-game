@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 public class NoteTrigger : MonoBehaviour
 {
@@ -97,29 +100,13 @@ public class NoteTrigger : MonoBehaviour
 					{
 						foreach (var obj in turnOnStuff)
 						{
-							//obj.SetActive(true);
-							foreach (var childcomp in turnOnStuff)
-							{
-								//childcomp.GetComponents<Behaviour>();
-								foreach (Behaviour child in childcomp.GetComponents<Behaviour>())
-								{
-									child.enabled = true;
-								}
-							}
+							obj.SetActive(true);
 						}
 
 						// Turn off all the objects
 						foreach (var obj in turnOffStuff)
 						{
-							//obj.SetActive(false);
-							foreach (var childcomp in turnOffStuff)
-							{
-								//childcomp.GetComponents<Behaviour>();
-								foreach (Behaviour child in childcomp.GetComponents<Behaviour>())
-								{
-									child.enabled = false;
-								}
-							}
+							obj.SetActive(false);
 						}
 						activated = true;
                     }
@@ -160,10 +147,10 @@ public class NoteTrigger : MonoBehaviour
 		isActive = true;
 	}
 
-    /// <summary>
-    /// Closes this note when it is open
-    /// </summary>
-    public void CloseNote()
+	/// <summary>
+	/// Closes this note when it is open
+	/// </summary>
+	public void CloseNote()
 	{
 		isActive = false;
 		noteTextBox.SetActive(false);
