@@ -10,7 +10,7 @@ using System.Xml.Serialization;
 // End of for serialization
 using UnityEngine;
 using UnityEngine.Experimental.Rendering.HDPipeline;
-[RequireComponent(typeof(CapsuleCollider), typeof(Rigidbody))]
+[RequireComponent(typeof(CapsuleCollider), typeof(Rigidbody)), RequireComponent(typeof(AudioSource))]
 public class PlayerController : MonoBehaviour, IXmlSerializable
 {
 	// NOTE: If there is more then 8 different values then need to change from byte
@@ -51,11 +51,11 @@ public class PlayerController : MonoBehaviour, IXmlSerializable
 	[Header("Footsteps")]
 	[Tooltip("How loud each footstep is")]
 	public float footstopVolume = 0.5f;
-	[Tooltip("The different sounds to play when the player is walking"
-		+ " (randomly pickes every time it plays if more then one)")]
+	[Tooltip("The different sounds to play when the player is walking" +
+		" (randomly pickes every time it plays if more then one)")]
 	public List<AudioClip> footstepSounds = new List<AudioClip>();
-	[Tooltip("How much distance the player has to walk before"
-		+ " another footstep plays")]
+	[Tooltip("How much distance the player has to walk before" +
+		" another footstep plays")]
 	public float footstepFrequency = 2;
 	private AudioSource audioSource;
 	private Vector2 lastFootstepPoint;
@@ -111,7 +111,7 @@ public class PlayerController : MonoBehaviour, IXmlSerializable
 	// Start is called before the first frame update
 	void Start()
 	{
-		audioSource = gameObject.AddComponent<AudioSource>();
+		audioSource = gameObject.GetComponent<AudioSource>();
 		audioSource.volume = footstopVolume;
 		lastFootstepPoint = new Vector2(transform.position.x, transform.position.z);
 		playerCamera = GetComponentInChildren<Camera>();
