@@ -31,7 +31,7 @@ public class CollisionNoise : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         suits = FindObjectsOfType<LivingArmourAI>();
         rb = GetComponent<Rigidbody>();
-        
+
     }
     /// <summary>
     /// on collision, play a sound and add the object that made the sound to the list of places of interest for the ai to go and walk to.
@@ -39,13 +39,13 @@ public class CollisionNoise : MonoBehaviour
     /// <param name="collision">Object that it collided with</param>
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.relativeVelocity.magnitude >= minSpeedToMakeSound)
-        { 
+        if (collision.relativeVelocity.magnitude >= minSpeedToMakeSound)
+        {
             audioSource.PlayOneShot(clip);
             madeSound = true;
-            foreach(var suit in suits)
+            foreach (var suit in suits)
             {
-                if(suit.isActiveAndEnabled)
+                if (suit.isActiveAndEnabled)
                 {
                     suit.soundSources.Add(gameObject.transform.position);
                 }

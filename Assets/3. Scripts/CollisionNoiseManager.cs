@@ -53,7 +53,7 @@ public class CollisionNoiseManager : MonoBehaviour
         {
             // Find it in the array
             CollisionObject oldObject = noises.Find(
-                delegate(CollisionObject a)
+                delegate (CollisionObject a)
                 {
                     return (a.script == oldScript);
                 }
