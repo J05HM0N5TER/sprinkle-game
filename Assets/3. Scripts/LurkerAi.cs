@@ -31,6 +31,7 @@ public class LurkerAi : MonoBehaviour, IXmlSerializable
 
 	private Animator anim;
 	bool hasbeenseen = false;
+	private bool move = false;
 	// Start is called before the first frame update
 	void Start()
 	{
@@ -57,6 +58,7 @@ public class LurkerAi : MonoBehaviour, IXmlSerializable
 			if (Random.value <= chanceOfAppearing)
 			{
 				appearsNearPlayer = true;
+				move = true;
 			}
 			else
 			{
@@ -91,11 +93,16 @@ public class LurkerAi : MonoBehaviour, IXmlSerializable
 			{
 				closestLurkerPoint.transform.position = lurkerWaitingPoint.transform.position;
 			}
+			if(move)
+			{
+				spookyTimer -= Time.deltaTime;
+			}
+			
 			//actually moving the bloody thing
 			if (closestLurkerPoint != null)
 			{
 				//print("Closest point is " + closestLurkerPoint.name);
-				spookyTimer -= Time.deltaTime;
+				
 				if (spookyTimer <= 0.0f)
 				{
 					gameObject.GetComponent<Transform>().position = closestLurkerPoint.transform.position;
@@ -103,6 +110,7 @@ public class LurkerAi : MonoBehaviour, IXmlSerializable
 					currentLurkingPoint = closestLurkerPoint;
 					spookyTimer = resettimer;
 					hasbeenseen = false;
+					move = false;
 				}
 			}
 			else

@@ -13,6 +13,7 @@ using UnityEngine.UIElements;
 
 // End of for serialization
 
+[RequireComponent(typeof(AudioSource), typeof(NavMeshAgent))]
 public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 {
 	private NavMeshAgent agent;
@@ -137,7 +138,7 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 	// Start is called before the first frame update
 	void Start()
 	{
-		audioSource = gameObject.AddComponent<AudioSource>();
+		audioSource = gameObject.GetComponent<AudioSource>();
 		audioSource.volume = footstopVolume;
 		agent = gameObject.GetComponent<NavMeshAgent>();
 		originalWonder = wonderDistance;
@@ -208,7 +209,7 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 		playerInScreenBounds = screenPoint.z > 0 && screenPoint.x > 0 && screenPoint.x < 1 && screenPoint.y > 0 && screenPoint.y < 1;
 		// The position the player was last seen at by the AI (Updated when the player is discovered)
 		// Is the player within screen bounds and nothing is obstructing view
-		rayObstructed = Physics.Linecast( /*startPos, endPos,*/ agent.transform.position, player.transform.position, out RaycastHit hitinfo, ~(1 << 10));
+		rayObstructed = Physics.Linecast( /*startPos, endPos,*/ DirectCam.transform.position, player.transform.position, out RaycastHit hitinfo, ~(1 << 10));
 		// Print out what the ray hit
 		// Debug view
 		isPlayerVisible = playerInScreenBounds && !rayObstructed;
