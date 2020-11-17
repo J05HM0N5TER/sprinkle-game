@@ -56,7 +56,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 5484521312776986435, guid: 5802c8dc589e29b449de279eda953fa8, type: 2}
+  - {fileID: 2100000, guid: 6aee76a3a4ac73e40973aa344f73c941, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -9893,12 +9893,11 @@ MonoBehaviour:
   neededKeyCard: 0
   maxDistanceToInteract: 2
   brokenTerminal: 0
-  brokenParticles: {fileID: 3882055329403096894}
-  screenMaterial: {fileID: 2100000, guid: 6aee76a3a4ac73e40973aa344f73c941, type: 2}
+  brokenParticles: {fileID: 3637513504224220756}
   brokenMaterial: {fileID: 2100000, guid: 451ebc866b1d8f644a95932df12cd4aa, type: 2}
   unlockedMaterial: {fileID: 2100000, guid: 3d5fd51d99116a94d8d2a5b432ec6ac3, type: 2}
   lockedMaterial: {fileID: 2100000, guid: 8fd8f919024b2ec4f8caecc26c869757, type: 2}
-  mats: []
+  screenMaterial: {fileID: 2100000, guid: 6aee76a3a4ac73e40973aa344f73c941, type: 2}
   textFadeOutTime: 3
 --- !u!1001 &722715186673934812
 PrefabInstance:
@@ -10118,6 +10117,12 @@ PrefabInstance:
 --- !u!4 &3637513503777426068 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 960652921004412195, guid: d5ba0bcd16048ea44a76f6e447b34062,
+    type: 3}
+  m_PrefabInstance: {fileID: 4553112833092470711}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &3637513504224220756 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 960652921094492643, guid: d5ba0bcd16048ea44a76f6e447b34062,
     type: 3}
   m_PrefabInstance: {fileID: 4553112833092470711}
   m_PrefabAsset: {fileID: 0}
