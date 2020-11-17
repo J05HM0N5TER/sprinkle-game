@@ -209,15 +209,16 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 		playerInScreenBounds = screenPoint.z > 0 && screenPoint.x > 0 && screenPoint.x < 1 && screenPoint.y > 0 && screenPoint.y < 1;
 		// The position the player was last seen at by the AI (Updated when the player is discovered)
 		// Is the player within screen bounds and nothing is obstructing view
-		rayObstructed = Physics.Linecast( /*startPos, endPos,*/ DirectCam.transform.position, player.transform.position, out RaycastHit hitinfo, ~(1 << 10));
+		rayObstructed = Physics.Linecast( /*startPos, endPos,*/ DirectCam.transform.position, playerCam.transform.position, out RaycastHit hitinfo, ~(1 << 10));
 		// Print out what the ray hit
 		// Debug view
 		isPlayerVisible = playerInScreenBounds && !rayObstructed;
 
 		if (((agent.transform.position - player.transform.position).magnitude < attackDistance) && isPlayerVisible && canAttackAgain)
 		{
+			
 			player.GetComponent<PlayerController>().health -= AIDamage;
-
+			
 			var randomNum = Random.Range(1, 4);
 			if (randomNum == 1)
 			{
@@ -250,11 +251,8 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 					playerCriticle.SetActive(true);
 				}
 			}
-			else
-			{
-				playerDamaged.SetActive(false);
-				playerCriticle.SetActive(false);
-			}
+			
+			
 			anim.SetBool("attack", true);
 			var dir = (player.transform.position - transform.position).normalized;
 			player.GetComponent<Rigidbody>().AddForce(knockBack * dir);
@@ -263,6 +261,11 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 			CurrentState = AIStates.Idle;
 
 			//attackcooldown();
+		}
+		if (player.GetComponent<PlayerController>().health > 60.0f)
+		{
+			playerDamaged.SetActive(false);
+			playerCriticle.SetActive(false);
 		}
 		if (!canAttackAgain)
 		{
