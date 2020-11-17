@@ -69,6 +69,7 @@ public class DeathScript : MonoBehaviour
         player.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
         player.GetComponent<PlayerController>().enabled = true;
         anim.enabled = false;
+        player.GetComponent<PlayerController>().health = 100;
 	}
     
 }
