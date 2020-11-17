@@ -14,18 +14,27 @@ public class Terminals : MonoBehaviour
 	private PlayerController playerinv;
 	[Tooltip("the max distance that the player can be from the terminal and still interact with it")]
 	public float maxDistanceToInteract = 2;
+	[Tooltip("Does this terminal require fixing before use?")]
 	public bool brokenTerminal = false;
+	[Tooltip("How bright the emmision is")]
+	[Range(0.001f, 0.005f)]
+	public float emissionIntencity = 0.001f;
 	[Tooltip("Spark Particles")]
-	public GameObject brokenParticles;
-	private ParticleSystem ps;
-	public Material screenMaterial;
+	public ParticleSystem brokenParticles;
+	[Tooltip("The material that is active on the display when the terminal is broken")]
 	public Material brokenMaterial;
+	[Tooltip("The material that is active on the display when the terminal is unlocked")]
 	public Material unlockedMaterial;
+	[Tooltip("The material that is active on the display when the terminal is locked")]
+
 	public Material lockedMaterial;
-	public Material[] mats;
+	public Material screenMaterial;
 	private CameraControl cameraControl;
 	private TextMeshPro screentext;
 	public float textFadeOutTime = 2;
+	[Header("Debug")]
+	[Tooltip("Manually updates the material on the display, this is to show changes made in inspector without player interacting with it (this is a button)")]
+	public bool manuallyUpdateDisplay = false;
 
 	// Start is called before the first frame update
 	void Start()
@@ -33,30 +42,27 @@ public class Terminals : MonoBehaviour
 		cameraControl = FindObjectOfType<CameraControl>();
 
 		playerinv = GameObject.FindGameObjectWithTag("Player")?.GetComponent<PlayerController>();
-		ps = brokenParticles.GetComponent<ParticleSystem>();
-		var em = ps.emission;
+		var em = brokenParticles.emission;
 		if (brokenTerminal)
 		{
-			ps.Play();
+			brokenParticles.Play();
 			em.enabled = true;
 		}
 		else
 		{
 			em.enabled = false;
-			ps.Stop();
-
+			brokenParticles.Stop();
 		}
 		screentext = gameObject.GetComponentInChildren<TextMeshPro>();
+		UpdateDisplay();
+
+		// screenMaterial.EnableKeyword("_EMISSION");
 
 	}
 
 	// Update is called once per frame
 	void Update()
 	{
-		if (screenMaterial == null)
-		{
-			return;
-		}
 		// UpdateDisplay();
 		if (Input.GetButtonDown("Interact"))
 		{
@@ -84,9 +90,9 @@ public class Terminals : MonoBehaviour
 				if (playerinv.inventory.HasFlag(PlayerController.Inventory.SolderingIron) && brokenTerminal)
 				{
 					brokenTerminal = false;
-					var em = ps.emission;
-					em.enabled = false;
-					ps.Stop();
+					// var em = brokenParticles.emission;
+					// em.enabled = false;
+					// brokenParticles.Stop();
 					//gameObject.GetComponent<Animator>().SetTrigger("FixTerminal");
 				}
 				if (!PlayerHasKeyCards() && !brokenTerminal)
@@ -98,72 +104,69 @@ public class Terminals : MonoBehaviour
 				UpdateDisplay();
 			}
 		}
-		UpdateDisplay();
+		if (manuallyUpdateDisplay)
+		{
+			UpdateDisplay();
+			manuallyUpdateDisplay = false;
+		}
 	}
 
+	/// <summary>
+	/// Updates the terminal display, only needs to be called when the state changes
+	/// </summary>
 	private void UpdateDisplay()
 	{
 		// Get the array of all the materials on the renderer
-		Renderer ren = gameObject.GetComponent<Renderer>();
-		// Material[] copiedMaterials = new Material[ren.materials.Length];
 
-		mats = ren.materials;
-		// Profiler.BeginSample("UpdateDisplay");
-		// Profiler
+		ParticleSystem.EmissionModule emission = brokenParticles.emission;
+
 		//if borked
 		if (brokenTerminal)
 		{
-			// You have to destoy any that you replace becuase GC doesn't take care
-			// of it "It is your responsibility to destroy the materials when the
-			// game object is being destroyed"
-			// https://docs.unity3d.com/ScriptReference/Renderer-material.html;
-			Destroy(mats[1]);
-			mats[1] = brokenMaterial;
-			ren.materials = mats;
+			SetScreenEmissive(brokenMaterial);
+			emission.enabled = true;
+			brokenParticles.Play();
 		}
-		//if unlocked
+
 		else
 		{
-			// Destroy(mats[0]);
-			Destroy(mats[1]);
-			mats[1] = unlockedMaterial;
-			ren.materials = mats;
-
-			if (doorToOpen.name == "BlastDoor")
+			// If locked
+			BlastDoor blastDoor = doorToOpen.GetComponent<BlastDoor>();
+			TriggerScript triggerScript = doorToOpen.GetComponent<TriggerScript>();
+			if ((blastDoor && blastDoor.locked) || (triggerScript && triggerScript.locked))
 			{
-				if (doorToOpen.GetComponent<BlastDoor>().locked == true)
-				{
-					// Destroy(mats[0]);
-					Destroy(mats[1]);
-					mats[1] = lockedMaterial;
-					ren.materials = mats;
-				}
+				SetScreenEmissive(lockedMaterial);
+				emission.enabled = false;
+				brokenParticles.Stop();
 			}
+			// If unlocked
 			else
 			{
-				if (doorToOpen.GetComponent<TriggerScript>().locked == true)
-				{
-					// Destroy(mats[0]);
-					Destroy(mats[1]);
-					mats[1] = lockedMaterial;
-					ren.materials = mats;
-				}
+				SetScreenEmissive(unlockedMaterial);
+				emission.enabled = false;
+				brokenParticles.Stop();
 			}
 		}
 
+		// ren.SetPropertyBlock(propertyBlock, 1);
+	}
+
+	/// <summary>
+	/// Set the emmision colour of the screen
+	/// </summary>
+	/// <param name="newmat">The material to get the emission colour from</param>
+	private void SetScreenEmissive(Material newmat)
+	{
+		Renderer ren = gameObject.GetComponent<Renderer>();
+		MaterialPropertyBlock propertyBlock = new MaterialPropertyBlock();
+		screenMaterial.EnableKeyword("_EMISSION");
+		propertyBlock.SetColor("_EmissiveColor", newmat.GetColor("_EmissiveColor") * emissionIntencity);
+		ren.SetPropertyBlock(propertyBlock, 1);
 	}
 
 	private bool PlayerHasKeyCards()
 	{
 		return (playerinv.inventory & neededKeyCard) == neededKeyCard;
-	}
-
-	private void SetColours(Color newColor)
-	{
-		// int id = Shader.PropertyToID("_EmissionColor");
-		screenMaterial.SetColor("_EmissiveColor", newColor);
-		screenMaterial.EnableKeyword("_EMISSION");
-		// screenMaterial.color = newColor;
 	}
 	private void textFadeout()
 	{
