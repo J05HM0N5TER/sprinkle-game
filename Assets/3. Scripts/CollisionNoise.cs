@@ -9,7 +9,7 @@ public class CollisionNoise : MonoBehaviour
 {
     //audio, 
     RequireComponent AudioSource; // component needed
-    AudioSource audioSource;
+    [HideInInspector] public AudioSource audioSource;
     [Tooltip("The sound that will be played when hitting something")]
     public AudioClip clip; // actual sound
     [Tooltip("The volume of the sound")]
@@ -41,7 +41,21 @@ public class CollisionNoise : MonoBehaviour
     {
         if (collision.relativeVelocity.magnitude >= minSpeedToMakeSound)
         {
-            audioSource.PlayOneShot(clip);
+            // For some reason this function can be called before start, this is to
+            // combat that
+            if (suits == null) { Start(); }
+            try
+            {
+                audioSource.clip = clip;
+
+            }
+            catch (System.Exception)
+            {
+
+                throw;
+            }
+            // audioSource.PlayOneShot(clip);
+            audioSource.Play();
             madeSound = true;
             foreach (var suit in suits)
             {
