@@ -10,7 +10,7 @@ using System.Xml.Serialization;
 // End of for serialization
 using UnityEngine;
 using UnityEngine.Experimental.Rendering.HDPipeline;
-[RequireComponent(typeof(CapsuleCollider), typeof(Rigidbody))]
+[RequireComponent(typeof(CapsuleCollider), typeof(Rigidbody)), RequireComponent(typeof(AudioSource))]
 public class PlayerController : MonoBehaviour, IXmlSerializable
 {
 	// NOTE: If there is more then 8 different values then need to change from byte
@@ -48,6 +48,18 @@ public class PlayerController : MonoBehaviour, IXmlSerializable
 	[Tooltip("The FOV of the camera when the player is sprinting")]
 	public float sprintFOV = 85;
 
+	[Header("Footsteps")]
+	[Tooltip("How loud each footstep is")]
+	public float footstopVolume = 0.5f;
+	[Tooltip("The different sounds to play when the player is walking" +
+		" (randomly pickes every time it plays if more then one)")]
+	public List<AudioClip> footstepSounds = new List<AudioClip>();
+	[Tooltip("How much distance the player has to walk before" +
+		" another footstep plays")]
+	public float footstepFrequency = 2;
+	private AudioSource audioSource;
+	private Vector2 lastFootstepPoint;
+
 	[Header("Crouch variables")]
 	[Range(0.1f, 1)]
 	[Tooltip("Height of player when crouched")]
@@ -62,7 +74,7 @@ public class PlayerController : MonoBehaviour, IXmlSerializable
 	// The collider for the player
 	private CapsuleCollider capsule;
 	// Is the player currently couching?
-	[HideInInspector]public bool isCrouching = false;
+	[HideInInspector] public bool isCrouching = false;
 	[Range(0, 10)]
 	[Tooltip("The effect that crouching has on speed, this is a percentage impact (0.5 make it so crouching make the player half speed)")]
 	public float crouchSpeed = 5f;
@@ -99,6 +111,9 @@ public class PlayerController : MonoBehaviour, IXmlSerializable
 	// Start is called before the first frame update
 	void Start()
 	{
+		audioSource = gameObject.GetComponent<AudioSource>();
+		audioSource.volume = footstopVolume;
+		lastFootstepPoint = new Vector2(transform.position.x, transform.position.z);
 		playerCamera = GetComponentInChildren<Camera>();
 		rb = gameObject.GetComponent<Rigidbody>();
 		capsule = GetComponent<CapsuleCollider>();
@@ -129,21 +144,33 @@ public class PlayerController : MonoBehaviour, IXmlSerializable
 
 		// Modify speed based on if the player is crouching
 		float currentSpeed = isCrouching ? crouchSpeed : speed;
-		
-		if(Input.GetKey(KeyCode.S))
+
+		if (Input.GetKey(KeyCode.S))
 		{
-			currentSpeed *= 0.6f; 
+			currentSpeed *= 0.6f;
 		}
-		
+
 		// Move the player using the input, keep the downwards velocity for when they fall.
 		Vector3 vel = new Vector3(0, rb.velocity.y, 0);
-		
+
 		vel += gameObject.transform.forward * input.z * currentSpeed;
 		vel += gameObject.transform.right * input.x * currentSpeed;
-		
+
 		rb.velocity = vel;
-		
-		
+
+		// Footsteps
+		Vector2 currentPoint = new Vector2(transform.position.x, transform.position.z);
+		if (Vector2.Distance(currentPoint, lastFootstepPoint) > footstepFrequency && IsStanding())
+		{
+			int index = UnityEngine.Random.Range(0, footstepSounds.Count);
+			// Set to use new clip
+			audioSource.clip = footstepSounds[index];
+			// Randomise pitch for variation
+			audioSource.pitch = UnityEngine.Random.Range(0.8f, 1.5f);
+			audioSource.Play();
+			// Update position to current point
+			lastFootstepPoint = currentPoint;
+		}
 	}
 
 	// Update is called once per frame
@@ -157,20 +184,20 @@ public class PlayerController : MonoBehaviour, IXmlSerializable
 			rb.AddForce(gameObject.transform.up * (isCrouching ? couchJumpForce : jumpForce));
 		}
 		Crouch();
-		
+
 		if (Input.GetButton("Sprint") && !isCrouching && (gameObject.GetComponent<Rigidbody>().velocity.magnitude >= 0.1))
 		{
 			currentFOV = playerCamera.fieldOfView;
 			if (currentFOV < sprintFOV)
-            {
+			{
 				playerCamera.fieldOfView = Mathf.Lerp(walkFOV, sprintFOV, FOVInterp);
 				FOVInterp += FOVSPeedChange * Time.deltaTime;
 				FOVInterp = Mathf.Clamp(FOVInterp, 0, 1);
 			}
 			//playerCamera.fieldOfView = sprintFOV;
-			
+
 			speed = sprintSpeed;
-			
+
 			foreach (var suit in suits)
 			{
 				if (suit.isActiveAndEnabled == true)
@@ -178,10 +205,10 @@ public class PlayerController : MonoBehaviour, IXmlSerializable
 					suit.soundSources.Add(gameObject.transform.position);
 				}
 			}
-				//makingsound = true;
-			
+			//makingsound = true;
+
 		}
-		else if(currentFOV > walkFOV)
+		else if (currentFOV > walkFOV)
 		{
 
 			playerCamera.fieldOfView = Mathf.Lerp(walkFOV, sprintFOV, FOVInterp);
@@ -189,14 +216,13 @@ public class PlayerController : MonoBehaviour, IXmlSerializable
 			FOVInterp = Mathf.Clamp(FOVInterp, 0, 1);
 			currentFOV = playerCamera.fieldOfView;
 			speed = walkspeed;
-			
 
 		}
-		if(Input.GetButton("Med-Gun") && medSyringes > 0)
+		if (Input.GetButton("Med-Gun") && medSyringes > 0)
 		{
 			health += syringeHealAmount;
-			medSyringes --;
-			if(health >= 100)
+			medSyringes--;
+			if (health >= 100)
 			{
 				health = 100;
 			}

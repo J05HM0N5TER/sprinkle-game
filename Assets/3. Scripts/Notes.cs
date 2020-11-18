@@ -33,6 +33,7 @@ public class Notes : MonoBehaviour
 	public float maxInteractDistance = 1;
 	CameraControl playerCamera;
 
+
 	// Start is called before the first frame update
 	void Start()
 	{
@@ -96,13 +97,19 @@ public class Notes : MonoBehaviour
 					Ray temp = playerCamera.CursorToRay();
 
 					OpenNote();
+					
+					
+					
 				}
-			}
+			}	
 		}
+	
 		if (Input.GetButtonDown("Pause") && isActive)
 		{
 			CloseNote();
 		}
+
+		
 	}
 
 	/// <summary>

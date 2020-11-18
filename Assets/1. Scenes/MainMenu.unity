@@ -2571,27 +2571,37 @@ PrefabInstance:
     - target: {fileID: 6598307379682285400, guid: 12de2b1400e411f418cb342e1b27dfd0,
         type: 3}
       propertyPath: m_textInfo.characterCount
-      value: 0
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 6598307379682285400, guid: 12de2b1400e411f418cb342e1b27dfd0,
         type: 3}
       propertyPath: m_textInfo.spaceCount
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6598307379682285400, guid: 12de2b1400e411f418cb342e1b27dfd0,
         type: 3}
       propertyPath: m_textInfo.wordCount
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6598307379682285400, guid: 12de2b1400e411f418cb342e1b27dfd0,
         type: 3}
       propertyPath: m_textInfo.lineCount
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6598307379682285400, guid: 12de2b1400e411f418cb342e1b27dfd0,
         type: 3}
       propertyPath: m_textInfo.pageCount
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6598307379682285400, guid: 12de2b1400e411f418cb342e1b27dfd0,
+        type: 3}
+      propertyPath: m_fontColor.a
+      value: 0.1882353
+      objectReference: {fileID: 0}
+    - target: {fileID: 6598307379682285400, guid: 12de2b1400e411f418cb342e1b27dfd0,
+        type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 805306368
       objectReference: {fileID: 0}
     - target: {fileID: 7532747849542074204, guid: 12de2b1400e411f418cb342e1b27dfd0,
         type: 3}
@@ -11789,71 +11799,6 @@ PrefabInstance:
       objectReference: {fileID: 1450913629}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 99d40d595ceca6f48919504f1093d24a, type: 3}
---- !u!1 &1316352225193083859 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1316352225112560347, guid: 99d40d595ceca6f48919504f1093d24a,
-    type: 3}
-  m_PrefabInstance: {fileID: 1316352225193083858}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1316352225193083860
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 58903302055104664}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a68c43fe1f2a47cfa234b5eeaa98012, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  version: 5
-  m_Version: 5
-  directionalIntensity: 3.1415927
-  punctualIntensity: 600
-  areaIntensity: 200
-  enableSpotReflector: 0
-  luxAtDistance: 1
-  m_InnerSpotPercent: 0
-  lightDimmer: 1
-  m_VolumetricDimmer: 1
-  lightUnit: 4
-  fadeDistance: 10000
-  affectDiffuse: 1
-  affectSpecular: 1
-  nonLightmappedOnly: 0
-  lightTypeExtent: 0
-  m_SpotLightShape: 0
-  shapeWidth: 0.5
-  shapeHeight: 0.5
-  aspectRatio: 1
-  shapeRadius: 0
-  maxSmoothness: 0.8
-  applyRangeAttenuation: 1
-  useOldInspector: 0
-  useVolumetric: 1
-  featuresFoldout: 1
-  showAdditionalSettings: 0
-  displayLightIntensity: 22
-  displayAreaLightEmissiveMesh: 0
-  areaLightCookie: {fileID: 0}
-  areaLightShadowCone: 120
-  useScreenSpaceShadows: 0
-  evsmExponent: 15
-  evsmLightLeakBias: 0
-  evsmVarianceBias: 0.00001
-  evsmBlurPasses: 0
-  lightLayers: 1
-  lightlayersMask: 1
-  linkShadowLayers: 1
-  shadowNearPlane: 0.1
-  shadowSoftness: 0.5
-  blockerSampleCount: 24
-  filterSampleCount: 16
-  minFilterSize: 0.00001
-  kernelSize: 5
-  lightAngle: 1
-  maxDepthBias: 0.001
 --- !u!20 &1376844650190263262
 Camera:
   m_ObjectHideFlags: 0

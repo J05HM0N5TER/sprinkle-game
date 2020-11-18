@@ -13,6 +13,7 @@ using UnityEngine.UIElements;
 
 // End of for serialization
 
+[RequireComponent(typeof(AudioSource), typeof(NavMeshAgent))]
 public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 {
 	private NavMeshAgent agent;
@@ -52,8 +53,8 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 	//hearing and sound stuff
 	//public GameObject[] soundSources;
 	[Tooltip("The positions of sounds that the AI has heard")]
-	public List<Vector3> soundSources = new List<Vector3> ();
-	[Tooltip ("The detection range of hearing for the AI")]
+	public List<Vector3> soundSources = new List<Vector3>();
+	[Tooltip("The detection range of hearing for the AI")]
 	public float maxHearingRange = 5;
 	private bool lookingforplayer = false;
 	// Original wander distance
@@ -80,6 +81,18 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 	private Color searchLight = new Color(66, 94, 68, 1);
 
 	private Vector3 playerLastSeen = Vector3.zero;
+
+	[Header("Footsteps")]
+	[Tooltip("How loud each footstep is")]
+	public float footstopVolume = 0.5f;
+	[Tooltip("The different sounds to play when the player is walking" +
+		" (randomly pickes every time it plays if more then one)")]
+	public List<AudioClip> footstepSounds = new List<AudioClip>();
+	[Tooltip("How much distance the player has to walk before" +
+		" another footstep plays")]
+	public float footstepFrequency = 2;
+	private AudioSource audioSource;
+	private Vector2 lastFootstepPoint;
 	[Header("attacking player values")]
 	//attacking player stuff
 	public float attackDistance = 3;
@@ -94,13 +107,12 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 	public float lookAroundTimer = 4;
 	private float lookAroundTimerReset;
 
-	
 	public float detectionTimer = 1;
 	private float detectionTimerReset;
 	public float crouchDetectionTimer = 2;
 	private float crouchDetectionTimerReset;
 	private Quaternion lookRotation;
-    private Vector3 direction;
+	private Vector3 direction;
 	public float AIDamage = 40.0f;
 
 	public enum AIStates
@@ -114,7 +126,7 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 	}
 	AIStates CurrentState;
 	public bool busyWithState;
-	[HideInInspector] public  GameObject playerHelmetCrackDecal1;
+	[HideInInspector] public GameObject playerHelmetCrackDecal1;
 	[HideInInspector] public GameObject playerHelmetCrackDecal2;
 	[HideInInspector] public GameObject playerHelmetCrackDecal3;
 	[HideInInspector] public GameObject playerHelmetCrackDecal4;
@@ -126,6 +138,8 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 	// Start is called before the first frame update
 	void Start()
 	{
+		audioSource = gameObject.GetComponent<AudioSource>();
+		audioSource.volume = footstopVolume;
 		agent = gameObject.GetComponent<NavMeshAgent>();
 		originalWonder = wonderDistance;
 		suits = GameObject.FindGameObjectsWithTag("Suit");
@@ -161,50 +175,64 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 		playerHelmetCrackDecal3 = GameObject.Find("Cracks_3");
 		playerHelmetCrackDecal4 = GameObject.Find("Cracks_4");
 		playerHelmetCrackDecal1.SetActive(false);
-		playerHelmetCrackDecal2.SetActive(false); 
-		playerHelmetCrackDecal3.SetActive(false); 
-		playerHelmetCrackDecal4.SetActive(false);  
+		playerHelmetCrackDecal2.SetActive(false);
+		playerHelmetCrackDecal3.SetActive(false);
+		playerHelmetCrackDecal4.SetActive(false);
 
 		playerDamaged = GameObject.Find("Hit_First");
 		playerCriticle = GameObject.Find("Hit_Second");
-		playerDamaged .SetActive(false);
+		playerDamaged.SetActive(false);
 		playerCriticle.SetActive(false);
 
 	}
-	
 
 	// Update is called once per frame  
 	void Update()
 	{
+		// Footsteps
+		Vector2 currentPoint = new Vector2(transform.position.x, transform.position.z);
+		if (Vector2.Distance(currentPoint, lastFootstepPoint) > footstepFrequency)
+		{
+			int index = UnityEngine.Random.Range(0, footstepSounds.Count);
+			// Set to use new clip
+			audioSource.clip = footstepSounds[index];
+			// Randomise pitch for variation
+			audioSource.pitch = UnityEngine.Random.Range(0.8f, 1.5f);
+			audioSource.Play();
+			// Update position to current point
+			lastFootstepPoint = currentPoint;
+		}
+
 		// Player position on the AI camera view
 		Vector3 screenPoint = DirectCam.WorldToViewportPoint(player.GetComponent<Transform>().position);
 		// Is the player within the view bounds
 		playerInScreenBounds = screenPoint.z > 0 && screenPoint.x > 0 && screenPoint.x < 1 && screenPoint.y > 0 && screenPoint.y < 1;
 		// The position the player was last seen at by the AI (Updated when the player is discovered)
 		// Is the player within screen bounds and nothing is obstructing view
-		rayObstructed = Physics.Linecast( /*startPos, endPos,*/ agent.transform.position, player.transform.position, out RaycastHit hitinfo, ~(1 << 10));
+		rayObstructed = Physics.Linecast( /*startPos, endPos,*/ DirectCam.transform.position, playerCam.transform.position, out RaycastHit hitinfo, ~(1 << 10));
 		// Print out what the ray hit
 		// Debug view
 		isPlayerVisible = playerInScreenBounds && !rayObstructed;
-		
-		if(((agent.transform.position - player.transform.position).magnitude < attackDistance) && isPlayerVisible && canAttackAgain)
+
+		if (((agent.transform.position - player.transform.position).magnitude < attackDistance) && isPlayerVisible && canAttackAgain)
 		{
+			
 			player.GetComponent<PlayerController>().health -= AIDamage;
 			
 			var randomNum = Random.Range(1, 4);
-			if(randomNum == 1)
+			if (randomNum == 1)
 			{
 				playerHelmetCrackDecal1.SetActive(true);
 			}
-			else if(randomNum == 2)
+			else if (randomNum == 2)
 			{
 				playerHelmetCrackDecal2.SetActive(true);
 			}
-			else if(randomNum == 3)
+			else if (randomNum == 3)
 			{
 				playerHelmetCrackDecal3.SetActive(true);
 			}
-			else if(randomNum == 4)
+			else if (randomNum == 4)
 			{
 				playerHelmetCrackDecal4.SetActive(true);
 			}
@@ -213,21 +241,18 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 			// {
 			// 	GameObject.Find("PauseManager").GetComponent<PauseMenu>().PauseGame();
 			// }
-			
-			if(player.GetComponent<PlayerController>().health <= 60.0f)
+
+			if (player.GetComponent<PlayerController>().health <= 60.0f)
 			{
 				playerDamaged.SetActive(true);
-				if(player.GetComponent<PlayerController>().health <= 40.0f )
+				if (player.GetComponent<PlayerController>().health <= 40.0f)
 				{
 					playerDamaged.SetActive(false);
 					playerCriticle.SetActive(true);
 				}
 			}
-			else
-			{
-				playerDamaged.SetActive(false);
-				playerCriticle.SetActive(false);
-			}
+			
+			
 			anim.SetBool("attack", true);
 			var dir = (player.transform.position - transform.position).normalized;
 			player.GetComponent<Rigidbody>().AddForce(knockBack * dir);
@@ -237,45 +262,45 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 
 			//attackcooldown();
 		}
+		if (player.GetComponent<PlayerController>().health > 60.0f)
+		{
+			playerDamaged.SetActive(false);
+			playerCriticle.SetActive(false);
+		}
 		if (!canAttackAgain)
 		{
 			attackCoolDown -= Time.deltaTime;
 			if (attackCoolDown <= 0)
 			{
-				
+
 				canAttackAgain = true;
 				attackCoolDown = attackcooldownreset;
 			}
 		}
-		
 
-		
-
-		
-		if(agent.velocity.magnitude >= 0.1f)
+		if (agent.velocity.magnitude >= 0.1f)
 		{
 			anim.SetBool("walking", true);
 		}
 		anim.speed = agent.speed / 2;
 
-		
 		if (((gameObject.transform.position - player.transform.position).magnitude > maxDistanceFromPlayer) && !isPlayerVisible && suits.Length >= 1)
 		{
-			suits = GameObject.FindGameObjectsWithTag ("Suit");
-			if(suits.Length > 1)
+			suits = GameObject.FindGameObjectsWithTag("Suit");
+			if (suits.Length > 1)
 			{
 				CurrentState = AIStates.SwapSuit;
 			}
 			//CurrentState = AIStates.SwapSuit;
 		}
-		
-		if(CurrentState == AIStates.Idle)
+
+		if (CurrentState == AIStates.Idle)
 		{
 			agent.isStopped = true;
-			if(CurrentState == AIStates.Idle)
+			if (CurrentState == AIStates.Idle)
 			{
 				stopafterattacktime -= Time.deltaTime;
-				if(stopafterattacktime <= 0)
+				if (stopafterattacktime <= 0)
 				{
 					stopafterattacktime = stopafterattacktimereset;
 					anim.SetBool("attack", false);
@@ -284,65 +309,65 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 				}
 			}
 		}
-		if(CurrentState == AIStates.Wondering)
+		if (CurrentState == AIStates.Wondering)
 		{
-			
+
 			anim.SetBool("walking", true);
 			if (agent.remainingDistance <= 1)
 			{
 				// for debug purpose this does work
-				agent.SetDestination (RandomNavSphere (agent.GetComponent<Transform> ().position, wonderDistance, -1));
+				agent.SetDestination(RandomNavSphere(agent.GetComponent<Transform>().position, wonderDistance, -1));
 			}
-			if(wonderDistance != originalWonder)
+			if (wonderDistance != originalWonder)
 			{
 				wonderDistance = originalWonder;
 				agent.speed = normalWalkSpeed;
-				
+
 			}
 			lightvisor.color = searchLight;
 			//visorEmission = search;
-			visorEmission.SetColor ("_EmissiveColor", searchLight);
-			visorEmission.EnableKeyword ("_EMISSION");
+			visorEmission.SetColor("_EmissiveColor", searchLight);
+			visorEmission.EnableKeyword("_EMISSION");
 
 			// Change state
-			if(isPlayerVisible)
+			if (isPlayerVisible)
 			{
 				CurrentState = AIStates.DetectingPlayer;
 			}
-			else if((!wasFollowingPlayer || !isPlayerVisible) && soundSources.Count >= 1)
+			else if ((!wasFollowingPlayer || !isPlayerVisible) && soundSources.Count >= 1)
 			{
 				CurrentState = AIStates.Searching;
 			}
 		}
-		if(CurrentState == AIStates.Chasing)
+		if (CurrentState == AIStates.Chasing)
 		{
-			
+
 			anim.SetBool("running", true);
 			anim.SetBool("walking", false);
-			if(isPlayerVisible)
+			if (isPlayerVisible)
 			{
 				playerLastSeen = player.transform.position;
 			}
-			
+
 			// Set the AI to go towards the player
-			agent.SetDestination (playerLastSeen);
+			agent.SetDestination(playerLastSeen);
 			wasFollowingPlayer = true;
 			agent.speed = chaseSpeed;
 			lightvisor.color = chaseLight;
 			//visorEmission = chase;
-			visorEmission.SetColor ("_EmissiveColor", chaseLight * 10000);
-			visorEmission.EnableKeyword ("_EMISSION");
-			if((agent.transform.position - playerLastSeen).magnitude < 1)
+			visorEmission.SetColor("_EmissiveColor", chaseLight * 10000);
+			visorEmission.EnableKeyword("_EMISSION");
+			if ((agent.transform.position - playerLastSeen).magnitude < 1)
 			{
 				CurrentState = AIStates.Searching;
 				anim.SetBool("walking", true);
 				anim.SetBool("running", false);
 			}
 		}
-		if(CurrentState == AIStates.Searching)
+		if (CurrentState == AIStates.Searching)
 		{
 			//anim.SetBool("walking", true);
-			if(soundSources.Count == 0)
+			if (soundSources.Count == 0)
 			{
 				// if (agent.remainingDistance <= 0.5)
 				// {
@@ -356,36 +381,36 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 				timer -= Time.deltaTime;
 				//visorEmission = investigate;
 				anim.SetBool("walking", true);
-				if(agent.remainingDistance <= 0.5)
+				if (agent.remainingDistance <= 0.5)
 				{
 					//stand and do looking animation 
 					lookAroundTimer -= Time.deltaTime;
 					anim.SetBool("searching", true);
 					anim.SetBool("walking", false);
-					if(lookAroundTimer <= 0)
+					if (lookAroundTimer <= 0)
 					{
 						anim.SetBool("searching", false);
 						anim.SetBool("walking", true);
-						agent.SetDestination (RandomNavSphere (agent.GetComponent<Transform> ().position, wonderDistance, NavMesh.AllAreas));
+						agent.SetDestination(RandomNavSphere(agent.GetComponent<Transform>().position, wonderDistance, NavMesh.AllAreas));
 						lookAroundTimer = lookAroundTimerReset;
-						
+
 					}
 				}
-				visorEmission.SetColor ("_EmissiveColor", investigateLight);
-				visorEmission.EnableKeyword ("_EMISSION");
+				visorEmission.SetColor("_EmissiveColor", investigateLight);
+				visorEmission.EnableKeyword("_EMISSION");
 			}
 			else
 			{
 				foreach (Vector3 soundSource in soundSources)
 				{
-					if (Vector3.Distance (gameObject.transform.position, soundSource) <= maxHearingRange)
+					if (Vector3.Distance(gameObject.transform.position, soundSource) <= maxHearingRange)
 					{
-						agent.SetDestination (soundSource);
+						agent.SetDestination(soundSource);
 						lookingforplayer = true;
 						lightvisor.color = investigateLight;
 						//visorEmission = investigate;
-						visorEmission.SetColor ("_EmissiveColor", investigateLight);
-						visorEmission.EnableKeyword ("_EMISSION");
+						visorEmission.SetColor("_EmissiveColor", investigateLight);
+						visorEmission.EnableKeyword("_EMISSION");
 						agent.speed = normalWalkSpeed;
 						anim.SetBool("searching", false);
 						anim.SetBool("walking", true);
@@ -398,7 +423,7 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 					}
 				}
 			}
-			
+
 			if (timer <= 0 && !isPlayerVisible)
 			{
 				lookingforplayer = false;
@@ -408,14 +433,14 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 				anim.SetBool("searching", false);
 				// Debug.Log("Timer Up", this);
 			}
-			if(isPlayerVisible)
+			if (isPlayerVisible)
 			{
 				CurrentState = AIStates.Chasing;
 			}
 		}
-		if(CurrentState == AIStates.SwapSuit)
+		if (CurrentState == AIStates.SwapSuit)
 		{
-			suits = GameObject.FindGameObjectsWithTag ("Suit");
+			suits = GameObject.FindGameObjectsWithTag("Suit");
 			currentSuit = gameObject;
 			foreach (GameObject suit in suits)
 			{
@@ -460,10 +485,10 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 				Debug.LogError("Couldn't find valid point");
 			}
 		}
-		if(CurrentState == AIStates.DetectingPlayer)
+		if (CurrentState == AIStates.DetectingPlayer)
 		{
-			
-			if(isPlayerVisible)
+
+			if (isPlayerVisible)
 			{
 				agent.isStopped = true;
 				direction = (player.transform.position - transform.position).normalized;
@@ -471,12 +496,12 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 				lookRotation = Quaternion.LookRotation(direction);
 				lightvisor.color = investigateLight;
 				//visorEmission = investigate;
-				visorEmission.SetColor ("_EmissiveColor", investigateLight);
-				visorEmission.EnableKeyword ("_EMISSION");
+				visorEmission.SetColor("_EmissiveColor", investigateLight);
+				visorEmission.EnableKeyword("_EMISSION");
 				transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime);
 				anim.SetBool("walking", false);
 				anim.SetBool("idle", true);
-				if(player.GetComponent<PlayerController>().isCrouching)
+				if (player.GetComponent<PlayerController>().isCrouching)
 				{
 					crouchDetectionTimer -= Time.deltaTime;
 				}
@@ -484,7 +509,7 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 				{
 					detectionTimer -= Time.deltaTime;
 				}
-				if(detectionTimer <= 0 || crouchDetectionTimer <= 0)
+				if (detectionTimer <= 0 || crouchDetectionTimer <= 0)
 				{
 					agent.isStopped = false;
 					CurrentState = AIStates.Chasing;
@@ -495,8 +520,8 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 		}
 
 		Debug.Log(CurrentState.ToString());
-		Debug.Log(" can attack again: " + canAttackAgain + ", time until next attack: " + attackCoolDown + ", bool of animaition attack: "+ anim.GetBool("attack"));
-		
+		Debug.Log(" can attack again: " + canAttackAgain + ", time until next attack: " + attackCoolDown + ", bool of animaition attack: " + anim.GetBool("attack"));
+
 	}
 	public static Vector3 RandomNavSphere(Vector3 origin, float distance, int layermask)
 	{
@@ -521,7 +546,7 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 			Gizmos.DrawWireSphere(agent.transform.position, wonderDistance);
 		}
 	}
-	private void IfSoundInRange ()
+	private void IfSoundInRange()
 	{
 		Physics.OverlapSphere(gameObject.transform.position, 30);
 	}
@@ -565,13 +590,13 @@ public class LivingArmourAI : MonoBehaviour, IXmlSerializable
 	{
 		StartCoroutine("decalFade");
 	}
-	private IEnumerator decalFade ()
+	private IEnumerator decalFade()
 	{
 		yield return new WaitForSeconds(decalFadeTime);
 		playerHelmetCrackDecal1.SetActive(false);
-		playerHelmetCrackDecal2.SetActive(false); 
-		playerHelmetCrackDecal3.SetActive(false); 
-		playerHelmetCrackDecal4.SetActive(false);  
+		playerHelmetCrackDecal2.SetActive(false);
+		playerHelmetCrackDecal3.SetActive(false);
+		playerHelmetCrackDecal4.SetActive(false);
 	}
 	// saving stuff no touchy touchy
 	public void WriteXml(XmlWriter writer)

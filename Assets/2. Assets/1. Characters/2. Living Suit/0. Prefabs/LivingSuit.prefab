@@ -22907,6 +22907,8 @@ GameObject:
   - component: {fileID: 5776743038438315082}
   - component: {fileID: 5776743038438315083}
   - component: {fileID: 5776743038438315076}
+  - component: {fileID: 2010826049501724546}
+  - component: {fileID: 3115847202484131602}
   m_Layer: 2
   m_Name: LivingSuit
   m_TagString: Suit
@@ -23042,15 +23044,143 @@ MonoBehaviour:
   chase: {fileID: 2100000, guid: 5471723233a754f4da222a9d17f40af6, type: 2}
   investigate: {fileID: 2100000, guid: fbf012aa0c14a9d4286cbc28de7a5894, type: 2}
   search: {fileID: 2100000, guid: 54638cbff7ff39c4a97d673600aa3688, type: 2}
+  footstopVolume: 0.5
+  footstepSounds:
+  - {fileID: 8300000, guid: 6ea72c363f5d9a9469fd6cde84acac8e, type: 3}
+  - {fileID: 8300000, guid: dad4a9900dfa0af428e2f53d571698b3, type: 3}
+  - {fileID: 8300000, guid: e94ae143a3f91d947a19786a181bc45d, type: 3}
+  - {fileID: 8300000, guid: 8603f12bc2306f14ab9c66c551ed2d1a, type: 3}
+  footstepFrequency: 2
   attackDistance: 3
   attackCoolDown: 1
   stopafterattacktime: 1
   canAttackAgain: 1
-  knockBack: 5000
+  knockBack: 500
   lookAroundTimer: 4
   detectionTimer: 1
   crouchDetectionTimer: 2
+  AIDamage: 40
   busyWithState: 0
+  playerHelmetCrackDecal1: {fileID: 0}
+  playerHelmetCrackDecal2: {fileID: 0}
+  playerHelmetCrackDecal3: {fileID: 0}
+  playerHelmetCrackDecal4: {fileID: 0}
+  playerDamaged: {fileID: 0}
+  playerCriticle: {fileID: 0}
+  decalFadeTime: 2
+  suitJump: 1
+--- !u!82 &2010826049501724546
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5776743038438315077}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 50
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!54 &3115847202484131602
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5776743038438315077}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &5776743038438947450
 GameObject:
   m_ObjectHideFlags: 0
