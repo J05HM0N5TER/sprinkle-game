@@ -16,14 +16,14 @@ public class SludgeDPS : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(playerInDPSArea)
+        if (playerInDPSArea)
         {
-             player.GetComponent<PlayerController>().health -= DPS * Time.deltaTime;
+            player.GetComponent<PlayerController>().health -= DPS * Time.deltaTime;
         }
     }
-    private void OnTriggerEnter(Collider other) 
+    private void OnTriggerEnter(Collider other)
     {
-        if(other == player)
+        if (other.gameObject == player)
         {
             playerInDPSArea = true;
             //player.GetComponent<PlayerController>().health -= DPS;
@@ -31,10 +31,10 @@ public class SludgeDPS : MonoBehaviour
     }
     private void OnTriggerExit(Collider other)
     {
-        if(other == player)
+        if (other.gameObject == player)
         {
-              playerInDPSArea = false;
+            playerInDPSArea = false;
         }
-        
+
     }
 }
