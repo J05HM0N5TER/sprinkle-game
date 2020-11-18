@@ -77,5 +77,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scriptLifeTime: 5
   volume: 0
-  collisionNoise: {fileID: 8300000, guid: 230cbe702da90f747a41b0c2e8fa0829, type: 3}
+  collisionClips:
+  - {fileID: 8300000, guid: 230cbe702da90f747a41b0c2e8fa0829, type: 3}
+  - {fileID: 8300000, guid: 03ba131d7a12aaf4696d1fe891bb3414, type: 3}
+  - {fileID: 8300000, guid: 0a0257335b1e98948aaa55ee71f63b97, type: 3}
   minSpeedToMakeSound: 1

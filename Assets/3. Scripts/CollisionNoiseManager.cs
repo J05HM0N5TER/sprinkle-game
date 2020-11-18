@@ -10,7 +10,7 @@ public class CollisionNoiseManager : MonoBehaviour
 	[Tooltip("The volume of the sound")]
 	public float volume;
 	[Tooltip("The noise that object make when things collide with them")]
-	public AudioClip collisionNoise;
+	public List<AudioClip> collisionClips = new List<AudioClip>();
 	[Tooltip("Minimum speed something must go to be able to create noise")]
 	public float minSpeedToMakeSound = 1.0f;
 	// Start is called before the first frame update
@@ -36,16 +36,21 @@ public class CollisionNoiseManager : MonoBehaviour
 
 	public void RemoveOld()
 	{
+		List<CollisionObject> itemToDestoy = new List<CollisionObject>();
 		foreach (var item in noisesScripts)
 		{
 			// If there is one that is too old
 			if ((DateTime.Now - item.timeAdded).TotalSeconds > scriptLifeTime)
 			{
 				// Remove
-				noisesScripts.Remove(item);
-				Destroy(item.script);
-				Destroy(item.audio);
+				itemToDestoy.Add(item);
 			}
+		}
+		foreach (var item in itemToDestoy)
+		{
+			noisesScripts.Remove(item);
+			Destroy(item.script);
+			Destroy(item.audio);
 		}
 	}
 
@@ -84,7 +89,7 @@ public class CollisionNoiseManager : MonoBehaviour
 		script.minSpeedToMakeSound = minSpeedToMakeSound;
 		script.volume = volume;
 		script.audioSource = audio;
-		script.clip = collisionNoise;
+		script.collisionClips = collisionClips;
 
 		// Add the new stuff
 		Add(script, audio);
