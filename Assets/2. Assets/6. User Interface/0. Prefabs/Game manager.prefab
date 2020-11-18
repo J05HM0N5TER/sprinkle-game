@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6128061836971473960}
   - component: {fileID: 6128061836971473961}
   - component: {fileID: 8753600789978463663}
+  - component: {fileID: 1599953148}
   m_Layer: 0
   m_Name: Game manager
   m_TagString: Untagged
@@ -46,6 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainMenu: MainMenu
   mainGame: Game Scene
+  gameCredits: CreditsScene
 --- !u!114 &8753600789978463663
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -61,3 +63,22 @@ MonoBehaviour:
   layersToSerialize:
     serializedVersion: 2
     m_Bits: 3072
+--- !u!114 &1599953148
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6128061836971473966}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b924bd9564765246b47bc12d2807385, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scriptLifeTime: 5
+  volume: 0
+  collisionClips:
+  - {fileID: 8300000, guid: 230cbe702da90f747a41b0c2e8fa0829, type: 3}
+  - {fileID: 8300000, guid: 03ba131d7a12aaf4696d1fe891bb3414, type: 3}
+  - {fileID: 8300000, guid: 0a0257335b1e98948aaa55ee71f63b97, type: 3}
+  minSpeedToMakeSound: 1
