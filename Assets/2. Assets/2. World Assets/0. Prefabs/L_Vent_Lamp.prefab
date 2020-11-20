@@ -27,7 +27,7 @@ GameObject:
   - component: {fileID: 1057754063128399005}
   m_Layer: 0
   m_Name: Point Light
-  m_TagString: Untagged
+  m_TagString: 'L_VentLamp '
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -40,8 +40,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3860897560621648595}
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: -3.157778, z: 0}
-  m_LocalScale: {x: 2.2222223, y: 2.2222233, z: 2.2222233}
+  m_LocalPosition: {x: 0, y: -1.111, z: 0}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children: []
   m_Father: {fileID: 3560742346566859862}
   m_RootOrder: 0
@@ -216,6 +216,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8363457748858637298}
+  - component: {fileID: 2073992917716451096}
   m_Layer: 0
   m_Name: L_Vent_Lamp
   m_TagString: Untagged
@@ -238,6 +239,25 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!205 &2073992917716451096
+LODGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8363457748858637299}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: 0, y: -0.10161725, z: -0.000000067055225}
+  m_Size: 0.19917053
+  m_FadeMode: 0
+  m_AnimateCrossFading: 0
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0.013038318
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 2237659648377895577}
+  m_Enabled: 1
 --- !u!1001 &8363457749255149388
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -346,6 +366,12 @@ GameObject:
 --- !u!4 &3560742346566859862 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: 70c8e816216014a4d8a255eab61c3f2c,
+    type: 3}
+  m_PrefabInstance: {fileID: 8363457749255149388}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &2237659648377895577 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -1504981713932161579, guid: 70c8e816216014a4d8a255eab61c3f2c,
     type: 3}
   m_PrefabInstance: {fileID: 8363457749255149388}
   m_PrefabAsset: {fileID: 0}
