@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 1022611368}
   m_Layer: 0
   m_Name: SpinRight
-  m_TagString: Untagged
+  m_TagString: L_Siren
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -41,7 +41,7 @@ Light:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1022611366}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 9
   m_Type: 0
   m_Color: {r: 0.8584906, g: 0.01214843, b: 0.01214843, a: 1}
@@ -166,7 +166,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Version: 1
-  shadowResolution: 1080
+  shadowResolution: 512
   shadowDimmer: 1
   volumetricShadowDimmer: 1
   shadowFadeDistance: 10000
@@ -223,7 +223,7 @@ GameObject:
   - component: {fileID: 3942938178666786351}
   m_Layer: 0
   m_Name: SpinLeft
-  m_TagString: Untagged
+  m_TagString: L_Siren
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -249,7 +249,7 @@ Light:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3208887647036416227}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 9
   m_Type: 0
   m_Color: {r: 0.8584906, g: 0.01214843, b: 0.01214843, a: 1}
@@ -374,7 +374,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Version: 1
-  shadowResolution: 1080
+  shadowResolution: 512
   shadowDimmer: 1
   volumetricShadowDimmer: 1
   shadowFadeDistance: 10000
@@ -430,7 +430,7 @@ GameObject:
   - component: {fileID: 402070350356775182}
   m_Layer: 0
   m_Name: Point Light
-  m_TagString: Untagged
+  m_TagString: L_Siren
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -456,7 +456,7 @@ Light:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6454480636944595851}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 9
   m_Type: 2
   m_Color: {r: 0.8980392, g: 0.31110558, b: 0.27450976, a: 1}

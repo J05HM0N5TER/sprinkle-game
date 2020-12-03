@@ -27,7 +27,7 @@ GameObject:
   - component: {fileID: 6720142898793857521}
   m_Layer: 0
   m_Name: Chandelier Light
-  m_TagString: Untagged
+  m_TagString: L_Chandelier
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -340,6 +340,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_StaticEditorFlags
       value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: fa4746451a1b8004491a3941eb098afe,
+        type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fa4746451a1b8004491a3941eb098afe, type: 3}
